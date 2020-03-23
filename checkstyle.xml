@@ -10,10 +10,6 @@
 
     <module name="FileTabCharacter"/>
 
-    <module name="TodoComment">
-        <property name="format" value="(TODO)|(FIXME)"/>
-    </module>
-
     <module name="MissingSwitchDefault"/>
 
     <!-- To not allow more than 3 nested for loops-->
