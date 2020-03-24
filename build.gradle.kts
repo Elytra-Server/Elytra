@@ -4,8 +4,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.3.61"
     id("com.github.johnrengelman.shadow") version "5.2.0"
-    id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
-    id("org.jlleitschuh.gradle.ktlint-idea") version "9.2.1"
 }
 
 val groupPrefix = "io.inb"
@@ -39,7 +37,25 @@ subprojects {
     group = groupPrefix
     version = pVersion
 
-    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+	if(project.hasProperty("dev")){
+		apply(plugin = "org.jlleitschuh.gradle.ktlint")
+
+		ktlint {
+			debug.set(true)
+			verbose.set(true)
+			android.set(false)
+			outputToConsole.set(true)
+			outputColorName.set("RED")
+			additionalEditorconfigFile.set(file(".editorconfig"))
+			filter {
+				exclude("**/generated/**")
+				exclude("**/target/**")
+				exclude("**/out/**")
+				include("**/kotlin/**")
+			}
+		}
+	}
+
 
     dependencies {
         implementation("org.apache.commons:commons-lang3:3.9")
@@ -50,32 +66,17 @@ subprojects {
     }
 
     tasks {
-        withType<KotlinCompile> {
-            kotlinOptions.jvmTarget = "11"
-            kotlinOptions.freeCompilerArgs =
-                listOf("-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi,kotlin.Experimental,kotlin.contracts.ExperimentalContracts")
-        }
-
-        withType<ShadowJar> {
-            archiveBaseName.set(project.name)
-            destinationDirectory.set(File(rootDir, "target"))
-        }
-    }
-
-    ktlint {
-        debug.set(true)
-        verbose.set(true)
-        android.set(false)
-        outputToConsole.set(true)
-        outputColorName.set("RED")
-		additionalEditorconfigFile.set(file(".editorconfig"))
-		filter {
-			exclude("**/generated/**")
-			exclude("**/target/**")
-			exclude("**/out/**")
-			include("**/kotlin/**")
+		withType<KotlinCompile> {
+			kotlinOptions.jvmTarget = "11"
+			kotlinOptions.freeCompilerArgs =
+					listOf("-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi,kotlin.Experimental,kotlin.contracts.ExperimentalContracts")
 		}
-    }
+
+		withType<ShadowJar> {
+			archiveBaseName.set(project.name)
+			destinationDirectory.set(File(rootDir, "target"))
+		}
+	}
 }
 
 gradle.taskGraph.whenReady {

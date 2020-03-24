@@ -1,5 +1,5 @@
 ## INB (It's not a bukkit)
-<p>A Plugin API & Server Implementation to battle those you struggel with the non multi-threaded bukkit api.</p>
+<p>A Plugin API & Server Implementation to battle those you struggle with the non multi-threaded bukkit api.</p>
 
 **Contents:**
 * [Issue reporting](https://github.com/INB-It-s-not-a-bukkit/INB/issues)
