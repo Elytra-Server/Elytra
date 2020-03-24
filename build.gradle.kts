@@ -37,26 +37,6 @@ subprojects {
     group = groupPrefix
     version = pVersion
 
-	if(project.hasProperty("dev")){
-		apply(plugin = "org.jlleitschuh.gradle.ktlint")
-
-		ktlint {
-			debug.set(true)
-			verbose.set(true)
-			android.set(false)
-			outputToConsole.set(true)
-			outputColorName.set("RED")
-			additionalEditorconfigFile.set(file(".editorconfig"))
-			filter {
-				exclude("**/generated/**")
-				exclude("**/target/**")
-				exclude("**/out/**")
-				include("**/kotlin/**")
-			}
-		}
-	}
-
-
     dependencies {
         implementation("org.apache.commons:commons-lang3:3.9")
 
