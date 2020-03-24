@@ -1,7 +1,5 @@
 package io.inb.sdk.network
 
-import io.inb.api.protocol.CodecHandler
-import io.inb.api.protocol.Packet
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.ReplayingDecoder

@@ -31,6 +31,7 @@ allprojects {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3")
         implementation("io.reactivex.rxjava2:rxjava:2.2.0")
         implementation("io.projectreactor.netty:reactor-netty:0.9.6.RELEASE")
+		implementation("com.flowpowered:flow-network:1.0.0")
     }
 }
 

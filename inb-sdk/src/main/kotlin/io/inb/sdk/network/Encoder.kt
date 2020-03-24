@@ -1,9 +1,5 @@
 package io.inb.sdk.network
 
-import io.inb.api.protocol.Codec
-import io.inb.api.protocol.CodecHandler
-import io.inb.api.protocol.Packet
-import io.inb.api.utils.extensions.kClass
 import io.netty.buffer.Unpooled
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.MessageToMessageEncoder

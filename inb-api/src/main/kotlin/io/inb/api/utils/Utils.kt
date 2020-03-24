@@ -1,6 +1,7 @@
 package io.inb.api.utils
 
 import io.netty.buffer.ByteBuf
+import kotlin.experimental.and
 
 object Utils {
 	fun readString(buf: ByteBuf): String {
@@ -22,4 +23,5 @@ object Utils {
 			buffer.writeChar(c.toInt())
 		}
 	}
+	
 }

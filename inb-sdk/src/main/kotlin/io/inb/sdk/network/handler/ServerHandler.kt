@@ -2,7 +2,6 @@ package io.inb.sdk.network.handler
 
 import io.inb.api.network.Session
 import io.inb.api.network.SessionManager
-import io.inb.api.protocol.Packet
 import io.netty.channel.Channel
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.SimpleChannelInboundHandler
