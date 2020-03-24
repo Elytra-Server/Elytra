@@ -1,4 +1,4 @@
-package io.inb.api.network
+package io.inb.api.network.pipeline
 
 import com.flowpowered.network.Codec
 import com.flowpowered.network.Codec.CodecRegistration

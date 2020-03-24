@@ -4,6 +4,7 @@ import com.flowpowered.network.Message
 import com.flowpowered.network.protocol.AbstractProtocol
 import com.flowpowered.network.session.BasicSession
 import io.inb.api.entity.Player
+import io.inb.api.network.pipeline.CodecsHandler
 import io.inb.api.network.protocol.message.DisconnectMessage
 import io.inb.api.network.protocol.packets.BasicPacket
 import io.inb.api.network.protocol.packets.HandshakePacket

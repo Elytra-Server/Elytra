@@ -1,7 +1,7 @@
 package io.inb.sdk.network.server
 
 import com.flowpowered.network.ConnectionManager
-import io.inb.api.network.InbConnectionManager
+import io.inb.api.network.pipeline.InbConnectionManager
 import io.inb.api.network.pipeline.ChannelInitializerHandler
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelOption

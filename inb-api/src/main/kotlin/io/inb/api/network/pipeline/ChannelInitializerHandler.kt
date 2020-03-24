@@ -1,7 +1,6 @@
 package io.inb.api.network.pipeline
 
 import com.flowpowered.network.ConnectionManager
-import io.inb.api.network.CodecsHandler
 import io.inb.api.network.protocol.packets.HandshakePacket
 import io.netty.channel.ChannelException
 import io.netty.channel.ChannelInitializer
@@ -15,6 +14,7 @@ class ChannelInitializerHandler(
 	override fun initChannel(ch: SocketChannel) {
 
 		val codecsHandler = CodecsHandler(HandshakePacket())
+		val decoderHandler = DecoderHandler()
 		val messagesHandler = MessageHandler(connectionManager = connectionManager)
 
 		try {
@@ -24,6 +24,7 @@ class ChannelInitializerHandler(
 		}
 
 		ch.pipeline()
+			.addLast("decoder", decoderHandler)
 			.addLast("codecs", codecsHandler)
 			.addLast("handler", messagesHandler)
 	}
