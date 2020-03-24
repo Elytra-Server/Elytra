@@ -2,7 +2,6 @@ package io.inb.api
 
 import io.inb.api.network.NetworkServer
 import io.inb.api.network.SessionRegistry
-import io.inb.api.utils.SecurityUtils
 import java.security.KeyPair
 
 /**
@@ -15,7 +14,6 @@ class InbServer(
 	val onlineMode: Boolean = true,
 
 	val sessionRegistry: SessionRegistry = SessionRegistry(),
-	val keyPair: KeyPair = SecurityUtils.generateKeyPair()!!
 ) {
 
 	companion object {
