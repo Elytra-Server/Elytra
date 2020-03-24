@@ -1,0 +1,2 @@
+# Use lf EndOfLine to prevent issues with docker scripts on windows
+*.sh text eol=lf
