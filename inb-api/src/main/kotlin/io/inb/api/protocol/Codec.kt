@@ -6,7 +6,7 @@ import kotlin.reflect.KClass
 interface Codec <T : Packet> {
 
 	var type: KClass<T>
-	var id: Short
+	var id: Int
 
 	fun encode(packet: T) : ByteBuf
 

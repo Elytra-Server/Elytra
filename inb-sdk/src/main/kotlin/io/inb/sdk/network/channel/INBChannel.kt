@@ -10,8 +10,8 @@ class INBChannel : ChannelInitializer<SocketChannel>() {
 
 	override fun initChannel(socketChannel: SocketChannel) {
 		socketChannel.pipeline()
-			.addLast(Encoder())
 			.addLast(Decoder())
+			.addLast(Encoder())
 			.addLast(ServerHandler())
 	}
 }

@@ -9,7 +9,7 @@ import kotlin.reflect.KClass
 
 class LoginCodec(
 	override var type: KClass<LoginPacket> = LoginPacket::class,
-	override var id: Short = 0x02
+	override var id: Int = 0x02
 ) : Codec<LoginPacket> {
 
 	override fun encode(packet: LoginPacket): ByteBuf {

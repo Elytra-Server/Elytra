@@ -12,10 +12,10 @@ class Decoder : ReplayingDecoder<Packet>() {
 
 		println("Decoding $id")
 
-		val codec = id?.toShort()?.let { CodecHandler.getCodec(it) }
+		val codec = CodecHandler.getCodec(id?.toInt()!!)
 
 		if(codec == null){
-			println("Invalid packet, no codec for $id")
+			println("Invalid packet, no codec for id($id)")
 			return
 		}
 

@@ -9,7 +9,7 @@ import kotlin.reflect.KClass
 
 class DisconnectCodec(
 	override var type: KClass<DisconnectPacket> = DisconnectPacket::class,
-	override var id: Short = 0xFF
+	override var id: Int = 0xFF
 ) : Codec<DisconnectPacket> {
 
 	override fun encode(packet: DisconnectPacket): ByteBuf {

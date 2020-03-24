@@ -9,7 +9,7 @@ import kotlin.reflect.KClass
 
 class HandshakeCodec(
 	override var type: KClass<HandshakePacket> = HandshakePacket::class,
-	override var id: Short = 0x00
+	override var id: Int = 0x00
 ) : Codec<HandshakePacket> {
 	override fun encode(packet: HandshakePacket): ByteBuf {
 		val buffer: ByteBuf = Unpooled.buffer()
