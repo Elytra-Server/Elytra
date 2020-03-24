@@ -1,6 +1,6 @@
 package io.inb.sdk.protocol.packets
 
-import io.inb.sdk.protocol.Packet
+import io.inb.api.protocol.Packet
 
 class HandshakePacket : Packet {
 
