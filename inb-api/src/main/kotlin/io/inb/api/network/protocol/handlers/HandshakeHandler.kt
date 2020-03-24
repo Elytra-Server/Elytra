@@ -2,6 +2,8 @@ package io.inb.api.network.protocol.handlers
 
 import com.flowpowered.network.MessageHandler
 import io.inb.api.InbServer
+import io.inb.api.events.PlayerKickEvent
+import io.inb.api.io.EventBus
 import io.inb.api.network.InbSession
 import io.inb.api.network.protocol.message.HandshakeMessage
 import io.inb.api.network.protocol.packets.BasicPacket
@@ -29,11 +31,20 @@ class HandshakeHandler : MessageHandler<InbSession, HandshakeMessage> {
 		println(message.version)
 
 		if(packet == loginPacket){
+			var reason = ""
+
+			//TODO: Refactor to remove duplicated code
 			if(message.version < InbServer.PROTOCOL_VERSION){
-				inbSession.disconnect("Outdated client! Running: ${InbServer.GAME_VERSION}")
+				reason = "Outdated client! Running: ${InbServer.GAME_VERSION}"
+				inbSession.disconnect(reason)
+				inbSession.player?.let { PlayerKickEvent(it, reason) }?.let { EventBus.post(it) }
 			}else if(message.version > InbServer.PROTOCOL_VERSION){
-				inbSession.disconnect("Outdated server! Running: ${InbServer.GAME_VERSION}")
+				reason = "Outdated server! Running: ${InbServer.GAME_VERSION}"
+				inbSession.disconnect(reason)
+
+				inbSession.player?.let { PlayerKickEvent(it, reason) }?.let { EventBus.post(it) }
 			}
+
 		}
 
 		println("Handshake [${message.address}:${message.port}] - ${message.version} (${message.state}) - ${inbSession.state}")
