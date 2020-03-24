@@ -10,7 +10,7 @@ class LoginHandler : PacketHandler<LoginPacket>{
 
 	override fun handle(session: Session, body: LoginPacket) {
 		if(session.state != State.LOGIN){
-			TODO("Disconnect, already logged in")
+			session.disconnect("Already logged in!")
 			return
 		}
 

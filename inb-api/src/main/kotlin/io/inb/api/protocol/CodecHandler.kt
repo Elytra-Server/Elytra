@@ -1,5 +1,6 @@
 package io.inb.api.protocol
 
+import io.inb.api.protocol.codecs.DisconnectCodec
 import io.inb.api.protocol.codecs.HandshakeCodec
 import io.inb.api.protocol.codecs.LoginCodec
 import kotlin.reflect.KClass
@@ -14,6 +15,7 @@ object CodecHandler {
 	init {
 		register(HandshakeCodec::class)
 		register(LoginCodec::class)
+		register(DisconnectCodec::class)
 	}
 
 	private fun <T : Packet, C : Codec<T>> register(clazz: KClass<C>) {

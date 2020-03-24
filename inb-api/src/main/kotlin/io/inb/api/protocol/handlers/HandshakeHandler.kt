@@ -9,7 +9,7 @@ class HandshakeHandler : PacketHandler<HandshakePacket> {
 
 	override fun handle(session: Session, body: HandshakePacket) {
 		if(session.state != State.HANDSHAKE){
-			TODO("Disconnect packet")
+			session.disconnect("Could not handshake!")
 		}
 
 		session.state = State.LOGIN

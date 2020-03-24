@@ -3,9 +3,11 @@ package io.inb.api.network
 import io.inb.api.entity.Player
 import io.inb.api.protocol.Packet
 import io.inb.api.protocol.PacketHandlers
+import io.inb.api.protocol.packets.DisconnectPacket
 import io.inb.api.utils.Tickable
 import io.inb.api.utils.extensions.kClass
 import io.netty.channel.Channel
+import io.netty.channel.ChannelFutureListener
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingDeque
 
@@ -24,6 +26,10 @@ class Session(val channel: Channel) : Tickable {
 	fun queueIncomingPackets(packet: Packet) = packetQueue.add(packet)
 
 	fun sendPacket(packet: Packet) = channel.writeAndFlush(packet)
+
+	fun disconnect(reason: String) =
+		sendPacket(DisconnectPacket(reason))
+			.addListener(ChannelFutureListener.CLOSE)
 
 	override fun tick() {
 		var packet: Packet? = null
