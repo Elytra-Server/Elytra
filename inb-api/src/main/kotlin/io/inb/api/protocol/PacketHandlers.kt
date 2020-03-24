@@ -1,7 +1,9 @@
 package io.inb.api.protocol
 
 import io.inb.api.protocol.handlers.HandshakeHandler
+import io.inb.api.protocol.handlers.LoginHandler
 import io.inb.api.protocol.packets.HandshakePacket
+import io.inb.api.protocol.packets.LoginPacket
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 import kotlin.reflect.KClass
@@ -13,6 +15,7 @@ object PacketHandlers {
 
 	init {
 		register(HandshakePacket::class, HandshakeHandler::class)
+		register(LoginPacket::class, LoginHandler::class)
 	}
 
 	private fun <T : Packet> register(clazz: KClass<T>, packetHandler: KClass<out PacketHandler<T>>){

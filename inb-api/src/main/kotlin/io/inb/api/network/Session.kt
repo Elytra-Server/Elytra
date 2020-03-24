@@ -1,5 +1,6 @@
 package io.inb.api.network
 
+import io.inb.api.entity.Player
 import io.inb.api.protocol.Packet
 import io.inb.api.protocol.PacketHandlers
 import io.inb.api.utils.Tickable
@@ -12,6 +13,8 @@ import java.util.concurrent.LinkedBlockingDeque
 class Session(val channel: Channel) : Tickable {
 
 	var state: State = State.HANDSHAKE
+	var player: Player? = null
+
 	private val packetQueue: BlockingQueue<Packet> = LinkedBlockingDeque<Packet>()
 
 	init {
