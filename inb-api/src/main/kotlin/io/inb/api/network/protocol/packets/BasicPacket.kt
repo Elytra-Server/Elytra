@@ -9,7 +9,6 @@ import com.flowpowered.network.protocol.AbstractProtocol
 import com.flowpowered.network.service.CodecLookupService
 import com.flowpowered.network.service.HandlerLookupService
 import com.flowpowered.network.util.ByteBufUtils
-import io.inb.api.network.protocol.handlers.HandshakeHandler
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
 import java.io.IOException
@@ -28,8 +27,12 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
 		handlers = HandlerLookupService()
 	}
 
-	protected open fun <M : Message, C : Codec<in M>, H : MessageHandler<*, in M>> inbound(
-		opcode: Int, message: Class<M>, codec: Class<C>, handler: HandshakeHandler) {
+	protected open fun <M : Message, C : Codec<M>, H : MessageHandler<*,  M>> inbound(
+		opcode: Int,
+		message: Class<M>,
+		codec: Class<C>,
+		handler: Class<H>
+	) {
 		try {
 			inboundCodecs?.bind(message, codec, opcode)
 			handlers?.bind(message, handler)
@@ -42,8 +45,25 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
 		}
 	}
 
-	protected open fun <M : Message?, C : Codec<in M>?> outbound(opcode: Int,
-																 message: Class<M>?, codec: Class<C>?) {
+	protected open fun < M : Message, C : Codec<M>, H : MessageHandler<*, in M>> inbound(
+		opcode: Int, message: Class<M>, codec: Class<C>, handler: H) {
+		try {
+			inboundCodecs!!.bind(message, codec, opcode)
+			handlers?.bind(message, handler)
+		} catch (e: InstantiationException) {
+			logger.error("Error registering inbound $opcode in $name", e)
+		} catch (e: IllegalAccessException) {
+			logger.error("Error registering inbound $opcode in $name", e)
+		} catch (e: InvocationTargetException) {
+			logger.error("Error registering inbound $opcode in $name", e)
+		}
+	}
+
+	protected open fun <M : Message?, C : Codec<in M>?> outbound(
+		opcode: Int,
+		message: Class<M>?,
+		codec: Class<C>?
+	) {
 		try {
 			outboundCodecs!!.bind(message, codec, opcode)
 		} catch (e: InstantiationException) {
@@ -103,3 +123,4 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
 		return inboundCodecs?.find(opcode)
 	}
 }
+

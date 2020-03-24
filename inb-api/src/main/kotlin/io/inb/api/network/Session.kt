@@ -1,9 +1,11 @@
 package io.inb.api.network
 
 import com.flowpowered.network.Message
+import com.flowpowered.network.protocol.AbstractProtocol
 import com.flowpowered.network.session.BasicSession
 import io.inb.api.entity.Player
 import io.inb.api.network.protocol.message.DisconnectMessage
+import io.inb.api.network.protocol.packets.BasicPacket
 import io.inb.api.network.protocol.packets.HandshakePacket
 import io.inb.api.utils.Tickable
 import io.netty.channel.Channel
@@ -17,6 +19,7 @@ class Session(channel: Channel) : BasicSession(channel, HandshakePacket()), Tick
 
 	var state: State = State.HANDSHAKE
 	var player: Player? = null
+	var protocol: BasicPacket? = null
 
 	private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque<Message>()
 
@@ -46,5 +49,10 @@ class Session(channel: Channel) : BasicSession(channel, HandshakePacket()), Tick
 		}
 	}
 
+	override fun setProtocol(protocol: AbstractProtocol?) {
+		channel.flush()
+		channel.pipeline().replace("codecs", "codecs", CodecsHandler(protocol as BasicPacket));
+		super.setProtocol(protocol)
+	}
 
 }

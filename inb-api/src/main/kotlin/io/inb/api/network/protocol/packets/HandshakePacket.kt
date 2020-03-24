@@ -7,8 +7,7 @@ import io.inb.api.network.protocol.message.HandshakeMessage
 class HandshakePacket : BasicPacket("HANDSHAKE", 0) {
 
 	init {
-		inbound(
-			0x00,
+		inbound(0x00,
 			HandshakeMessage::class.java,
 			HandshakeCodec::class.java,
 			HandshakeHandler()
