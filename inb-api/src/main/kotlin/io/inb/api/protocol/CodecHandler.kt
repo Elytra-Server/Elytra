@@ -24,7 +24,7 @@ object CodecHandler {
 		packetCodecs[codec.type] = codec
 	}
 
-	fun getCodec(id: Short): Codec<*>? = codecs.find { it.id == id}
+	fun getCodec(id: Int): Codec<*>? = codecs.find { it.id == id}
 
 	fun <T : Packet> getCodec(clazz: KClass<T>): Codec<T> = packetCodecs[clazz] as Codec<T>
 }
