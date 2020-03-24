@@ -1,20 +1,33 @@
 package io.inb.sdk.network.handler
 
-import io.netty.buffer.ByteBuf
-import io.netty.buffer.Unpooled
-import io.netty.channel.ChannelFutureListener
+import io.inb.api.network.Session
+import io.inb.api.network.SessionManager
+import io.inb.api.protocol.Packet
+import io.netty.channel.Channel
 import io.netty.channel.ChannelHandlerContext
-import io.netty.channel.ChannelInboundHandlerAdapter
-import io.netty.util.CharsetUtil
+import io.netty.channel.SimpleChannelInboundHandler
 
-class ServerHandler : ChannelInboundHandlerAdapter() {
 
-	override fun channelRead(ctx: ChannelHandlerContext, msg: Any?) {
-		val input: ByteBuf = msg as ByteBuf
+class ServerHandler : SimpleChannelInboundHandler<Packet>() {
+	override fun channelActive(ctx: ChannelHandlerContext) {
+		val channel: Channel = ctx.channel()
 
-		val received = input.toString(CharsetUtil.UTF_8)
-		println("Server received: $received")
+		Session(channel)
 
-		ctx.write(Unpooled.copiedBuffer("Received: $received", CharsetUtil.UTF_8))
+		println("New session (${SessionManager.activeSessions()} total). Channel: $channel.")
+	}
+
+	override fun channelInactive(ctx: ChannelHandlerContext) { // Destroy session
+		val channel: Channel = ctx.channel()
+		SessionManager.closeSession(channel)
+		println("Session closed (${SessionManager.activeSessions()} total). Channel: $channel.")
+	}
+
+	override fun channelRead0(ctx: ChannelHandlerContext, message: Packet?) {
+		val session = SessionManager.getSession(ctx.channel())
+
+		if (message != null) {
+			session?.queueIncomingPackets(message)
+		}
 	}
 }
