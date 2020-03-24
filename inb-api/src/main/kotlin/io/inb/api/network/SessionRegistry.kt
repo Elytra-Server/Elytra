@@ -5,15 +5,15 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
 class SessionRegistry(
-	private val sessions: ConcurrentMap<Session, Boolean> = ConcurrentHashMap()
+	private val sessions: ConcurrentMap<InbSession, Boolean> = ConcurrentHashMap()
 ) : Tickable {
 
-	fun add(session: Session) {
-		sessions[session] = true
+	fun add(inbSession: InbSession) {
+		sessions[inbSession] = true
 	}
 
-	fun closeSession(session: Session) {
-		sessions.remove(session)
+	fun remove(inbSession: InbSession) {
+		sessions.remove(inbSession)
 	}
 
 	fun activeSessions(): Int {
@@ -23,5 +23,4 @@ class SessionRegistry(
 	override fun tick() {
 		sessions.keys.forEach { it.tick() }
 	}
-
 }

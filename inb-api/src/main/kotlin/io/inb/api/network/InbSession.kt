@@ -16,7 +16,7 @@ import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingDeque
 
 
-class Session(channel: Channel) : BasicSession(channel, HandshakePacket()), Tickable {
+class InbSession(channel: Channel) : BasicSession(channel, HandshakePacket()), Tickable {
 
 	var state: State = State.HANDSHAKE
 	var player: Player? = null

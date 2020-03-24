@@ -1,13 +1,12 @@
 package io.inb.api.network.protocol.handlers
 
 import com.flowpowered.network.MessageHandler
-import io.inb.api.network.Session
+import io.inb.api.network.InbSession
 import io.inb.api.network.protocol.message.HandshakeMessage
-import io.inb.api.network.protocol.packets.BasicPacket
 
-class HandshakeHandler : MessageHandler<Session, HandshakeMessage> {
+class HandshakeHandler : MessageHandler<InbSession, HandshakeMessage> {
 
-	override fun handle(session: Session, message: HandshakeMessage) {
+	override fun handle(inbSession: InbSession, message: HandshakeMessage) {
 		println("Something")
 	}
 
