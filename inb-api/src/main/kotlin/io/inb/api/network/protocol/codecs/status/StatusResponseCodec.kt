@@ -8,13 +8,13 @@ import io.inb.api.network.protocol.message.status.StatusResponseMessage
 import io.netty.buffer.ByteBuf
 
 class StatusResponseCodec : Codec<StatusResponseMessage> {
-	override fun encode(buf: ByteBuf, message: StatusResponseMessage): ByteBuf {
-		ByteBufUtils.writeUTF8(buf, Gson().toJson(message.body));
-		return buf;
-	}
-
 	override fun decode(buffer: ByteBuf): StatusResponseMessage {
 		val json = ByteBufUtils.readUTF8(buffer)
-		return StatusResponseMessage(Gson().fromJson(json, JsonObject::class.java));
+		return StatusResponseMessage(json);
+	}
+
+	override fun encode(buf: ByteBuf, message: StatusResponseMessage): ByteBuf {
+		ByteBufUtils.writeUTF8(buf, message.body);
+		return buf;
 	}
 }
