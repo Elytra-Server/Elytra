@@ -12,7 +12,7 @@ object CodecHandler {
 	private val codecs = mutableListOf<Codec<*>>()
 	private val packetCodecs = mutableMapOf<KClass<out Packet>, Codec<*>>()
 
-	fun load() {
+	init {
 		register(HandshakeCodec::class)
 		register(LoginCodec::class)
 		register(DisconnectCodec::class)
