@@ -10,11 +10,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - task: Gradle@2
-    inputs:
+- task: Gradle@2
+  inputs:
     gradleWrapperFile: 'gradlew'
     tasks: 'build'
     publishJUnitResults: true
-    testResultsFiles: '**/TEST-*.xml' # Required when publishJUnitResults == True
-    jdkVersionOption: '1.11' # Optional. Options: default, 1.11, 1.10, 1.9, 1.8, 1.7, 1.6
-    gradleOptions: '-Xmx2024m'
+    testResultsFiles: '**/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.11'
+    jdkArchitectureOption: 'x64'
+    sonarQubeRunAnalysis: false
