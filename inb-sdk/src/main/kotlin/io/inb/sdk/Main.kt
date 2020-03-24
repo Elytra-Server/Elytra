@@ -1,7 +1,7 @@
 package io.inb.sdk
 
-import io.inb.sdk.network.server.Server
+import io.inb.api.InbServer
 
 fun main() {
-	Server().start()
+	InbServer().run()
 }

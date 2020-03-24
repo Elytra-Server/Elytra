@@ -1,15 +1,15 @@
-package io.inb.sdk.network.server
+package io.inb.api.network
 
 import com.flowpowered.network.ConnectionManager
-import io.inb.api.network.pipeline.InbConnectionManager
 import io.inb.api.network.pipeline.ChannelInitializerHandler
+import io.inb.api.network.pipeline.InbConnectionManager
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelOption
 import io.netty.channel.EventLoopGroup
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioServerSocketChannel
 
-internal class Server(private val port: Int = 25565) {
+internal class InbNetworkServer(private val port: Int = 25565) {
 
 	private val bootstrap: ServerBootstrap = ServerBootstrap()
 
