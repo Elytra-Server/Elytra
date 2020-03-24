@@ -2,9 +2,6 @@ package io.inb.api.utils
 
 import io.netty.buffer.ByteBuf
 
-
-
-
 object Utils {
 	fun readString(buf: ByteBuf): String {
 		val len = buf.readUnsignedShort()
