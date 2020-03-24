@@ -3,6 +3,7 @@ package io.inb.api.network
 import com.flowpowered.network.Message
 import com.flowpowered.network.protocol.AbstractProtocol
 import com.flowpowered.network.session.BasicSession
+import io.inb.api.InbServer
 import io.inb.api.entity.Player
 import io.inb.api.network.pipeline.CodecsHandler
 import io.inb.api.network.protocol.message.DisconnectMessage
@@ -17,11 +18,14 @@ import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingDeque
 
 
-class InbSession(channel: Channel) : BasicSession(channel, HandshakePacket()), Tickable {
+class NetworkSession(
+	channel: Channel,
+	var state: State = State.HANDSHAKE,
+	var player: Player? = null,
+	var protocol: BasicPacket? = null,
 
-	var state: State = State.HANDSHAKE
-	var player: Player? = null
-	var protocol: BasicPacket? = null
+	var server: InbServer? = InbServer.getServer()
+) : BasicSession(channel, HandshakePacket()), Tickable {
 
 	private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque<Message>()
 

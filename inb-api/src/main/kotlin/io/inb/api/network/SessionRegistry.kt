@@ -5,15 +5,15 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
 class SessionRegistry(
-	private val sessions: ConcurrentMap<InbSession, Boolean> = ConcurrentHashMap()
+	private val sessions: ConcurrentMap<NetworkSession, Boolean> = ConcurrentHashMap()
 ) : Tickable {
 
-	fun add(inbSession: InbSession) {
-		sessions[inbSession] = true
+	fun add(networkSession: NetworkSession) {
+		sessions[networkSession] = true
 	}
 
-	fun remove(inbSession: InbSession) {
-		sessions.remove(inbSession)
+	fun remove(networkSession: NetworkSession) {
+		sessions.remove(networkSession)
 	}
 
 	fun activeSessions(): Int {

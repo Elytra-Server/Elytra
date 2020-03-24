@@ -2,17 +2,17 @@ package io.inb.api.network.protocol.handlers
 
 import com.flowpowered.network.MessageHandler
 import io.inb.api.InbServer
-import io.inb.api.events.PlayerKickEvent
+import io.inb.api.events.PlayerDisconnectEvent
 import io.inb.api.io.EventBus
-import io.inb.api.network.InbSession
+import io.inb.api.network.NetworkSession
 import io.inb.api.network.protocol.message.HandshakeMessage
 import io.inb.api.network.protocol.packets.BasicPacket
 import io.inb.api.network.protocol.packets.LoginPacket
 import io.inb.api.network.protocol.packets.StatusPacket
 
-class HandshakeHandler : MessageHandler<InbSession, HandshakeMessage> {
+class HandshakeHandler : MessageHandler<NetworkSession, HandshakeMessage> {
 
-	override fun handle(inbSession: InbSession, message: HandshakeMessage) {
+	override fun handle(networkSession: NetworkSession, message: HandshakeMessage) {
 		val loginPacket = LoginPacket()
 
 		val packet: BasicPacket
@@ -22,13 +22,11 @@ class HandshakeHandler : MessageHandler<InbSession, HandshakeMessage> {
 		}else if(message.state == 2){
 			packet = loginPacket
 		}else {
-			inbSession.disconnect("Invalid State")
+			networkSession.disconnect("Invalid State")
 			return
 		}
 
-		inbSession.setProtocol(packet)
-
-		println(message.version)
+		networkSession.setProtocol(packet)
 
 		if(packet == loginPacket){
 			var reason = ""
@@ -36,18 +34,19 @@ class HandshakeHandler : MessageHandler<InbSession, HandshakeMessage> {
 			//TODO: Refactor to remove duplicated code
 			if(message.version < InbServer.PROTOCOL_VERSION){
 				reason = "Outdated client! Running: ${InbServer.GAME_VERSION}"
-				inbSession.disconnect(reason)
-				inbSession.player?.let { PlayerKickEvent(it, reason) }?.let { EventBus.post(it) }
+				networkSession.disconnect(reason)
+
+				networkSession.player?.let { PlayerDisconnectEvent(it, reason) }?.let { EventBus.post(it) }
 			}else if(message.version > InbServer.PROTOCOL_VERSION){
 				reason = "Outdated server! Running: ${InbServer.GAME_VERSION}"
-				inbSession.disconnect(reason)
+				networkSession.disconnect(reason)
 
-				inbSession.player?.let { PlayerKickEvent(it, reason) }?.let { EventBus.post(it) }
+				networkSession.player?.let { PlayerDisconnectEvent(it, reason) }?.let { EventBus.post(it) }
 			}
 
 		}
 
-		println("Handshake [${message.address}:${message.port}] - ${message.version} (${message.state}) - ${inbSession.state}")
+		println("Handshake [${message.address}:${message.port}] - ${message.version} (${message.state}) - ${networkSession.state}")
 	}
 
 }

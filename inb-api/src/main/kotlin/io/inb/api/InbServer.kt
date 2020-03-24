@@ -1,7 +1,9 @@
 package io.inb.api
 
-import io.inb.api.network.InbNetworkServer
+import io.inb.api.network.NetworkServer
 import io.inb.api.network.SessionRegistry
+import io.inb.api.utils.SecurityUtils
+import java.security.KeyPair
 
 /**
  * The core server class of the Inb server.
@@ -10,8 +12,12 @@ import io.inb.api.network.SessionRegistry
  */
 class InbServer(
 	private val port: Int = 25565,
-	val sessionRegistry: SessionRegistry = SessionRegistry()
+	val onlineMode: Boolean = true,
+
+	val sessionRegistry: SessionRegistry = SessionRegistry(),
+	val keyPair: KeyPair = SecurityUtils.generateKeyPair()!!
 ) {
+
 	companion object {
 		fun getServer() = InbServer()
 
@@ -27,7 +33,7 @@ class InbServer(
 	}
 
 	fun run(){
-		InbNetworkServer(port).start()
+		NetworkServer(port).start()
 	}
 }
 

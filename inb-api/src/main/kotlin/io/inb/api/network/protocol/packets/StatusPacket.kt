@@ -15,6 +15,7 @@ class StatusPacket : BasicPacket("STATUS", 2) {
 		inbound(0x00, StatusRequestMessage::class.java, StatusRequestCodec::class.java,
 			StatusRequestHandler::class.java)
 		inbound(0x01, StatusPingMessage::class.java, StatusPingCodec::class.java, StatusPingHandler::class.java)
+
 		outbound(0x00, StatusResponseMessage::class.java, StatusResponseCodec::class.java)
 		outbound(0x01, StatusPingMessage::class.java, StatusPingCodec::class.java)
 	}

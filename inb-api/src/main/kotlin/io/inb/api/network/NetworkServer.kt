@@ -9,7 +9,7 @@ import io.netty.channel.EventLoopGroup
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioServerSocketChannel
 
-internal class InbNetworkServer(private val port: Int = 25565) {
+internal class NetworkServer(private val port: Int = 25565) {
 
 	private val bootstrap: ServerBootstrap = ServerBootstrap()
 

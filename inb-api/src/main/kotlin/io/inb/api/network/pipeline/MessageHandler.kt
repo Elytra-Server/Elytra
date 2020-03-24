@@ -2,13 +2,13 @@ package io.inb.api.network.pipeline
 
 import com.flowpowered.network.ConnectionManager
 import com.flowpowered.network.Message
-import io.inb.api.network.InbSession
+import io.inb.api.network.NetworkSession
 import io.netty.channel.ChannelHandlerContext
 import io.netty.channel.SimpleChannelInboundHandler
 import java.util.concurrent.atomic.AtomicReference
 
 class MessageHandler(
-	private val session: AtomicReference<InbSession?> = AtomicReference(null),
+	private val session: AtomicReference<NetworkSession?> = AtomicReference(null),
 	private val connectionManager: ConnectionManager
 ) : SimpleChannelInboundHandler<Message>() {
 
@@ -18,7 +18,7 @@ class MessageHandler(
 
 	override fun channelActive(ctx: ChannelHandlerContext?) {
 		val channel = ctx?.channel()
-		val newSession = connectionManager.newSession(channel) as InbSession
+		val newSession = connectionManager.newSession(channel) as NetworkSession
 
 		if (!session.compareAndSet(null, newSession)) {
 			throw IllegalStateException("Session may not be set more than once");
