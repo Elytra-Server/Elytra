@@ -21,11 +21,16 @@ import java.util.concurrent.LinkedBlockingDeque
 class NetworkSession(
 	channel: Channel,
 	var state: State = State.HANDSHAKE,
-	var player: Player? = null,
 	var protocol: BasicPacket? = null,
 
 	var server: InbServer? = InbServer.getServer()
 ) : BasicSession(channel, HandshakePacket()), Tickable {
+
+	var player: Player? = null
+		set(value) {
+			field = value
+			field?.join()
+		}
 
 	private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque<Message>()
 
@@ -64,4 +69,5 @@ class NetworkSession(
 	private fun updatePipeline(key: String, handler: ChannelHandler) {
 		channel.pipeline().replace(key, key, handler);
 	}
+
 }
