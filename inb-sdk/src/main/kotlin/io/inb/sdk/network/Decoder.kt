@@ -8,7 +8,7 @@ import io.netty.handler.codec.ReplayingDecoder
 
 class Decoder : ReplayingDecoder<Packet>() {
 	override fun decode(ctx: ChannelHandlerContext?, buffer: ByteBuf?, list: MutableList<Any>?) {
-		val id = buffer?.readUnsignedInt()
+		val id = buffer?.readByte()
 
 		println("Decoding $id")
 

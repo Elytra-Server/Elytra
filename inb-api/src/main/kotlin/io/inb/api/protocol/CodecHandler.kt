@@ -12,30 +12,19 @@ object CodecHandler {
 	private val codecs = mutableListOf<Codec<*>>()
 	private val packetCodecs = mutableMapOf<KClass<out Packet>, Codec<*>>()
 
-	init {
-	    register(HandshakeCodec::class)
+	fun load() {
+		register(HandshakeCodec::class)
 		register(LoginCodec::class)
 		register(DisconnectCodec::class)
 	}
 
 	private fun <T : Packet, C : Codec<T>> register(clazz: KClass<C>) {
 		val codec: Codec<T> = clazz.createInstance()
-
 		codecs.add(codec)
 		packetCodecs[codec.type] = codec
 	}
 
-	fun getCodec(id: Int): Codec<*>? {
-		var foundCodec: Codec<*>? = null
-
-		for(codec in codecs){
-			if(codec.id == id){
-				foundCodec = codec
-			}
-		}
-
-		return foundCodec
-	}
+	fun getCodec(id: Short): Codec<*>? = codecs.find { it.id == id}
 
 	fun <T : Packet> getCodec(clazz: KClass<T>): Codec<T> = packetCodecs[clazz] as Codec<T>
 }
