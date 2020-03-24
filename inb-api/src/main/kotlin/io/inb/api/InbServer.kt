@@ -18,12 +18,12 @@ class InbServer(
 		/**
 		 * The game version supported by the server.
 		 */
-		val GAME_VERSION = listOf("12.2.2", "14.4.4")
+		const val GAME_VERSION = "14.4.4"
 
 		/**
 		 * The protocol version supported by the server.
 		 */
-		val PROTOCOL_VERSIONS = listOf(480, 340)
+		const val PROTOCOL_VERSION = 498
 	}
 
 	fun run(){

@@ -33,7 +33,7 @@ class InbSession(channel: Channel) : BasicSession(channel, HandshakePacket()), T
 		return super.sendWithFuture(message)
 	}
 
-	private fun disconnect(reason: String) {
+	fun disconnect(reason: String) {
 		sendWithFuture(DisconnectMessage(reason))
 			?.addListener(ChannelFutureListener.CLOSE)
 	}
@@ -51,7 +51,7 @@ class InbSession(channel: Channel) : BasicSession(channel, HandshakePacket()), T
 		}
 	}
 
-	override fun setProtocol(protocol: AbstractProtocol?) {
+	public override fun setProtocol(protocol: AbstractProtocol?) {
 		channel.flush()
 		updatePipeline("codecs", CodecsHandler(protocol as BasicPacket))
 		super.setProtocol(protocol)
