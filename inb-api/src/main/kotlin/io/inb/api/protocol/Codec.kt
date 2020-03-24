@@ -8,7 +8,7 @@ interface Codec <T : Packet> {
 	var type: KClass<T>
 	var id: Short
 
-	fun encode(buffer: ByteBuf) : T
+	fun encode(packet: T) : ByteBuf
 
-	fun decode() : ByteBuf
+	fun decode(buffer: ByteBuf) : T
 }

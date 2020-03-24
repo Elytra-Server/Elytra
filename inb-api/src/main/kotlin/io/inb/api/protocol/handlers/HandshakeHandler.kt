@@ -1,9 +1,9 @@
-package io.inb.sdk.protocol.handlers
+package io.inb.api.protocol.handlers
 
 import io.inb.api.network.Session
 import io.inb.api.network.State
 import io.inb.api.protocol.PacketHandler
-import io.inb.sdk.protocol.packets.HandshakePacket
+import io.inb.api.protocol.packets.HandshakePacket
 
 class HandshakeHandler : PacketHandler<HandshakePacket> {
 

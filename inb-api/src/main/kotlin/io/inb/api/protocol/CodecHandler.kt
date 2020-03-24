@@ -1,5 +1,6 @@
 package io.inb.api.protocol
 
+import io.inb.api.protocol.codecs.HandshakeCodec
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 
@@ -8,6 +9,10 @@ object CodecHandler {
 
 	private val codecs = mutableListOf<Codec<*>>()
 	private val packetCodecs = mutableMapOf<KClass<out Packet>, Codec<*>>()
+
+	init {
+		register(HandshakeCodec::class)
+	}
 
 	private fun <T : Packet, C : Codec<T>> register(clazz: KClass<C>) {
 		val codec: Codec<T> = clazz.createInstance()

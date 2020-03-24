@@ -1,4 +1,4 @@
-package io.inb.sdk.protocol.packets
+package io.inb.api.protocol.packets
 
 import io.inb.api.protocol.Packet
 

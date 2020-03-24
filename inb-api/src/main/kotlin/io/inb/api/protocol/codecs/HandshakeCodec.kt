@@ -1,8 +1,8 @@
-package io.inb.sdk.protocol.codecs
+package io.inb.api.protocol.codecs
 
 import io.inb.api.protocol.Codec
 import io.inb.api.utils.Utils
-import io.inb.sdk.protocol.packets.HandshakePacket
+import io.inb.api.protocol.packets.HandshakePacket
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
 import kotlin.reflect.KClass
