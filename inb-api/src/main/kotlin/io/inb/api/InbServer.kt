@@ -13,7 +13,7 @@ class InbServer(
 	private val port: Int = 25565,
 	val onlineMode: Boolean = true,
 
-	val sessionRegistry: SessionRegistry = SessionRegistry(),
+	val sessionRegistry: SessionRegistry = SessionRegistry()
 ) {
 
 	companion object {
