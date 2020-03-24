@@ -1,6 +1,5 @@
 package io.inb.sdk.network.server
 
-import io.inb.sdk.network.channel.INBChannel
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelOption
 import io.netty.channel.EventLoopGroup
@@ -22,7 +21,6 @@ internal class Server(private val port: Int = 25565) {
 			.channel(NioServerSocketChannel::class.java)
 			.option(ChannelOption.SO_KEEPALIVE, true)
 			.childOption(ChannelOption.TCP_NODELAY, true)
-			.childHandler(INBChannel())
 
 		val server = bootstrap.bind(port).sync()
 

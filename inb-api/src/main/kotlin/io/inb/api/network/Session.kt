@@ -11,6 +11,7 @@ import io.inb.api.utils.Tickable
 import io.netty.channel.Channel
 import io.netty.channel.ChannelFuture
 import io.netty.channel.ChannelFutureListener
+import io.netty.channel.ChannelHandler
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingDeque
 
@@ -24,16 +25,16 @@ class Session(channel: Channel) : BasicSession(channel, HandshakePacket()), Tick
 	private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque<Message>()
 
 	override fun sendWithFuture(message: Message?): ChannelFuture? {
-		if(!isActive){
+		if (!isActive) {
 			return null
 		}
 
 		return super.sendWithFuture(message)
 	}
 
-	fun disconnect(reason: String) {
+	private fun disconnect(reason: String) {
 		sendWithFuture(DisconnectMessage(reason))
-				?.addListener(ChannelFutureListener.CLOSE)
+			?.addListener(ChannelFutureListener.CLOSE)
 	}
 
 	override fun disconnect() {
@@ -51,8 +52,11 @@ class Session(channel: Channel) : BasicSession(channel, HandshakePacket()), Tick
 
 	override fun setProtocol(protocol: AbstractProtocol?) {
 		channel.flush()
-		channel.pipeline().replace("codecs", "codecs", CodecsHandler(protocol as BasicPacket));
+		updatePipeline("codecs", CodecsHandler(protocol as BasicPacket))
 		super.setProtocol(protocol)
 	}
 
+	private fun updatePipeline(key: String, handler: ChannelHandler) {
+		channel.pipeline().replace(key, key, handler);
+	}
 }

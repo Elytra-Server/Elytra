@@ -27,7 +27,7 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
 		handlers = HandlerLookupService()
 	}
 
-	protected open fun <M : Message, C : Codec<M>, H : MessageHandler<*,  M>> inbound(
+	protected open fun <M : Message, C : Codec<M>, H : MessageHandler<*, M>> inbound(
 		opcode: Int,
 		message: Class<M>,
 		codec: Class<C>,
@@ -45,11 +45,12 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
 		}
 	}
 
-	protected open fun < M : Message, C : Codec<M>, H : MessageHandler<*, in M>> inbound(
+
+	protected open fun <M : Message, C : Codec<M>, H : MessageHandler<*, M>> inbound(
 		opcode: Int, message: Class<M>, codec: Class<C>, handler: H) {
 		try {
 			inboundCodecs!!.bind(message, codec, opcode)
-			handlers?.bind(message, handler)
+			//handlers?.bind(message, handler)
 		} catch (e: InstantiationException) {
 			logger.error("Error registering inbound $opcode in $name", e)
 		} catch (e: IllegalAccessException) {
@@ -82,7 +83,7 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
 	override fun <M : Message> getCodecRegistration(clazz: Class<M>): Codec.CodecRegistration? {
 		val reg = outboundCodecs?.find(clazz)
 
-		if(reg == null){
+		if (reg == null) {
 			println("No codec to write ${clazz.simpleName} in $name")
 		}
 

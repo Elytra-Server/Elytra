@@ -10,7 +10,7 @@ class HandshakePacket : BasicPacket("HANDSHAKE", 0) {
 		inbound(0x00,
 			HandshakeMessage::class.java,
 			HandshakeCodec::class.java,
-			HandshakeHandler()
+			HandshakeHandler::class.java
 		)
 	}
 }
