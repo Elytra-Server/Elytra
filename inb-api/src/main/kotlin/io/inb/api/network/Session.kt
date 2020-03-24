@@ -14,6 +14,10 @@ class Session(val channel: Channel) : Tickable {
 	var state: State = State.HANDSHAKE
 	private val packetQueue: BlockingQueue<Packet> = LinkedBlockingDeque<Packet>()
 
+	init {
+		SessionManager.openSession(this)
+	}
+
 	fun queueIncomingPackets(packet: Packet) = packetQueue.add(packet)
 
 	fun sendPacket(packet: Packet) = channel.writeAndFlush(packet)
