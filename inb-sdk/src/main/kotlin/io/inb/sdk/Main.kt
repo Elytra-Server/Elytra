@@ -1,5 +1,7 @@
 package io.inb.sdk
 
-fun main() {
+import io.inb.api.InbServer
 
+fun main() {
+	InbServer().start()
 }

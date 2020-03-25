@@ -29,8 +29,10 @@ allprojects {
         implementation(kotlin("stdlib-jdk8"))
         implementation(kotlin("reflect"))
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3")
-        implementation("io.reactivex.rxjava2:rxjava:2.2.0")
+        implementation("com.google.code.gson:gson:2.8.6")
+		implementation("io.reactivex.rxjava3:rxkotlin:3.0.0")
         implementation("io.projectreactor.netty:reactor-netty:0.9.6.RELEASE")
+		implementation("com.flowpowered:flow-network:1.0.0")
     }
 }
 
