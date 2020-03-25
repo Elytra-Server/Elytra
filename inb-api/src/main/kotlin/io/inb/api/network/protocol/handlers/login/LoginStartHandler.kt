@@ -2,6 +2,7 @@ package io.inb.api.network.protocol.handlers.login
 
 import com.flowpowered.network.MessageHandler
 import io.inb.api.InbServer
+import io.inb.api.entity.Player
 import io.inb.api.network.NetworkSession
 import io.inb.api.network.State
 import io.inb.api.network.protocol.message.LoginStartMessage
@@ -18,7 +19,11 @@ class LoginStartHandler : MessageHandler<NetworkSession, LoginStartMessage>{
 
 		session.send(LoginSuccessMessage(uuid.toString(), name))
 
+		//TODO: Add player to a global players list
+
 		session.state = State.PLAYING
 		session.setProtocol(PlayPacket())
+
+		session.player = Player(session, message.username)
 	}
 }

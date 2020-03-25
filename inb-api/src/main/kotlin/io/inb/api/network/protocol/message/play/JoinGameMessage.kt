@@ -6,7 +6,10 @@ data class JoinGameMessage(
 	val id: Int,
 	val gameMode: Int,
 	val dimension: Int,
-	val difficulty: Int,
+	val seed: Int,
 	val maxPlayers: Int,
-	val levelType: String
+	val levelType: String,
+	val viewDistance: Int,
+	val reducedDebugInfo: Boolean,
+	val enableRespawnScreen: Boolean
 ) : Message

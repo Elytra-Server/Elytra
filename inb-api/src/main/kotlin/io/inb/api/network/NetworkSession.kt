@@ -32,7 +32,7 @@ class NetworkSession(
 			field?.join()
 		}
 
-	private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque<Message>()
+	private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque()
 
 	override fun sendWithFuture(message: Message?): ChannelFuture? {
 		if (!isActive) {

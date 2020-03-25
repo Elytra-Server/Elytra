@@ -19,7 +19,7 @@ class StatusRequestHandler : MessageHandler<NetworkSession, StatusRequestMessage
 	override fun handle(session: NetworkSession, message: StatusRequestMessage) {
 		val event = ServerListPingEvent(
 			"§aInb - Test Server",
-			"",
+			"14.4.4",
 			480,
 			0
 		)
