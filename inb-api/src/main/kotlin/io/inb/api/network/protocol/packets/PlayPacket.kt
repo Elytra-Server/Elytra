@@ -11,6 +11,7 @@ import io.inb.api.network.protocol.codecs.play.PlayerPositionCodec
 import io.inb.api.network.protocol.codecs.play.PositionAndLookCodec
 import io.inb.api.network.protocol.codecs.status.StatusRequestCodec
 import io.inb.api.network.protocol.handlers.play.PlayerPositionHandler
+import io.inb.api.network.protocol.handlers.play.PositionAndLookHandler
 import io.inb.api.network.protocol.handlers.status.StatusRequestHandler
 import io.inb.api.network.protocol.message.play.JoinGameMessage
 import io.inb.api.network.protocol.message.play.PlayerPositionMessage
