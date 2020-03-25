@@ -3,8 +3,8 @@ package io.inb.api.network.protocol.handlers.status
 import com.google.gson.Gson
 import io.inb.api.network.NetworkSession
 import io.inb.api.network.protocol.handlers.InbMessageHandler
-import io.inb.api.network.protocol.message.status.StatusRequestMessage
-import io.inb.api.network.protocol.message.status.StatusResponseMessage
+import io.inb.api.network.protocol.message.status.ServerQueryMessage
+import io.inb.api.network.protocol.message.status.ServerInfoMessage
 import io.inb.api.server.InbServer
 import io.inb.api.utils.formatting.Colors
 import io.inb.api.utils.formatting.Formatting
@@ -14,9 +14,9 @@ import kotlin.collections.ArrayList
 /**
  * @see https://wiki.vg/Server_List_Ping
  */
-class StatusRequestHandler : InbMessageHandler<StatusRequestMessage>() {
+class ServerQueryHandler : InbMessageHandler<ServerQueryMessage>() {
 
-	override fun handle(session: NetworkSession, message: StatusRequestMessage) {
+	override fun handle(session: NetworkSession, message: ServerQueryMessage) {
 		val motd = Motd(
 			"${Colors.GOLD}Hello ${Colors.YELLOW}${Formatting.OBSFUSCATED}World!",
 			InbServer.GAME_VERSION,
@@ -41,8 +41,7 @@ class StatusRequestHandler : InbMessageHandler<StatusRequestMessage>() {
 		)
 
 		session.server?.motd = motd
-		session.send(StatusResponseMessage(json))
-		session.channel.close()
+		session.send(ServerInfoMessage(json))
 	}
 
 	private data class StatusResponse(
