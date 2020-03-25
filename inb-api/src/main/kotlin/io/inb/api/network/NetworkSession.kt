@@ -26,7 +26,8 @@ class NetworkSession(
 	var protocol: BasicPacket? = null,
 
 	//TODO: Needs refactor, too many instances
-	private val packetProvider: PacketProvider = PacketProvider()
+	private val packetProvider: PacketProvider = PacketProvider(),
+	@Volatile private var disconnect: Boolean = false
 ) : BasicSession(channel, HandshakePacket()), Tickable {
 
 	var player: Player? = null
@@ -64,9 +65,17 @@ class NetworkSession(
 	}
 
 	fun assignPlayer(player: Player){
+		if(!isActive){ //Check if the player is disconnected
+			return
+		}
 		this.player = player
 		finalizeLogin(player)
 		player.join(this)
+
+		if (!isActive) {
+			onDisconnect();
+			return;
+		}
 	}
 
 	private fun finalizeLogin(player: Player?){
