@@ -1,10 +1,19 @@
 package io.inb.api.server
 
+import com.google.gson.Gson
+import io.inb.api.events.ServerListPingEvent
+import io.inb.api.io.EventBus
 import io.inb.api.network.NetworkServer
 import io.inb.api.network.SessionRegistry
 import io.inb.api.network.protocol.PacketProvider
 import io.inb.api.scheduler.Scheduler
+import io.inb.api.utils.formatting.Formatting
 import io.inb.api.utils.motd.Motd
+import java.io.IOException
+import java.io.Reader
+import java.nio.file.Files
+import java.nio.file.Paths
+
 
 class InbServer(
 	override val sessionRegistry: SessionRegistry = SessionRegistry(),
@@ -15,7 +24,7 @@ class InbServer(
 ) : Server {
 
 	companion object {
-		fun getServer() = InbServer()
+		fun getServer() : Server = InbServer()
 
 		/**
 		 * The game version supported by the server.
@@ -28,14 +37,36 @@ class InbServer(
 		const val PROTOCOL_VERSION = 340
 	}
 
-	override fun boot(){
+	init {
+		loadConfigs()
+	}
+
+	override fun boot() {
 		PacketProvider()
 		scheduler.start()
 
 		bindNetwork()
 	}
 
-	private fun bindNetwork(){
+	//TODO: Will be refactored, just for testing for now
+	private fun loadConfigs() {
+		var reader: Reader? = null
+
+		try {
+			val gson = Gson()
+			reader = Files.newBufferedReader(Paths.get("./server.json"))
+			val serverPojo: ServerPojo = gson.fromJson(reader, ServerPojo::class.java)
+			val (motd) = serverPojo
+
+			this.motd = motd
+		} catch (e: IOException) {
+			println(e.printStackTrace())
+		} finally {
+			reader?.close()
+		}
+	}
+
+	private fun bindNetwork() {
 		NetworkServer(port).start()
 	}
 }

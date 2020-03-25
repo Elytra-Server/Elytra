@@ -5,6 +5,7 @@ import io.inb.api.network.NetworkSession
 import io.inb.api.network.protocol.handlers.InbMessageHandler
 import io.inb.api.network.protocol.message.LoginStartMessage
 import io.inb.api.server.InbServer
+import io.inb.api.server.Server
 import java.util.*
 
 class LoginStartHandler : InbMessageHandler<LoginStartMessage>() {
@@ -15,6 +16,5 @@ class LoginStartHandler : InbMessageHandler<LoginStartMessage>() {
 		println("Login has started to user - ${message.username}")
 
 		session.assignPlayer(InbPlayer(username, uuid, gameProfile = null))
-		session.server = InbServer.getServer()
 	}
 }

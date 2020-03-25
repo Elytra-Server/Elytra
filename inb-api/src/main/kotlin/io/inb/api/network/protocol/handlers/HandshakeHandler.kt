@@ -1,6 +1,6 @@
 package io.inb.api.network.protocol.handlers
 
-import io.inb.api.server.InbServer
+import io.inb.api.server.Server
 import io.inb.api.events.PlayerDisconnectEvent
 import io.inb.api.io.EventBus
 import io.inb.api.network.NetworkSession
@@ -8,6 +8,7 @@ import io.inb.api.network.protocol.message.HandshakeMessage
 import io.inb.api.network.protocol.packets.BasicPacket
 import io.inb.api.network.protocol.packets.LoginPacket
 import io.inb.api.network.protocol.packets.StatusPacket
+import io.inb.api.server.InbServer
 
 class HandshakeHandler : InbMessageHandler<HandshakeMessage>() {
 

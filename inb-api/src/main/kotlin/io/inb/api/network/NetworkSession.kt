@@ -11,7 +11,7 @@ import io.inb.api.network.protocol.message.DisconnectMessage
 import io.inb.api.network.protocol.message.login.LoginSuccessMessage
 import io.inb.api.network.protocol.packets.BasicPacket
 import io.inb.api.network.protocol.packets.HandshakePacket
-import io.inb.api.server.InbServer
+import io.inb.api.server.Server
 import io.inb.api.utils.Asyncable
 import io.inb.api.utils.Tickable
 import io.netty.channel.Channel
@@ -26,7 +26,7 @@ import java.util.concurrent.LinkedBlockingDeque
 class NetworkSession(
 	channel: Channel,
 	var protocol: BasicPacket? = null,
-	var server: InbServer? = null,
+	var server: Server? = null,
 
 	//TODO: Needs refactor, too many instances
 	private var packetProvider: PacketProvider = PacketProvider(),

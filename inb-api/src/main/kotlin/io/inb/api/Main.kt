@@ -1,4 +1,4 @@
-package io.inb.sdk
+package io.inb.api
 
 import io.inb.api.server.InbServer
 

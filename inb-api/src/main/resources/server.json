@@ -1,0 +1,7 @@
+{
+  "motd": {
+    "description": "§6Hello §eWorld!",
+    "pingText": "INB",
+    "maxPlayers": 100
+  }
+}
