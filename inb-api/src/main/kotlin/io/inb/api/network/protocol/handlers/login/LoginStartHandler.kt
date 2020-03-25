@@ -6,6 +6,7 @@ import io.inb.api.network.NetworkSession
 import io.inb.api.network.State
 import io.inb.api.network.protocol.message.LoginStartMessage
 import io.inb.api.network.protocol.message.login.LoginSuccessMessage
+import io.inb.api.network.protocol.packets.PlayPacket
 import java.util.*
 
 class LoginStartHandler : MessageHandler<NetworkSession, LoginStartMessage>{
@@ -13,9 +14,11 @@ class LoginStartHandler : MessageHandler<NetworkSession, LoginStartMessage>{
 		val name: String = message.username
 		val uuid = UUID.randomUUID()
 
-		session.state = State.PLAYING
 		println("Login has started to user - ${message.username}")
 
 		session.send(LoginSuccessMessage(uuid.toString(), name))
+
+		session.state = State.PLAYING
+		session.setProtocol(PlayPacket())
 	}
 }

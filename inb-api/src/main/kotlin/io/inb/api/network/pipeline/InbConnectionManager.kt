@@ -5,6 +5,7 @@ import com.flowpowered.network.session.Session
 import io.inb.api.InbServer
 import io.inb.api.network.NetworkSession
 import io.inb.api.network.SessionRegistry
+import io.inb.api.network.protocol.packets.PlayPacket
 import io.netty.channel.Channel
 
 class InbConnectionManager(
