@@ -21,8 +21,8 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
-
         maven("https://oss.sonatype.org/content/repositories/snapshots")
+		maven("https://libraries.minecraft.net/")
     }
 
     dependencies {
@@ -33,6 +33,7 @@ allprojects {
 		implementation("io.reactivex.rxjava3:rxkotlin:3.0.0")
         implementation("io.projectreactor.netty:reactor-netty:0.9.6.RELEASE")
 		implementation("com.flowpowered:flow-network:1.0.0")
+		implementation("com.mojang:authlib:1.5.21")
     }
 }
 
