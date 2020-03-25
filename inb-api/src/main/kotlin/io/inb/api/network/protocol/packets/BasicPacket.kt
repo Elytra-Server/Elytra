@@ -13,6 +13,7 @@ import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
 import java.io.IOException
 import java.lang.reflect.InvocationTargetException
+import java.lang.reflect.TypeVariable
 
 
 abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
@@ -46,11 +47,11 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
 	}
 
 
-	protected open fun <M : Message, C : Codec<M>, H : MessageHandler<*, M>> inbound(
+	protected open fun <M : Message, C : Codec<M>, H : MessageHandler<*, in M>> inbound(
 		opcode: Int, message: Class<M>, codec: Class<C>, handler: H) {
 		try {
 			inboundCodecs!!.bind(message, codec, opcode)
-			//handlers?.bind(message, handler)
+			handlers?.bind(message, handler::class.java)
 		} catch (e: InstantiationException) {
 			logger.error("Error registering inbound $opcode in $name", e)
 		} catch (e: IllegalAccessException) {

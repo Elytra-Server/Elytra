@@ -1,6 +1,5 @@
 package io.inb.api.network.protocol.handlers
 
-import com.flowpowered.network.MessageHandler
 import io.inb.api.InbServer
 import io.inb.api.events.PlayerDisconnectEvent
 import io.inb.api.io.EventBus
@@ -10,34 +9,34 @@ import io.inb.api.network.protocol.packets.BasicPacket
 import io.inb.api.network.protocol.packets.LoginPacket
 import io.inb.api.network.protocol.packets.StatusPacket
 
-class HandshakeHandler : MessageHandler<NetworkSession, HandshakeMessage> {
+class HandshakeHandler : InbMessageHandler<HandshakeMessage>() {
 
 	override fun handle(networkSession: NetworkSession, message: HandshakeMessage) {
 		val loginPacket = LoginPacket()
 
 		val packet: BasicPacket
 
-		if(message.state == 1){
+		if (message.state == 1) {
 			packet = StatusPacket()
-		}else if(message.state == 2){
+		} else if (message.state == 2) {
 			packet = loginPacket
-		}else {
+		} else {
 			networkSession.disconnect("Invalid State")
 			return
 		}
 
 		networkSession.setProtocol(packet)
 
-		if(packet == loginPacket){
+		if (packet == loginPacket) {
 			var reason = ""
 
 			//TODO: Refactor to remove duplicated code
-			if(message.version < InbServer.PROTOCOL_VERSION){
+			if (message.version < InbServer.PROTOCOL_VERSION) {
 				reason = "Outdated client! Running: ${InbServer.GAME_VERSION}"
 				networkSession.disconnect(reason)
 
 				networkSession.player?.let { PlayerDisconnectEvent(it, reason) }?.let { EventBus.post(it) }
-			}else if(message.version > InbServer.PROTOCOL_VERSION){
+			} else if (message.version > InbServer.PROTOCOL_VERSION) {
 				reason = "Outdated server! Running: ${InbServer.GAME_VERSION}"
 				networkSession.disconnect(reason)
 
