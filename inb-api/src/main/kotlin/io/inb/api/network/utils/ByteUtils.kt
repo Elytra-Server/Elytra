@@ -4,9 +4,19 @@ import io.netty.buffer.ByteBuf
 import io.netty.handler.codec.DecoderException
 import io.netty.handler.codec.EncoderException
 import java.nio.charset.StandardCharsets
+import java.util.*
 import kotlin.experimental.and
 
 object ByteUtils {
+
+	fun writeEnumValue(buffer: ByteBuf,value: Enum<*>) {
+		writeVarIntToBuffer(buffer,value.ordinal)
+	}
+
+	fun <T : Enum<T>?> readEnumValue(buffer: ByteBuf,enumClass: Class<T>): T {
+		return (enumClass.enumConstants as Array<*>)[readVarIntFromBuffer(buffer)] as T
+	}
+
 	fun writeString(buffer: ByteBuf, string: String): ByteBuf? {
 		val bytes = string.toByteArray(StandardCharsets.UTF_8)
 
@@ -65,6 +75,15 @@ object ByteUtils {
 		}
 
 		return i
+	}
+
+	fun writeUuid(buffer: ByteBuf,uuid: UUID) {
+		buffer.writeLong(uuid.mostSignificantBits)
+		buffer.writeLong(uuid.leastSignificantBits)
+	}
+
+	fun readUuid(buffer: ByteBuf): UUID? {
+		return UUID(buffer.readLong(), buffer.readLong())
 	}
 
 	private val HEX_ARRAY = "0123456789ABCDEF".toCharArray()
