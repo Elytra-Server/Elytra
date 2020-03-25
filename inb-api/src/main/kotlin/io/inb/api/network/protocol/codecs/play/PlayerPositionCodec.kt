@@ -16,7 +16,6 @@ class PlayerPositionCodec : Codec<PlayerPositionMessage> {
 		return PlayerPositionMessage(x, y, z, isGrounded)
 	}
 
-	@Throws(IOException::class)
 	override fun encode(buf: ByteBuf, message: PlayerPositionMessage): ByteBuf? {
 		buf.writeDouble(message.x)
 		buf.writeDouble(message.y)
