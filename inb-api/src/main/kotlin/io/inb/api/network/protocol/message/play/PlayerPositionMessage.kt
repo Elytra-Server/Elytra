@@ -8,7 +8,7 @@ data class PlayerPositionMessage(
 	val x: Double,
 	val y: Double,
 	val z: Double,
-	val grounded: Boolean
+	val isGrounded: Boolean
 ) : Message, Updatable<Location> {
 
 	override fun update(arg: Location) {
