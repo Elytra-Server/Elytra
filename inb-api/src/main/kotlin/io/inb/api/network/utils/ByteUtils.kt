@@ -1,4 +1,4 @@
-package io.inb.api.utils
+package io.inb.api.network.utils
 
 import io.netty.buffer.ByteBuf
 import io.netty.handler.codec.DecoderException
@@ -6,33 +6,13 @@ import io.netty.handler.codec.EncoderException
 import java.nio.charset.StandardCharsets
 import kotlin.experimental.and
 
-object Utils {
-	/*fun readString(buf: ByteBuf): String {
-		val len = buf.readUnsignedShort()
-		val characters = CharArray(len)
-
-		for (i in 0 until len) {
-			characters[i] = buf.readChar()
-		}
-
-		return String(characters)
-	}
-
-	fun writeString(buffer: ByteBuf, string: String) {
-		val chars = string.toCharArray()
-		buffer.writeShort(chars.size)
-
-		for (c in chars) {
-			buffer.writeChar(c.toInt())
-		}
-	}*/
-
+object ByteUtils {
 	fun writeString(buffer: ByteBuf, string: String): ByteBuf?{
 		val bytes = string.toByteArray(StandardCharsets.UTF_8)
 		return if (bytes.size > 32767) {
 			throw EncoderException("String too big (was " + bytes.size + " bytes encoded, max " + 32767 + ")")
 		} else {
-			writeVarIntToBuffer(buffer,bytes.size)
+			writeVarIntToBuffer(buffer, bytes.size)
 			buffer.writeBytes(bytes)
 		}
 	}

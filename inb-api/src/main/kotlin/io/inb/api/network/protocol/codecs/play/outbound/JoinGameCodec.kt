@@ -1,9 +1,8 @@
 package io.inb.api.network.protocol.codecs.play.outbound
 
 import com.flowpowered.network.Codec
-import com.flowpowered.network.util.ByteBufUtils
 import io.inb.api.network.protocol.message.play.JoinGameMessage
-import io.inb.api.utils.Utils
+import io.inb.api.network.utils.ByteUtils
 import io.netty.buffer.ByteBuf
 import java.io.IOException
 
@@ -14,7 +13,7 @@ class JoinGameCodec : Codec<JoinGameMessage> {
 		buf.writeInt(message.dimension)
 		buf.writeByte(message.difficulty)
 		buf.writeByte(message.maxPlayers)
-		Utils.writeString(buf, message.worldType)
+		ByteUtils.writeString(buf, message.worldType)
 		buf.writeBoolean(message.reducedDebugInfo)
 
 		return buf

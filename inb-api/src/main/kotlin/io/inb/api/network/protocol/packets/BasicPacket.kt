@@ -9,12 +9,10 @@ import com.flowpowered.network.protocol.AbstractProtocol
 import com.flowpowered.network.service.CodecLookupService
 import com.flowpowered.network.service.HandlerLookupService
 import com.flowpowered.network.util.ByteBufUtils
-import io.inb.api.utils.Utils
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
 import java.io.IOException
 import java.lang.reflect.InvocationTargetException
-import java.lang.reflect.TypeVariable
 
 
 abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
