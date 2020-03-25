@@ -1,6 +1,6 @@
 package io.inb.api.network.protocol.handlers
 
-import io.inb.api.InbServer
+import io.inb.api.server.InbServer
 import io.inb.api.events.PlayerDisconnectEvent
 import io.inb.api.io.EventBus
 import io.inb.api.network.NetworkSession
@@ -45,7 +45,7 @@ class HandshakeHandler : InbMessageHandler<HandshakeMessage>() {
 
 		}
 
-		println("Handshake [${message.address}:${message.port}] - ${message.version} (${message.state}) - ${networkSession.state}")
+		println("Handshake [${message.address}:${message.port}] - ${message.version} (${message.state})")
 	}
 
 }

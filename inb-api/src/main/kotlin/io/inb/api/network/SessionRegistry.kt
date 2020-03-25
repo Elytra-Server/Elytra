@@ -4,6 +4,11 @@ import io.inb.api.utils.Tickable
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
+/**
+ * Manages the connection sessions
+ *
+ * @see [io.inb.api.network.NetworkSession]
+ */
 class SessionRegistry(
 	private val sessions: ConcurrentMap<NetworkSession, Boolean> = ConcurrentHashMap()
 ) : Tickable {

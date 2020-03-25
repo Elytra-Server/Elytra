@@ -24,11 +24,10 @@ import java.util.concurrent.LinkedBlockingDeque
 
 class NetworkSession(
 	channel: Channel,
-	var state: State = State.HANDSHAKE,
 	var protocol: BasicPacket? = null,
 
 	//TODO: Needs refactor, too many instances
-	private val packetProvider: PacketProvider = PacketProvider(),
+	private var packetProvider: PacketProvider = PacketProvider(),
 	@Volatile private var disconnected: Boolean = false
 ) : BasicSession(channel, HandshakePacket()), Tickable {
 

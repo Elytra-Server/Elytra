@@ -3,7 +3,7 @@ package io.inb.api.entity
 import com.mojang.authlib.GameProfile
 import io.inb.api.network.NetworkSession
 import io.inb.api.network.protocol.message.play.*
-import io.inb.api.world.EnumDifficulty
+import io.inb.api.world.Difficulty
 import io.inb.api.world.GameMode
 import io.inb.api.world.Location
 import java.util.*
@@ -16,7 +16,7 @@ data class InbPlayer(
 ) : Player {
 
 	override fun join(session: NetworkSession) {
-		val joinMessage = JoinGameMessage(1, GameMode.CREATIVE, 0, EnumDifficulty.NORMAL, 1, "flat", false)
+		val joinMessage = JoinGameMessage(1, GameMode.CREATIVE, 0, Difficulty.NORMAL, 1, "flat", false)
 		val positionMessage = PlayerPosLookMessage(150.0, 150.0, 150.0, 50f, 50f, 0x01, 1)
 
 		session.send(joinMessage)

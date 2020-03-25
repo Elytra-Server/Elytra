@@ -13,7 +13,7 @@ object Channels {
 	private val EPOLL_AVAILABLE = Epoll.isAvailable()
 
 	fun pickBestChannel() : Class<out ServerSocketChannel> {
-		if (Epoll.isAvailable()) {
+		if (EPOLL_AVAILABLE) {
 			return EpollServerSocketChannel::class.java
 		}
 
