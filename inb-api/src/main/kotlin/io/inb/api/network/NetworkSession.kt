@@ -4,7 +4,6 @@ import com.flowpowered.network.Message
 import com.flowpowered.network.MessageHandler
 import com.flowpowered.network.protocol.AbstractProtocol
 import com.flowpowered.network.session.BasicSession
-import io.inb.api.InbServer
 import io.inb.api.entity.Player
 import io.inb.api.network.pipeline.CodecsHandler
 import io.inb.api.network.protocol.PacketProvider
@@ -81,6 +80,7 @@ class NetworkSession(
 		}
 
 		this.player = player
+
 		finalizeLogin(player)
 		player.join(this)
 
