@@ -1,6 +1,7 @@
 package io.inb.api.network
 
 import com.flowpowered.network.Message
+import com.flowpowered.network.MessageHandler
 import com.flowpowered.network.protocol.AbstractProtocol
 import com.flowpowered.network.session.BasicSession
 import io.inb.api.InbServer
@@ -16,6 +17,7 @@ import io.netty.channel.Channel
 import io.netty.channel.ChannelFuture
 import io.netty.channel.ChannelFutureListener
 import io.netty.channel.ChannelHandler
+import io.netty.handler.codec.CodecException
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingDeque
 
@@ -88,6 +90,23 @@ class NetworkSession(
 
 	private fun updatePipeline(key: String, handler: ChannelHandler) {
 		channel.pipeline().replace(key, key, handler);
+	}
+
+	override fun onDisconnect() {
+		disconnect = true
+	}
+
+	override fun onInboundThrowable(throwable: Throwable?) {
+		if(throwable is CodecException){
+			println("Error in inbound network: $throwable")
+			return
+		}
+
+		disconnect("decode error: ${throwable?.message}")
+	}
+
+	override fun onHandlerThrowable(message: Message?, handle: MessageHandler<*, *>?, throwable: Throwable?) {
+		println("Error while handling $message (${handle?.javaClass?.simpleName}) - $throwable")
 	}
 
 }
