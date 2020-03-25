@@ -10,7 +10,7 @@ class JoinGameCodec : Codec<JoinGameMessage> {
 		buf.writeInt(message.id)
 		buf.writeInt(message.gameMode)
 		buf.writeByte(message.maxPlayers)
-		ByteBufUtils.writeUTF8(buf, message.levelType)
+		ByteBufUtils.writeUTF8(buf, message.worldType)
 		buf.writeInt(message.viewDistance)
 		buf.writeBoolean(message.reducedDebugInfo)
 		buf.writeBoolean(message.enableRespawnScreen)
@@ -22,7 +22,7 @@ class JoinGameCodec : Codec<JoinGameMessage> {
 		val id = buffer.readInt()
 		val gameMode = buffer.readByte()
 		val maxPlayers = buffer.readByte()
-		val levelType = ByteBufUtils.readUTF8(buffer)
+		val worldType = ByteBufUtils.readUTF8(buffer)
 		val viewDistance = buffer.readInt()
 		val enableRespawnScreen = buffer.readBoolean()
 		val reducedDebugInfo = buffer.readBoolean()
@@ -31,7 +31,7 @@ class JoinGameCodec : Codec<JoinGameMessage> {
 			id,
 			gameMode.toInt(),
 			maxPlayers.toInt(),
-			levelType,
+			worldType,
 			viewDistance,
 			reducedDebugInfo,
 			enableRespawnScreen
