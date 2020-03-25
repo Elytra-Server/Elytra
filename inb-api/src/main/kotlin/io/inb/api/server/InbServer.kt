@@ -12,6 +12,7 @@ import io.inb.api.utils.motd.Motd
 import java.io.IOException
 import java.io.Reader
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
 
 
@@ -50,19 +51,17 @@ class InbServer(
 
 	//TODO: Will be refactored, just for testing for now
 	private fun loadConfigs() {
-		var reader: Reader? = null
-
 		try {
 			val gson = Gson()
-			reader = Files.newBufferedReader(Paths.get("./server.json"))
-			val serverPojo: ServerPojo = gson.fromJson(reader, ServerPojo::class.java)
+
+			val resource = javaClass.classLoader.getResource("./server.json")
+
+			val serverPojo: ServerPojo = gson.fromJson(resource.readText(), ServerPojo::class.java)
 			val (motd) = serverPojo
 
 			this.motd = motd
 		} catch (e: IOException) {
 			println(e.printStackTrace())
-		} finally {
-			reader?.close()
 		}
 	}
 
