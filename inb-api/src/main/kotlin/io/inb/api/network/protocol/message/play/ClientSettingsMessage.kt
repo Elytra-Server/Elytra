@@ -4,9 +4,9 @@ import com.flowpowered.network.Message
 
 data class ClientSettingsMessage(
 	val lang: String,
-	val view: Int,
+	val view: Byte,
 	val chatVisibility: Int,
 	val enableColors: Boolean,
-	val modelPartFlags: Int,
+	val modelPartFlags: Short,
 	val mainHand: Int
 ) : Message

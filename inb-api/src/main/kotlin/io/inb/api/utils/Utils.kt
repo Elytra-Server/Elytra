@@ -57,7 +57,7 @@ object Utils {
 	fun writeVarIntToBuffer(buffer: ByteBuf, input: Int){
 		var input = input
 		while (input and -128 != 0) {
-			buffer.writeByte(input and 127 or 128)
+			buffer.writeByte(input.and(127) or 128)
 			input = input ushr 7
 		}
 		buffer.writeByte(input)
@@ -77,5 +77,16 @@ object Utils {
 			}
 		}
 		return i
+	}
+
+	private val HEX_ARRAY = "0123456789ABCDEF".toCharArray()
+	fun bytesToHex(bytes: ByteArray): String? {
+		val hexChars = CharArray(bytes.size * 2)
+		for (j in bytes.indices) {
+			val v = (bytes[j] and 0xFF.toByte()).toInt()
+			hexChars[j * 2] = HEX_ARRAY[v ushr 4]
+			hexChars[j * 2 + 1] = HEX_ARRAY[v and 0x0F]
+		}
+		return String(hexChars)
 	}
 }

@@ -29,6 +29,7 @@ class NetworkSession(
 	private val packetProvider: PacketProvider = PacketProvider()
 ) : BasicSession(channel, HandshakePacket()), Tickable {
 
+	//TODO: Needs refactor, too many instances
 	var player: Player? = null
 
 	private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque()
@@ -54,6 +55,7 @@ class NetworkSession(
 		var message: Message?
 		while (messageQueue.poll().also { message = it } != null) {
 			//TODO: Handle disconnected sessions
+			println(message)
 			super.messageReceived(message)
 		}
 	}

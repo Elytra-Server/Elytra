@@ -33,6 +33,7 @@ class StatusRequestHandler : InbMessageHandler<StatusRequestMessage>() {
 				Description("§4Hello World! INB")))
 
 		session.send(StatusResponseMessage(json))
+		session.channel.close()
 		//println("StatusRequestHandler - $message")
 	}
 

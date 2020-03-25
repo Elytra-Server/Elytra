@@ -12,19 +12,6 @@ import io.inb.api.network.protocol.message.play.*
 class PlayPacket : BasicPacket("PLAY", 0x4F) {
 
 	init {
-
-		inbound(0x0D,
-			PlayerPositionMessage::class.java,
-			PlayerPositionCodec::class.java,
-			PlayerPositionHandler::class.java
-		)
-
-		inbound(0x0E,
-			PlayerPositionAndLookMessage::class.java,
-			PlayerPositionAndLookCodec::class.java,
-			PositionAndLookHandler::class.java
-		)
-
 		inbound(
 			0x00,
 			ConfirmTeleportMessage::class.java,
@@ -33,31 +20,32 @@ class PlayPacket : BasicPacket("PLAY", 0x4F) {
 		)
 
 		inbound(
-			0x05,
+			0x04,
 			ClientSettingsMessage::class.java,
 			ClientSettingsCodec::class.java,
 			ClientSettingsHandler::class.java
 		)
 
 		inbound(
-			0x19,
+			0x9,
 			CustomPayloadMessage::class.java,
 			CustomPayloadCodec::class.java,
 			CustomPayloadHandler::class.java
 		)
 
 		inbound(
-			0x03,
+			0x02,
 			ChatMessage::class.java,
 			ChatCodec::class.java,
 			ChatHandler::class.java
 		)
 
-		outbound(0x40, HeldItemChangeMessage::class.java, HeldItemChangeCodec::class.java)
-		outbound(0x32, PlayerAbilitiesMessage::class.java, PlayerAbilitiesCodec::class.java)
-		outbound(0x0E, ServerDifficultyMessage::class.java, ServerDifficultyCodec::class.java)
-		outbound(0x19, CustomPayloadMessage::class.java, CustomPayloadCodec::class.java)
+		outbound(0x39, HeldItemChangeMessage::class.java, HeldItemChangeCodec::class.java)
+		outbound(0x2B, PlayerAbilitiesMessage::class.java, PlayerAbilitiesCodec::class.java)
+		outbound(0x0D, ServerDifficultyMessage::class.java, ServerDifficultyCodec::class.java)
+		outbound(0x18, CustomPayloadMessage::class.java, CustomPayloadCodec::class.java)
 		outbound(0x23, JoinGameMessage::class.java, JoinGameCodec::class.java)
-		outbound(0x2F, PositionLookMessage::class.java, PositionLookCodec::class.java)
+		outbound(0x2F, PlayerPosLookMessage::class.java, PlayerPosLookCodec::class.java)
+		outbound(0x1B, EntityStatusMessage::class.java, EntityStatusCodec::class.java)
 	}
 }
