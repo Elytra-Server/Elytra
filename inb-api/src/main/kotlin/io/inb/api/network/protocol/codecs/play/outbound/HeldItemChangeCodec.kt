@@ -9,6 +9,8 @@ import java.io.IOException
 class HeldItemChangeCodec : Codec<HeldItemChangeMessage> {
 	override fun encode(buf: ByteBuf, message: HeldItemChangeMessage): ByteBuf {
 		buf.writeByte(message.heldItemHotbarIndex)
+
+		println("held item - " + message.heldItemHotbarIndex)
 		return buf
 	}
 
