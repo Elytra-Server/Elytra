@@ -21,6 +21,8 @@ class SessionRegistry(
 	}
 
 	override fun tick() {
-		sessions.keys.forEach { it.tick() }
+		sessions.keys.forEach {
+			it.tick()
+		}
 	}
 }

@@ -6,6 +6,7 @@ import io.inb.api.network.pipeline.InbConnectionManager
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelOption
 import io.netty.channel.EventLoopGroup
+import io.netty.channel.epoll.EpollServerSocketChannel
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioServerSocketChannel
 
@@ -15,14 +16,14 @@ internal class NetworkServer(private val port: Int = 25565) {
 
 
 	fun start() {
-		val masterGroup: EventLoopGroup = NioEventLoopGroup()
-		val workerGroup: EventLoopGroup = NioEventLoopGroup()
+		val masterGroup: EventLoopGroup = Channels.pickBestEventLoopGroup()
+		val workerGroup: EventLoopGroup = Channels.pickBestEventLoopGroup()
 
 		val connectionManager: ConnectionManager = InbConnectionManager()
 
 		bootstrap
 			.group(masterGroup, workerGroup)
-			.channel(NioServerSocketChannel::class.java)
+			.channel(Channels.pickBestChannel())
 			.option(ChannelOption.SO_KEEPALIVE, true)
 			.childOption(ChannelOption.TCP_NODELAY, true)
 			.childHandler(ChannelInitializerHandler(connectionManager))

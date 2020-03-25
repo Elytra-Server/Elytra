@@ -3,6 +3,7 @@ package io.inb.api
 import io.inb.api.network.NetworkServer
 import io.inb.api.network.SessionRegistry
 import io.inb.api.network.protocol.PacketProvider
+import io.inb.api.scheduler.Scheduler
 
 /**
  * The core server class of the Inb server.
@@ -12,7 +13,8 @@ import io.inb.api.network.protocol.PacketProvider
 class InbServer(
 	private val port: Int = 25565,
 
-	val sessionRegistry: SessionRegistry = SessionRegistry()
+	val sessionRegistry: SessionRegistry = SessionRegistry(),
+	private val scheduler: Scheduler = Scheduler(sessionRegistry)
 ) {
 
 	companion object {
@@ -30,8 +32,14 @@ class InbServer(
 
 	}
 
-	fun run(){
+	fun start(){
 		PacketProvider()
+		scheduler.start()
+
+		bindNetwork()
+	}
+
+	private fun bindNetwork(){
 		NetworkServer(port).start()
 	}
 

@@ -26,10 +26,10 @@ class NetworkSession(
 	var protocol: BasicPacket? = null,
 
 	//TODO: Needs refactor, too many instances
-	private val packetProvider: PacketProvider = PacketProvider()
+	private val packetProvider: PacketProvider = PacketProvider(),
+	@Volatile private var disconnected: Boolean = false
 ) : BasicSession(channel, HandshakePacket()), Tickable {
 
-	//TODO: Needs refactor, too many instances
 	var player: Player? = null
 
 	private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque()
@@ -54,9 +54,16 @@ class NetworkSession(
 	override fun tick() {
 		var message: Message?
 		while (messageQueue.poll().also { message = it } != null) {
+			if(disconnected) break
+
 			//TODO: Handle disconnected sessions
 			println(message)
 			super.messageReceived(message)
+		}
+
+		if(disconnected){
+			println("${player?.username} lost connection")
+			//TODO: Handle quit event and display quit message
 		}
 	}
 
@@ -66,9 +73,18 @@ class NetworkSession(
 	}
 
 	fun assignPlayer(player: Player){
+		if(!isActive){ //Check if the player is disconnected
+			return
+		}
+
 		this.player = player
 		finalizeLogin(player)
 		player.join(this)
+
+		if (!isActive) {
+			onDisconnect();
+			return;
+		}
 	}
 
 	private fun finalizeLogin(player: Player?){
@@ -81,6 +97,32 @@ class NetworkSession(
 
 	private fun updatePipeline(key: String, handler: ChannelHandler) {
 		channel.pipeline().replace(key, key, handler);
+	}
+
+	override fun onDisconnect() {
+		disconnected = true
+	}
+
+	override fun onInboundThrowable(throwable: Throwable?) {
+		if(throwable is CodecException){
+			println("Error in inbound network: $throwable")
+			return
+		}
+
+		disconnect("decode error: ${throwable?.message}")
+	}
+
+	override fun onHandlerThrowable(message: Message?, handle: MessageHandler<*, *>?, throwable: Throwable?) {
+		println("Error while handling $message (${handle?.javaClass?.simpleName}) - $throwable")
+	}
+
+	override fun messageReceived(message: Message) {
+		if(message is Asyncable){
+			super.messageReceived(message)
+			return
+		}
+
+		messageQueue.add(message)
 	}
 
 }

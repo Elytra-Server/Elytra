@@ -10,4 +10,8 @@ object EventBus : IEventBus {
 	override fun listen(): Observable<Any> = publisher
 
 	override fun post(event: InbEvent) = publisher.onNext(event)
+
 }
+
+inline fun <reified T : InbEvent> EventBus.listen(): Observable<T> = listen().ofType(T::class.java)
+
