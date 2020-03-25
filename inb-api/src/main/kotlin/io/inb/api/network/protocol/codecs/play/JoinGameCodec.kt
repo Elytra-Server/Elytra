@@ -15,6 +15,7 @@ class JoinGameCodec : Codec<JoinGameMessage> {
 		buf.writeByte(message.maxPlayers)
 		Utils.writeString(buf, message.worldType)
 		buf.writeBoolean(message.reducedDebugInfo)
+
 		return buf
 	}
 
@@ -26,7 +27,8 @@ class JoinGameCodec : Codec<JoinGameMessage> {
 		val viewDistance = buffer.readInt()
 		val enableRespawnScreen = buffer.readBoolean()
 		val reducedDebugInfo = buffer.readBoolean()
-		return JoinGameMessage(0,0,0,0,0,"",false)
+
+		return JoinGameMessage(0,0,0,0,0,"flat",false)
 	}
 
 }

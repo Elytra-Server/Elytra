@@ -6,6 +6,7 @@ import com.google.gson.JsonObject
 import io.inb.api.events.ServerListPingEvent
 import io.inb.api.io.EventBus
 import io.inb.api.network.NetworkSession
+import io.inb.api.network.protocol.handlers.InbMessageHandler
 import io.inb.api.network.protocol.message.status.StatusRequestMessage
 import io.inb.api.network.protocol.message.status.StatusResponseMessage
 import java.util.*
@@ -14,7 +15,7 @@ import kotlin.collections.ArrayList
 /**
  * @see https://wiki.vg/Server_List_Ping
  */
-class StatusRequestHandler : MessageHandler<NetworkSession, StatusRequestMessage> {
+class StatusRequestHandler : InbMessageHandler<StatusRequestMessage>() {
 
 	override fun handle(session: NetworkSession, message: StatusRequestMessage) {
 		val event = ServerListPingEvent(
