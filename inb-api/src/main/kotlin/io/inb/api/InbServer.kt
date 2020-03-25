@@ -7,7 +7,7 @@ import io.inb.api.network.protocol.PacketProvider
 /**
  * The core server class of the Inb server.
  *
- * @author Graham AstroCoder
+ * @author AstroCoder
  */
 class InbServer(
 	private val port: Int = 25565,

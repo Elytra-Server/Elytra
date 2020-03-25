@@ -7,7 +7,6 @@ import java.util.*
 data class Player(var username: String, var uuid: UUID){
 
 	fun join(session: NetworkSession){
-		println("Entrou no join")
 		val message = JoinGameMessage(0,
 			0,
 			0,
