@@ -12,6 +12,7 @@ import io.inb.api.network.protocol.message.DisconnectMessage
 import io.inb.api.network.protocol.message.login.LoginSuccessMessage
 import io.inb.api.network.protocol.packets.BasicPacket
 import io.inb.api.network.protocol.packets.HandshakePacket
+import io.inb.api.utils.Asyncable
 import io.inb.api.utils.Tickable
 import io.netty.channel.Channel
 import io.netty.channel.ChannelFuture
@@ -70,6 +71,7 @@ class NetworkSession(
 		if(!isActive){ //Check if the player is disconnected
 			return
 		}
+
 		this.player = player
 		finalizeLogin(player)
 		player.join(this)
@@ -107,6 +109,15 @@ class NetworkSession(
 
 	override fun onHandlerThrowable(message: Message?, handle: MessageHandler<*, *>?, throwable: Throwable?) {
 		println("Error while handling $message (${handle?.javaClass?.simpleName}) - $throwable")
+	}
+
+	override fun messageReceived(message: Message) {
+		if(message is Asyncable){
+			super.messageReceived(message)
+			return
+		}
+
+		messageQueue.add(message)
 	}
 
 }
