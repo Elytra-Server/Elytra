@@ -1,4 +1,4 @@
-package io.inb.api.network.protocol.codecs.play
+package io.inb.api.network.protocol.codecs.play.inbound
 
 import com.flowpowered.network.Codec
 import io.inb.api.network.protocol.message.play.PlayerPositionMessage

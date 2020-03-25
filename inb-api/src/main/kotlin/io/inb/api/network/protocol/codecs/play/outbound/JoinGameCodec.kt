@@ -1,4 +1,4 @@
-package io.inb.api.network.protocol.codecs.play
+package io.inb.api.network.protocol.codecs.play.outbound
 
 import com.flowpowered.network.Codec
 import com.flowpowered.network.util.ByteBufUtils
