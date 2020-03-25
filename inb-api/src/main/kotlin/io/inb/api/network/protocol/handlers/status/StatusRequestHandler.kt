@@ -1,15 +1,14 @@
 package io.inb.api.network.protocol.handlers.status
 
-import com.flowpowered.network.MessageHandler
 import com.google.gson.Gson
-import com.google.gson.JsonObject
-import io.inb.api.events.ServerListPingEvent
-import io.inb.api.io.EventBus
 import io.inb.api.network.NetworkSession
 import io.inb.api.network.protocol.handlers.InbMessageHandler
 import io.inb.api.network.protocol.message.status.StatusRequestMessage
 import io.inb.api.network.protocol.message.status.StatusResponseMessage
-import java.util.*
+import io.inb.api.server.InbServer
+import io.inb.api.utils.formatting.Colors
+import io.inb.api.utils.formatting.Formatting
+import io.inb.api.utils.motd.Motd
 import kotlin.collections.ArrayList
 
 /**
@@ -18,39 +17,50 @@ import kotlin.collections.ArrayList
 class StatusRequestHandler : InbMessageHandler<StatusRequestMessage>() {
 
 	override fun handle(session: NetworkSession, message: StatusRequestMessage) {
-		val event = ServerListPingEvent(
-			"§aInb - Test Server",
-			"14.4.4",
-			480,
+		val motd = Motd(
+			"${Colors.GOLD}Hello ${Colors.YELLOW}${Formatting.OBSFUSCATED}World!",
+			InbServer.GAME_VERSION,
+			"INB",
+			InbServer.PROTOCOL_VERSION,
 			0
 		)
-		EventBus.post(event)
 
 		val json: String = Gson().toJson(
 			StatusResponse(
-				Version("INB",498),
-				Players(1,0, ArrayList()),
-				Description("§4Hello World! INB")))
+				Version(
+					motd.versionText,
+					motd.protocolVersion
+				),
+				Players(
+					1,
+					motd.numPlayers,
+					ArrayList()
+				),
+				Description(motd.description)
+			)
+		)
 
+		session.server?.motd = motd
 		session.send(StatusResponseMessage(json))
 		session.channel.close()
-		//println("StatusRequestHandler - $message")
 	}
 
-	data class StatusResponse(val version: Version,
-							  val players: Players,
-							  val description: Description) {}
+	private data class StatusResponse(
+		val version: Version,
+		val players: Players,
+		val description: Description
+	)
 
-	data class Description(val text: String) {}
+	private data class Description(val text: String)
 
-	data class Players(val max: Int,
-					   val online: Int,
-					   val sample: List<Player>) {}
+	private data class Players(
+		val max: Int,
+		val online: Int,
+		val sample: List<Player>
+	)
 
-	data class Player(val name: String,
-					   val id: String) {}
+	private data class Player(val name: String, val id: String)
 
-	data class Version(val name: String,
-					   val protocol: Int) {}
+	private data class Version(val name: String, val protocol: Int)
 
 }

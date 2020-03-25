@@ -4,10 +4,13 @@ import io.inb.api.network.NetworkServer
 import io.inb.api.network.SessionRegistry
 import io.inb.api.network.protocol.PacketProvider
 import io.inb.api.scheduler.Scheduler
+import io.inb.api.utils.motd.Motd
 
 class InbServer(
-	private val port: Int = 25565,
 	override val sessionRegistry: SessionRegistry = SessionRegistry(),
+	override var motd: Motd? = null,
+
+	private val port: Int = 25565,
 	private val scheduler: Scheduler = Scheduler(sessionRegistry)
 ) : Server {
 
