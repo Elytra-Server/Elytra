@@ -32,7 +32,6 @@ class PlayPacket : BasicPacket("PLAY", 0x4F) {
 
 		inbound(0x0E, PositionAndLookMessage::class.java, PositionAndLookCodec::class.java, PositionAndLookHandler::class.java)
 
-
 		inbound(
 			0x00,
 			ConfirmTeleportMessage::class.java,
