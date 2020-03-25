@@ -4,7 +4,6 @@ import com.flowpowered.network.Message
 import com.flowpowered.network.MessageHandler
 import com.flowpowered.network.protocol.AbstractProtocol
 import com.flowpowered.network.session.BasicSession
-import io.inb.api.InbServer
 import io.inb.api.entity.Player
 import io.inb.api.network.pipeline.CodecsHandler
 import io.inb.api.network.protocol.PacketProvider
@@ -30,7 +29,7 @@ class NetworkSession(
 
 	//TODO: Needs refactor, too many instances
 	private val packetProvider: PacketProvider = PacketProvider(),
-	@Volatile private var disconnect: Boolean = false
+	@Volatile private var disconnected: Boolean = false
 ) : BasicSession(channel, HandshakePacket()), Tickable {
 
 	var player: Player? = null
@@ -57,7 +56,8 @@ class NetworkSession(
 	override fun tick() {
 		var message: Message?
 		while (messageQueue.poll().also { message = it } != null) {
-			//TODO: Handle disconnected sessions
+			if(disconnected) break
+
 			super.messageReceived(message)
 		}
 	}
@@ -95,7 +95,7 @@ class NetworkSession(
 	}
 
 	override fun onDisconnect() {
-		disconnect = true
+		disconnected = true
 	}
 
 	override fun onInboundThrowable(throwable: Throwable?) {
