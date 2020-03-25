@@ -17,23 +17,18 @@ import kotlin.collections.ArrayList
 class ServerQueryHandler : InbMessageHandler<ServerQueryMessage>() {
 
 	override fun handle(session: NetworkSession, message: ServerQueryMessage) {
-		val motd = Motd(
-			"${Colors.GOLD}Hello ${Colors.YELLOW}${Formatting.OBSFUSCATED}World!",
-			InbServer.GAME_VERSION,
-			"INB",
-			InbServer.PROTOCOL_VERSION,
-			0
-		)
+		session.server = InbServer.getServer()
+		val motd = session.server?.motd ?: return
 
 		val json: String = Gson().toJson(
 			StatusResponse(
 				Version(
-					motd.versionText,
-					motd.protocolVersion
+					motd.pingText,
+					InbServer.PROTOCOL_VERSION
 				),
 				Players(
 					1,
-					motd.numPlayers,
+					motd.maxPlayers,
 					ArrayList()
 				),
 				Description(motd.description)
