@@ -21,12 +21,12 @@ class InbServer(
 		/**
 		 * The game version supported by the server.
 		 */
-		const val GAME_VERSION = "14.4.4"
+		const val GAME_VERSION = "12.2.2"
 
 		/**
 		 * The protocol version supported by the server.
 		 */
-		const val PROTOCOL_VERSION = 498
+		const val PROTOCOL_VERSION = 340
 
 	}
 

@@ -11,10 +11,8 @@ data class Player(var username: String, var uuid: UUID){
 		val message = JoinGameMessage(0,
 			0,
 			0,
-			0,
-			10,
 			"flat",
-			50,
+			0,
 			reducedDebugInfo = true,
 			enableRespawnScreen = true
 		)

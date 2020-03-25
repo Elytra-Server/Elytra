@@ -21,8 +21,10 @@ class DecoderHandler : ByteToMessageCodec<ByteBuf>() {
 				return false
 			}
 			input = buf.readByte()
+
 		} while ((input.and(0x80.toByte())) != 0.toByte())
 		buf.readerIndex(idx)
+
 		return true
 	}
 
