@@ -2,7 +2,7 @@ package io.inb.api
 
 import io.inb.api.network.NetworkServer
 import io.inb.api.network.SessionRegistry
-import java.security.KeyPair
+import io.inb.api.network.protocol.PacketProvider
 
 /**
  * The core server class of the Inb server.
@@ -11,7 +11,6 @@ import java.security.KeyPair
  */
 class InbServer(
 	private val port: Int = 25565,
-	val onlineMode: Boolean = true,
 
 	val sessionRegistry: SessionRegistry = SessionRegistry()
 ) {
@@ -28,10 +27,14 @@ class InbServer(
 		 * The protocol version supported by the server.
 		 */
 		const val PROTOCOL_VERSION = 498
+
 	}
 
 	fun run(){
+		PacketProvider()
 		NetworkServer(port).start()
 	}
+
+
 }
 

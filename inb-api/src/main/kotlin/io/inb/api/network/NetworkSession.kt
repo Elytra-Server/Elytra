@@ -6,7 +6,9 @@ import com.flowpowered.network.session.BasicSession
 import io.inb.api.InbServer
 import io.inb.api.entity.Player
 import io.inb.api.network.pipeline.CodecsHandler
+import io.inb.api.network.protocol.PacketProvider
 import io.inb.api.network.protocol.message.DisconnectMessage
+import io.inb.api.network.protocol.message.login.LoginSuccessMessage
 import io.inb.api.network.protocol.packets.BasicPacket
 import io.inb.api.network.protocol.packets.HandshakePacket
 import io.inb.api.utils.Tickable
@@ -23,14 +25,11 @@ class NetworkSession(
 	var state: State = State.HANDSHAKE,
 	var protocol: BasicPacket? = null,
 
-	var server: InbServer? = InbServer.getServer()
+	//TODO: Needs refactor, too many instances
+	private val packetProvider: PacketProvider = PacketProvider()
 ) : BasicSession(channel, HandshakePacket()), Tickable {
 
 	var player: Player? = null
-		set(value) {
-			field = value
-			field?.join()
-		}
 
 	private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque()
 
@@ -64,6 +63,21 @@ class NetworkSession(
 		channel.flush()
 		updatePipeline("codecs", CodecsHandler(protocol as BasicPacket))
 		super.setProtocol(protocol)
+	}
+
+	fun assignPlayer(player: Player){
+		this.player = player
+
+		finalizeLogin(player)
+		player.join(this)
+	}
+
+	private fun finalizeLogin(player: Player?){
+		if (player != null) {
+			send(LoginSuccessMessage(player.uuid.toString(), player.username))
+		}
+
+		setProtocol(packetProvider.playPacket)
 	}
 
 	private fun updatePipeline(key: String, handler: ChannelHandler) {
