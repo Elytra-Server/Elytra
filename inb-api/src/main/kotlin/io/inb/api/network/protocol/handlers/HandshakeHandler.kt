@@ -35,12 +35,12 @@ class HandshakeHandler : InbMessageHandler<HandshakeMessage>() {
 				reason = "Outdated client! Running: ${InbServer.GAME_VERSION}"
 				networkSession.disconnect(reason)
 
-				networkSession.inbPlayer?.let { PlayerDisconnectEvent(it, reason) }?.let { EventBus.post(it) }
+				networkSession.player?.let { PlayerDisconnectEvent(it, reason) }?.let { EventBus.post(it) }
 			} else if (message.version > InbServer.PROTOCOL_VERSION) {
 				reason = "Outdated server! Running: ${InbServer.GAME_VERSION}"
 				networkSession.disconnect(reason)
 
-				networkSession.inbPlayer?.let { PlayerDisconnectEvent(it, reason) }?.let { EventBus.post(it) }
+				networkSession.player?.let { PlayerDisconnectEvent(it, reason) }?.let { EventBus.post(it) }
 			}
 
 		}
