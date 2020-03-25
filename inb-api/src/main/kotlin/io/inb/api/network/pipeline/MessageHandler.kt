@@ -13,6 +13,7 @@ class MessageHandler(
 ) : SimpleChannelInboundHandler<Message>() {
 
 	override fun channelRead0(ctx: ChannelHandlerContext, msg: Message) {
+		println("[DEBUG] $msg")
 		session.get()?.messageReceived(msg);
 	}
 
@@ -29,6 +30,7 @@ class MessageHandler(
 
 	override fun channelInactive(ctx: ChannelHandlerContext?) {
 		session.get()?.onDisconnect();
+		println("Disconnect ${session.get()?.player?.username}")
 	}
 
 	override fun exceptionCaught(ctx: ChannelHandlerContext?, cause: Throwable?) {

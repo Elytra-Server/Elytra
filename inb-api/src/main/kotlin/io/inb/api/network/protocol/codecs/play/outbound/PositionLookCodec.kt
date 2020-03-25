@@ -3,6 +3,7 @@ package io.inb.api.network.protocol.codecs.play.outbound
 import com.flowpowered.network.Codec
 import io.inb.api.network.protocol.message.play.PositionLookMessage
 import io.netty.buffer.ByteBuf
+import java.io.IOException
 
 class PositionLookCodec : Codec<PositionLookMessage> {
 	override fun encode(buf: ByteBuf, message: PositionLookMessage): ByteBuf {
@@ -16,12 +17,6 @@ class PositionLookCodec : Codec<PositionLookMessage> {
 	}
 
 	override fun decode(buffer: ByteBuf): PositionLookMessage {
-		val x = buffer.readDouble()
-		val y = buffer.readDouble()
-		val z = buffer.readDouble()
-		val rotation = buffer.readFloat()
-		val pitch = buffer.readFloat()
-
-		return PositionLookMessage(x, y, z, rotation, pitch)
+		throw IOException("No have decode support for this")
 	}
 }

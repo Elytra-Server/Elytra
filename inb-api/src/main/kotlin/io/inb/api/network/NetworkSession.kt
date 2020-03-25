@@ -54,20 +54,17 @@ class NetworkSession(
 		var message: Message?
 		while (messageQueue.poll().also { message = it } != null) {
 			//TODO: Handle disconnected sessions
-
 			super.messageReceived(message)
 		}
 	}
 
 	public override fun setProtocol(protocol: AbstractProtocol?) {
-		channel.flush()
 		updatePipeline("codecs", CodecsHandler(protocol as BasicPacket))
 		super.setProtocol(protocol)
 	}
 
 	fun assignPlayer(player: Player){
 		this.player = player
-
 		finalizeLogin(player)
 		player.join(this)
 	}

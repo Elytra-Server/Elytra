@@ -17,6 +17,6 @@ data class Player(var username: String, var uuid: UUID, var location: Location =
 
 		//TODO: Spawn packet
 
-		session.send(positionMessage)
+		//session.send(positionMessage)
 	}
 }

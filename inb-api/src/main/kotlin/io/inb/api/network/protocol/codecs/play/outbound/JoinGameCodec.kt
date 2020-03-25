@@ -5,6 +5,7 @@ import com.flowpowered.network.util.ByteBufUtils
 import io.inb.api.network.protocol.message.play.JoinGameMessage
 import io.inb.api.utils.Utils
 import io.netty.buffer.ByteBuf
+import java.io.IOException
 
 class JoinGameCodec : Codec<JoinGameMessage> {
 	override fun encode(buf: ByteBuf, message: JoinGameMessage): ByteBuf {
@@ -20,15 +21,7 @@ class JoinGameCodec : Codec<JoinGameMessage> {
 	}
 
 	override fun decode(buffer: ByteBuf): JoinGameMessage {
-		val id = buffer.readInt()
-		val gameMode = buffer.readByte()
-		val maxPlayers = buffer.readByte()
-		val worldType = ByteBufUtils.readUTF8(buffer)
-		val viewDistance = buffer.readInt()
-		val enableRespawnScreen = buffer.readBoolean()
-		val reducedDebugInfo = buffer.readBoolean()
-
-		return JoinGameMessage(0,0,0,0,0,"flat",false)
+		throw IOException("No have decode support for this")
 	}
 
 }
