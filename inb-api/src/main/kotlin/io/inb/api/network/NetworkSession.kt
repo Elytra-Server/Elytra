@@ -5,6 +5,9 @@ import com.flowpowered.network.MessageHandler
 import com.flowpowered.network.protocol.AbstractProtocol
 import com.flowpowered.network.session.BasicSession
 import io.inb.api.entity.Player
+import io.inb.api.events.PlayerQuitEvent
+import io.inb.api.io.EventBus
+import io.inb.api.io.IEventBus
 import io.inb.api.network.pipeline.CodecsHandler
 import io.inb.api.network.protocol.PacketProvider
 import io.inb.api.network.protocol.message.DisconnectMessage
@@ -59,6 +62,11 @@ class NetworkSession(
 			if(disconnected) break
 
 			super.messageReceived(message)
+		}
+
+		if(disconnected){
+			println("${player?.username} lost connection")
+			//TODO: Handle quit event and display quit message
 		}
 	}
 
