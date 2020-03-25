@@ -23,15 +23,14 @@ import io.inb.api.network.protocol.message.status.StatusRequestMessage
 class PlayPacket : BasicPacket("PLAY", 0x4F) {
 
 	init {
+
 		inbound(0x0D,
 			PlayerPositionMessage::class.java,
 			PlayerPositionCodec::class.java,
 			PlayerPositionHandler::class.java
 		)
 
-		inbound(0x00, StatusRequestMessage::class.java, StatusRequestCodec::class.java, StatusRequestHandler::class.java)
-
-
+		//inbound(0x00, StatusRequestMessage::class.java, StatusRequestCodec::class.java, StatusRequestHandler::class.java)
 
 		inbound(
 			0x00,
