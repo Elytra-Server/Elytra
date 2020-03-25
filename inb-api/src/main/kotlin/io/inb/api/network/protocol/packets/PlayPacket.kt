@@ -5,6 +5,7 @@ import io.inb.api.network.protocol.codecs.play.PlayerPositionCodec
 import io.inb.api.network.protocol.codecs.play.PositionAndLookCodec
 import io.inb.api.network.protocol.codecs.status.StatusRequestCodec
 import io.inb.api.network.protocol.handlers.play.PlayerPositionHandler
+import io.inb.api.network.protocol.handlers.play.PositionAndLookHandler
 import io.inb.api.network.protocol.handlers.status.StatusRequestHandler
 import io.inb.api.network.protocol.message.play.JoinGameMessage
 import io.inb.api.network.protocol.message.play.PlayerPositionMessage
@@ -23,8 +24,7 @@ class PlayPacket : BasicPacket("PLAY", 0x4F) {
 			PlayerPositionHandler::class.java
 		)
 
-		inbound(0x00, StatusRequestMessage::class.java, StatusRequestCodec::class.java, StatusRequestHandler::class.java)
-
+		inbound(0x0E, PositionAndLookMessage::class.java, PositionAndLookCodec::class.java, PositionAndLookHandler::class.java)
 
 		outbound(0x23, JoinGameMessage::class.java, JoinGameCodec::class.java)
 		outbound(0x2F, PositionAndLookMessage::class.java, PositionAndLookCodec::class.java)
