@@ -9,9 +9,9 @@ enum class GameMode(val value: Int) {
 data class JoinGameMessage(
 	val id: Int,
 	val gameMode: Int,
+	val dimension: Int,
+	val difficulty: Int,
 	val maxPlayers: Int,
 	val worldType: String,
-	val viewDistance: Int,
-	val reducedDebugInfo: Boolean,
-	val enableRespawnScreen: Boolean
+	val reducedDebugInfo: Boolean
 ) : Message
