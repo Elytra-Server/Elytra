@@ -6,9 +6,6 @@ import io.inb.api.network.protocol.handlers.InbMessageHandler
 import io.inb.api.network.protocol.message.status.ServerQueryMessage
 import io.inb.api.network.protocol.message.status.ServerInfoMessage
 import io.inb.api.server.InbServer
-import io.inb.api.utils.formatting.Colors
-import io.inb.api.utils.formatting.Formatting
-import io.inb.api.utils.motd.Motd
 import kotlin.collections.ArrayList
 
 /**
@@ -18,7 +15,9 @@ class ServerQueryHandler : InbMessageHandler<ServerQueryMessage>() {
 
 	override fun handle(session: NetworkSession, message: ServerQueryMessage) {
 		session.server = InbServer.getServer()
-		val motd = session.server?.motd ?: return
+
+		val serverDescriptor = session.server?.serverDescriptor ?: return
+		val motd = serverDescriptor.motd
 
 		val json: String = Gson().toJson(
 			StatusResponse(
@@ -27,15 +26,17 @@ class ServerQueryHandler : InbMessageHandler<ServerQueryMessage>() {
 					InbServer.PROTOCOL_VERSION
 				),
 				Players(
-					motd.maxPlayers,
-					1,
+					serverDescriptor.options.maxPlayers,
+					session.server!!.sessionRegistry.activeSessions(), //FIXME: Get from a player registry
 					ArrayList()
 				),
 				Description(motd.description)
 			)
 		)
 
-		session.server?.motd = motd
+		serverDescriptor.motd = motd
+
+		println(session.server?.serverDescriptor)
 		session.send(ServerInfoMessage(json))
 	}
 

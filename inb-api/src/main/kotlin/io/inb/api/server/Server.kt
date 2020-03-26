@@ -1,7 +1,6 @@
 package io.inb.api.server
 
 import io.inb.api.network.SessionRegistry
-import io.inb.api.utils.motd.Motd
 
 /**
  * [Server] is the game entry that managers the
@@ -9,7 +8,7 @@ import io.inb.api.utils.motd.Motd
  */
 interface Server {
 	val sessionRegistry: SessionRegistry
-	var motd: Motd?
+	var serverDescriptor: ServerPojo?
 
 	/**
 	 * Initializes the execution of the game loop and related services

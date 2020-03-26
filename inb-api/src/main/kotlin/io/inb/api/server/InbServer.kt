@@ -12,7 +12,7 @@ import java.io.IOException
 
 class InbServer(
 	override val sessionRegistry: SessionRegistry = SessionRegistry(),
-	override var motd: Motd? = null,
+	override var serverDescriptor: ServerPojo? = null,
 
 	private val port: Int = 25565,
 	private val scheduler: Scheduler = Scheduler(sessionRegistry)
@@ -52,9 +52,8 @@ class InbServer(
 			val resource = javaClass.classLoader.getResource("./server.json")
 
 			val serverPojo: ServerPojo = gson.fromJson(resource.readText(), ServerPojo::class.java)
-			val (motd) = serverPojo
 
-			this.motd = motd
+			this.serverDescriptor = serverPojo
 		} catch (e: IOException) {
 			println(e.printStackTrace())
 		}
