@@ -6,5 +6,5 @@ interface IEventBus {
 
 	fun listen() : Observable<Any>
 
-	fun post(event: InbEvent)
+	fun post(event: ElytraEvent)
 }

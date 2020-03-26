@@ -1,8 +1,8 @@
 package io.inb.api.events
 
-import io.inb.api.io.InbEvent
-import io.inb.api.utils.motd.Motd
+import io.inb.api.io.ElytraEvent
+import io.inb.api.server.motd.Motd
 
 data class ServerListPingEvent(
 	val motd: Motd
-) : InbEvent
+) : ElytraEvent
