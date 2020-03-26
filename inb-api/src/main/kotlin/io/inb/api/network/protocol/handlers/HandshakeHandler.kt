@@ -43,7 +43,7 @@ class HandshakeHandler : InbMessageHandler<HandshakeMessage>() {
 			networkSession.disconnect(reason)
 		}
 
-		println("Handshake [${message.address}:${message.port}] - ${message.version} (${message.state})")
+		InbServer.logger.debug("Handshake [${message.address}:${message.port}] - ${message.version} (${message.state})")
 	}
 
 }

@@ -6,7 +6,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "5.2.0"
 }
 
-val groupPrefix = "io.inb"
+val groupPrefix = "io.elytra"
 val pVersion = "1.0.0-SNAPSHOT"
 
 group = groupPrefix
