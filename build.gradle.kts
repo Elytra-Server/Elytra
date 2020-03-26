@@ -21,8 +21,8 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
-
         maven("https://oss.sonatype.org/content/repositories/snapshots")
+		maven("https://libraries.minecraft.net/")
     }
 
     dependencies {
@@ -33,6 +33,7 @@ allprojects {
 		implementation("io.reactivex.rxjava3:rxkotlin:3.0.0")
         implementation("io.projectreactor.netty:reactor-netty:0.9.6.RELEASE")
 		implementation("com.flowpowered:flow-network:1.0.0")
+		implementation("com.mojang:authlib:1.5.21")
     }
 }
 
@@ -42,6 +43,9 @@ subprojects {
 
     dependencies {
         implementation("org.apache.commons:commons-lang3:3.9")
+        implementation("org.slf4j:slf4j-api:2.0.0-alpha1")
+        implementation("ch.qos.logback:logback-core:1.2.3")
+        implementation("ch.qos.logback:logback-classic:1.3.0-alpha5")
 
         testRuntimeOnly(kotlin("stdlib"))
         testImplementation("junit:junit:4.11")

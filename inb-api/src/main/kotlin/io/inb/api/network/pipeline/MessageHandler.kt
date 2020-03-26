@@ -30,7 +30,6 @@ class MessageHandler(
 
 	override fun channelInactive(ctx: ChannelHandlerContext?) {
 		session.get()?.onDisconnect();
-		println("Disconnect ${session.get()?.player?.username}")
 	}
 
 	override fun exceptionCaught(ctx: ChannelHandlerContext?, cause: Throwable?) {

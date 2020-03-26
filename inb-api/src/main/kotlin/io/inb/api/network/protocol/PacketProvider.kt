@@ -5,6 +5,10 @@ import io.inb.api.network.protocol.packets.LoginPacket
 import io.inb.api.network.protocol.packets.PlayPacket
 import io.inb.api.network.protocol.packets.StatusPacket
 
+/**
+ * Provides the packet to the main game loop [io.inb.api.server.Server]
+ * in order to make them locatable to the codecs
+ */
 data class PacketProvider(
 	private val statusPacket: StatusPacket = StatusPacket(),
 	private val loginPacket: LoginPacket = LoginPacket(),

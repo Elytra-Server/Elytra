@@ -1,10 +1,8 @@
 package io.inb.api.events
 
 import io.inb.api.io.InbEvent
+import io.inb.api.utils.motd.Motd
 
 data class ServerListPingEvent(
-	val motd: String,
-	val version: String,
-	val protocolVersion: Int,
-	val numPlayer: Int
+	val motd: Motd
 ) : InbEvent
