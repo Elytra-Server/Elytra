@@ -14,4 +14,11 @@ data class ServerOptionsPojo(
 	val eulaCheck: Boolean
 )
 
-data class ServerPojo(var motd: Motd, val options: ServerOptionsPojo, val world: WorldPojo)
+/**
+ * Describes the server settings setted on the file server.json
+ */
+data class ServerPojo(
+	var motd: Motd,
+	val options: ServerOptionsPojo,
+	val world: WorldPojo
+)
