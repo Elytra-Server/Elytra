@@ -16,6 +16,7 @@ INB is a Kotlin program which uses Gradle 2 for compilation. To compile from Git
 * Clone the repo ``git clone https://github.com/INB-It-s-not-a-bukkit`` (it may change in the next months)
 * Run the gradle task ``gradle clean build``
 
+
 ### Credits
 * [Protocol Wiki](http://wiki.vg) for helping to know which protocols exists and the login flow
 * [MCP](http://www.modcoderpack.com/) for helping with the protocol flow
