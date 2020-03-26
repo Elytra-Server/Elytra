@@ -1,6 +1,6 @@
 package io.inb.api.server
 
-import io.inb.api.utils.motd.Motd
+import io.inb.api.server.motd.Motd
 
 data class WorldPojo(
 	val initialWorld: String,
