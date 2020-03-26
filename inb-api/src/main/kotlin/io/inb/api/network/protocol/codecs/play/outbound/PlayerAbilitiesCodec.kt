@@ -11,19 +11,19 @@ class PlayerAbilitiesCodec : Codec<PlayerAbilitiesMessage> {
 		var b0: Byte = 0
 
 		if (message.invulnerable) {
-			b0 = (b0 or 1) as Byte
+			b0 = (b0 or 1)
 		}
 
 		if (message.flying) {
-			b0 = (b0 or 2) as Byte
+			b0 = (b0 or 2)
 		}
 
 		if (message.allowFlying) {
-			b0 = (b0 or 4) as Byte
+			b0 = (b0 or 4)
 		}
 
 		if (message.creativeMode) {
-			b0 = (b0 or 8) as Byte
+			b0 = (b0 or 8)
 		}
 
 		buf.writeByte(b0.toInt())

@@ -30,19 +30,17 @@ class HandshakeHandler : InbMessageHandler<HandshakeMessage>() {
 
 		if (packet == loginPacket) {
 			var reason = ""
+			val player = networkSession.player ?: return
 
 			//TODO: Refactor to remove duplicated code
 			if (message.version < InbServer.PROTOCOL_VERSION) {
 				reason = "Outdated client! Running: ${InbServer.GAME_VERSION}"
-				networkSession.disconnect(reason)
-
-				networkSession.player?.let { PlayerDisconnectEvent(it, reason) }?.let { EventBus.post(it) }
 			} else if (message.version > InbServer.PROTOCOL_VERSION) {
 				reason = "Outdated server! Running: ${InbServer.GAME_VERSION}"
-				networkSession.disconnect(reason)
-
-				networkSession.player?.let { PlayerDisconnectEvent(it, reason) }?.let { EventBus.post(it) }
 			}
+
+			EventBus.post(PlayerDisconnectEvent(player, reason))
+			networkSession.disconnect(reason)
 		}
 
 		println("Handshake [${message.address}:${message.port}] - ${message.version} (${message.state})")
