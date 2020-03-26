@@ -1,20 +1,14 @@
 package io.inb.api.server
 
 import com.google.gson.Gson
-import io.inb.api.events.ServerListPingEvent
-import io.inb.api.io.EventBus
 import io.inb.api.network.NetworkServer
 import io.inb.api.network.SessionRegistry
 import io.inb.api.network.protocol.PacketProvider
 import io.inb.api.scheduler.Scheduler
-import io.inb.api.utils.formatting.Formatting
 import io.inb.api.utils.motd.Motd
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.io.IOException
-import java.io.Reader
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
-
 
 class InbServer(
 	override val sessionRegistry: SessionRegistry = SessionRegistry(),
@@ -25,6 +19,7 @@ class InbServer(
 ) : Server {
 
 	companion object {
+		val logger: Logger = LoggerFactory.getLogger("INB")
 		fun getServer() : Server = InbServer()
 
 		/**
@@ -66,7 +61,7 @@ class InbServer(
 	}
 
 	private fun bindNetwork() {
-		NetworkServer(port).start()
+		NetworkServer(port, sessionRegistry).start()
 	}
 }
 

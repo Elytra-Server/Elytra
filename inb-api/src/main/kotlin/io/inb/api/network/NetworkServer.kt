@@ -3,6 +3,7 @@ package io.inb.api.network
 import com.flowpowered.network.ConnectionManager
 import io.inb.api.network.pipeline.ChannelInitializerHandler
 import io.inb.api.network.pipeline.InbConnectionManager
+import io.inb.api.server.InbServer
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelOption
 import io.netty.channel.EventLoopGroup
@@ -16,7 +17,10 @@ import io.netty.channel.socket.nio.NioServerSocketChannel
  *
  * @param port tcp server port
  */
-internal class NetworkServer(private val port: Int = 25565) {
+internal class NetworkServer(
+	private val port: Int = 25565,
+	private val sessionRegistry: SessionRegistry
+) {
 
 	private val bootstrap: ServerBootstrap = ServerBootstrap()
 
@@ -27,7 +31,7 @@ internal class NetworkServer(private val port: Int = 25565) {
 		val masterGroup: EventLoopGroup = Channels.pickBestEventLoopGroup()
 		val workerGroup: EventLoopGroup = Channels.pickBestEventLoopGroup()
 
-		val connectionManager: ConnectionManager = InbConnectionManager()
+		val connectionManager: ConnectionManager = InbConnectionManager(sessionRegistry)
 
 		bootstrap
 			.group(masterGroup, workerGroup)
@@ -39,7 +43,7 @@ internal class NetworkServer(private val port: Int = 25565) {
 		val server = bootstrap.bind(port).sync()
 
 		if (server.isSuccess) {
-			println("INB is ready for connections.")
+			InbServer.logger.info("Ready for connections!")
 		}
 
 		server.channel().closeFuture().sync()

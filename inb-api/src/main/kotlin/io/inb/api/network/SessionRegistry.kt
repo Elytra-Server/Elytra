@@ -29,6 +29,8 @@ class SessionRegistry(
 		return sessions.size
 	}
 
+	fun clearSessions() = sessions.clear()
+
 	override fun tick() {
 		sessions.keys.forEach {
 			it.tick()

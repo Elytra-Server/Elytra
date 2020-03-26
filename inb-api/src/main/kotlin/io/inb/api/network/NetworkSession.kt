@@ -79,19 +79,15 @@ class NetworkSession(
 	var player: Player? = null
 
 	fun assignPlayer(player: Player){
-		if(!isActive){ //Check if the player is disconnected
-			return
+		if (!isActive) {
+			onDisconnect();
+			return;
 		}
 
 		this.player = player
 
 		finalizeLogin(player)
 		player.join(this)
-
-		if (!isActive) {
-			onDisconnect();
-			return;
-		}
 	}
 
 	private fun finalizeLogin(player: Player?){
@@ -127,6 +123,7 @@ class NetworkSession(
 			super.messageReceived(message)
 			return
 		}
+
 		messageQueue.add(message)
 	}
 

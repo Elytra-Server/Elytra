@@ -12,7 +12,7 @@ import io.netty.channel.Channel
  * Manages the connections within the netty channels
  */
 class InbConnectionManager(
-	private val sessionRegistry: SessionRegistry = InbServer.getServer().sessionRegistry
+	private val sessionRegistry: SessionRegistry
 ) : ConnectionManager {
 
 	override fun sessionInactivated(session: Session) {
@@ -26,7 +26,7 @@ class InbConnectionManager(
 	}
 
 	override fun shutdown() {
-		TODO("not implemented")
+		sessionRegistry.clearSessions()
 	}
 
 }
