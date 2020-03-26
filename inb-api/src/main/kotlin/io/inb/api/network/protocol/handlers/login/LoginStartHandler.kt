@@ -1,10 +1,11 @@
 package io.inb.api.network.protocol.handlers.login
 
-import com.flowpowered.network.MessageHandler
-import io.inb.api.entity.Player
+import io.inb.api.entity.InbPlayer
 import io.inb.api.network.NetworkSession
 import io.inb.api.network.protocol.handlers.InbMessageHandler
 import io.inb.api.network.protocol.message.LoginStartMessage
+import io.inb.api.server.InbServer
+import io.inb.api.server.Server
 import java.util.*
 
 class LoginStartHandler : InbMessageHandler<LoginStartMessage>() {
@@ -14,6 +15,6 @@ class LoginStartHandler : InbMessageHandler<LoginStartMessage>() {
 
 		println("Login has started to user - ${message.username}")
 
-		session.assignPlayer(Player(username, uuid))
+		session.assignPlayer(InbPlayer(username, uuid, gameProfile = null))
 	}
 }

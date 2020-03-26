@@ -1,7 +1,6 @@
 package io.inb.api.network.protocol.codecs.play.outbound
 
 import com.flowpowered.network.Codec
-import io.inb.api.network.protocol.message.play.EnumDifficulty
 import io.inb.api.network.protocol.message.play.ServerDifficultyMessage
 import io.netty.buffer.ByteBuf
 import java.io.IOException

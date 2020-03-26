@@ -1,9 +1,8 @@
 package io.inb.api.network.protocol.codecs.play.outbound
 
 import com.flowpowered.network.Codec
-import com.flowpowered.network.util.ByteBufUtils
 import io.inb.api.network.protocol.message.play.PlayerPosLookMessage
-import io.inb.api.utils.Utils
+import io.inb.api.network.utils.ByteUtils
 import io.netty.buffer.ByteBuf
 import java.io.IOException
 
@@ -15,7 +14,7 @@ class PlayerPosLookCodec : Codec<PlayerPosLookMessage> {
 		buf.writeFloat(message.yaw)
 		buf.writeFloat(message.pitch)
 		buf.writeByte(message.flags.toInt())
-		Utils.writeVarIntToBuffer(buf,message.teleportId)
+		ByteUtils.writeVarIntToBuffer(buf,message.teleportId)
 
 		println(message)
 		return buf

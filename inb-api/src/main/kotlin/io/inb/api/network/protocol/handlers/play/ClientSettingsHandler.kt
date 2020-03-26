@@ -4,7 +4,6 @@ import com.flowpowered.network.MessageHandler
 import io.inb.api.network.NetworkSession
 import io.inb.api.network.protocol.message.play.ClientSettingsMessage
 import io.inb.api.network.protocol.message.play.HeldItemChangeMessage
-import io.inb.api.network.protocol.message.status.StatusPingMessage
 
 class ClientSettingsHandler : MessageHandler<NetworkSession, ClientSettingsMessage> {
 
