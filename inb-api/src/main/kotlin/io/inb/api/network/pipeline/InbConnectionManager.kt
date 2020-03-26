@@ -22,7 +22,6 @@ class InbConnectionManager(
 	override fun newSession(c: Channel): Session {
 		val session = NetworkSession(c)
 		sessionRegistry.add(session)
-
 		return session
 	}
 

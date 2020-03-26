@@ -43,7 +43,6 @@ class HandshakeHandler : InbMessageHandler<HandshakeMessage>() {
 
 				networkSession.player?.let { PlayerDisconnectEvent(it, reason) }?.let { EventBus.post(it) }
 			}
-
 		}
 
 		println("Handshake [${message.address}:${message.port}] - ${message.version} (${message.state})")

@@ -21,6 +21,10 @@ class SessionRegistry(
 		sessions.remove(networkSession)
 	}
 
+	fun get(id: String): NetworkSession? {
+		return sessions.keys.first { session -> session.sessionId == id };
+	}
+
 	fun activeSessions(): Int {
 		return sessions.size
 	}

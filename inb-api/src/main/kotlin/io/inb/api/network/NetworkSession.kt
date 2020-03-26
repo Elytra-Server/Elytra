@@ -19,6 +19,7 @@ import io.netty.channel.ChannelFuture
 import io.netty.channel.ChannelFutureListener
 import io.netty.channel.ChannelHandler
 import io.netty.handler.codec.CodecException
+import java.util.*
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingDeque
 
@@ -33,15 +34,12 @@ class NetworkSession(
 	@Volatile private var disconnected: Boolean = false
 ) : BasicSession(channel, HandshakePacket()), Tickable {
 
-	var player: Player? = null
-
 	private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque()
 
 	override fun sendWithFuture(message: Message?): ChannelFuture? {
 		if (!isActive) {
 			return null
 		}
-
 		return super.sendWithFuture(message)
 	}
 
@@ -52,6 +50,9 @@ class NetworkSession(
 
 	override fun disconnect() {
 		disconnect("No reason specified.")
+		if(disconnected && getProtocol() == packetProvider.playPacket){
+			println("$sessionId : ${player?.username} disconnect")
+		}
 	}
 
 	override fun tick() {
@@ -64,8 +65,8 @@ class NetworkSession(
 			super.messageReceived(message)
 		}
 
-		if(disconnected){
-			println("${player?.username} lost connection")
+		if(disconnected && getProtocol() == packetProvider.playPacket){
+			println("$sessionId lost connection")
 			//TODO: Handle quit event and display quit message
 		}
 	}
@@ -74,6 +75,8 @@ class NetworkSession(
 		updatePipeline("codecs", CodecsHandler(protocol as BasicPacket))
 		super.setProtocol(protocol)
 	}
+
+	var player: Player? = null
 
 	fun assignPlayer(player: Player){
 		if(!isActive){ //Check if the player is disconnected
@@ -95,7 +98,6 @@ class NetworkSession(
 		if (player != null) {
 			send(LoginSuccessMessage(player.uuid.toString(), player.username))
 		}
-
 		setProtocol(packetProvider.playPacket)
 	}
 
@@ -125,7 +127,6 @@ class NetworkSession(
 			super.messageReceived(message)
 			return
 		}
-
 		messageQueue.add(message)
 	}
 
