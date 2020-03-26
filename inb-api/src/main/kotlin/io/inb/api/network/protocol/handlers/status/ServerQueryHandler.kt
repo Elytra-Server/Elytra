@@ -27,8 +27,8 @@ class ServerQueryHandler : InbMessageHandler<ServerQueryMessage>() {
 					InbServer.PROTOCOL_VERSION
 				),
 				Players(
-					1,
 					motd.maxPlayers,
+					1,
 					ArrayList()
 				),
 				Description(motd.description)
