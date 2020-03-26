@@ -35,8 +35,6 @@ class ServerQueryHandler : InbMessageHandler<ServerQueryMessage>() {
 		)
 
 		serverDescriptor.motd = motd
-
-		println(session.server?.serverDescriptor)
 		session.send(ServerInfoMessage(json))
 	}
 

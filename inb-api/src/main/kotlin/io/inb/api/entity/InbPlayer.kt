@@ -23,6 +23,5 @@ data class InbPlayer(
 		session.send(HeldItemChangeMessage(1))
 		session.send(EntityStatusMessage(1, 24))
 		session.send(positionMessage)
-		//TODO: Spawn packet
 	}
 }

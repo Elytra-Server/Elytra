@@ -7,9 +7,8 @@ import io.inb.api.server.InbServer
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelOption
 import io.netty.channel.EventLoopGroup
-import io.netty.channel.epoll.EpollServerSocketChannel
-import io.netty.channel.nio.NioEventLoopGroup
-import io.netty.channel.socket.nio.NioServerSocketChannel
+import io.netty.util.ResourceLeakDetector
+import java.util.logging.Level
 
 /**
  * Initializes a TCP server to handle the packets, codecs and packet handlers
@@ -32,6 +31,7 @@ internal class NetworkServer(
 		val workerGroup: EventLoopGroup = Channels.pickBestEventLoopGroup()
 
 		val connectionManager: ConnectionManager = InbConnectionManager(sessionRegistry)
+
 
 		bootstrap
 			.group(masterGroup, workerGroup)
