@@ -27,7 +27,7 @@ data class ElytraPlayer(
 
 	fun join(session: NetworkSession) {
 		val joinMessage = JoinGameMessage(1, GameMode.CREATIVE, 0, Difficulty.NORMAL, 1, "flat", false)
-		val positionMessage = PlayerPosLookMessage(150.0, 150.0, 150.0, 50f, 50f, 0x01, 1)
+		val positionMessage = PlayerPosLookMessage(location.x, location.y, location.z, location.yaw, location.pitch, 0x01, 1)
 
 		session.send(joinMessage)
 		session.send(HeldItemChangeMessage(1))

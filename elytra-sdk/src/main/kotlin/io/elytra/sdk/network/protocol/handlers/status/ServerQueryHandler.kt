@@ -1,14 +1,9 @@
 package io.elytra.sdk.network.protocol.handlers.status
 
-import com.google.gson.Gson
-import io.elytra.sdk.Elytra
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.handlers.InbMessageHandler
 import io.elytra.sdk.network.protocol.message.status.ServerQueryMessage
-import io.elytra.sdk.network.protocol.message.status.ServerInfoMessage
-import io.elytra.sdk.network.protocol.ProtocolInfo
-import io.elytra.sdk.server.Elytra
-import kotlin.collections.ArrayList
+
 
 /**
  * @see https://wiki.vg/Server_List_Ping
@@ -16,7 +11,7 @@ import kotlin.collections.ArrayList
 class ServerQueryHandler : InbMessageHandler<ServerQueryMessage>() {
 
 	override fun handle(session: NetworkSession, message: ServerQueryMessage) {
-		session.server = Elytra.server
+		/*session.server = Elytra.server
 
 		val serverDescriptor = session.server?.serverDescriptor ?: return
 		val motd = serverDescriptor.motd
@@ -36,8 +31,8 @@ class ServerQueryHandler : InbMessageHandler<ServerQueryMessage>() {
                 )
 		)
 
-		serverDescriptor.motd = motd
-		session.send(ServerInfoMessage(json))
+		serverDescriptor.motd = motd */
+		//session.send(ServerInfoMessage(json))
 	}
 
 	private data class StatusResponse(

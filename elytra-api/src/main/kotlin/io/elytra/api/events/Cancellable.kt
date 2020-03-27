@@ -1,4 +1,4 @@
-package io.elytra.api.io
+package io.elytra.api.events
 
 interface Cancellable {
 	var cancelled: Boolean

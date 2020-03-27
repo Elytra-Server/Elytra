@@ -24,7 +24,7 @@ class InbConnectionManager(
 	}
 
 	override fun shutdown() {
-		sessionRegistry.clearSessions()
+		sessionRegistry.clear()
 	}
 
 }

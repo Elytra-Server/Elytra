@@ -11,19 +11,19 @@ class PlayerRegistry(
 	private val sessions: ConcurrentMap<NetworkSession, Boolean> = ConcurrentHashMap()
 ) : Registry<Player, String>{
 
-	override fun add(record: Player) {
+	override fun add(target: Player) {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 
-	override fun remove(record: Player) {
+	override fun remove(target: Player) {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 
-	override fun get(record: String): Player? {
+	override fun get(target: String): Player? {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 
-	override fun stream(): Stream<Player> {
+	override fun iterator(): Stream<Player> {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 

@@ -1,6 +1,7 @@
 package io.elytra.sdk.server
 
 import com.google.gson.Gson
+import io.elytra.api.io.ConsoleSender
 import io.elytra.sdk.network.NetworkServer
 import io.elytra.sdk.network.SessionRegistry
 import io.elytra.sdk.network.protocol.PacketProvider
@@ -8,6 +9,7 @@ import io.elytra.sdk.scheduler.Scheduler
 import io.elytra.api.server.Server
 import io.elytra.api.server.ServerPojo
 import io.elytra.sdk.console.ElytraConsole
+import org.slf4j.LoggerFactory
 import java.io.IOException
 
 class Elytra private constructor(
@@ -18,7 +20,8 @@ class Elytra private constructor(
 ) : Server {
 
 	companion object {
-		val server: Server = Elytra()
+		val server = Elytra()
+		val console: ConsoleSender =  ElytraConsole(LoggerFactory.getLogger("Elytra"))
 	}
 
 	init {
@@ -28,6 +31,8 @@ class Elytra private constructor(
 	override fun boot() {
 		PacketProvider()
 		scheduler.start()
+
+		loadConfigs()
 		bindNetwork()
 	}
 
@@ -41,10 +46,6 @@ class Elytra private constructor(
 			val serverPojo: ServerPojo = gson.fromJson(resource.readText(), ServerPojo::class.java)
 
 			this.serverDescriptor = serverPojo
-
-			ElytraConsole.send(
-				StringBuilder("&2").append("Server configurations loaded.")
-			)
 		} catch (e: IOException) {
 			println(e.printStackTrace())
 		}

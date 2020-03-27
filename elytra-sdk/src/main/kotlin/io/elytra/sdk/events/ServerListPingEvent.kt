@@ -1,6 +1,6 @@
-package io.elytra.api.events
+package io.elytra.sdk.events
 
-import io.elytra.api.io.ElytraEvent
+import io.elytra.api.events.ElytraEvent
 import io.elytra.api.server.motd.Motd
 
 data class ServerListPingEvent(

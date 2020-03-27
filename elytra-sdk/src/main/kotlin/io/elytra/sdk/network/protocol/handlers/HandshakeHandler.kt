@@ -1,14 +1,14 @@
 package io.elytra.sdk.network.protocol.handlers
 
-import io.elytra.api.events.PlayerDisconnectEvent
-import io.elytra.api.io.EventBus
+import io.elytra.sdk.events.PlayerDisconnectEvent
+import io.elytra.api.events.EventBus
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.message.HandshakeMessage
 import io.elytra.sdk.network.protocol.packets.BasicPacket
 import io.elytra.sdk.network.protocol.packets.LoginPacket
 import io.elytra.sdk.network.protocol.packets.StatusPacket
-import io.elytra.api.server.InbServer
 import io.elytra.sdk.network.protocol.ProtocolInfo
+import io.elytra.sdk.server.Elytra
 
 class HandshakeHandler : InbMessageHandler<HandshakeMessage>() {
 
@@ -30,7 +30,7 @@ class HandshakeHandler : InbMessageHandler<HandshakeMessage>() {
 
 		if (packet == loginPacket) {
 			var reason = ""
-			val player = networkSession.player ?: return
+			//val player = networkSession.player ?: return
 
 			//TODO: Refactor to remove duplicated code
 			if (message.version < ProtocolInfo.CURRENT_PROTOCOL) {
@@ -39,11 +39,11 @@ class HandshakeHandler : InbMessageHandler<HandshakeMessage>() {
 				reason = "Outdated server! Running: ${ProtocolInfo.MINECRAFT_VERSION}"
 			}
 
-			EventBus.post(PlayerDisconnectEvent(player, reason))
+			//EventBus.post(PlayerDisconnectEvent(player, reason))
 			networkSession.disconnect(reason)
 		}
 
-		InbServer.logger.debug("Handshake [${message.address}:${message.port}] - ${message.version} (${message.state})")
+		Elytra.console.debug("Handshake [${message.address}:${message.port}] - ${message.version} (${message.state})")
 	}
 
 }

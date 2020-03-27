@@ -1,4 +1,4 @@
-package io.elytra.api.io
+package io.elytra.api.events
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject

@@ -10,10 +10,6 @@ import io.elytra.sdk.network.protocol.handlers.play.ClientSettingsHandler
 import io.elytra.sdk.network.protocol.handlers.play.ConfirmTeleportHandler
 import io.elytra.sdk.network.protocol.handlers.play.CustomPayloadHandler
 import io.elytra.sdk.network.protocol.message.play.*
-import io.inb.network.protocol.codecs.play.inbound.*
-import io.inb.network.protocol.codecs.play.outbound.*
-import io.inb.network.protocol.handlers.play.*
-import io.inb.network.protocol.message.play.*
 
 /**
  * @param [opcode] in this case means whats the highest packet id on the play packets
