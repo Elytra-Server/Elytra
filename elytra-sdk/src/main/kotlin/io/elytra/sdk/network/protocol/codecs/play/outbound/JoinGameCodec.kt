@@ -9,13 +9,12 @@ import java.io.IOException
 class JoinGameCodec : Codec<JoinGameMessage> {
 	override fun encode(buf: ByteBuf, message: JoinGameMessage): ByteBuf {
 		buf.writeInt(message.id)
-		buf.writeByte(message.gameMode.value)
+		ByteUtils.writeEnumValue(buf,message.gameMode)
 		buf.writeInt(message.dimension)
-		buf.writeByte(message.difficulty.value)
+		ByteUtils.writeEnumValue(buf,message.difficulty)
 		buf.writeByte(message.maxPlayers)
 		ByteUtils.writeString(buf, message.worldType)
 		buf.writeBoolean(message.reducedDebugInfo)
-
 		return buf
 	}
 

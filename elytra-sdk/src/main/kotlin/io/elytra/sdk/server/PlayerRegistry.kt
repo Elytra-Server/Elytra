@@ -2,37 +2,36 @@ package io.elytra.sdk.server
 
 import io.elytra.api.entity.Player
 import io.elytra.api.registry.Registry
-import io.elytra.sdk.network.NetworkSession
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.ConcurrentMap
-import java.util.stream.Stream
 
 class PlayerRegistry(
-	private val sessions: ConcurrentMap<NetworkSession, Boolean> = ConcurrentHashMap()
+	private val players: Set<Player> = ConcurrentHashMap.newKeySet(),
+	private var currentId: Int = 1
 ) : Registry<Player, String>{
 
 	override fun add(target: Player) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		players.plus(target)
+		currentId++
 	}
 
 	override fun remove(target: Player) {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		players.minus(target)
 	}
 
 	override fun get(target: String): Player? {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		return players.first { player -> player.username == target };
 	}
 
-	override fun iterator(): Stream<Player> {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	override fun iterator(): Iterator<Player> {
+		return players.iterator()
 	}
 
 	override fun size(): Int {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		return players.size
 	}
 
 	override fun clear() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		TODO("not implemented")
 	}
 
 }

@@ -85,16 +85,12 @@ class NetworkSession(
 	}
 
 	fun disconnect(reason: String) {
-		/*if (player != null) {
-			ElytraServer.logger.info("${player?.username} kicked due $reason")
-		}*/
-
-		if (disconnected && getProtocol() == packetProvider.playPacket) {
-			//println("$sessionId : ${player?.username} disconnect")
-			sendWithFuture(DisconnectMessage(reason))?.addListener(ChannelFutureListener.CLOSE)
+		/*if (getProtocol() == packetProvider.playPacket) {
 		} else {
 			channel.close()
-		}
+		}*/
+		println("$sessionId : kicked due $reason")
+		sendWithFuture(DisconnectMessage(reason))?.addListener(ChannelFutureListener.CLOSE)
 	}
 
 	private fun updatePipeline(key: String, handler: ChannelHandler) {

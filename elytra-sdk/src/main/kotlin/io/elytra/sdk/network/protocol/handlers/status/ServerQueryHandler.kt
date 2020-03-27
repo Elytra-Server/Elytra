@@ -1,7 +1,10 @@
 package io.elytra.sdk.network.protocol.handlers.status
 
+import com.google.gson.Gson
 import io.elytra.sdk.network.NetworkSession
+import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
+import io.elytra.sdk.network.protocol.message.status.ServerInfoMessage
 import io.elytra.sdk.network.protocol.message.status.ServerQueryMessage
 
 
@@ -11,28 +14,26 @@ import io.elytra.sdk.network.protocol.message.status.ServerQueryMessage
 class ServerQueryHandler : ElytraMessageHandler<ServerQueryMessage>() {
 
 	override fun handle(session: NetworkSession, message: ServerQueryMessage) {
-		/*session.server = Elytra.server
-
-		val serverDescriptor = session.server?.serverDescriptor ?: return
-		val motd = serverDescriptor.motd
+		//val serverDescriptor = session.server?.serverDescriptor ?: return
+		//val motd = serverDescriptor.motd
 
 		val json: String = Gson().toJson(
                 StatusResponse(
                         Version(
-                                motd.pingText,
+                                "INB",
                                 ProtocolInfo.CURRENT_PROTOCOL
                         ),
                         Players(
-                                serverDescriptor.options.maxPlayers,
+                                1,
                                 0, //FIXME: Get from a player registry
                                 ArrayList()
                         ),
-                        Description(motd.description)
+                        Description("Elytra Server")//motd.description
                 )
 		)
 
-		serverDescriptor.motd = motd */
-		//session.send(ServerInfoMessage(json))
+		//serverDescriptor.motd = motd
+		session.send(ServerInfoMessage(json))
 	}
 
 	private data class StatusResponse(

@@ -25,16 +25,6 @@ data class ElytraPlayer(
 	override var gamemode: GameMode = GameMode.SURVIVAL
 ) : Player {
 
-	fun join(session: NetworkSession) {
-		val joinMessage = JoinGameMessage(1, GameMode.CREATIVE, 0, Difficulty.NORMAL, 1, "flat", false)
-		val positionMessage = PlayerPosLookMessage(location.x, location.y, location.z, location.yaw, location.pitch, 0x01, 1)
-
-		session.send(joinMessage)
-		session.send(HeldItemChangeMessage(1))
-		session.send(EntityStatusMessage(1, 24))
-		session.send(positionMessage)
-	}
-
 	fun session(){
 
 	}

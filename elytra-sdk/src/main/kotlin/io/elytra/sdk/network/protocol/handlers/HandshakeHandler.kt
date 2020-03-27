@@ -27,18 +27,10 @@ class HandshakeHandler : ElytraMessageHandler<HandshakeMessage>() {
 		networkSession.setProtocol(packet)
 
 		if (packet == loginPacket) {
-			var reason = ""
-			//val player = networkSession.player ?: return
-
-			//TODO: Refactor to remove duplicated code
-			if (message.version < ProtocolInfo.CURRENT_PROTOCOL) {
-				reason = "Outdated client! Running: ${ProtocolInfo.MINECRAFT_VERSION}"
-			} else if (message.version > ProtocolInfo.CURRENT_PROTOCOL) {
-				reason = "Outdated server! Running: ${ProtocolInfo.MINECRAFT_VERSION}"
+			if (message.version < ProtocolInfo.CURRENT_PROTOCOL || message.version > ProtocolInfo.CURRENT_PROTOCOL) {
+				val reason = if (message.version < ProtocolInfo.CURRENT_PROTOCOL) "Outdated client! Running: ${ProtocolInfo.MINECRAFT_VERSION}" else "Outdated server! Running: ${ProtocolInfo.MINECRAFT_VERSION}"
+				networkSession.disconnect(reason)
 			}
-
-			//EventBus.post(PlayerDisconnectEvent(player, reason))
-			networkSession.disconnect(reason)
 		}
 
 		Elytra.console.debug("Handshake [${message.address}:${message.port}] - ${message.version} (${message.state})")

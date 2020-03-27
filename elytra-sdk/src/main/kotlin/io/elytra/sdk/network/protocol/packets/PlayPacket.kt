@@ -45,7 +45,7 @@ class PlayPacket : BasicPacket("PLAY", 0x4F) {
 			ChatHandler::class.java
 		)
 
-		outbound(0x39, HeldItemChangeMessage::class.java, HeldItemChangeCodec::class.java)
+		outbound(0x3A, HeldItemChangeMessage::class.java, HeldItemChangeCodec::class.java)//Maybe 0x39 // 0x3A
 		outbound(0x2B, PlayerAbilitiesMessage::class.java, PlayerAbilitiesCodec::class.java)
 		outbound(0x0D, ServerDifficultyMessage::class.java, ServerDifficultyCodec::class.java)
 		outbound(0x18, CustomPayloadMessage::class.java, CustomPayloadCodec::class.java)
