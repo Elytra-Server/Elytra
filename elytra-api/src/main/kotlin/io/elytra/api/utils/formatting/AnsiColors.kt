@@ -1,6 +1,6 @@
 package io.elytra.api.utils.formatting
 
-enum class AnsiColors(private val ansi: String, private val color: String) {
+enum class AnsiColors(internal val ansi: String, internal val color: String) {
 	RESET("\u001B[0m", "&r"),
 	BLACK("\u001B[30m", "&0"),
 	RED("\u001B[31m", "&c"),
@@ -11,15 +11,16 @@ enum class AnsiColors(private val ansi: String, private val color: String) {
 	CYAN("\u001B[36m", "&b"),
 	WHITE("\u001B[37m", "&f");
 
-	companion object {
-		fun replaceByColor(text: String): String {
-			var message = text.replace("§", "&")
-
-			values().forEach {
-				message = message.replace(it.color, it.ansi)
-			}
-
-			return message
-		}
-	}
 }
+
+
+val String.colorized: String
+	get() {
+		var message = replace("§", "&")
+
+		AnsiColors.values().forEach {
+			message = message.replace(it.color, it.ansi)
+		}
+
+		return message
+	}
