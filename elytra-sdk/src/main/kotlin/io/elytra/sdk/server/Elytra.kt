@@ -7,8 +7,7 @@ import io.elytra.sdk.network.protocol.PacketProvider
 import io.elytra.sdk.scheduler.Scheduler
 import io.elytra.api.server.Server
 import io.elytra.api.server.ServerPojo
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import io.elytra.sdk.console.ElytraConsole
 import java.io.IOException
 
 class Elytra private constructor(
@@ -19,7 +18,6 @@ class Elytra private constructor(
 ) : Server {
 
 	companion object {
-		val logger: Logger = LoggerFactory.getLogger("INB")
 		val server: Server = Elytra()
 	}
 
@@ -43,6 +41,10 @@ class Elytra private constructor(
 			val serverPojo: ServerPojo = gson.fromJson(resource.readText(), ServerPojo::class.java)
 
 			this.serverDescriptor = serverPojo
+
+			ElytraConsole.send(
+				StringBuilder("&2").append("Server configurations loaded.")
+			)
 		} catch (e: IOException) {
 			println(e.printStackTrace())
 		}
