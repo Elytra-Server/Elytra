@@ -1,7 +1,5 @@
 package io.elytra.sdk.network.protocol.handlers
 
-import io.elytra.sdk.events.PlayerDisconnectEvent
-import io.elytra.api.events.EventBus
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.message.HandshakeMessage
 import io.elytra.sdk.network.protocol.packets.BasicPacket
@@ -10,7 +8,7 @@ import io.elytra.sdk.network.protocol.packets.StatusPacket
 import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.server.Elytra
 
-class HandshakeHandler : InbMessageHandler<HandshakeMessage>() {
+class HandshakeHandler : ElytraMessageHandler<HandshakeMessage>() {
 
 	override fun handle(networkSession: NetworkSession, message: HandshakeMessage) {
 		val loginPacket = LoginPacket()

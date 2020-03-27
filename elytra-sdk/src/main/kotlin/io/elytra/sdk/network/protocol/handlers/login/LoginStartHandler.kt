@@ -1,13 +1,13 @@
 package io.elytra.sdk.network.protocol.handlers.login
 
 import io.elytra.sdk.network.NetworkSession
-import io.elytra.sdk.network.protocol.handlers.InbMessageHandler
+import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
 import io.elytra.sdk.network.protocol.message.LoginStartMessage
 import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
 import io.elytra.sdk.network.protocol.packets.PlayPacket
 import java.util.*
 
-class LoginStartHandler : InbMessageHandler<LoginStartMessage>() {
+class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
 	override fun handle(session: NetworkSession, message: LoginStartMessage) {
 		val username: String = message.username
 		val uuid = UUID.randomUUID()

@@ -1,14 +1,14 @@
 package io.elytra.sdk.network.protocol.handlers.status
 
 import io.elytra.sdk.network.NetworkSession
-import io.elytra.sdk.network.protocol.handlers.InbMessageHandler
+import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
 import io.elytra.sdk.network.protocol.message.status.ServerQueryMessage
 
 
 /**
  * @see https://wiki.vg/Server_List_Ping
  */
-class ServerQueryHandler : InbMessageHandler<ServerQueryMessage>() {
+class ServerQueryHandler : ElytraMessageHandler<ServerQueryMessage>() {
 
 	override fun handle(session: NetworkSession, message: ServerQueryMessage) {
 		/*session.server = Elytra.server

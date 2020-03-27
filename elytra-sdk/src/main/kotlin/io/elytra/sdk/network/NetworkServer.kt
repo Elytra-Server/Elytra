@@ -1,9 +1,8 @@
 package io.elytra.sdk.network
 
 import com.flowpowered.network.ConnectionManager
-import io.elytra.sdk.console.ElytraConsole
 import io.elytra.sdk.network.pipeline.ChannelInitializerHandler
-import io.elytra.sdk.network.pipeline.InbConnectionManager
+import io.elytra.sdk.network.pipeline.ElytraConnectionManager
 import io.elytra.sdk.server.Elytra
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelOption
@@ -29,7 +28,7 @@ internal class NetworkServer(
 		val masterGroup: EventLoopGroup = Channels.pickBestEventLoopGroup()
 		val workerGroup: EventLoopGroup = Channels.pickBestEventLoopGroup()
 
-		val connectionManager: ConnectionManager = InbConnectionManager(sessionRegistry)
+		val connectionManager: ConnectionManager = ElytraConnectionManager(sessionRegistry)
 
 
 		bootstrap

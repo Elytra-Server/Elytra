@@ -4,4 +4,4 @@ import com.flowpowered.network.Message
 import com.flowpowered.network.MessageHandler
 import io.elytra.sdk.network.NetworkSession
 
-abstract class InbMessageHandler<M : Message> : MessageHandler<NetworkSession, M>
+abstract class ElytraMessageHandler<M : Message> : MessageHandler<NetworkSession, M>

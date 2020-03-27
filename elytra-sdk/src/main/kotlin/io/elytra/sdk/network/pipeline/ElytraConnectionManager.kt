@@ -9,7 +9,7 @@ import io.netty.channel.Channel
 /**
  * Manages the connections within the netty channels
  */
-class InbConnectionManager(
+class ElytraConnectionManager(
 	private val sessionRegistry: SessionRegistry
 ) : ConnectionManager {
 
