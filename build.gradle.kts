@@ -67,9 +67,9 @@ subprojects {
 }
 
 gradle.taskGraph.whenReady {
-    findProject("inb-api")?.tasks?.also {
-        it.findByPath(":inb-api:build")?.enabled = false
-        it.findByPath(":inb-api:shadowJar")?.enabled = false
+    findProject("elytra-api")?.tasks?.also {
+        it.findByPath(":elytra-api:build")?.enabled = true
+        it.findByPath(":elytra-api:shadowJar")?.enabled = true
     }
 }
 

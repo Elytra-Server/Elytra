@@ -1,3 +1,3 @@
-rootProject.name = "its-not-bukkit"
+rootProject.name = "elytra"
 include("elytra-api")
 include("elytra-sdk")
