@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile
 import io.elytra.api.entity.Player
 import io.elytra.api.world.Difficulty
 import io.elytra.api.world.GameMode
-import io.elytra.api.world.Location
+import io.elytra.api.world.Position
 import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
@@ -34,10 +34,10 @@ class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
 		session.send(LoginSuccessMessage(uuid.toString(), username))
 		session.setProtocol(PlayPacket())
 
-		val player: Player = ElytraPlayer(session.sessionId,username,uuid,gameProfile,true,false,0,0, Location.EMPTY,GameMode.SURVIVAL)
+		val player: Player = ElytraPlayer(session.sessionId,username,uuid,gameProfile,true,false,0,0, Position.EMPTY,GameMode.SURVIVAL)
 
 		val joinMessage = JoinGameMessage(1, player.gamemode, 0, Difficulty.NORMAL, 1, "flat", false)
-		val positionMessage = PlayerPosLookMessage(player.location.x, player.location.y, player.location.z, player.location.yaw, player.location.pitch, 0x01, 1)
+		val positionMessage = PlayerPosLookMessage(player.position.x, player.position.y, player.position.z, player.position.yaw, player.position.pitch, 0x01, 1)
 
 		Elytra.server.playerRegistry.add(player)
 

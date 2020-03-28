@@ -5,14 +5,14 @@ import com.flowpowered.network.MessageHandler
 import com.flowpowered.network.protocol.AbstractProtocol
 import com.flowpowered.network.session.BasicSession
 import io.elytra.api.events.EventBus
+import io.elytra.api.utils.Asyncable
+import io.elytra.api.utils.Tickable
+import io.elytra.sdk.network.events.SessionDisconnectEvent
 import io.elytra.sdk.network.pipeline.CodecsHandler
 import io.elytra.sdk.network.protocol.PacketProvider
 import io.elytra.sdk.network.protocol.message.DisconnectMessage
 import io.elytra.sdk.network.protocol.packets.BasicPacket
 import io.elytra.sdk.network.protocol.packets.HandshakePacket
-import io.elytra.api.utils.Asyncable
-import io.elytra.api.utils.Tickable
-import io.elytra.sdk.network.events.SessionDisconnectEvent
 import io.netty.channel.Channel
 import io.netty.channel.ChannelFuture
 import io.netty.channel.ChannelFutureListener
