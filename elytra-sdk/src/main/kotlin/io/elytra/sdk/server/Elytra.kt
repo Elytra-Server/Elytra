@@ -15,6 +15,7 @@ class Elytra private constructor(
 	override var serverDescriptor: ServerDescriptor? = null,
 	val playerRegistry: PlayerRegistry = PlayerRegistry(),
 	private val port: Int = 25565,
+
 	private val sessionRegistry: SessionRegistry = SessionRegistry(),
 	private val scheduler: Scheduler = Scheduler(sessionRegistry)
 ) : Server {
@@ -32,7 +33,6 @@ class Elytra private constructor(
 		PacketProvider()
 		scheduler.start()
 
-		loadConfigs()
 		bindNetwork()
 	}
 
