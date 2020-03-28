@@ -1,6 +1,7 @@
 package io.elytra.sdk.network.protocol.codecs.play.inbound
 
 import com.flowpowered.network.Codec
+import com.flowpowered.network.util.ByteBufUtils
 import io.elytra.sdk.network.protocol.message.play.ClientSettingsMessage
 import io.elytra.sdk.network.utils.minecraft
 import io.netty.buffer.ByteBuf
@@ -20,10 +21,10 @@ class ClientSettingsCodec : Codec<ClientSettingsMessage> {
 	override fun decode(buffer: ByteBuf): ClientSettingsMessage {
 		val lang = buffer.minecraft.readString(16)
 		val view = buffer.readByte()
-		val chatVisibility = buffer.minecraft.readVarInt()
+		val chatVisibility = ByteBufUtils.readVarInt(buffer)
 		val enableColors = buffer.readBoolean()
 		val modelPartFlags = buffer.readUnsignedByte()
-		val mainHand = buffer.minecraft.readVarInt()
+		val mainHand = ByteBufUtils.readVarInt(buffer)
 		return ClientSettingsMessage(lang, view, chatVisibility, enableColors, modelPartFlags, mainHand)
 	}
 

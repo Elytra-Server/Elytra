@@ -27,9 +27,7 @@ internal class NetworkServer(
 	fun start() {
 		val masterGroup: EventLoopGroup = Channels.pickBestEventLoopGroup()
 		val workerGroup: EventLoopGroup = Channels.pickBestEventLoopGroup()
-
 		val connectionManager: ConnectionManager = ElytraConnectionManager(sessionRegistry)
-
 
 		bootstrap
 			.group(masterGroup, workerGroup)

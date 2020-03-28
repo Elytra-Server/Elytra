@@ -12,7 +12,6 @@ class HandshakeHandler : ElytraMessageHandler<HandshakeMessage>() {
 
 	override fun handle(networkSession: NetworkSession, message: HandshakeMessage) {
 		val loginPacket = LoginPacket()
-
 		val packet: BasicPacket
 
 		if (message.state == 1) {

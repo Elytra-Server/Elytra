@@ -12,7 +12,6 @@ class ChannelInitializerHandler(
 	private val connectionManager : ConnectionManager
 ) : ChannelInitializer<SocketChannel>() {
 	override fun initChannel(ch: SocketChannel) {
-
 		val codecsHandler = CodecsHandler(HandshakePacket())
 		val decoderHandler = DecoderHandler()
 		val messagesHandler = MessageHandler(connectionManager = connectionManager)

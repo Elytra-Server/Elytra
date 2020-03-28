@@ -1,6 +1,7 @@
 package io.elytra.sdk.network.protocol.codecs.play.outbound
 
 import com.flowpowered.network.Codec
+import com.flowpowered.network.util.ByteBufUtils
 import io.elytra.sdk.network.protocol.message.play.PlayerPosLookMessage
 import io.elytra.sdk.network.utils.minecraft
 import io.netty.buffer.ByteBuf
@@ -15,7 +16,7 @@ class PlayerPosLookCodec : Codec<PlayerPosLookMessage> {
 		buffer.writeFloat(message.yaw)
 		buffer.writeFloat(message.pitch)
 		buffer.writeByte(message.flags.toInt())
-		buffer.minecraft.writeVarInt(message.teleportId)
+		ByteBufUtils.writeVarInt(buffer,message.teleportId)
 
 		println(message)
 		return buffer

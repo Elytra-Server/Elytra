@@ -12,7 +12,7 @@ import java.util.stream.Stream
  * @see [io.elytra.sdk.network.NetworkSession]
  */
 class SessionRegistry(
-	private val sessions: ConcurrentMap<NetworkSession, Boolean> = ConcurrentHashMap()
+	private var sessions: ConcurrentMap<NetworkSession, Boolean> = ConcurrentHashMap()
 ) : Registry<NetworkSession,String>,Tickable {
 
 	override fun add(target: NetworkSession) {

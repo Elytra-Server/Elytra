@@ -1,13 +1,12 @@
 package io.elytra.sdk.network.protocol.handlers.login
 
 import com.mojang.authlib.GameProfile
-import io.elytra.api.entity.Player
 import io.elytra.api.world.Difficulty
 import io.elytra.api.world.GameMode
-import io.elytra.api.world.Location
-import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.network.NetworkSession
+import io.elytra.sdk.network.SessionState
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
+import io.elytra.sdk.network.protocol.message.login.EncryptionRequestMessage
 import io.elytra.sdk.network.protocol.message.login.LoginStartMessage
 import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
 import io.elytra.sdk.network.protocol.message.play.EntityStatusMessage
@@ -16,35 +15,26 @@ import io.elytra.sdk.network.protocol.message.play.JoinGameMessage
 import io.elytra.sdk.network.protocol.message.play.PlayerPosLookMessage
 import io.elytra.sdk.network.protocol.packets.PlayPacket
 import io.elytra.sdk.server.Elytra
+import org.apache.commons.lang3.Validate
+import java.nio.charset.StandardCharsets
 import java.util.*
 
 class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
 	override fun handle(session: NetworkSession, message: LoginStartMessage) {
-		val username: String = message.username
-		val uuid = UUID.randomUUID()
-		val gameProfile: GameProfile = GameProfile(uuid,username)
+		Validate.validState(session.sessionState == SessionState.HELLO, "Unexpected hello packet")
+		println("Login has started to user - ${message.gameProfile.name}")
 
-		println("Login has started to user - ${message.username}")
+		//Define default gameProfile
+		session.gameProfile = message.gameProfile
 
 		if(!session.isActive){
 			session.onDisconnect();
 			return
 		}
 
-		session.send(LoginSuccessMessage(uuid.toString(), username))
-		session.setProtocol(PlayPacket())
+		//Elytra.server.playerRegistry.initialize(session,GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + message.gameProfile.name.toLowerCase()).toByteArray(StandardCharsets.UTF_8)),  message.gameProfile.name), false)
 
-		val player: Player = ElytraPlayer(session.sessionId,username,uuid,gameProfile,true,false,0,0, Location.EMPTY,GameMode.SURVIVAL)
-
-		val joinMessage = JoinGameMessage(1, player.gamemode, 0, Difficulty.NORMAL, 1, "flat", false)
-		val positionMessage = PlayerPosLookMessage(player.location.x, player.location.y, player.location.z, player.location.yaw, player.location.pitch, 0x01, 1)
-
-		Elytra.server.playerRegistry.add(player)
-
-		session.send(joinMessage)
-		session.send(HeldItemChangeMessage(8))
-		session.send(EntityStatusMessage(1, 24))
-		session.send(positionMessage)
-
+		session.sessionState = SessionState.KEY
+		session.send(EncryptionRequestMessage("",Elytra.server.keypair.public,session.verifyToken))
 	}
 }

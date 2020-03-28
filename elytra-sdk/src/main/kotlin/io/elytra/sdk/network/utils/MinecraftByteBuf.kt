@@ -1,5 +1,6 @@
 package io.elytra.sdk.network.utils
 
+import com.flowpowered.network.util.ByteBufUtils
 import io.netty.buffer.ByteBuf
 import io.netty.handler.codec.DecoderException
 import io.netty.handler.codec.EncoderException
@@ -12,16 +13,16 @@ val ByteBuf.minecraft get() = MinecraftByteBuf(this)
 inline class MinecraftByteBuf(private val byteBuf: ByteBuf){
 
 	fun writeEnumValue(value: Enum<*>) {
-		writeVarInt(value.ordinal)
+		ByteBufUtils.writeVarInt(byteBuf,value.ordinal)
 	}
 
 	fun <T : Enum<T>?> readEnumValue(enumClass: Class<T>): T {
-		return (enumClass.enumConstants as Array<*>)[readVarInt()] as T
+		return (enumClass.enumConstants as Array<*>)[ByteBufUtils.readVarInt(byteBuf)] as T
 	}
 
-	fun writeVarInt(`in`: Int) {
+	/*fun writeVarInt(`in`: Int) {
 		var input = `in`
-		while (input and -128 != 0) {
+		while ((input and -128) != 0) {
 			byteBuf.writeByte(input.and(127) or 128)
 			input = input ushr 7
 		}
@@ -44,9 +45,8 @@ inline class MinecraftByteBuf(private val byteBuf: ByteBuf){
 				break
 			}
 		}
-
 		return i
-	}
+	}*/
 
 	fun writeUuid(uuid: UUID) {
 		byteBuf.writeLong(uuid.mostSignificantBits)
@@ -63,13 +63,13 @@ inline class MinecraftByteBuf(private val byteBuf: ByteBuf){
 		return if (bytes.size > 32767) {
 			throw EncoderException("String too big (was " + bytes.size + " bytes encoded, max " + 32767 + ")")
 		} else {
-			writeVarInt(bytes.size)
+			ByteBufUtils.writeVarInt(byteBuf,bytes.size)
 			byteBuf.writeBytes(bytes)
 		}
 	}
 
 	fun readString(maxLength: Int): String {
-		val i: Int = readVarInt()
+		val i: Int = ByteBufUtils.readVarInt(byteBuf)
 		return if (i > maxLength * 4) {
 			throw DecoderException("The received encoded string buffer length is longer than maximum allowed (" + i + " > " + maxLength * 4 + ")")
 		} else if (i < 0) {
@@ -84,4 +84,25 @@ inline class MinecraftByteBuf(private val byteBuf: ByteBuf){
 			}
 		}
 	}
+
+	fun writeByteArray(array: ByteArray) {
+		ByteBufUtils.writeVarInt(byteBuf,array.size)
+		byteBuf.writeBytes(array)
+	}
+
+	fun readByteArray(): ByteArray? {
+		return this.readByteArray(byteBuf.readableBytes())
+	}
+
+	fun readByteArray(maxLength: Int): ByteArray? {
+		val i: Int = ByteBufUtils.readVarInt(byteBuf)
+		return if (i > maxLength) {
+			throw DecoderException("ByteArray with size $i is bigger than allowed $maxLength")
+		} else {
+			val abyte = ByteArray(i)
+			byteBuf.readBytes(abyte)
+			abyte
+		}
+	}
+
 }

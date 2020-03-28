@@ -1,6 +1,7 @@
 package io.elytra.sdk.network.protocol.packets
 
 import io.elytra.sdk.network.protocol.ProtocolInfo
+import io.elytra.sdk.network.protocol.codecs.DisconnectCodec
 import io.elytra.sdk.network.protocol.codecs.play.CustomPayloadCodec
 import io.elytra.sdk.network.protocol.codecs.play.inbound.ChatCodec
 import io.elytra.sdk.network.protocol.codecs.play.inbound.ClientSettingsCodec
@@ -10,6 +11,7 @@ import io.elytra.sdk.network.protocol.handlers.play.ChatHandler
 import io.elytra.sdk.network.protocol.handlers.play.ClientSettingsHandler
 import io.elytra.sdk.network.protocol.handlers.play.ConfirmTeleportHandler
 import io.elytra.sdk.network.protocol.handlers.play.CustomPayloadHandler
+import io.elytra.sdk.network.protocol.message.DisconnectMessage
 import io.elytra.sdk.network.protocol.message.play.*
 
 /**
@@ -53,5 +55,6 @@ class PlayPacket : BasicPacket("PLAY", 0x4F) {
 		outbound(ProtocolInfo.JOIN_GAME, JoinGameMessage::class.java, JoinGameCodec::class.java)
 		outbound(ProtocolInfo.PLAYER_POS_LOOK, PlayerPosLookMessage::class.java, PlayerPosLookCodec::class.java)
 		outbound(ProtocolInfo.ENTITY_STATUS, EntityStatusMessage::class.java, EntityStatusCodec::class.java)
+		outbound(ProtocolInfo.PLAY_DISCONNECT, DisconnectMessage::class.java, DisconnectCodec::class.java)
 	}
 }

@@ -6,11 +6,10 @@ import io.elytra.api.world.Location
 import java.util.*
 
 interface Player {
-
-	var username: String
-	var uuid: UUID
+	var displayName: String
 	var gameProfile: GameProfile?
 
+	var premium: Boolean
 	var online: Boolean
 	var banned: Boolean
 
@@ -19,5 +18,4 @@ interface Player {
 
 	var location: Location
 	var gamemode: GameMode
-
 }
