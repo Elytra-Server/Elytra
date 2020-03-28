@@ -1,12 +1,13 @@
 package io.elytra.sdk.network.protocol.handlers.login
 
 import com.mojang.authlib.GameProfile
+import io.elytra.api.entity.Player
 import io.elytra.api.world.Difficulty
 import io.elytra.api.world.GameMode
+import io.elytra.api.world.Location
+import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.network.NetworkSession
-import io.elytra.sdk.network.SessionState
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
-import io.elytra.sdk.network.protocol.message.login.EncryptionRequestMessage
 import io.elytra.sdk.network.protocol.message.login.LoginStartMessage
 import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
 import io.elytra.sdk.network.protocol.message.play.EntityStatusMessage

@@ -2,13 +2,13 @@ package io.elytra.sdk.network.protocol.packets
 
 import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.network.protocol.codecs.status.PingCodec
-import io.elytra.sdk.network.protocol.codecs.status.ServerQueryCodec
 import io.elytra.sdk.network.protocol.codecs.status.ServerInfoCodec
+import io.elytra.sdk.network.protocol.codecs.status.ServerQueryCodec
 import io.elytra.sdk.network.protocol.handlers.status.PingHandler
 import io.elytra.sdk.network.protocol.handlers.status.ServerQueryHandler
 import io.elytra.sdk.network.protocol.message.status.PingMessage
-import io.elytra.sdk.network.protocol.message.status.ServerQueryMessage
 import io.elytra.sdk.network.protocol.message.status.ServerInfoMessage
+import io.elytra.sdk.network.protocol.message.status.ServerQueryMessage
 
 class StatusPacket : BasicPacket("STATUS", 2) {
 

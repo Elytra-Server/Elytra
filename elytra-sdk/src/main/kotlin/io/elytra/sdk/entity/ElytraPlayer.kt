@@ -2,6 +2,8 @@ package io.elytra.sdk.entity
 
 import com.mojang.authlib.GameProfile
 import io.elytra.api.entity.Player
+import io.elytra.api.world.enums.GameMode
+import io.elytra.api.world.Position
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.api.world.Difficulty
 import io.elytra.api.world.GameMode
@@ -29,4 +31,5 @@ data class ElytraPlayer(
 	fun session(): NetworkSession? {
 		return Elytra.server.sessionRegistry.get(sessionId)
 	}
+
 }

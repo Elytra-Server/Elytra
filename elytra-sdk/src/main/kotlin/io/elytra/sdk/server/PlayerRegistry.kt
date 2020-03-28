@@ -16,10 +16,11 @@ import io.netty.buffer.Unpooled
 import reactor.netty.ByteBufFlux
 import java.nio.ByteBuffer
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.atomic.AtomicInteger
 
 class PlayerRegistry(
 	private val players: Set<Player> = ConcurrentHashMap.newKeySet(),
-	private var currentId: Int = 1
+	private var currentId: AtomicInteger = AtomicInteger(1)
 ) : Registry<Player, String>{
 
 	fun initialize(session: NetworkSession, gameProfile: GameProfile, premium: Boolean){
@@ -47,11 +48,14 @@ class PlayerRegistry(
 
 	override fun add(target: Player) {
 		players.plus(target)
-		currentId++
+		currentId.getAndIncrement()
+
+		println("current session id - " + currentId.get())
 	}
 
 	override fun remove(target: Player) {
 		players.minus(target)
+		currentId.getAndDecrement()
 	}
 
 	override fun get(target: String): Player? {
@@ -67,7 +71,7 @@ class PlayerRegistry(
 	}
 
 	override fun clear() {
-		TODO("not implemented")
+
 	}
 
 }

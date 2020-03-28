@@ -1,4 +1,4 @@
-package io.elytra.api.world
+package io.elytra.api.world.enums
 
 enum class WorldMode(val compact: String) {
 	READ_WRITE("rw"),

@@ -5,15 +5,15 @@ import com.mojang.authlib.minecraft.MinecraftSessionService
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
 import com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService
 import io.elytra.api.io.ConsoleSender
+import io.elytra.api.server.Server
+import io.elytra.api.server.ServerDescriptor
+import io.elytra.sdk.config.ServerConfigFile
+import io.elytra.sdk.console.ElytraConsole
 import io.elytra.sdk.network.NetworkServer
 import io.elytra.sdk.network.SessionRegistry
 import io.elytra.sdk.network.protocol.PacketProvider
 import io.elytra.sdk.scheduler.Scheduler
-import io.elytra.api.server.Server
 import io.elytra.api.server.ServerPojo
-import io.elytra.sdk.console.ElytraConsole
-import io.elytra.sdk.utils.CryptManager
-import io.elytra.sdk.utils.cryptManager
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.net.Proxy
@@ -21,18 +21,19 @@ import java.security.KeyPair
 import java.util.*
 
 class Elytra private constructor(
+	override var serverDescriptor: ServerDescriptor? = null,
 	override var serverDescriptor: ServerPojo? = null,
 	private val port: Int = 25565,
 	val sessionService: MinecraftSessionService = (YggdrasilAuthenticationService(Proxy.NO_PROXY, UUID.randomUUID().toString())).createMinecraftSessionService(),
-	val sessionRegistry: SessionRegistry = SessionRegistry(),
 	val playerRegistry: PlayerRegistry = PlayerRegistry(),
-	private val scheduler: Scheduler = Scheduler(sessionRegistry),
+	private val sessionRegistry: SessionRegistry = SessionRegistry(),
+	private val scheduler: Scheduler = Scheduler(sessionRegistry)
 	val keypair: KeyPair = cryptManager.generateKeyPair()
 ) : Server {
 
 	companion object {
 		val server = Elytra()
-		val console: ConsoleSender =  ElytraConsole(LoggerFactory.getLogger("Elytra"))
+		val console: ConsoleSender = ElytraConsole(LoggerFactory.getLogger("Elytra"))
 	}
 
 	init {
@@ -42,23 +43,14 @@ class Elytra private constructor(
 	override fun boot() {
 		PacketProvider()
 		scheduler.start()
-		loadConfigs()
+
 		bindNetwork()
 	}
 
 	//TODO: Will be refactored, just for testing for now
 	private fun loadConfigs() {
-		try {
-			val gson = Gson()
-
-			val resource = javaClass.classLoader.getResource("./server.json")
-
-			val serverPojo: ServerPojo = gson.fromJson(resource.readText(), ServerPojo::class.java)
-
-			this.serverDescriptor = serverPojo
-		} catch (e: IOException) {
-			println(e.printStackTrace())
-		}
+		val serverConfigFile = ServerConfigFile(serverDescriptor)
+		serverConfigFile.load()
 	}
 
 	private fun bindNetwork() {

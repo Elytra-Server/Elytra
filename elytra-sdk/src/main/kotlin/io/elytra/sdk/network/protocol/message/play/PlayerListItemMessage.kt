@@ -11,6 +11,10 @@ enum class Action() {
 }
 
 data class PlayerListItemMessage(
-	val invulnerable: Boolean ,val flying: Boolean ,val allowFlying: Boolean ,
-	val creativeMode: Boolean,val flySpeed: Float, val walkSpeed: Float
+	val invulnerable: Boolean,
+	val flying: Boolean,
+	val allowFlying: Boolean,
+	val creativeMode: Boolean,
+	val flySpeed: Float,
+	val walkSpeed: Float
 ) : Message

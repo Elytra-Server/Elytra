@@ -122,7 +122,6 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
 	@Throws(IOException::class, IllegalOpcodeException::class)
 	open fun newReadHeader(input: ByteBuf): Codec<*>? {
 		val opcode = ByteBufUtils.readVarInt(input)
-		println("Packet id: $opcode | ${input.capacity()}")
 		return inboundCodecs?.find(opcode)
 	}
 }

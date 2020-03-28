@@ -1,11 +1,11 @@
 package io.elytra.sdk.network.protocol.handlers
 
 import io.elytra.sdk.network.NetworkSession
+import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.network.protocol.message.HandshakeMessage
 import io.elytra.sdk.network.protocol.packets.BasicPacket
 import io.elytra.sdk.network.protocol.packets.LoginPacket
 import io.elytra.sdk.network.protocol.packets.StatusPacket
-import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.server.Elytra
 
 class HandshakeHandler : ElytraMessageHandler<HandshakeMessage>() {

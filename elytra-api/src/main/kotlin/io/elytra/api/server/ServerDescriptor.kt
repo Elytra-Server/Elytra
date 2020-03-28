@@ -17,7 +17,7 @@ data class ServerOptionsPojo(
 /**
  * Describes the server settings setted on the file server.json
  */
-data class ServerPojo(
+data class ServerDescriptor(
 	var motd: Motd,
 	val options: ServerOptionsPojo,
 	val world: WorldPojo

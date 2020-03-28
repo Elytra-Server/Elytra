@@ -1,6 +1,5 @@
 package io.elytra.api.events
 
-import io.elytra.api.events.ElytraEvent
 import io.reactivex.rxjava3.core.Observable
 
 interface IEventBus {

@@ -70,6 +70,8 @@ class NetworkSession(
 		var message: Message?
 		while (messageQueue.poll().also { message = it } != null) {
 			if (disconnected) break
+
+			println(message)
 			super.messageReceived(message)
 		}
 
@@ -93,6 +95,7 @@ class NetworkSession(
 			println("Error in inbound network: $throwable")
 			return
 		}
+
 		disconnect("decode error: ${throwable?.message}")
 	}
 
@@ -105,10 +108,15 @@ class NetworkSession(
 			super.messageReceived(message)
 			return
 		}
+
 		messageQueue.add(message)
 	}
 
 	fun disconnect(reason: String) {
+		/*if (getProtocol() == packetProvider.playPacket) {
+		} else {
+			channel.close()
+		}*/
 		EventBus.post(SessionDisconnectEvent(sessionId))
 		println("$sessionId : kicked due $reason")
 		sendWithFuture(DisconnectMessage(reason))?.addListener(ChannelFutureListener.CLOSE)

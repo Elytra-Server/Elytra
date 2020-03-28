@@ -4,6 +4,7 @@ import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.network.protocol.codecs.DisconnectCodec
 import io.elytra.sdk.network.protocol.codecs.play.CustomPayloadCodec
 import io.elytra.sdk.network.protocol.codecs.play.inbound.ChatCodec
+import io.elytra.sdk.network.protocol.codecs.play.inbound.ChunkDataCodec
 import io.elytra.sdk.network.protocol.codecs.play.inbound.ClientSettingsCodec
 import io.elytra.sdk.network.protocol.codecs.play.inbound.ConfirmTeleportCodec
 import io.elytra.sdk.network.protocol.codecs.play.outbound.*
@@ -56,5 +57,6 @@ class PlayPacket : BasicPacket("PLAY", 0x4F) {
 		outbound(ProtocolInfo.PLAYER_POS_LOOK, PlayerPosLookMessage::class.java, PlayerPosLookCodec::class.java)
 		outbound(ProtocolInfo.ENTITY_STATUS, EntityStatusMessage::class.java, EntityStatusCodec::class.java)
 		outbound(ProtocolInfo.PLAY_DISCONNECT, DisconnectMessage::class.java, DisconnectCodec::class.java)
+		outbound(ProtocolInfo.LOAD_CHUNK_DATA, ChunkDataMessage::class.java, ChunkDataCodec::class.java)
 	}
 }
