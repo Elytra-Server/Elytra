@@ -5,12 +5,39 @@ object ProtocolInfo {
 	/**
 	 * The protocol version supported by the server.
 	 */
-	var CURRENT_PROTOCOL = 340
+	const val CURRENT_PROTOCOL = 340
 
 	/**
 	 * The game version supported by the server.
 	 */
-	var MINECRAFT_VERSION = "12.2.2"
+	const val MINECRAFT_VERSION = "12.2.2"
 
-	var LOGIN_PACKET: Byte = 0x01
+	//region PLAY
+	const val CONFIRM_TELEPORT: Int = 0x00
+	const val CLIENT_SETTINGS: Int = 0x04
+	const val I_CUSTOM_PAYLOAD:Int = 0x09 // 0x9
+	const val I_CHAT:Int = 0x02
+
+	const val HELD_ITEM_CHANGE: Int = 0x3A
+	const val PLAYER_ABILITIES: Int = 0x2B
+	const val SERVER_DIFFICULTY: Int = 0x0D
+	const val O_CUSTOM_PAYLOAD: Int = 0x18
+	const val JOIN_GAME: Int = 0x23
+	const val PLAYER_POS_LOOK: Int = 0x2F
+	const val ENTITY_STATUS: Int = 0x1B
+	//endregion
+
+	//region STATUS
+	const val SERVER_QUERY: Int = 0x00
+	const val I_PING: Int = 0x01
+	const val SERVER_INFO:Int = 0x00
+	const val O_PING:Int = 0x01
+	//endregion
+
+	//region STATUS
+	const val LOGIN_START: Int = 0x00
+	const val LOGIN_SUCCESS: Int = 0x02
+	const val DISCONNECT:Int = 0x00
+	//endregion
+
 }

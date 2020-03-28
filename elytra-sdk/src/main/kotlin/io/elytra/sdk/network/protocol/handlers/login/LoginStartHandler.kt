@@ -8,7 +8,7 @@ import io.elytra.api.world.Location
 import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
-import io.elytra.sdk.network.protocol.message.LoginStartMessage
+import io.elytra.sdk.network.protocol.message.login.LoginStartMessage
 import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
 import io.elytra.sdk.network.protocol.message.play.EntityStatusMessage
 import io.elytra.sdk.network.protocol.message.play.HeldItemChangeMessage
@@ -38,6 +38,8 @@ class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
 
 		val joinMessage = JoinGameMessage(1, player.gamemode, 0, Difficulty.NORMAL, 1, "flat", false)
 		val positionMessage = PlayerPosLookMessage(player.location.x, player.location.y, player.location.z, player.location.yaw, player.location.pitch, 0x01, 1)
+
+		Elytra.server.playerRegistry.add(player)
 
 		session.send(joinMessage)
 		session.send(HeldItemChangeMessage(8))

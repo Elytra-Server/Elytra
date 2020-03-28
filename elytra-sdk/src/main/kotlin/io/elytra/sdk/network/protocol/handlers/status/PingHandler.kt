@@ -7,8 +7,5 @@ import io.elytra.sdk.network.protocol.message.status.PingMessage
 class PingHandler : ElytraMessageHandler<PingMessage>() {
 	override fun handle(session: NetworkSession, message: PingMessage) {
 		session.send(message)
-		session.send(message)
-		session.send(message)
-		session.send(message)
 	}
 }

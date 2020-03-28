@@ -9,8 +9,5 @@ class ClientSettingsHandler : MessageHandler<NetworkSession, ClientSettingsMessa
 
 	override fun handle(session: NetworkSession, message: ClientSettingsMessage) {
 		println("Client Settings")
-
-		session.send(HeldItemChangeMessage(0))
-
 	}
 }

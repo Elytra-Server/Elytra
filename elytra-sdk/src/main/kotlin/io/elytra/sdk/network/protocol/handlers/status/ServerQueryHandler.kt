@@ -6,6 +6,7 @@ import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
 import io.elytra.sdk.network.protocol.message.status.ServerInfoMessage
 import io.elytra.sdk.network.protocol.message.status.ServerQueryMessage
+import io.elytra.sdk.server.Elytra
 
 
 /**
@@ -25,7 +26,7 @@ class ServerQueryHandler : ElytraMessageHandler<ServerQueryMessage>() {
                         ),
                         Players(
                                 1,
-                                0, //FIXME: Get from a player registry
+                                Elytra.server.playerRegistry.size(), //FIXME: Get from a player registry
                                 ArrayList()
                         ),
                         Description("Elytra Server")//motd.description

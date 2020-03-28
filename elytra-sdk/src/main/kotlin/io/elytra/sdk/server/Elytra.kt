@@ -15,8 +15,8 @@ import java.io.IOException
 class Elytra private constructor(
 	override var serverDescriptor: ServerPojo? = null,
 	private val port: Int = 25565,
-	private val sessionRegistry: SessionRegistry = SessionRegistry(),
-	private val playerRegistry: PlayerRegistry = PlayerRegistry(),
+	val sessionRegistry: SessionRegistry = SessionRegistry(),
+	val playerRegistry: PlayerRegistry = PlayerRegistry(),
 	private val scheduler: Scheduler = Scheduler(sessionRegistry)
 ) : Server {
 

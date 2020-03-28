@@ -1,5 +1,6 @@
 package io.elytra.sdk.network.protocol.packets
 
+import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.network.protocol.codecs.play.CustomPayloadCodec
 import io.elytra.sdk.network.protocol.codecs.play.inbound.ChatCodec
 import io.elytra.sdk.network.protocol.codecs.play.inbound.ClientSettingsCodec
@@ -18,39 +19,39 @@ class PlayPacket : BasicPacket("PLAY", 0x4F) {
 
 	init {
 		inbound(
-			0x00,
+			ProtocolInfo.CONFIRM_TELEPORT,
 			ConfirmTeleportMessage::class.java,
 			ConfirmTeleportCodec::class.java,
 			ConfirmTeleportHandler::class.java
 		)
 
 		inbound(
-			0x04,
+			ProtocolInfo.CLIENT_SETTINGS,
 			ClientSettingsMessage::class.java,
 			ClientSettingsCodec::class.java,
 			ClientSettingsHandler::class.java
 		)
 
 		inbound(
-			0x9,
+			ProtocolInfo.I_CUSTOM_PAYLOAD,
 			CustomPayloadMessage::class.java,
 			CustomPayloadCodec::class.java,
 			CustomPayloadHandler::class.java
 		)
 
 		inbound(
-			0x02,
+			ProtocolInfo.I_CHAT,
 			ChatMessage::class.java,
 			ChatCodec::class.java,
 			ChatHandler::class.java
 		)
 
-		outbound(0x3A, HeldItemChangeMessage::class.java, HeldItemChangeCodec::class.java)//Maybe 0x39 // 0x3A
-		outbound(0x2B, PlayerAbilitiesMessage::class.java, PlayerAbilitiesCodec::class.java)
-		outbound(0x0D, ServerDifficultyMessage::class.java, ServerDifficultyCodec::class.java)
-		outbound(0x18, CustomPayloadMessage::class.java, CustomPayloadCodec::class.java)
-		outbound(0x23, JoinGameMessage::class.java, JoinGameCodec::class.java)
-		outbound(0x2F, PlayerPosLookMessage::class.java, PlayerPosLookCodec::class.java)
-		outbound(0x1B, EntityStatusMessage::class.java, EntityStatusCodec::class.java)
+		outbound(ProtocolInfo.HELD_ITEM_CHANGE, HeldItemChangeMessage::class.java, HeldItemChangeCodec::class.java)//Maybe 0x39 // 0x3A
+		outbound(ProtocolInfo.PLAYER_ABILITIES, PlayerAbilitiesMessage::class.java, PlayerAbilitiesCodec::class.java)
+		outbound(ProtocolInfo.SERVER_DIFFICULTY, ServerDifficultyMessage::class.java, ServerDifficultyCodec::class.java)
+		outbound(ProtocolInfo.O_CUSTOM_PAYLOAD, CustomPayloadMessage::class.java, CustomPayloadCodec::class.java)
+		outbound(ProtocolInfo.JOIN_GAME, JoinGameMessage::class.java, JoinGameCodec::class.java)
+		outbound(ProtocolInfo.PLAYER_POS_LOOK, PlayerPosLookMessage::class.java, PlayerPosLookCodec::class.java)
+		outbound(ProtocolInfo.ENTITY_STATUS, EntityStatusMessage::class.java, EntityStatusCodec::class.java)
 	}
 }

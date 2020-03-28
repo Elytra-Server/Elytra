@@ -1,4 +1,4 @@
-package io.elytra.sdk.network.protocol.message
+package io.elytra.sdk.network.protocol.message.login
 
 import com.flowpowered.network.Message
 import io.elytra.api.utils.Asyncable

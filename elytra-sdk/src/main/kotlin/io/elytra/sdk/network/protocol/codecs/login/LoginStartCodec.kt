@@ -2,7 +2,7 @@ package io.elytra.sdk.network.protocol.codecs.login
 
 import com.flowpowered.network.Codec
 import com.flowpowered.network.util.ByteBufUtils
-import io.elytra.sdk.network.protocol.message.LoginStartMessage
+import io.elytra.sdk.network.protocol.message.login.LoginStartMessage
 import io.netty.buffer.ByteBuf
 
 class LoginStartCodec : Codec<LoginStartMessage> {
