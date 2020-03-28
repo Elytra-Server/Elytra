@@ -7,7 +7,7 @@
 [![GitHub issues](https://img.shields.io/github/issues-raw/Elytra-Server/Elytra.svg?label=issues)](https://github.com/Elytra-Server/Elytra/issues)
 [![GitHub last commit](https://img.shields.io/github/last-commit/Elytra-Server/Elytra/develop.svg)](https://github.com/Elytra-Server/Elytra/commit)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?color=1bcc1b)](https://choosealicense.com/licenses/mit)
-[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
 A Plugin API & Server Implementation to battle those you struggle with the non multi-threaded bukkit api.
 
