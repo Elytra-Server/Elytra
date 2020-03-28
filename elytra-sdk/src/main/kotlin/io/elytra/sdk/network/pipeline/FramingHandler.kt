@@ -7,7 +7,7 @@ import io.netty.handler.codec.ByteToMessageCodec
 import kotlin.experimental.and
 
 
-class DecoderHandler : ByteToMessageCodec<ByteBuf>() {
+class FramingHandler : ByteToMessageCodec<ByteBuf>() {
 
 	private fun readableVarInt(buf: ByteBuf): Boolean {
 		if (buf.readableBytes() > 5) {
@@ -24,7 +24,6 @@ class DecoderHandler : ByteToMessageCodec<ByteBuf>() {
 
 		} while ((input.and(0x80.toByte())) != 0.toByte())
 		buf.readerIndex(idx)
-
 		return true
 	}
 
@@ -33,9 +32,8 @@ class DecoderHandler : ByteToMessageCodec<ByteBuf>() {
 		out.writeBytes(msg);
 	}
 
-	override fun decode(ctx: ChannelHandlerContext?, input: ByteBuf?, out: MutableList<Any>?) {
-		input!!.markReaderIndex()
-
+	override fun decode(ctx: ChannelHandlerContext?, input: ByteBuf, out: MutableList<Any>) {
+		input.markReaderIndex()
 		if (!readableVarInt(input)) {
 			return
 		}
@@ -49,6 +47,6 @@ class DecoderHandler : ByteToMessageCodec<ByteBuf>() {
 		val buf = ctx!!.alloc().buffer(length)
 
 		input.readBytes(buf, length)
-		out!!.add(buf)
+		out.add(buf)
 	}
 }

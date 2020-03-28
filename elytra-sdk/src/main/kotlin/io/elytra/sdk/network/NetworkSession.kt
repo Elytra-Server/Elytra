@@ -10,9 +10,8 @@ import io.elytra.api.utils.Asyncable
 import io.elytra.api.utils.Tickable
 import io.elytra.sdk.network.events.SessionDisconnectEvent
 import io.elytra.sdk.network.pipeline.CodecsHandler
+import io.elytra.sdk.network.pipeline.EncryptionHandler
 import io.elytra.sdk.network.protocol.PacketProvider
-import io.elytra.sdk.network.protocol.handlers.encryption.NettyEncryptingDecoder
-import io.elytra.sdk.network.protocol.handlers.encryption.NettyEncryptingEncoder
 import io.elytra.sdk.network.protocol.message.DisconnectMessage
 import io.elytra.sdk.network.protocol.packets.BasicPacket
 import io.elytra.sdk.network.protocol.packets.HandshakePacket
@@ -128,8 +127,7 @@ class NetworkSession(
 
 	fun enableEncryption(sharedSecret: SecretKey){
 		encrypted = true
-		channel.pipeline().addBefore("decoder", "decrypt", NettyEncryptingDecoder(sharedSecret))
-		channel.pipeline().addBefore("decrypt", "encrypt", NettyEncryptingEncoder(sharedSecret))
+		channel.pipeline().addFirst("decrypt", EncryptionHandler(sharedSecret))
 	}
 
 	//TODO Then put this somewhere else maybe

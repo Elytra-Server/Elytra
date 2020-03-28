@@ -18,7 +18,7 @@ import io.elytra.sdk.network.protocol.message.play.*
 /**
  * @param [opcode] in this case means whats the highest packet id on the play packets
  */
-class PlayPacket : BasicPacket("PLAY", 0x4F) {
+class PlayPacket : BasicPacket("PLAY", 0x96) {
 
 	init {
 		inbound(

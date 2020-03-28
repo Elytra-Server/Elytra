@@ -18,11 +18,11 @@ class NettyEncryptionTranslator (private val cipher: Cipher){
 		return inputBuffer
 	}
 
-	fun decipher(ctx: ChannelHandlerContext, buffer: ByteBuf): ByteBuf? {
+	fun decipher(ctx: ChannelHandlerContext, buffer: ByteBuf): ByteBuf {
 		val i = buffer.readableBytes()
-		val abyte = bufToBytes(buffer)
+		val byteArray = bufToBytes(buffer)
 		val bytebuf = ctx.alloc().heapBuffer(cipher.getOutputSize(i))
-		bytebuf.writerIndex(cipher.update(abyte, 0, i, bytebuf.array(), bytebuf.arrayOffset()))
+		bytebuf.writerIndex(cipher.update(byteArray, 0, i, bytebuf.array(), bytebuf.arrayOffset()))
 		return bytebuf
 	}
 
