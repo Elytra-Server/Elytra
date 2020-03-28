@@ -2,13 +2,11 @@ package io.elytra.sdk.network.protocol.codecs.play.outbound
 
 import com.flowpowered.network.Codec
 import io.elytra.sdk.network.protocol.message.play.PlayerPosLookMessage
-import io.elytra.sdk.network.utils.MinecraftByteBuf
+import io.elytra.sdk.network.utils.minecraft
 import io.netty.buffer.ByteBuf
 import java.io.IOException
 
 class PlayerPosLookCodec : Codec<PlayerPosLookMessage> {
-
-	private val ByteBuf.minecraft get() = MinecraftByteBuf(this)
 
 	override fun encode(buffer: ByteBuf, message: PlayerPosLookMessage): ByteBuf {
 		buffer.writeDouble(message.x)

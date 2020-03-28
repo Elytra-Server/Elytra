@@ -8,6 +8,5 @@ import io.elytra.sdk.network.protocol.message.play.HeldItemChangeMessage
 class ClientSettingsHandler : MessageHandler<NetworkSession, ClientSettingsMessage> {
 
 	override fun handle(session: NetworkSession, message: ClientSettingsMessage) {
-		println("Client Settings")
 	}
 }

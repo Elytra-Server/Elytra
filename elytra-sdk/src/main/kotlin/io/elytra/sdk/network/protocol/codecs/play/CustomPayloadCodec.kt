@@ -2,13 +2,11 @@ package io.elytra.sdk.network.protocol.codecs.play
 
 import com.flowpowered.network.Codec
 import io.elytra.sdk.network.protocol.message.play.CustomPayloadMessage
-import io.elytra.sdk.network.utils.MinecraftByteBuf
+import io.elytra.sdk.network.utils.minecraft
 import io.netty.buffer.ByteBuf
 import java.io.IOException
 
 class CustomPayloadCodec : Codec<CustomPayloadMessage> {
-
-	private val ByteBuf.minecraft get() = MinecraftByteBuf(this)
 
 	override fun encode(buffer: ByteBuf, message: CustomPayloadMessage): ByteBuf {
 		buffer.minecraft.writeString(message.channel)

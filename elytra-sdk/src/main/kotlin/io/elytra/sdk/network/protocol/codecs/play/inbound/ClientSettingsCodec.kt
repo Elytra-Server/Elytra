@@ -2,12 +2,10 @@ package io.elytra.sdk.network.protocol.codecs.play.inbound
 
 import com.flowpowered.network.Codec
 import io.elytra.sdk.network.protocol.message.play.ClientSettingsMessage
-import io.elytra.sdk.network.utils.MinecraftByteBuf
+import io.elytra.sdk.network.utils.minecraft
 import io.netty.buffer.ByteBuf
 
 class ClientSettingsCodec : Codec<ClientSettingsMessage> {
-
-	private val ByteBuf.minecraft get() = MinecraftByteBuf(this)
 
 	override fun encode(buffer: ByteBuf, message: ClientSettingsMessage): ByteBuf {
 		buffer.minecraft.writeString(message.lang)

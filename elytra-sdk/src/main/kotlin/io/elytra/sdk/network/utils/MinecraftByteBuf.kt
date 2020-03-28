@@ -7,6 +7,8 @@ import java.nio.charset.StandardCharsets
 import java.util.*
 import kotlin.experimental.and
 
+val ByteBuf.minecraft get() = MinecraftByteBuf(this)
+
 inline class MinecraftByteBuf(private val byteBuf: ByteBuf){
 
 	fun writeEnumValue(value: Enum<*>) {

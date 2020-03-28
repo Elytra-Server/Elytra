@@ -2,12 +2,10 @@ package io.elytra.sdk.network.protocol.codecs.play.inbound
 
 import com.flowpowered.network.Codec
 import io.elytra.sdk.network.protocol.message.play.ConfirmTeleportMessage
-import io.elytra.sdk.network.utils.MinecraftByteBuf
+import io.elytra.sdk.network.utils.minecraft
 import io.netty.buffer.ByteBuf
 
 class ConfirmTeleportCodec : Codec<ConfirmTeleportMessage> {
-
-	private val ByteBuf.minecraft get() = MinecraftByteBuf(this)
 
 	override fun encode(buffer: ByteBuf, message: ConfirmTeleportMessage): ByteBuf {
 		buffer.minecraft.writeVarIntToBuffer(message.telportId)
