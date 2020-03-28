@@ -32,9 +32,7 @@ object ProtocolInfo {
 	const val I_PING: Int = 0x01
 	const val SERVER_INFO:Int = 0x00
 	const val O_PING:Int = 0x01
-	//endregion
 
-	//region STATUS
 	const val LOGIN_START: Int = 0x00
 	const val LOGIN_SUCCESS: Int = 0x02
 	const val DISCONNECT:Int = 0x00

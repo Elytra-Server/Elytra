@@ -4,4 +4,6 @@ import com.flowpowered.network.Message
 import io.elytra.api.utils.Asyncable
 import java.security.PublicKey
 
-data class EnableCompressionMessage(val compressionThreshold:Int) : Message, Asyncable
+data class EnableCompressionMessage(
+	val compressionThreshold:Int
+) : Message, Asyncable
