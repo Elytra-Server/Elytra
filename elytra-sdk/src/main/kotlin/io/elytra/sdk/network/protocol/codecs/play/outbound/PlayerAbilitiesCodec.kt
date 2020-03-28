@@ -7,7 +7,7 @@ import java.io.IOException
 import kotlin.experimental.or
 
 class PlayerAbilitiesCodec : Codec<PlayerAbilitiesMessage> {
-	override fun encode(buf: ByteBuf, message: PlayerAbilitiesMessage): ByteBuf {
+	override fun encode(buffer: ByteBuf, message: PlayerAbilitiesMessage): ByteBuf {
 		var b0: Byte = 0
 
 		if (message.invulnerable) {
@@ -26,10 +26,10 @@ class PlayerAbilitiesCodec : Codec<PlayerAbilitiesMessage> {
 			b0 = (b0 or 8)
 		}
 
-		buf.writeByte(b0.toInt())
-		buf.writeFloat(message.flySpeed)
-		buf.writeFloat(message.walkSpeed)
-		return buf
+		buffer.writeByte(b0.toInt())
+		buffer.writeFloat(message.flySpeed)
+		buffer.writeFloat(message.walkSpeed)
+		return buffer
 	}
 
 	override fun decode(buffer: ByteBuf): PlayerAbilitiesMessage {

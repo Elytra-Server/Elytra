@@ -6,9 +6,9 @@ import io.netty.buffer.ByteBuf
 import java.io.IOException
 
 class ServerDifficultyCodec : Codec<ServerDifficultyMessage> {
-	override fun encode(buf: ByteBuf, message: ServerDifficultyMessage): ByteBuf {
-		buf.writeByte(message.difficulty.value)
-		return buf
+	override fun encode(buffer: ByteBuf, message: ServerDifficultyMessage): ByteBuf {
+		buffer.writeByte(message.difficulty.value)
+		return buffer
 	}
 
 	override fun decode(buffer: ByteBuf): ServerDifficultyMessage {
