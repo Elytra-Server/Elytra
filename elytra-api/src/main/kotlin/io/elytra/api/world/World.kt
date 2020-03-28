@@ -1,11 +1,17 @@
 package io.elytra.api.world
 
-import java.util.*
+import io.elytra.api.world.enums.Difficulty
+import io.elytra.api.world.enums.WorldMode
+import io.elytra.api.world.enums.WorldType
+import io.elytra.api.world.generator.WorldGenerator
 
 interface World {
-	var uuid: UUID//Maybe remove this, i think we can use this to identify
 	var name: String
 	var difficulty: Difficulty
 	var type: WorldType
 	var mode: WorldMode
+	val generator: WorldGenerator
+
+	fun getChunkAt(x: Int, z: Int) : Chunk?
+
 }

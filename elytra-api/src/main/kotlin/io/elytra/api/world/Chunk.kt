@@ -6,6 +6,4 @@ interface Chunk {
 
 	val y: Int
 
-	val z: Int
-
 }

@@ -2,7 +2,7 @@ package io.elytra.sdk.entity
 
 import com.mojang.authlib.GameProfile
 import io.elytra.api.entity.Player
-import io.elytra.api.world.GameMode
+import io.elytra.api.world.enums.GameMode
 import io.elytra.api.world.Position
 import java.util.*
 
