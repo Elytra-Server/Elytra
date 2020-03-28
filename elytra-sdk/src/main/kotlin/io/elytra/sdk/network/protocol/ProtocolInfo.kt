@@ -25,10 +25,13 @@ object ProtocolInfo {
 	const val JOIN_GAME: Int = 0x23
 	const val PLAYER_POS_LOOK: Int = 0x2F
 	const val ENTITY_STATUS: Int = 0x1B
+	const val LOAD_CHUNK_DATA: Int = 0x21
 	//endregion
+	const val SERVER_QUERY: Int = 0x00
+
+	const val HANDSHAKE: Int = 0x00
 
 	//region STATUS
-	const val SERVER_QUERY: Int = 0x00
 	const val I_PING: Int = 0x01
 	const val SERVER_INFO:Int = 0x00
 	const val O_PING:Int = 0x01

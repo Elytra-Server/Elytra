@@ -22,4 +22,8 @@ class ElytraWorld(
 	override fun getChunkAt(x: Int, z: Int): Chunk? {
 		return chunkManager.getChunk(x, z)
 	}
+
+	override fun setChunkAt(x: Int, y: Int, z: Int, blockId: Int) {
+		chunkManager.setChunk(x, z)
+	}
 }

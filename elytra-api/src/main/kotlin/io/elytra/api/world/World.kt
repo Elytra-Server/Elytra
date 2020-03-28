@@ -14,4 +14,5 @@ interface World {
 
 	fun getChunkAt(x: Int, z: Int) : Chunk?
 
+	fun setChunkAt(x: Int, y: Int, z: Int, blockId: Int)
 }
