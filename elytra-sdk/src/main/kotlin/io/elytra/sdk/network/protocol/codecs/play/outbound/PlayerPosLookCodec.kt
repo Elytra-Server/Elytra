@@ -15,7 +15,7 @@ class PlayerPosLookCodec : Codec<PlayerPosLookMessage> {
 		buffer.writeFloat(message.yaw)
 		buffer.writeFloat(message.pitch)
 		buffer.writeByte(message.flags.toInt())
-		buffer.minecraft.writeVarIntToBuffer(message.teleportId)
+		buffer.minecraft.writeVarInt(message.teleportId)
 
 		println(message)
 		return buffer

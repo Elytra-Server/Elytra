@@ -18,12 +18,12 @@ class ClientSettingsCodec : Codec<ClientSettingsMessage> {
 	}
 
 	override fun decode(buffer: ByteBuf): ClientSettingsMessage {
-		val lang = buffer.minecraft.readStringFromBuffer(16)
+		val lang = buffer.minecraft.readString(16)
 		val view = buffer.readByte()
-		val chatVisibility = buffer.minecraft.readVarIntFromBuffer()
+		val chatVisibility = buffer.minecraft.readVarInt()
 		val enableColors = buffer.readBoolean()
 		val modelPartFlags = buffer.readUnsignedByte()
-		val mainHand = buffer.minecraft.readVarIntFromBuffer()
+		val mainHand = buffer.minecraft.readVarInt()
 		return ClientSettingsMessage(lang, view, chatVisibility, enableColors, modelPartFlags, mainHand)
 	}
 

@@ -12,14 +12,14 @@ val ByteBuf.minecraft get() = MinecraftByteBuf(this)
 inline class MinecraftByteBuf(private val byteBuf: ByteBuf){
 
 	fun writeEnumValue(value: Enum<*>) {
-		writeVarIntToBuffer(value.ordinal)
+		writeVarInt(value.ordinal)
 	}
 
 	fun <T : Enum<T>?> readEnumValue(enumClass: Class<T>): T {
-		return (enumClass.enumConstants as Array<*>)[readVarIntFromBuffer()] as T
+		return (enumClass.enumConstants as Array<*>)[readVarInt()] as T
 	}
 
-	fun writeVarIntToBuffer(`in`: Int) {
+	fun writeVarInt(`in`: Int) {
 		var input = `in`
 		while (input and -128 != 0) {
 			byteBuf.writeByte(input.and(127) or 128)
@@ -28,7 +28,7 @@ inline class MinecraftByteBuf(private val byteBuf: ByteBuf){
 		byteBuf.writeByte(input)
 	}
 
-	fun readVarIntFromBuffer(): Int {
+	fun readVarInt(): Int {
 		var i = 0
 		var j = 0
 
@@ -63,13 +63,13 @@ inline class MinecraftByteBuf(private val byteBuf: ByteBuf){
 		return if (bytes.size > 32767) {
 			throw EncoderException("String too big (was " + bytes.size + " bytes encoded, max " + 32767 + ")")
 		} else {
-			writeVarIntToBuffer(bytes.size)
+			writeVarInt(bytes.size)
 			byteBuf.writeBytes(bytes)
 		}
 	}
 
-	fun readStringFromBuffer(maxLength: Int): String {
-		val i: Int = readVarIntFromBuffer()
+	fun readString(maxLength: Int): String {
+		val i: Int = readVarInt()
 		return if (i > maxLength * 4) {
 			throw DecoderException("The received encoded string buffer length is longer than maximum allowed (" + i + " > " + maxLength * 4 + ")")
 		} else if (i < 0) {

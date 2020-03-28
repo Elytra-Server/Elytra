@@ -15,7 +15,7 @@ class CustomPayloadCodec : Codec<CustomPayloadMessage> {
 	}
 
 	override fun decode(buffer: ByteBuf): CustomPayloadMessage {
-		val channel = buffer.minecraft.readStringFromBuffer(20)
+		val channel = buffer.minecraft.readString(20)
 		val i = buffer.readableBytes()
 		if (i in 0..32767) {
 			val data = buffer.readBytes(i)

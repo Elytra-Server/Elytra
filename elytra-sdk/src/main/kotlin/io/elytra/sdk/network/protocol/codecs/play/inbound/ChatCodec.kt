@@ -13,7 +13,7 @@ class ChatCodec : Codec<ChatMessage> {
 	}
 
 	override fun decode(buffer: ByteBuf): ChatMessage {
-		val json = buffer.minecraft.readStringFromBuffer(256)
+		val json = buffer.minecraft.readString(256)
 		return ChatMessage(json)
 	}
 

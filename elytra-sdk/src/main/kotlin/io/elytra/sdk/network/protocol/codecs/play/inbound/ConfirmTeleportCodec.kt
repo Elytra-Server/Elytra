@@ -8,12 +8,12 @@ import io.netty.buffer.ByteBuf
 class ConfirmTeleportCodec : Codec<ConfirmTeleportMessage> {
 
 	override fun encode(buffer: ByteBuf, message: ConfirmTeleportMessage): ByteBuf {
-		buffer.minecraft.writeVarIntToBuffer(message.telportId)
+		buffer.minecraft.writeVarInt(message.telportId)
 		return buffer
 	}
 
 	override fun decode(buffer: ByteBuf): ConfirmTeleportMessage {
-		val teleportId = buffer.minecraft.readVarIntFromBuffer();
+		val teleportId = buffer.minecraft.readVarInt();
 		return ConfirmTeleportMessage(teleportId)
 	}
 
