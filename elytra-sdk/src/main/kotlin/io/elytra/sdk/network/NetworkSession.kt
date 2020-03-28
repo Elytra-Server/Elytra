@@ -117,7 +117,7 @@ class NetworkSession(
 			channel.close()
 		}*/
 		EventBus.post(SessionDisconnectEvent(sessionId))
-		println("$sessionId : kicked due $reason")
+		println("${gameProfile?.name} : kicked due $reason")
 		sendWithFuture(DisconnectMessage(reason))?.addListener(ChannelFutureListener.CLOSE)
 	}
 
@@ -137,7 +137,6 @@ class NetworkSession(
 			premium = false
 			gameProfile = GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + gameProfile!!.name.toLowerCase()).toByteArray(StandardCharsets.UTF_8)), gameProfile!!.name)
 		}
-
 		Elytra.server.playerRegistry.initialize(this,gameProfile!!,premium)
 	}
 }

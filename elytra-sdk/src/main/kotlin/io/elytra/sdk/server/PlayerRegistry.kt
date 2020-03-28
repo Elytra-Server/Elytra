@@ -33,6 +33,8 @@ class PlayerRegistry(
 
 		Elytra.server.playerRegistry.add(player)
 
+		println("Premium : $premium")
+
 		session.send(joinMessage)
 		val version = Unpooled.buffer()
 		version.minecraft.writeString(ProtocolInfo.MINECRAFT_VERSION)

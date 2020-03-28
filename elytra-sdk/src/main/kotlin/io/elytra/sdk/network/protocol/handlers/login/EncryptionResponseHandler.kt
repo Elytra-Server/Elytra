@@ -35,11 +35,12 @@ class EncryptionResponseHandler : ElytraMessageHandler<EncryptionResponseMessage
 			println("UUID of player ${gameProfile.name} is ${gameProfile.id}")
 			session.gameProfile = gameProfile
 			session.sessionState = SessionState.READY_TO_ACCEPT
-			session.tryLogin()
 		}else{
 			//TODO Need add verification for only member premium from server configuration
-			session.disconnect("Username ${session.gameProfile!!.name} tried to join with an invalid session")
+			//session.disconnect("Username ${session.gameProfile!!.name} tried to join with an invalid session")
 		}
+
+		session.tryLogin()
 	}
 
 }
