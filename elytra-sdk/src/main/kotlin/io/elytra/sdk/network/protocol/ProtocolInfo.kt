@@ -24,7 +24,6 @@ object ProtocolInfo {
 	const val O_CUSTOM_PAYLOAD: Int = 0x18
 	const val JOIN_GAME: Int = 0x23
 	const val PLAYER_POS_LOOK: Int = 0x2F
-	const val ENTITY_STATUS: Int = 0x1B
 	const val LOAD_CHUNK_DATA: Int = 0x21
 	const val ENTITY_STATUS: Int = 0x1A
 	const val PLAY_DISCONNECT: Int = 0x1B
@@ -32,12 +31,8 @@ object ProtocolInfo {
 
 	//region STATUS
 	const val SERVER_QUERY: Int = 0x00
-
-	const val HANDSHAKE: Int = 0x00
-
-	//region STATUS
-	const val I_PING: Int = 0x01
 	const val SERVER_INFO:Int = 0x00
+	const val I_PING: Int = 0x01
 	const val O_PING:Int = 0x01
 	//endregion
 
@@ -49,4 +44,5 @@ object ProtocolInfo {
 	const val LOGIN_DISCONNECT:Int = 0x00
 	//endregion
 
+	const val HANDSHAKE: Int = 0x00
 }

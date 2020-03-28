@@ -3,8 +3,7 @@ package io.elytra.sdk.server
 import com.mojang.authlib.GameProfile
 import io.elytra.api.entity.Player
 import io.elytra.api.registry.Registry
-import io.elytra.api.world.Difficulty
-import io.elytra.api.world.Location
+import io.elytra.api.world.enums.Difficulty
 import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.ProtocolInfo
@@ -13,8 +12,6 @@ import io.elytra.sdk.network.protocol.message.play.*
 import io.elytra.sdk.network.protocol.packets.PlayPacket
 import io.elytra.sdk.network.utils.minecraft
 import io.netty.buffer.Unpooled
-import reactor.netty.ByteBufFlux
-import java.nio.ByteBuffer
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -32,7 +29,7 @@ class PlayerRegistry(
 		session.setProtocol(PlayPacket())
 
 		val joinMessage = JoinGameMessage(1, player.gamemode, 0, Difficulty.NORMAL, 2, "flat", false)
-		val positionMessage = PlayerPosLookMessage(player.location.x, player.location.y, player.location.z, player.location.yaw, player.location.pitch, 0x01, 153)
+		val positionMessage = PlayerPosLookMessage(player.position.x, player.position.y, player.position.z, player.position.yaw, player.position.pitch, 0x01, 153)
 
 		Elytra.server.playerRegistry.add(player)
 

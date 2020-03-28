@@ -1,24 +1,12 @@
 package io.elytra.sdk.network.protocol.handlers.login
 
-import com.mojang.authlib.GameProfile
-import io.elytra.api.entity.Player
-import io.elytra.api.world.Difficulty
-import io.elytra.api.world.GameMode
-import io.elytra.api.world.Location
-import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.network.NetworkSession
+import io.elytra.sdk.network.SessionState
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
+import io.elytra.sdk.network.protocol.message.login.EncryptionRequestMessage
 import io.elytra.sdk.network.protocol.message.login.LoginStartMessage
-import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
-import io.elytra.sdk.network.protocol.message.play.EntityStatusMessage
-import io.elytra.sdk.network.protocol.message.play.HeldItemChangeMessage
-import io.elytra.sdk.network.protocol.message.play.JoinGameMessage
-import io.elytra.sdk.network.protocol.message.play.PlayerPosLookMessage
-import io.elytra.sdk.network.protocol.packets.PlayPacket
 import io.elytra.sdk.server.Elytra
 import org.apache.commons.lang3.Validate
-import java.nio.charset.StandardCharsets
-import java.util.*
 
 class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
 	override fun handle(session: NetworkSession, message: LoginStartMessage) {
