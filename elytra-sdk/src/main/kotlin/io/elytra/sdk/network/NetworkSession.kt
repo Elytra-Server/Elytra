@@ -58,7 +58,7 @@ class NetworkSession(
 	override fun tick() {
 		if(protocol == Protocol.LOGIN){
 			if(sessionState == SessionState.READY_TO_ACCEPT){
-				println("TRY")
+				tryLogin()
 			}else if(sessionState == SessionState.DELAY_ACCEPT){
 				println("ACCEPT")
 			}
@@ -70,8 +70,6 @@ class NetworkSession(
 		var message: Message?
 		while (messageQueue.poll().also { message = it } != null) {
 			if (disconnected) break
-
-			println(message)
 			super.messageReceived(message)
 		}
 
@@ -81,6 +79,7 @@ class NetworkSession(
 	}
 
 	fun protocol(protocol: Protocol){
+		this.protocol = protocol
 		when(protocol) {
 			Protocol.LOGIN -> setProtocol(packetProvider.loginPacket)
 			Protocol.PLAY -> setProtocol(packetProvider.playPacket)
