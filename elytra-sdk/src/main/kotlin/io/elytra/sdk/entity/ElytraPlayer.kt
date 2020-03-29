@@ -6,6 +6,7 @@ import io.elytra.api.entity.PlayerMode
 import io.elytra.api.world.enums.GameMode
 import io.elytra.api.world.Position
 import io.elytra.sdk.network.NetworkSession
+import io.elytra.sdk.network.protocol.message.DisconnectMessage
 import io.elytra.sdk.server.Elytra
 
 data class ElytraPlayer(
@@ -21,8 +22,12 @@ data class ElytraPlayer(
 	override var gamemode: GameMode = GameMode.SURVIVAL
 ) : Player {
 
-	fun session(): NetworkSession? {
+	private fun session(): NetworkSession? {
 		return Elytra.server.sessionRegistry.get(sessionId)
+	}
+
+	override fun kick(reason: String) {
+		session()?.send(DisconnectMessage(reason))
 	}
 
 }

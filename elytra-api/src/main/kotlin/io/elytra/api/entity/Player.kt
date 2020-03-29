@@ -18,6 +18,8 @@ interface Player {
 
 	var position: Position
 	var gamemode: GameMode
+
+	fun kick(reason: String)
 }
 
 enum class PlayerMode{
