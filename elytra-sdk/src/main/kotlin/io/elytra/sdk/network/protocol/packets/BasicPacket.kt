@@ -107,7 +107,6 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
 			length = ByteBufUtils.readVarInt(buf)
 			buf.markReaderIndex()
 			opcode = ByteBufUtils.readVarInt(buf)
-			println(opcode)
 			inboundCodecs!!.find(opcode)
 		} catch (e: IOException) {
 			throw UnknownPacketException("Failed to read packet data (corrupt?)", opcode,

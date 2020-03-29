@@ -70,8 +70,6 @@ class NetworkSession(
 		var message: Message?
 		while (messageQueue.poll().also { message = it } != null) {
 			if (disconnected) break
-
-			println(message)
 			super.messageReceived(message)
 		}
 
