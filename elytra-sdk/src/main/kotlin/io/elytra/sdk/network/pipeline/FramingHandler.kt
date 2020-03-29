@@ -34,11 +34,13 @@ class FramingHandler : ByteToMessageCodec<ByteBuf>() {
 
 	override fun decode(ctx: ChannelHandlerContext?, input: ByteBuf, out: MutableList<Any>) {
 		input.markReaderIndex()
+
 		if (!readableVarInt(input)) {
 			return
 		}
 
 		val length = ByteBufUtils.readVarInt(input)
+
 		if (input.readableBytes() < length) {
 			input.resetReaderIndex()
 			return
