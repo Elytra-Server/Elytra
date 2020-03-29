@@ -1,26 +1,27 @@
 package io.elytra.sdk.network.protocol.handlers.login
 
 import io.elytra.sdk.network.NetworkSession
-import io.elytra.sdk.network.protocol.handlers.InbMessageHandler
-import io.elytra.sdk.network.protocol.message.LoginStartMessage
-import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
-import io.elytra.sdk.network.protocol.packets.PlayPacket
-import java.util.*
+import io.elytra.sdk.network.SessionState
+import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
+import io.elytra.sdk.network.protocol.message.login.EncryptionRequestMessage
+import io.elytra.sdk.network.protocol.message.login.LoginStartMessage
+import io.elytra.sdk.server.Elytra
+import org.apache.commons.lang3.Validate
 
-class LoginStartHandler : InbMessageHandler<LoginStartMessage>() {
+class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
 	override fun handle(session: NetworkSession, message: LoginStartMessage) {
-		val username: String = message.username
-		val uuid = UUID.randomUUID()
+		Validate.validState(session.sessionState == SessionState.HELLO, "Unexpected hello packet")
+		println("Login has started to user - ${message.gameProfile.name}")
 
-		println("Login has started to user - ${message.username}")
+		//Define default gameProfile
+		session.gameProfile = message.gameProfile
 
 		if(!session.isActive){
 			session.onDisconnect();
 			return
 		}
 
-		session.send(LoginSuccessMessage(uuid.toString(), username))
-		session.setProtocol(PlayPacket())
-		//session.assignPlayer(InbPlayer(username, uuid, gameProfile = null))
+		session.sessionState = SessionState.KEY
+		session.send(EncryptionRequestMessage("",Elytra.server.keypair.public,session.verifyToken))
 	}
 }

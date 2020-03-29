@@ -6,10 +6,10 @@ import io.netty.buffer.ByteBuf
 import java.io.IOException
 
 class EntityStatusCodec : Codec<EntityStatusMessage> {
-	override fun encode(buf: ByteBuf, message: EntityStatusMessage): ByteBuf {
-		buf.writeInt(message.entityId)
-		buf.writeByte(message.logicOpcode.toInt())
-		return buf
+	override fun encode(buffer: ByteBuf, message: EntityStatusMessage): ByteBuf {
+		buffer.writeInt(message.entityId)
+		buffer.writeByte(message.logicOpcode.toInt())
+		return buffer
 	}
 
 	override fun decode(buffer: ByteBuf): EntityStatusMessage {

@@ -1,6 +1,6 @@
 package io.elytra.api.utils.formatting
 
-enum class AnsiColors(private val ansi: String, private val color: String) {
+enum class AnsiColors(val ansi: String, private val color: String) {
 	RESET("\u001B[0m", "&r"),
 	BLACK("\u001B[30m", "&0"),
 	RED("\u001B[31m", "&c"),

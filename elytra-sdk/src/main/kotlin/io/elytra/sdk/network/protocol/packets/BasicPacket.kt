@@ -107,7 +107,6 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
 			length = ByteBufUtils.readVarInt(buf)
 			buf.markReaderIndex()
 			opcode = ByteBufUtils.readVarInt(buf)
-			println(opcode)
 			inboundCodecs!!.find(opcode)
 		} catch (e: IOException) {
 			throw UnknownPacketException("Failed to read packet data (corrupt?)", opcode,
@@ -122,7 +121,6 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
 	@Throws(IOException::class, IllegalOpcodeException::class)
 	open fun newReadHeader(input: ByteBuf): Codec<*>? {
 		val opcode = ByteBufUtils.readVarInt(input)
-		println("Packet id: $opcode | ${input.capacity()}")
 		return inboundCodecs?.find(opcode)
 	}
 }

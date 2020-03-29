@@ -1,9 +1,9 @@
 package io.elytra.sdk.network
 
 import com.flowpowered.network.ConnectionManager
-import io.elytra.sdk.console.ElytraConsole
 import io.elytra.sdk.network.pipeline.ChannelInitializerHandler
-import io.elytra.sdk.network.pipeline.InbConnectionManager
+import io.elytra.sdk.network.pipeline.ElytraConnectionManager
+import io.elytra.sdk.server.Elytra
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelOption
 import io.netty.channel.EventLoopGroup
@@ -27,9 +27,7 @@ internal class NetworkServer(
 	fun start() {
 		val masterGroup: EventLoopGroup = Channels.pickBestEventLoopGroup()
 		val workerGroup: EventLoopGroup = Channels.pickBestEventLoopGroup()
-
-		val connectionManager: ConnectionManager = InbConnectionManager(sessionRegistry)
-
+		val connectionManager: ConnectionManager = ElytraConnectionManager(sessionRegistry)
 
 		bootstrap
 			.group(masterGroup, workerGroup)
@@ -41,10 +39,8 @@ internal class NetworkServer(
 		val server = bootstrap.bind(port).sync()
 
 		if (server.isSuccess) {
-			ElytraConsole.send(
-				StringBuilder("&2").append("Server running in port: ").append(port),
-				StringBuilder("&2").append("Ready for connections!")
-			)
+			Elytra.console.info("&eServer running on port: $port")
+			Elytra.console.info("&2Ready for connections")
 		}
 
 		server.channel().closeFuture().sync()

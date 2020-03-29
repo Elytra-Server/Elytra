@@ -4,27 +4,26 @@ import io.elytra.api.registry.Registry
 import io.elytra.api.utils.Tickable
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
-import java.util.stream.Stream
 
 /**
  * Manages the connection sessions
  *
- * @see [io.inb.network.NetworkSession]
+ * @see [io.elytra.sdk.network.NetworkSession]
  */
 class SessionRegistry(
-	private val sessions: ConcurrentMap<NetworkSession, Boolean> = ConcurrentHashMap()
+	private var sessions: ConcurrentMap<NetworkSession, Boolean> = ConcurrentHashMap()
 ) : Registry<NetworkSession,String>,Tickable {
 
-	override fun add(record: NetworkSession) {
-		sessions[record] = true
+	override fun add(target: NetworkSession) {
+		sessions[target] = true
 	}
 
-	override fun remove(record: NetworkSession) {
-		sessions.remove(record)
+	override fun remove(target: NetworkSession) {
+		sessions.remove(target)
 	}
 
-	override fun get(record: String): NetworkSession? {
-		return sessions.keys.first { session -> session.sessionId == record };
+	override fun get(target: String): NetworkSession? {
+		return sessions.keys.first { session -> session.sessionId == target };
 	}
 
 	override fun size(): Int {
@@ -39,7 +38,7 @@ class SessionRegistry(
 		}
 	}
 
-	override fun stream(): Stream<NetworkSession> {
-		return sessions.keys.stream()
+	override fun iterator(): Iterator<NetworkSession> {
+		return sessions.keys.iterator()
 	}
 }

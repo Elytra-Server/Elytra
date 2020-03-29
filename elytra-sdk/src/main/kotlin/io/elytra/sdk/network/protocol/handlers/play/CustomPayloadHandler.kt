@@ -7,6 +7,5 @@ import io.elytra.sdk.network.protocol.message.play.CustomPayloadMessage
 class CustomPayloadHandler : MessageHandler<NetworkSession, CustomPayloadMessage> {
 
 	override fun handle(session: NetworkSession, message: CustomPayloadMessage) {
-		println("Custom Payload")
 	}
 }

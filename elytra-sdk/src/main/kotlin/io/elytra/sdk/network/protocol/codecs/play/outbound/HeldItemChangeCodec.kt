@@ -6,11 +6,9 @@ import io.netty.buffer.ByteBuf
 import java.io.IOException
 
 class HeldItemChangeCodec : Codec<HeldItemChangeMessage> {
-	override fun encode(buf: ByteBuf, message: HeldItemChangeMessage): ByteBuf {
-		buf.writeByte(message.heldItemHotbarIndex)
-
-		println("held item - " + message.heldItemHotbarIndex)
-		return buf
+	override fun encode(buffer: ByteBuf, message: HeldItemChangeMessage): ByteBuf {
+		buffer.writeByte(message.heldItemHotbarIndex)
+		return buffer
 	}
 
 	override fun decode(buffer: ByteBuf): HeldItemChangeMessage {

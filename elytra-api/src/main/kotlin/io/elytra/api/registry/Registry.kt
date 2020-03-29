@@ -1,16 +1,15 @@
 package io.elytra.api.registry
 
-import java.util.stream.Stream
 
 interface Registry <T, K> {
 
-	fun add(record: T)
+	fun add(target: T)
 
-	fun remove(record: T)
+	fun remove(target: T)
 
-	fun get(record: K): T?
+	fun get(target: K): T?
 
-	fun stream(): Stream<T>
+	fun iterator(): Iterator<T>
 
 	fun size(): Int
 

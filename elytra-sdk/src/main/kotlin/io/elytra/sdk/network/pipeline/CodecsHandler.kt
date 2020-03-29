@@ -29,8 +29,6 @@ class CodecsHandler(private val packet: BasicPacket) : MessageToMessageCodec<Byt
 
 	override fun decode(ctx: ChannelHandlerContext, msg: ByteBuf, out: MutableList<Any>) {
 		val codec: Codec<*>? = packet.newReadHeader(msg)
-
-
 		val decoded = codec?.decode(msg)
 
 		if (msg.readableBytes() > 0) {

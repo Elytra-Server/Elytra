@@ -6,10 +6,15 @@ package io.elytra.api.server
  * game loop.
  */
 interface Server {
-	var serverDescriptor: ServerPojo?
+	var serverDescriptor: ServerDescriptor?
 
 	/**
 	 * Initializes the execution of the game loop and related services
 	 */
 	fun boot()
+
+	/**
+	 * Sends a chat message to all online players
+	 */
+	fun broadcastMessage(message: String)
 }

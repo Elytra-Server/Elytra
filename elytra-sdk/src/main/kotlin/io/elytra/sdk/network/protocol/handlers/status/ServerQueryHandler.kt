@@ -1,42 +1,39 @@
 package io.elytra.sdk.network.protocol.handlers.status
 
 import com.google.gson.Gson
-import io.elytra.sdk.Elytra
 import io.elytra.sdk.network.NetworkSession
-import io.elytra.sdk.network.protocol.handlers.InbMessageHandler
-import io.elytra.sdk.network.protocol.message.status.ServerQueryMessage
-import io.elytra.sdk.network.protocol.message.status.ServerInfoMessage
 import io.elytra.sdk.network.protocol.ProtocolInfo
+import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
+import io.elytra.sdk.network.protocol.message.status.ServerInfoMessage
+import io.elytra.sdk.network.protocol.message.status.ServerQueryMessage
 import io.elytra.sdk.server.Elytra
-import kotlin.collections.ArrayList
+
 
 /**
  * @see https://wiki.vg/Server_List_Ping
  */
-class ServerQueryHandler : InbMessageHandler<ServerQueryMessage>() {
+class ServerQueryHandler : ElytraMessageHandler<ServerQueryMessage>() {
 
 	override fun handle(session: NetworkSession, message: ServerQueryMessage) {
-		session.server = Elytra.server
-
-		val serverDescriptor = session.server?.serverDescriptor ?: return
-		val motd = serverDescriptor.motd
+		//val serverDescriptor = session.server?.serverDescriptor ?: return
+		//val motd = serverDescriptor.motd
 
 		val json: String = Gson().toJson(
                 StatusResponse(
                         Version(
-                                motd.pingText,
+                                "INB",
                                 ProtocolInfo.CURRENT_PROTOCOL
                         ),
                         Players(
-                                serverDescriptor.options.maxPlayers,
-                                0, //FIXME: Get from a player registry
+                                1,
+                                Elytra.server.playerRegistry.size(), //FIXME: Get from a player registry
                                 ArrayList()
                         ),
-                        Description(motd.description)
+                        Description("Elytra Server")//motd.description
                 )
 		)
 
-		serverDescriptor.motd = motd
+		//serverDescriptor.motd = motd
 		session.send(ServerInfoMessage(json))
 	}
 
