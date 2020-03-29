@@ -112,12 +112,13 @@ class NetworkSession(
 	}
 
 	fun disconnect(reason: String) {
-		/*if (getProtocol() == packetProvider.playPacket) {
-		} else {
+		if(getProtocol() != packetProvider.playPacket) {
 			channel.close()
-		}*/
-		EventBus.post(SessionDisconnectEvent(sessionId))
+			return
+		}
+
 		println("${gameProfile?.name} : kicked due $reason")
+		EventBus.post(SessionDisconnectEvent(sessionId))
 		sendWithFuture(DisconnectMessage(reason))?.addListener(ChannelFutureListener.CLOSE)
 	}
 
