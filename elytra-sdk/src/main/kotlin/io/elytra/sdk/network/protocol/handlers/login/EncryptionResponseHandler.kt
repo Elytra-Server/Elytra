@@ -5,7 +5,7 @@ import io.elytra.sdk.network.SessionState
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
 import io.elytra.sdk.network.protocol.message.login.EncryptionResponseMessage
 import io.elytra.sdk.server.Elytra
-import io.elytra.sdk.utils.cryptManager
+import io.elytra.sdk.network.utils.cryptManager
 import org.apache.commons.lang3.Validate
 import java.math.BigInteger
 import java.security.PrivateKey

@@ -2,6 +2,7 @@ package io.elytra.sdk.server
 
 import com.mojang.authlib.GameProfile
 import io.elytra.api.entity.Player
+import io.elytra.api.entity.PlayerMode
 import io.elytra.api.registry.Registry
 import io.elytra.api.world.enums.Difficulty
 import io.elytra.sdk.entity.ElytraPlayer
@@ -20,8 +21,16 @@ class PlayerRegistry(
 	private var currentId: AtomicInteger = AtomicInteger(1)
 ) : Registry<Player, String>{
 
-	fun initialize(session: NetworkSession, gameProfile: GameProfile, premium: Boolean){
-		var player: Player = ElytraPlayer(session.sessionId,gameProfile.name,gameProfile,premium, online = true, banned = false, exp = 0, expLevel = 0)
+	fun initialize(session: NetworkSession, gameProfile: GameProfile){
+		var player: Player = ElytraPlayer(
+			session.sessionId,
+			gameProfile.name,
+			gameProfile,
+			if(gameProfile.isComplete) PlayerMode.PREMIUM else PlayerMode.OFFLINE,
+			online = false,
+			banned = false,
+			exp = 0,
+			expLevel = 0)
 
 		//TODO Add gameProfile in cache
 
@@ -33,7 +42,7 @@ class PlayerRegistry(
 
 		Elytra.server.playerRegistry.add(player)
 
-		println("Premium : $premium")
+		println("Premium : ${player.mode}")
 
 		session.send(joinMessage)
 		val version = Unpooled.buffer()
