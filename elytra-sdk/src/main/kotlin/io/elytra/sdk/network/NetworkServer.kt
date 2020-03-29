@@ -34,6 +34,8 @@ internal class NetworkServer(
 			.channel(Channels.pickBestChannel())
 			.option(ChannelOption.SO_KEEPALIVE, true)
 			.childOption(ChannelOption.TCP_NODELAY, true)
+			.childOption(ChannelOption.WRITE_BUFFER_HIGH_WATER_MARK , 32 * 1024)
+			.childOption(ChannelOption.WRITE_BUFFER_LOW_WATER_MARK , 8 * 1024)
 			.childHandler(ChannelInitializerHandler(connectionManager))
 
 		val server = bootstrap.bind(port).sync()
