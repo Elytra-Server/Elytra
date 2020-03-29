@@ -40,7 +40,7 @@ class EncryptionResponseHandler : ElytraMessageHandler<EncryptionResponseMessage
 			//session.disconnect("Username ${session.gameProfile!!.name} tried to join with an invalid session")
 		}
 
-		session.tryLogin()
+		//session.tryLogin()
 	}
 
 }

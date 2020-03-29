@@ -21,8 +21,6 @@ class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
 			return
 		}
 
-		//Elytra.server.playerRegistry.initialize(session,GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + message.gameProfile.name.toLowerCase()).toByteArray(StandardCharsets.UTF_8)),  message.gameProfile.name), false)
-
 		session.sessionState = SessionState.KEY
 		session.send(EncryptionRequestMessage("",Elytra.server.keypair.public,session.verifyToken))
 	}
