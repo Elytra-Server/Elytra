@@ -36,24 +36,24 @@ class PlayerListItemCodec : Codec<PlayerListItemMessage> {
 					buffer.minecraft.writeEnumValue(playerData.gameMode)
 					ByteBufUtils.writeVarInt(buffer,playerData.ping)
 
-					if(playerData.displayName == null){
-
-					}else{
-						buffer.writeBoolean(true)
-						buffer.minecraft.writeString(playerData.displayName.asJson())
-					}
+					buffer.writeBoolean(true)
+					buffer.minecraft.writeString(playerData.displayName.asJson())
 				}
 				Action.REMOVE_PLAYER -> {
-
+					buffer.minecraft.writeUuid(playerData.gameProfile.id)
 				}
 				Action.UPDATE_DISPLAY_NAME -> {
-
+					buffer.minecraft.writeUuid(playerData.gameProfile.id)
+					buffer.writeBoolean(true)
+					buffer.minecraft.writeString(playerData.displayName.asJson())
 				}
 				Action.UPDATE_GAME_MODE -> {
-
+					buffer.minecraft.writeUuid(playerData.gameProfile.id)
+					buffer.minecraft.writeEnumValue(playerData.gameMode)
 				}
 				Action.UPDATE_LATENCY -> {
-
+					buffer.minecraft.writeUuid(playerData.gameProfile.id)
+					ByteBufUtils.writeVarInt(buffer,playerData.ping)
 				}
 			}
 		}
