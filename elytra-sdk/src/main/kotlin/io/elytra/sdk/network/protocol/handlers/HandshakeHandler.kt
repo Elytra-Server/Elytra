@@ -12,7 +12,6 @@ import io.elytra.sdk.server.Elytra
 class HandshakeHandler : ElytraMessageHandler<HandshakeMessage>() {
 
 	override fun handle(networkSession: NetworkSession, message: HandshakeMessage) {
-		val loginPacket = LoginPacket()
 		val protocol: Protocol
 
 		when(message.state){
