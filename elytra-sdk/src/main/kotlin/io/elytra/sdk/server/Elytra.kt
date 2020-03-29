@@ -19,12 +19,14 @@ import java.util.*
 
 class Elytra private constructor(
 	override var serverDescriptor: ServerDescriptor? = null,
-	private val port: Int = 25565,
-	val sessionService: MinecraftSessionService = (YggdrasilAuthenticationService(Proxy.NO_PROXY, UUID.randomUUID().toString())).createMinecraftSessionService(),
+	val sessionService: MinecraftSessionService = (YggdrasilAuthenticationService(
+		Proxy.NO_PROXY, UUID.randomUUID().toString()
+	)).createMinecraftSessionService(),
 	val playerRegistry: PlayerRegistry = PlayerRegistry(),
 	val sessionRegistry: SessionRegistry = SessionRegistry(),
-	private val scheduler: Scheduler = Scheduler(sessionRegistry),
-	val keypair: KeyPair = cryptManager.generateKeyPair()
+	val keypair: KeyPair = cryptManager.generateKeyPair(),
+	private val port: Int = 25565,
+	private val scheduler: Scheduler = Scheduler(sessionRegistry)
 ) : Server {
 
 	companion object {

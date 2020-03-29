@@ -1,4 +1,4 @@
-package io.elytra.api.utils.formatting
+package io.elytra.api.chat
 
 /**
  * Enumeration of the colors supported by the client

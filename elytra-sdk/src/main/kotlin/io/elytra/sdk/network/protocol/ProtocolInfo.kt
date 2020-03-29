@@ -17,6 +17,7 @@ object ProtocolInfo {
 	const val CLIENT_SETTINGS: Int = 0x04
 	const val I_CUSTOM_PAYLOAD:Int = 0x09 // 0x9
 	const val I_CHAT:Int = 0x02
+	const val O_CHAT:Int = 0x0F
 
 	const val HELD_ITEM_CHANGE: Int = 0x3A
 	const val PLAYER_ABILITIES: Int = 0x2B

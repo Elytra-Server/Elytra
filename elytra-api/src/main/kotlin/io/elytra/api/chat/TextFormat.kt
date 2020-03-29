@@ -1,9 +1,10 @@
-package io.elytra.api.utils.formatting
+package io.elytra.api.chat
 
 /**
  * Enumeration of the text format operations supported by the client
  */
-object Formatting {
+object TextFormat {
+
 	const val OBSFUSCATED = "§k"
 
 	const val BOLD = "§l"
