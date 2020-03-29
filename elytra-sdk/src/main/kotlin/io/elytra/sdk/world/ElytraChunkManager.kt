@@ -22,7 +22,7 @@ class ElytraChunkManager(
 		chunks[index] = ElytraChunk(chunkX, chunkZ)
 	}
 
-	override fun sendChunksComOCaralho() {
+	override fun clear() {
 		chunks.clear()
 	}
 

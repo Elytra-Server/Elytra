@@ -8,5 +8,5 @@ interface ChunkManager {
 
 	fun setChunk(chunkX: Int, chunkZ: Int)
 
-	fun sendChunksComOCaralho()
+	fun clear()
 }
