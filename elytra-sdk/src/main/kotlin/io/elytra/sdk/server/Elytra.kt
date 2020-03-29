@@ -32,6 +32,9 @@ class Elytra private constructor(
 	companion object {
 		val server = Elytra()
 		val console: ConsoleSender = ElytraConsole(LoggerFactory.getLogger("Elytra"))
+
+
+
 	}
 
 	init {
