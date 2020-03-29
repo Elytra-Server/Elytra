@@ -9,14 +9,12 @@ class OutboundChatCodec : Codec<OutboundChatMessage> {
 	override fun encode(buf: ByteBuf, message: OutboundChatMessage): ByteBuf {
 		ByteBufUtils.writeUTF8(buf, message.content)
 		buf.writeByte(message.mode)
-
 		return buf
 	}
 
 	override fun decode(buffer: ByteBuf): OutboundChatMessage {
 		val content = ByteBufUtils.readUTF8(buffer)
 		val mode = buffer.readByte()
-
 		return OutboundChatMessage(content, mode.toInt())
 	}
 }
