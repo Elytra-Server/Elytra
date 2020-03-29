@@ -9,7 +9,7 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?color=1bcc1b)](https://choosealicense.com/licenses/mit)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
-A Plugin API & Server Implementation to battle those you struggle with the non multi-threaded bukkit api.
+A Server API to battle those who struggle with the non multi-threaded bukkit/spigot api.
 
 You can always join us on [Discord][discord-invite-link] if you want to get more involved in the project.
 
