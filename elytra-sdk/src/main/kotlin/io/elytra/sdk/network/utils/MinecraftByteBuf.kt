@@ -20,34 +20,6 @@ inline class MinecraftByteBuf(private val byteBuf: ByteBuf){
 		return (enumClass.enumConstants as Array<*>)[ByteBufUtils.readVarInt(byteBuf)] as T
 	}
 
-	/*fun writeVarInt(`in`: Int) {
-		var input = `in`
-		while ((input and -128) != 0) {
-			byteBuf.writeByte(input.and(127) or 128)
-			input = input ushr 7
-		}
-		byteBuf.writeByte(input)
-	}
-
-	fun readVarInt(): Int {
-		var i = 0
-		var j = 0
-
-		while (true) {
-			val b0: Byte = byteBuf.readByte()
-			i = i or (b0.and(127).toInt()) shl j++ * 7
-
-			if (j > 5) {
-				throw RuntimeException("VarInt too big")
-			}
-
-			if ((b0.and(128.toByte())).toInt() != 128) {
-				break
-			}
-		}
-		return i
-	}*/
-
 	fun writeUuid(uuid: UUID) {
 		byteBuf.writeLong(uuid.mostSignificantBits)
 		byteBuf.writeLong(uuid.leastSignificantBits)

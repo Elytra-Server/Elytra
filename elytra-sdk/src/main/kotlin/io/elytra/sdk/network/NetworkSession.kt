@@ -132,11 +132,9 @@ class NetworkSession(
 
 	//TODO Then put this somewhere else maybe
 	fun tryLogin(){
-		var premium: Boolean = true
 		if(!gameProfile!!.isComplete){
-			premium = false
 			gameProfile = GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + gameProfile!!.name.toLowerCase()).toByteArray(StandardCharsets.UTF_8)), gameProfile!!.name)
 		}
-		Elytra.server.playerRegistry.initialize(this,gameProfile!!,premium)
+		Elytra.server.playerRegistry.initialize(this,gameProfile!!)
 	}
 }

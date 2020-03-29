@@ -9,7 +9,7 @@ interface Player {
 	var displayName: String
 	var gameProfile: GameProfile?
 
-	var premium: Boolean
+	var mode: PlayerMode
 	var online: Boolean
 	var banned: Boolean
 
@@ -18,4 +18,9 @@ interface Player {
 
 	var position: Position
 	var gamemode: GameMode
+}
+
+enum class PlayerMode{
+	PREMIUM,
+	OFFLINE
 }

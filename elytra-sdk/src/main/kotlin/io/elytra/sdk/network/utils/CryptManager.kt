@@ -1,4 +1,4 @@
-package io.elytra.sdk.utils
+package io.elytra.sdk.network.utils
 
 import java.security.*
 import java.security.spec.EncodedKeySpec

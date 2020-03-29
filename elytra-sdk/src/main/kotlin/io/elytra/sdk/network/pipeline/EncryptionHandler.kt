@@ -1,7 +1,7 @@
 package io.elytra.sdk.network.pipeline
 
 import io.elytra.sdk.network.utils.NettyEncryptionTranslator
-import io.elytra.sdk.utils.cryptManager
+import io.elytra.sdk.network.utils.cryptManager
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.ByteToMessageCodec

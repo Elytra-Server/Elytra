@@ -2,6 +2,7 @@ package io.elytra.sdk.entity
 
 import com.mojang.authlib.GameProfile
 import io.elytra.api.entity.Player
+import io.elytra.api.entity.PlayerMode
 import io.elytra.api.world.enums.GameMode
 import io.elytra.api.world.Position
 import io.elytra.sdk.network.NetworkSession
@@ -11,7 +12,7 @@ data class ElytraPlayer(
 	var sessionId: String,
 	override var displayName: String,
 	override var gameProfile: GameProfile?,
-	override var premium: Boolean,
+	override var mode: PlayerMode,
 	override var online: Boolean,
 	override var banned: Boolean,
 	override var exp: Int,
