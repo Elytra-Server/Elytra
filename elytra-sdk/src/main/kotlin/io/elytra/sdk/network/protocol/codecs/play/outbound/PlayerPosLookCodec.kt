@@ -18,7 +18,6 @@ class PlayerPosLookCodec : Codec<PlayerPosLookMessage> {
 		buffer.writeByte(message.flags.toInt())
 		ByteBufUtils.writeVarInt(buffer,message.teleportId)
 
-		println(message)
 		return buffer
 	}
 
