@@ -32,6 +32,9 @@ class Elytra private constructor(
 	companion object {
 		val server = Elytra()
 		val console: ConsoleSender = ElytraConsole(LoggerFactory.getLogger("Elytra"))
+
+
+
 	}
 
 	init {
@@ -45,10 +48,13 @@ class Elytra private constructor(
 		bindNetwork()
 	}
 
+	override fun broadcastMessage(message: String) {
+		TODO("Not yet implemented")
+	}
+
 	//TODO: Will be refactored, just for testing for now
 	private fun loadConfigs() {
-		val serverConfigFile = ServerConfigFile(serverDescriptor)
-		serverConfigFile.load()
+		ServerConfigFile(serverDescriptor).load()
 	}
 
 	private fun bindNetwork() {

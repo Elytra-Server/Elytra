@@ -12,4 +12,9 @@ interface Server {
 	 * Initializes the execution of the game loop and related services
 	 */
 	fun boot()
+
+	/**
+	 * Sends a chat message to all online players
+	 */
+	fun broadcastMessage(message: String)
 }
