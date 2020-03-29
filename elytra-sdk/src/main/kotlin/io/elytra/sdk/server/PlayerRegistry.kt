@@ -1,6 +1,7 @@
 package io.elytra.sdk.server
 
 import com.mojang.authlib.GameProfile
+import io.elytra.api.chat.ChatComponent
 import io.elytra.api.entity.Player
 import io.elytra.api.entity.PlayerMode
 import io.elytra.api.registry.Registry
@@ -51,6 +52,7 @@ class PlayerRegistry(
 		session.send(HeldItemChangeMessage(4))
 		//session.send(EntityStatusMessage(1, 24)) //Crash client
 		session.send(positionMessage)
+		session.send(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0,player.gamemode,player.gameProfile!!, ChatComponent(player.displayName)))))
 		add(player)
 	}
 

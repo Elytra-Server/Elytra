@@ -28,6 +28,7 @@ object ProtocolInfo {
 	const val LOAD_CHUNK_DATA: Int = 0x21
 	const val ENTITY_STATUS: Int = 0x1A
 	const val PLAY_DISCONNECT: Int = 0x1B
+	const val PLAYER_LIST_ITEM: Int = 0x2e
 	//endregion
 
 	//region STATUS
