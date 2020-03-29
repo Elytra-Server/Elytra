@@ -23,7 +23,6 @@ class EncryptionResponseHandler : ElytraMessageHandler<EncryptionResponseMessage
 
 		val secretKey = cryptManager.decryptSharedKey(privatekey,message.secretKeyEncrypted)
 
-		//TODO Add encryption on encode & decode
 		session.sessionState = SessionState.ACCEPTED
 		session.enableEncryption(secretKey)
 
@@ -36,11 +35,12 @@ class EncryptionResponseHandler : ElytraMessageHandler<EncryptionResponseMessage
 			session.gameProfile = gameProfile
 			session.sessionState = SessionState.READY_TO_ACCEPT
 		}else{
-			//TODO Need add verification for only member premium from server configuration
-			//session.disconnect("Username ${session.gameProfile!!.name} tried to join with an invalid session")
+			if(Elytra.server.serverDescriptor!!.options.onyPremium){
+				session.disconnect("Username ${session.gameProfile!!.name} tried to join with an invalid session")
+			}else{
+				session.sessionState = SessionState.READY_TO_ACCEPT
+			}
 		}
-
-		//session.tryLogin()
 	}
 
 }

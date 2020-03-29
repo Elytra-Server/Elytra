@@ -10,7 +10,7 @@ data class WorldPojo(
 
 data class ServerOptionsPojo(
 	val maxPlayers: Int,
-	val onlineMode: Boolean,
+	val onyPremium: Boolean,
 	val eulaCheck: Boolean
 )
 
