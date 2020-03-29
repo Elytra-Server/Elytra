@@ -9,7 +9,7 @@ import io.elytra.sdk.utils.getResource
 import java.io.IOException
 
 class ServerConfigFile(
-	var descriptor: ServerDescriptor?
+	private var descriptor: ServerDescriptor?
 ) : ConfigurationFile{
 
 	override fun load() {
