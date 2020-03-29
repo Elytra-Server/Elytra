@@ -62,7 +62,7 @@ class NetworkSession(
 			}else if(sessionState == SessionState.DELAY_ACCEPT){
 				println("ACCEPT")
 			}
-			if(connectionTimer++ == 600){
+			if (connectionTimer++ == 600) {
 				disconnect("JABIRACA")
 			}
 		}
@@ -122,8 +122,13 @@ class NetworkSession(
 	}
 
 	fun disconnect(reason: String) {
-		EventBus.post(SessionDisconnectEvent(sessionId))
+		if (protocol != Protocol.PLAY) {
+			channel.close()
+			return
+		}
+
 		println("${gameProfile?.name} : kicked due $reason")
+		EventBus.post(SessionDisconnectEvent(sessionId))
 		sendWithFuture(DisconnectMessage(reason))?.addListener(ChannelFutureListener.CLOSE)
 	}
 
@@ -131,16 +136,17 @@ class NetworkSession(
 		channel.pipeline().replace(key, key, handler);
 	}
 
-	fun enableEncryption(sharedSecret: SecretKey){
+	fun enableEncryption(sharedSecret: SecretKey) {
 		encrypted = true
 		channel.pipeline().addFirst("decrypt", EncryptionHandler(sharedSecret))
 	}
 
 	//TODO Then put this somewhere else maybe
-	fun tryLogin(){
-		if(!gameProfile!!.isComplete){
+	fun tryLogin() {
+		if (!gameProfile!!.isComplete) {
 			gameProfile = GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + gameProfile!!.name.toLowerCase()).toByteArray(StandardCharsets.UTF_8)), gameProfile!!.name)
 		}
-		Elytra.server.playerRegistry.initialize(this,gameProfile!!)
+
+		Elytra.server.playerRegistry.initialize(this, gameProfile!!)
 	}
 }
