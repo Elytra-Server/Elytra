@@ -15,6 +15,7 @@ import io.elytra.sdk.network.protocol.PacketProvider
 import io.elytra.sdk.network.protocol.message.DisconnectMessage
 import io.elytra.sdk.network.protocol.packets.BasicPacket
 import io.elytra.sdk.network.protocol.packets.HandshakePacket
+import io.elytra.sdk.network.protocol.packets.Protocol
 import io.elytra.sdk.server.Elytra
 import io.netty.channel.Channel
 import io.netty.channel.ChannelFuture
@@ -31,7 +32,7 @@ import kotlin.random.Random
 
 class NetworkSession(
 	channel: Channel,
-	var protocol: BasicPacket? = null,
+	var protocol: Protocol = Protocol.HANDSHAKE,
 	@Volatile private var disconnected: Boolean = false,
 	private var packetProvider: PacketProvider = PacketProvider(),
 	private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque()
@@ -55,9 +56,9 @@ class NetworkSession(
 	}
 
 	override fun tick() {
-		if(protocol == packetProvider.loginPacket){
+		if(protocol == Protocol.LOGIN){
 			if(sessionState == SessionState.READY_TO_ACCEPT){
-				tryLogin()
+				println("TRY")
 			}else if(sessionState == SessionState.DELAY_ACCEPT){
 				println("ACCEPT")
 			}
@@ -79,8 +80,17 @@ class NetworkSession(
 		}*/
 	}
 
+	fun protocol(protocol: Protocol){
+		when(protocol) {
+			Protocol.LOGIN -> setProtocol(packetProvider.loginPacket)
+			Protocol.PLAY -> setProtocol(packetProvider.playPacket)
+			Protocol.STATUS -> setProtocol(packetProvider.statusPacket)
+			Protocol.HANDSHAKE -> setProtocol(packetProvider.handshakePacket)
+			else -> disconnect()
+		}
+	}
+
 	public override fun setProtocol(protocol: AbstractProtocol?) {
-		this.protocol = protocol as BasicPacket?
 		updatePipeline("codecs", CodecsHandler(protocol as BasicPacket))
 		super.setProtocol(protocol)
 	}
@@ -112,10 +122,6 @@ class NetworkSession(
 	}
 
 	fun disconnect(reason: String) {
-		/*if (getProtocol() == packetProvider.playPacket) {
-		} else {
-			channel.close()
-		}*/
 		EventBus.post(SessionDisconnectEvent(sessionId))
 		println("${gameProfile?.name} : kicked due $reason")
 		sendWithFuture(DisconnectMessage(reason))?.addListener(ChannelFutureListener.CLOSE)

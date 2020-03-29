@@ -5,6 +5,7 @@ import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.network.protocol.message.HandshakeMessage
 import io.elytra.sdk.network.protocol.packets.BasicPacket
 import io.elytra.sdk.network.protocol.packets.LoginPacket
+import io.elytra.sdk.network.protocol.packets.Protocol
 import io.elytra.sdk.network.protocol.packets.StatusPacket
 import io.elytra.sdk.server.Elytra
 
@@ -12,20 +13,20 @@ class HandshakeHandler : ElytraMessageHandler<HandshakeMessage>() {
 
 	override fun handle(networkSession: NetworkSession, message: HandshakeMessage) {
 		val loginPacket = LoginPacket()
-		val packet: BasicPacket
+		val protocol: Protocol
 
-		if (message.state == 1) {
-			packet = StatusPacket()
-		} else if (message.state == 2) {
-			packet = loginPacket
-		} else {
-			networkSession.disconnect("Invalid State")
-			return
+		when(message.state){
+			1 -> protocol = Protocol.STATUS
+			2 -> protocol = Protocol.LOGIN
+			else -> {
+				networkSession.disconnect("Invalid State")
+				return
+			}
 		}
 
-		networkSession.setProtocol(packet)
+		networkSession.protocol(protocol)
 
-		if (packet == loginPacket) {
+		if (protocol == Protocol.LOGIN) {
 			if (message.version < ProtocolInfo.CURRENT_PROTOCOL || message.version > ProtocolInfo.CURRENT_PROTOCOL) {
 				val reason = if (message.version < ProtocolInfo.CURRENT_PROTOCOL) "Outdated client! Running: ${ProtocolInfo.MINECRAFT_VERSION}" else "Outdated server! Running: ${ProtocolInfo.MINECRAFT_VERSION}"
 				networkSession.disconnect(reason)
