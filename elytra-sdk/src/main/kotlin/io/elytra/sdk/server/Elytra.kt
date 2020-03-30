@@ -48,18 +48,20 @@ class Elytra private constructor(
 	}
 
 	override fun broadcastMessage(message: String) {
+		broadcastMessage(message) { it.online }
+	}
+
+	override fun broadcastMessage(message: String, filter: (player: Player) -> Boolean) {
 		val players = playerRegistry.iterator()
 
 		while(players.hasNext()){
 			val player = players.next() as ElytraPlayer
 
-			if(!player.online){
-				continue
-			}
-
+			filter.invoke(player)
 			player.sendMessage(message)
 		}
 	}
+
 
 	//TODO: Will be refactored, just for testing for now
 	private fun loadConfigs() {
