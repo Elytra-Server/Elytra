@@ -2,12 +2,16 @@ package io.elytra.sdk.entity
 
 import com.flowpowered.network.Message
 import com.mojang.authlib.GameProfile
+import io.elytra.api.chat.ChatComponent
+import io.elytra.api.chat.ChatMode
 import io.elytra.api.entity.Player
 import io.elytra.api.entity.PlayerMode
+import io.elytra.api.utils.asJson
 import io.elytra.api.world.enums.GameMode
 import io.elytra.api.world.Position
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.message.DisconnectMessage
+import io.elytra.sdk.network.protocol.message.play.OutboundChatMessage
 import io.elytra.sdk.server.Elytra
 
 data class ElytraPlayer(
@@ -35,5 +39,16 @@ data class ElytraPlayer(
 	override fun kick(reason: String) {
 		session()?.send(DisconnectMessage(reason))
 	}
- 
+
+	override fun sendMessage(message: String) {
+		sendMessage(ChatComponent(message))
+	}
+
+	override fun sendMessage(chatComponent: ChatComponent) {
+		sendPacket(OutboundChatMessage(chatComponent.asJson(), ChatMode.PLAYER))
+	}
+
+	private fun sendPacket(packet: Message) {
+		session()?.sendWithFuture(packet)
+	}
 }

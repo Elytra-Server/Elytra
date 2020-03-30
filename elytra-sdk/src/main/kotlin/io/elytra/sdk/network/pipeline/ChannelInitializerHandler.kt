@@ -6,12 +6,13 @@ import io.netty.channel.ChannelException
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.ChannelOption
 import io.netty.channel.socket.SocketChannel
+import io.netty.handler.timeout.IdleStateHandler
 import io.netty.handler.timeout.ReadTimeoutHandler
-
 
 class ChannelInitializerHandler(
 	private val connectionManager : ConnectionManager
 ) : ChannelInitializer<SocketChannel>() {
+
 	override fun initChannel(ch: SocketChannel) {
 		val codecsHandler = CodecsHandler(HandshakePacket())
 		val decoderHandler = FramingHandler()
@@ -21,13 +22,13 @@ class ChannelInitializerHandler(
 		 * The time in seconds which are elapsed before a client is disconnected due
 		 * to a read timeout.
 		 */
-		val READ_TIMEOUT: Int = 20;
+		val readTimeout: Int = 20;
 
 		/**
 		 * The time in seconds which are elapsed before a client is deemed idle due
 		 * to a write timeout.
 		 */
-		val WRITE_IDLE_TIMEOUT: Int = 15;
+		val writeIdleTimeout: Int = 15;
 
 		try {
 			ch.config().setOption(ChannelOption.IP_TOS, 0x18)
@@ -38,8 +39,8 @@ class ChannelInitializerHandler(
 		ch.pipeline()
 			.addLast("framing", decoderHandler)
 			.addLast("codecs", codecsHandler)
-			.addLast("readtimeout", ReadTimeoutHandler(READ_TIMEOUT))
-			//.addLast("writeidletimeout", IdleStateHandler(0, WRITE_IDLE_TIMEOUT, 0))
+			.addLast("readtimeout", ReadTimeoutHandler(readTimeout))
+			//.addLast("writeidletimeout", IdleStateHandler(readTimeout, writeIdleTimeout, 0))
 			.addLast("handler", messagesHandler)
 	}
 }

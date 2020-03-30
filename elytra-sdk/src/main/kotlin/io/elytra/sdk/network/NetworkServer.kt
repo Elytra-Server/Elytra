@@ -7,6 +7,8 @@ import io.elytra.sdk.server.Elytra
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelOption
 import io.netty.channel.EventLoopGroup
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 /**
  * Initializes a TCP server to handle the packets, codecs and packet handlers
@@ -25,15 +27,16 @@ internal class NetworkServer(
 	 * Boot up the tcp server
 	 */
 	fun start() {
-		val masterGroup: EventLoopGroup = Channels.pickBestEventLoopGroup()
 		val workerGroup: EventLoopGroup = Channels.pickBestEventLoopGroup()
 		val connectionManager: ConnectionManager = ElytraConnectionManager(sessionRegistry)
 
 		bootstrap
-			.group(masterGroup, workerGroup)
+			.group(workerGroup)
 			.channel(Channels.pickBestChannel())
 			.option(ChannelOption.SO_KEEPALIVE, true)
 			.childOption(ChannelOption.TCP_NODELAY, true)
+			.childOption(ChannelOption.WRITE_BUFFER_HIGH_WATER_MARK , 32 * 1024)
+			.childOption(ChannelOption.WRITE_BUFFER_LOW_WATER_MARK , 8 * 1024)
 			.childHandler(ChannelInitializerHandler(connectionManager))
 
 		val server = bootstrap.bind(port).sync()
@@ -44,7 +47,6 @@ internal class NetworkServer(
 		}
 
 		server.channel().closeFuture().sync()
-		masterGroup.shutdownGracefully()
 		workerGroup.shutdownGracefully()
 	}
 }

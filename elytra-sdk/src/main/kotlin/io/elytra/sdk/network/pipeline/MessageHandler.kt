@@ -13,7 +13,6 @@ class MessageHandler(
 ) : SimpleChannelInboundHandler<Message>() {
 
 	override fun channelRead0(ctx: ChannelHandlerContext, msg: Message) {
-		println("[DEBUG] $msg")
 		session.get()?.messageReceived(msg);
 	}
 
