@@ -54,8 +54,6 @@ class PlayerRegistry(
 		players.iterator().forEach { it: Player ->
 			session.send(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0,it.gamemode,player.gameProfile!!, ChatComponent(it.displayName)))))
 		}
-
-		session.send(KeepAliveMessage(1))
 	}
 
 	override fun add(target: Player) {

@@ -24,12 +24,12 @@ object ProtocolInfo {
 	const val O_CUSTOM_PAYLOAD: Int = 0x18
 	const val JOIN_GAME: Int = 0x23
 	const val PLAYER_POS_LOOK: Int = 0x2F
-	const val LOAD_CHUNK_DATA: Int = 0x21
+	//const val LOAD_CHUNK_DATA: Int = 0x21
 	const val ENTITY_STATUS: Int = 0x1A
 	const val PLAY_DISCONNECT: Int = 0x1B
 	const val PLAYER_LIST_ITEM: Int = 0x2E
-	const val O_KEEP_ALIVE: Int = 0x20
-	const val I_KEEP_ALIVE: Int = 0x0C
+	const val O_KEEP_ALIVE: Int = 0x1F
+	const val I_KEEP_ALIVE: Int = 0x0B
 	//endregion
 
 	//region STATUS

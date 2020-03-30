@@ -42,13 +42,15 @@ class NetworkSession(
 	var gameProfile: GameProfile? = null
 	var encrypted: Boolean = false
 	private var networkTickCount: Int = 0
-	private var keepAliveId: Int = 0
+	private var keepAliveId: Long = 0
 	private var lastPingTime: Long = 0
 	private var lastSentPingPacket: Long = 0
 	var ping: Int = 0
 
 	override fun send(message: Message?) {
-		println("OUT $message")
+		if(Elytra.server.debug && (message !is KeepAliveMessage)){
+			println("OUT $message")
+		}
 		super.send(message)
 	}
 
@@ -81,10 +83,9 @@ class NetworkSession(
 
 			if (this.networkTickCount - this.lastSentPingPacket > 40L) {
 				this.lastSentPingPacket = this.networkTickCount.toLong()
-				println(lastSentPingPacket)
-				lastPingTime = currentTimeMillis()
-				this.keepAliveId = lastPingTime.toInt()
-				//send(KeepAliveMessage(this.keepAliveId))
+				lastPingTime = System.currentTimeMillis()
+				this.keepAliveId = lastPingTime
+				send(KeepAliveMessage(this.keepAliveId))
 			}
 		}
 
@@ -129,7 +130,9 @@ class NetworkSession(
 	}
 
 	override fun messageReceived(message: Message) {
-		println("IN $message")
+		if(Elytra.server.debug && (message !is KeepAliveMessage)){
+			println("IN $message")
+		}
 		if (message is Asyncable) {
 			super.messageReceived(message)
 			return
@@ -165,13 +168,8 @@ class NetworkSession(
 		Elytra.server.playerRegistry.initialize(this, gameProfile!!)
 	}
 
-	fun ping(id: Int){
-		println("Local $keepAliveId Client $id")
-		val i = (currentTimeMillis() - lastPingTime).toInt()
-		ping = (ping * 3 + i) / 4
-	}
-
-	private fun currentTimeMillis(): Long {
-		return System.nanoTime() / 1000000L
+	fun ping(id: Long){
+		val i = (System.currentTimeMillis() - lastPingTime).toInt()
+		ping = ((ping * 3 + i) / 4)
 	}
 }

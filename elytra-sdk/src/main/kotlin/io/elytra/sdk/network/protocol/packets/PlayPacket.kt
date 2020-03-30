@@ -62,7 +62,7 @@ class PlayPacket : BasicPacket("PLAY", 0x96) {
 		outbound(ProtocolInfo.PLAYER_POS_LOOK, PlayerPosLookMessage::class.java, PlayerPosLookCodec::class.java)
 		outbound(ProtocolInfo.ENTITY_STATUS, EntityStatusMessage::class.java, EntityStatusCodec::class.java)
 		outbound(ProtocolInfo.PLAY_DISCONNECT, DisconnectMessage::class.java, DisconnectCodec::class.java)
-		outbound(ProtocolInfo.LOAD_CHUNK_DATA, ChunkDataMessage::class.java, ChunkDataCodec::class.java)
+		//outbound(ProtocolInfo.LOAD_CHUNK_DATA, ChunkDataMessage::class.java, ChunkDataCodec::class.java)
 		outbound(ProtocolInfo.O_CHAT, OutboundChatMessage::class.java, OutboundChatCodec::class.java)
 		outbound(ProtocolInfo.PLAYER_LIST_ITEM, PlayerListItemMessage::class.java, PlayerListItemCodec::class.java)
 		outbound(ProtocolInfo.O_KEEP_ALIVE, KeepAliveMessage::class.java, KeepAliveCodec::class.java)
