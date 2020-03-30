@@ -8,7 +8,7 @@ import io.elytra.api.entity.Player
  * game loop.
  */
 interface Server {
-	var serverDescriptor: ServerDescriptor?
+	var serverDescriptor: ServerDescriptor
 
 	/**
 	 * Initializes the execution of the game loop and related services
