@@ -19,7 +19,11 @@ class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
 			return
 		}
 
-		session.sessionState = SessionState.KEY
-		session.send(EncryptionRequestMessage("",Elytra.server.keypair.public,session.verifyToken))
+		if(Elytra.server.debug)
+			session.sessionState = SessionState.READY_TO_ACCEPT
+		else{
+			session.sessionState = SessionState.KEY
+			session.send(EncryptionRequestMessage("",Elytra.server.keypair.public,session.verifyToken))
+		}
 	}
 }
