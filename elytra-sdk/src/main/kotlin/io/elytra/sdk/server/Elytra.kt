@@ -1,5 +1,6 @@
 package io.elytra.sdk.server
 
+import ch.qos.logback.classic.util.ContextInitializer
 import com.flowpowered.network.Message
 import com.mojang.authlib.minecraft.MinecraftSessionService
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
@@ -50,6 +51,8 @@ class Elytra private constructor(
 	}
 
 	override fun boot() {
+		System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, "./logback.xml");
+
 		PacketProvider()
 		scheduler.start()
 
