@@ -6,11 +6,19 @@ import io.netty.handler.codec.DecoderException
 import io.netty.handler.codec.EncoderException
 import java.nio.charset.StandardCharsets
 import java.util.*
-import kotlin.experimental.and
 
 val ByteBuf.minecraft get() = MinecraftByteBuf(this)
 
 inline class MinecraftByteBuf(private val byteBuf: ByteBuf){
+
+	fun writeVarIntToBuffer(input: Int) {
+		var input = input
+		while (input and -128 != 0) {
+			byteBuf.writeByte(input and 127 or 128)
+			input = input ushr 7
+		}
+		byteBuf.writeByte(input)
+	}
 
 	fun writeEnumValue(value: Enum<*>) {
 		ByteBufUtils.writeVarInt(byteBuf,value.ordinal)

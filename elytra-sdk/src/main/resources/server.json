@@ -6,7 +6,7 @@
   },
   "options": {
     "maxPlayers": 100,
-    "onlineMode": true,
+    "onlyPremium": false,
     "eulaCheck": true
   },
   "motd": {

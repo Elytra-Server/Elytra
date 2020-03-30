@@ -5,14 +5,13 @@ import com.flowpowered.network.MessageHandler
 import com.flowpowered.network.protocol.AbstractProtocol
 import com.flowpowered.network.session.BasicSession
 import com.mojang.authlib.GameProfile
-import io.elytra.api.events.EventBus
 import io.elytra.api.utils.Asyncable
 import io.elytra.api.utils.Tickable
-import io.elytra.sdk.network.events.SessionDisconnectEvent
 import io.elytra.sdk.network.pipeline.CodecsHandler
 import io.elytra.sdk.network.pipeline.EncryptionHandler
 import io.elytra.sdk.network.protocol.PacketProvider
 import io.elytra.sdk.network.protocol.message.DisconnectMessage
+import io.elytra.sdk.network.protocol.message.play.KeepAliveMessage
 import io.elytra.sdk.network.protocol.packets.BasicPacket
 import io.elytra.sdk.network.protocol.packets.HandshakePacket
 import io.elytra.sdk.network.protocol.packets.Protocol
@@ -29,7 +28,6 @@ import java.util.concurrent.LinkedBlockingDeque
 import javax.crypto.SecretKey
 import kotlin.random.Random
 
-
 class NetworkSession(
 	channel: Channel,
 	var protocol: Protocol = Protocol.HANDSHAKE,
@@ -43,6 +41,16 @@ class NetworkSession(
 	val verifyToken: ByteArray = Random.nextBytes(4)
 	var gameProfile: GameProfile? = null
 	var encrypted: Boolean = false
+	private var networkTickCount: Int = 0
+	private var keepAliveId: Int = 0
+	private var lastPingTime: Long = 0
+	private var lastSentPingPacket: Long = 0
+	var ping: Int = 0
+
+	override fun send(message: Message?) {
+		println("OUT $message")
+		super.send(message)
+	}
 
 	override fun sendWithFuture(message: Message?): ChannelFuture? {
 		if (!isActive) {
@@ -56,6 +64,7 @@ class NetworkSession(
 	}
 
 	override fun tick() {
+		++networkTickCount
 		if(protocol == Protocol.LOGIN){
 			if(sessionState == SessionState.READY_TO_ACCEPT){
 				tryLogin()
@@ -67,15 +76,22 @@ class NetworkSession(
 			}
 		}
 
+		if(protocol == Protocol.PLAY){
+			if (disconnected) disconnect("Exit the game")
+
+			if (this.networkTickCount - this.lastSentPingPacket > 40L) {
+				this.lastSentPingPacket = this.networkTickCount.toLong()
+				println(lastSentPingPacket)
+				lastPingTime = currentTimeMillis()
+				this.keepAliveId = lastPingTime.toInt()
+				//send(KeepAliveMessage(this.keepAliveId))
+			}
+		}
+
 		var message: Message?
 		while (messageQueue.poll().also { message = it } != null) {
 			if (disconnected) break
 			super.messageReceived(message)
-		}
-
-		if (disconnected && (protocol == Protocol.PLAY)) {
-			disconnect("Exit the game")
-			//player?.let { PlayerDisconnectEvent(it, "No reason specified") }?.let { EventBus.post(it) }
 		}
 	}
 
@@ -113,6 +129,7 @@ class NetworkSession(
 	}
 
 	override fun messageReceived(message: Message) {
+		println("IN $message")
 		if (message is Asyncable) {
 			super.messageReceived(message)
 			return
@@ -121,13 +138,11 @@ class NetworkSession(
 	}
 
 	fun disconnect(reason: String) {
+		println(reason)
 		if (protocol != Protocol.PLAY) {
 			channel.close()
 			return
 		}
-
-		println("${gameProfile?.name} : $reason")
-		EventBus.post(SessionDisconnectEvent(sessionId))
 		sendWithFuture(DisconnectMessage(reason))?.addListener(ChannelFutureListener.CLOSE)
 		Elytra.server.sessionRegistry.remove(this)
 		Elytra.server.playerRegistry.remove(Elytra.server.playerRegistry.get(gameProfile!!.name)!!)
@@ -143,11 +158,20 @@ class NetworkSession(
 	}
 
 	//TODO Then put this somewhere else maybe
-	fun tryLogin() {
+	private fun tryLogin() {
 		if (!gameProfile!!.isComplete) {
 			gameProfile = GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + gameProfile!!.name.toLowerCase()).toByteArray(StandardCharsets.UTF_8)), gameProfile!!.name)
 		}
-
 		Elytra.server.playerRegistry.initialize(this, gameProfile!!)
+	}
+
+	fun ping(id: Int){
+		println("Local $keepAliveId Client $id")
+		val i = (currentTimeMillis() - lastPingTime).toInt()
+		ping = (ping * 3 + i) / 4
+	}
+
+	private fun currentTimeMillis(): Long {
+		return System.nanoTime() / 1000000L
 	}
 }
