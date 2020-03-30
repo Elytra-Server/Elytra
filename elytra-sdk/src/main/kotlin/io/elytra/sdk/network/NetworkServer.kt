@@ -22,7 +22,6 @@ internal class NetworkServer(
 ) {
 
 	private val bootstrap: ServerBootstrap = ServerBootstrap()
-	private val serverExecutors: ExecutorService = Executors.newCachedThreadPool()
 
 	/**
 	 * Boot up the tcp server

@@ -9,10 +9,10 @@ import io.netty.channel.socket.SocketChannel
 import io.netty.handler.timeout.IdleStateHandler
 import io.netty.handler.timeout.ReadTimeoutHandler
 
-
 class ChannelInitializerHandler(
 	private val connectionManager : ConnectionManager
 ) : ChannelInitializer<SocketChannel>() {
+
 	override fun initChannel(ch: SocketChannel) {
 		val codecsHandler = CodecsHandler(HandshakePacket())
 		val decoderHandler = FramingHandler()
