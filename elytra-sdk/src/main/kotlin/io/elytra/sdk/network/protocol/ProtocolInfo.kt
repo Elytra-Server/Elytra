@@ -18,7 +18,6 @@ object ProtocolInfo {
 	const val I_CUSTOM_PAYLOAD:Int = 0x09 // 0x9
 	const val I_CHAT:Int = 0x02
 	const val O_CHAT:Int = 0x0F
-
 	const val HELD_ITEM_CHANGE: Int = 0x3A
 	const val PLAYER_ABILITIES: Int = 0x2B
 	const val SERVER_DIFFICULTY: Int = 0x0D
@@ -28,7 +27,9 @@ object ProtocolInfo {
 	const val LOAD_CHUNK_DATA: Int = 0x21
 	const val ENTITY_STATUS: Int = 0x1A
 	const val PLAY_DISCONNECT: Int = 0x1B
-	const val PLAYER_LIST_ITEM: Int = 0x2e
+	const val PLAYER_LIST_ITEM: Int = 0x2E
+	const val O_KEEP_ALIVE: Int = 0x20
+	const val I_KEEP_ALIVE: Int = 0x0C
 	//endregion
 
 	//region STATUS
