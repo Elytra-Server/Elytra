@@ -45,4 +45,7 @@ Elytra is a Kotlin program which uses Gradle 2 for compilation. To compile from 
 </tr>
 </table>
 
+## Donate
+<a href="https://www.buymeacoffee.com/kCEm5ra" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/lato-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
+
 [discord-invite-link]: https://discord.gg/bBTjRPP
