@@ -5,8 +5,14 @@ dependencies {
 	implementation("it.unimi.dsi:fastutil:8.3.1")
 }
 
-val compileKotlin: KotlinCompile by tasks
+tasks {
+	withType<KotlinCompile> {
+		kotlinOptions.freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
+	}
 
-compileKotlin.kotlinOptions {
-    freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
+	jar {
+		manifest {
+			attributes("Main-Class" to "io.elytra.sdk.ElytraServer")
+		}
+	}
 }
