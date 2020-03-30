@@ -2,6 +2,7 @@ package io.elytra.sdk.server
 
 import com.mojang.authlib.GameProfile
 import io.elytra.api.chat.ChatComponent
+import io.elytra.api.chat.Colors
 import io.elytra.api.entity.Player
 import io.elytra.api.entity.PlayerMode
 import io.elytra.api.registry.Registry
@@ -18,12 +19,13 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
 
 class PlayerRegistry(
-	private val players: Set<Player> = ConcurrentHashMap.newKeySet(),
-	private var currentId: AtomicInteger = AtomicInteger(1)
+	private var players: Set<Player> = ConcurrentHashMap.newKeySet(),
+	private var currentId: AtomicInteger = AtomicInteger(0)
 ) : Registry<Player, String>{
 
 	fun initialize(session: NetworkSession, gameProfile: GameProfile){
 		var player: Player = ElytraPlayer(
+			currentId.getAndIncrement(),
 			session.sessionId,
 			gameProfile.name,
 			gameProfile,
@@ -32,6 +34,7 @@ class PlayerRegistry(
 			banned = false,
 			exp = 0,
 			expLevel = 0)
+		players = players.plus(player)
 
 		//TODO Add gameProfile in cache
 
@@ -41,10 +44,6 @@ class PlayerRegistry(
 		val joinMessage = JoinGameMessage(1, player.gamemode, 0, Difficulty.NORMAL, 2, "flat", false)
 		val positionMessage = PlayerPosLookMessage(player.position.x, player.position.y, player.position.z, player.position.yaw, player.position.pitch, 0x01, 153)
 
-		Elytra.server.playerRegistry.add(player)
-
-		println("Premium : ${player.mode}")
-
 		session.send(joinMessage)
 		val version = Unpooled.buffer()
 		version.minecraft.writeString(ProtocolInfo.MINECRAFT_VERSION)
@@ -52,19 +51,22 @@ class PlayerRegistry(
 		session.send(HeldItemChangeMessage(4))
 		//session.send(EntityStatusMessage(1, 24)) //Crash client
 		session.send(positionMessage)
-		session.send(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0,player.gamemode,player.gameProfile!!, ChatComponent(player.displayName)))))
-		add(player)
+
+		Elytra.sendPacketToAll(OutboundChatMessage(ChatComponent("${Colors.YELLOW} ${player.displayName} joined the game"),1))
+		Elytra.sendPacketToAll(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0,player.gamemode,player.gameProfile!!, ChatComponent(player.displayName)))))
+
+		players.iterator().forEach { it: Player ->
+			session.send(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0,it.gamemode,player.gameProfile!!, ChatComponent(it.displayName)))))
+		}
 	}
 
 	override fun add(target: Player) {
-		players.plus(target)
+		players = players.plusElement(target)
 		currentId.getAndIncrement()
-
-		println("current session id - " + currentId.get())
 	}
 
 	override fun remove(target: Player) {
-		players.minus(target)
+		players = players.minusElement(target)
 		currentId.getAndDecrement()
 	}
 

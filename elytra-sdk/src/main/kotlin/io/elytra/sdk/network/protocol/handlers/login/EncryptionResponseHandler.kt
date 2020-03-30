@@ -31,7 +31,6 @@ class EncryptionResponseHandler : ElytraMessageHandler<EncryptionResponseMessage
 		val gameProfile = Elytra.server.sessionService.hasJoinedServer(session.gameProfile, serverId)
 
 		if(gameProfile != null){
-			println("UUID of player ${gameProfile.name} is ${gameProfile.id}")
 			session.gameProfile = gameProfile
 			session.sessionState = SessionState.READY_TO_ACCEPT
 		}else{

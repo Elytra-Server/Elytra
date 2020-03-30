@@ -27,7 +27,8 @@ class HandshakeHandler : ElytraMessageHandler<HandshakeMessage>() {
 
 		if (protocol == Protocol.LOGIN) {
 			if (message.version < ProtocolInfo.CURRENT_PROTOCOL || message.version > ProtocolInfo.CURRENT_PROTOCOL) {
-				val reason = if (message.version < ProtocolInfo.CURRENT_PROTOCOL) "Outdated client! Running: ${ProtocolInfo.MINECRAFT_VERSION}" else "Outdated server! Running: ${ProtocolInfo.MINECRAFT_VERSION}"
+				val reason = if (message.version < ProtocolInfo.CURRENT_PROTOCOL) "Outdated client! Running: ${ProtocolInfo.MINECRAFT_VERSION}"
+				else "Outdated server! Running: ${ProtocolInfo.MINECRAFT_VERSION}"
 				networkSession.disconnect(reason)
 			}
 		}

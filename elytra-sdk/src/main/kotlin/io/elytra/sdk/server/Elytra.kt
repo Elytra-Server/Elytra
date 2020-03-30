@@ -1,12 +1,15 @@
 package io.elytra.sdk.server
 
+import com.flowpowered.network.Message
 import com.mojang.authlib.minecraft.MinecraftSessionService
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
+import io.elytra.api.entity.Player
 import io.elytra.api.io.ConsoleSender
 import io.elytra.api.server.Server
 import io.elytra.api.server.ServerDescriptor
 import io.elytra.sdk.config.ServerConfigFile
 import io.elytra.sdk.console.ElytraConsole
+import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.network.NetworkServer
 import io.elytra.sdk.network.SessionRegistry
 import io.elytra.sdk.network.protocol.PacketProvider
@@ -33,8 +36,13 @@ class Elytra private constructor(
 		val server = Elytra()
 		val console: ConsoleSender = ElytraConsole(LoggerFactory.getLogger("Elytra"))
 
+		fun players(): Iterator<Player>  = server.playerRegistry.iterator()
 
-
+		fun sendPacketToAll(message: Message){
+			for (player in players()) {
+				(player as ElytraPlayer).sendPacket(message)
+			}
+		}
 	}
 
 	init {

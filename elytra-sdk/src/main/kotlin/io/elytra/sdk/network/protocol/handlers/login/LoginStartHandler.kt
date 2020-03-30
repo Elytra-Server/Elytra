@@ -11,9 +11,7 @@ import org.apache.commons.lang3.Validate
 class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
 	override fun handle(session: NetworkSession, message: LoginStartMessage) {
 		Validate.validState(session.sessionState == SessionState.HELLO, "Unexpected hello packet")
-		println("Login has started to user - ${message.gameProfile.name}")
 
-		//Define default gameProfile
 		session.gameProfile = message.gameProfile
 
 		if(!session.isActive){

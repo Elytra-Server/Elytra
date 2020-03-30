@@ -21,7 +21,7 @@ class ServerQueryHandler : ElytraMessageHandler<ServerQueryMessage>() {
 		val json: String = Gson().toJson(
                 StatusResponse(
                         Version(
-                                "INB",
+                                "Elytra",
                                 ProtocolInfo.CURRENT_PROTOCOL
                         ),
                         Players(

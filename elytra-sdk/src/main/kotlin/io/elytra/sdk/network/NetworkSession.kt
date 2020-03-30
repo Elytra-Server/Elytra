@@ -63,7 +63,7 @@ class NetworkSession(
 				println("ACCEPT")
 			}
 			if (connectionTimer++ == 600) {
-				disconnect("JABIRACA")
+				disconnect("multiplayer.disconnect.slow_login")
 			}
 		}
 
@@ -73,9 +73,10 @@ class NetworkSession(
 			super.messageReceived(message)
 		}
 
-		/*if (disconnected && getProtocol() == packetProvider.playPacket) {
-			player?.let { PlayerDisconnectEvent(it, "No reason specified") }?.let { EventBus.post(it) }
-		}*/
+		if (disconnected && (protocol == Protocol.PLAY)) {
+			disconnect("Exit the game")
+			//player?.let { PlayerDisconnectEvent(it, "No reason specified") }?.let { EventBus.post(it) }
+		}
 	}
 
 	fun protocol(protocol: Protocol){
@@ -116,7 +117,6 @@ class NetworkSession(
 			super.messageReceived(message)
 			return
 		}
-
 		messageQueue.add(message)
 	}
 
@@ -126,9 +126,11 @@ class NetworkSession(
 			return
 		}
 
-		println("${gameProfile?.name} : kicked due $reason")
+		println("${gameProfile?.name} : $reason")
 		EventBus.post(SessionDisconnectEvent(sessionId))
 		sendWithFuture(DisconnectMessage(reason))?.addListener(ChannelFutureListener.CLOSE)
+		Elytra.server.sessionRegistry.remove(this)
+		Elytra.server.playerRegistry.remove(Elytra.server.playerRegistry.get(gameProfile!!.name)!!)
 	}
 
 	private fun updatePipeline(key: String, handler: ChannelHandler) {

@@ -1,5 +1,6 @@
 package io.elytra.sdk.entity
 
+import com.flowpowered.network.Message
 import com.mojang.authlib.GameProfile
 import io.elytra.api.entity.Player
 import io.elytra.api.entity.PlayerMode
@@ -10,6 +11,7 @@ import io.elytra.sdk.network.protocol.message.DisconnectMessage
 import io.elytra.sdk.server.Elytra
 
 data class ElytraPlayer(
+	var id: Int,
 	var sessionId: String,
 	override var displayName: String,
 	override var gameProfile: GameProfile?,
@@ -24,6 +26,10 @@ data class ElytraPlayer(
 
 	private fun session(): NetworkSession? {
 		return Elytra.server.sessionRegistry.get(sessionId)
+	}
+
+	fun sendPacket(message: Message){
+		session()?.send(message)
 	}
 
 	override fun kick(reason: String) {
