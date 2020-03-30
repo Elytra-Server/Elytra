@@ -62,8 +62,7 @@ class Elytra private constructor(
 
 	override fun broadcastMessage(message: String, filter: (player: Player) -> Boolean) {
 		for (player in players()) {
-			filter.invoke(player)
-			player.sendMessage(message)
+			if(filter.invoke(player)) player.sendMessage(message)
 		}
 	}
 

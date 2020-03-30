@@ -32,10 +32,6 @@ data class ElytraPlayer(
 		return Elytra.server.sessionRegistry.get(sessionId)
 	}
 
-	fun sendPacket(message: Message){
-		session()?.send(message)
-	}
-
 	override fun kick(reason: String) {
 		session()?.send(DisconnectMessage(reason))
 	}
@@ -48,7 +44,7 @@ data class ElytraPlayer(
 		sendPacket(OutboundChatMessage(chatComponent.asJson(), ChatMode.PLAYER))
 	}
 
-	private fun sendPacket(packet: Message) {
+	fun sendPacket(packet: Message) {
 		session()?.sendWithFuture(packet)
 	}
 }
