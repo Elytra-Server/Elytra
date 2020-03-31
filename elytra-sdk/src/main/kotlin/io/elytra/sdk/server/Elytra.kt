@@ -49,13 +49,10 @@ class Elytra private constructor(
 		}
 	}
 
-	init {
-		loadConfigs()
-	}
-
 	override fun boot() {
 		System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, "./logback.xml");
 
+		loadConfigs()
 		PacketProvider()
 		scheduler.start()
 
@@ -72,8 +69,6 @@ class Elytra private constructor(
 		}
 	}
 
-
-	//TODO: Will be refactored, just for testing for now
 	private fun loadConfigs() {
 		ResourceUtils.saveResource("server.json", ElytraConsts.SERVER_CONFIG_PATH, false)
 
