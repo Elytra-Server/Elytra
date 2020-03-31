@@ -36,6 +36,7 @@ class NetworkSession(
 	private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque()
 ) : BasicSession(channel, HandshakePacket()), Tickable {
 
+	//TODO Refactor this and make the ping functional
 	private var connectionTimer: Int = 0
 	var sessionState: SessionState = SessionState.HELLO
 	val verifyToken: ByteArray = Random.nextBytes(4)
@@ -66,29 +67,28 @@ class NetworkSession(
 	}
 
 	override fun tick() {
-		++networkTickCount
-		if(protocol == Protocol.LOGIN){
-			if(sessionState == SessionState.READY_TO_ACCEPT){
-				tryLogin()
-			}else if(sessionState == SessionState.DELAY_ACCEPT){
-				println("ACCEPT")
+		when(protocol){
+			Protocol.LOGIN -> {
+				if(sessionState == SessionState.READY_TO_ACCEPT){
+					tryLogin()
+				}else if(sessionState == SessionState.DELAY_ACCEPT){
+					println("ACCEPT")
+				}
+				if (connectionTimer++ == 600) {
+					disconnect("multiplayer.disconnect.slow_login")
+				}
 			}
-			if (connectionTimer++ == 600) {
-				disconnect("multiplayer.disconnect.slow_login")
+			Protocol.PLAY -> {
+				++networkTickCount
+				if (disconnected) disconnect("Exit the game")
+				if (this.networkTickCount - this.lastSentPingPacket > 40L) {
+					this.lastSentPingPacket = this.networkTickCount.toLong()
+					lastPingTime = System.currentTimeMillis()
+					this.keepAliveId = lastPingTime
+					send(KeepAliveMessage(this.keepAliveId))
+				}
 			}
 		}
-
-		if(protocol == Protocol.PLAY){
-			if (disconnected) disconnect("Exit the game")
-
-			if (this.networkTickCount - this.lastSentPingPacket > 40L) {
-				this.lastSentPingPacket = this.networkTickCount.toLong()
-				lastPingTime = System.currentTimeMillis()
-				this.keepAliveId = lastPingTime
-				send(KeepAliveMessage(this.keepAliveId))
-			}
-		}
-
 		var message: Message?
 		while (messageQueue.poll().also { message = it } != null) {
 			if (disconnected) break
@@ -110,10 +110,6 @@ class NetworkSession(
 	public override fun setProtocol(protocol: AbstractProtocol?) {
 		updatePipeline("codecs", CodecsHandler(protocol as BasicPacket))
 		super.setProtocol(protocol)
-	}
-
-	override fun onDisconnect() {
-		disconnected = true
 	}
 
 	override fun onInboundThrowable(throwable: Throwable?) {
@@ -140,15 +136,16 @@ class NetworkSession(
 		messageQueue.add(message)
 	}
 
+	override fun onDisconnect() {
+		disconnected = true
+	}
+
 	fun disconnect(reason: String) {
-		println(reason)
-		if (protocol != Protocol.PLAY) {
-			channel.close()
-			return
+		if (protocol == Protocol.PLAY) {
+			Elytra.server.playerRegistry.remove(Elytra.server.playerRegistry.get(gameProfile!!.name)!!)
 		}
 		sendWithFuture(DisconnectMessage(reason))?.addListener(ChannelFutureListener.CLOSE)
 		Elytra.server.sessionRegistry.remove(this)
-		Elytra.server.playerRegistry.remove(Elytra.server.playerRegistry.get(gameProfile!!.name)!!)
 	}
 
 	private fun updatePipeline(key: String, handler: ChannelHandler) {

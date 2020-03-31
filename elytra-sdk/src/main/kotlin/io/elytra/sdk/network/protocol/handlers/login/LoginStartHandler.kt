@@ -19,6 +19,7 @@ class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
 			return
 		}
 
+		//TODO Then see why the customer has placed a check to verify the session and disconnect from the server after receiving the encryption request
 		if(Elytra.server.debug)
 			session.sessionState = SessionState.READY_TO_ACCEPT
 		else{

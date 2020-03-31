@@ -30,7 +30,7 @@ class Elytra private constructor(
 	val playerRegistry: PlayerRegistry = PlayerRegistry(),
 	val sessionRegistry: SessionRegistry = SessionRegistry(),
 	val keypair: KeyPair = cryptManager.generateKeyPair(),
-	val debug: Boolean = true,
+	val debug: Boolean = false,
 	private val port: Int = 25565,
 	private val scheduler: Scheduler = Scheduler(sessionRegistry)
 ) : Server {

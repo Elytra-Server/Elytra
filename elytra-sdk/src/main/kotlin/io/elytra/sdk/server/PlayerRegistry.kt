@@ -1,7 +1,7 @@
 package io.elytra.sdk.server
 
 import com.mojang.authlib.GameProfile
-import io.elytra.api.chat.ChatComponent
+import io.elytra.api.chat.TextComponent
 import io.elytra.api.chat.Colors
 import io.elytra.api.entity.Player
 import io.elytra.api.entity.PlayerMode
@@ -9,7 +9,9 @@ import io.elytra.api.registry.Registry
 import io.elytra.api.world.enums.Difficulty
 import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.network.NetworkSession
+import io.elytra.sdk.network.SessionState
 import io.elytra.sdk.network.protocol.ProtocolInfo
+import io.elytra.sdk.network.protocol.message.login.EncryptionRequestMessage
 import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
 import io.elytra.sdk.network.protocol.message.play.*
 import io.elytra.sdk.network.protocol.packets.Protocol
@@ -49,10 +51,10 @@ class PlayerRegistry(
 		session.send(HeldItemChangeMessage(4))
 		session.send(positionMessage)
 
-		Elytra.sendPacketToAll(OutboundChatMessage(ChatComponent("${Colors.YELLOW} ${player.displayName} joined the game"),1))
-		Elytra.sendPacketToAll(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0,player.gamemode,player.gameProfile!!, ChatComponent(player.displayName)))))
+		Elytra.sendPacketToAll(OutboundChatMessage(TextComponent("${Colors.YELLOW} ${player.displayName} joined the game"),1))
+		Elytra.sendPacketToAll(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0,player.gamemode,player.gameProfile!!, TextComponent(player.displayName)))))
 		players.iterator().forEach { it: Player ->
-			session.send(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0,it.gamemode,player.gameProfile!!, ChatComponent(it.displayName)))))
+			session.send(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0,it.gamemode,player.gameProfile!!, TextComponent(it.displayName)))))
 		}
 	}
 

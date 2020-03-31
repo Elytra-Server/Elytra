@@ -13,7 +13,6 @@ class HandshakeCodec : Codec<HandshakeMessage> {
 		val address = ByteBufUtils.readUTF8(buffer)
 		val port = buffer.readUnsignedShort()
 		val state = ByteBufUtils.readVarInt(buffer)
-
 		return HandshakeMessage(version, address, port, state)
 	}
 
@@ -22,7 +21,6 @@ class HandshakeCodec : Codec<HandshakeMessage> {
 		ByteBufUtils.writeUTF8(buf, message.address);
 		buf.writeShort(message.port);
 		ByteBufUtils.writeVarInt(buf, message.state);
-
 		return buf
 	}
 }

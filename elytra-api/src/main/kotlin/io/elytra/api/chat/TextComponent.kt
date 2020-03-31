@@ -1,6 +1,6 @@
 package io.elytra.api.chat
 
-data class ChatComponent(
+data class TextComponent(
 	var text: String,
 	var clickEvent: ClickEvent? = null,
 	var hoverEvent: HoverEvent? = null,

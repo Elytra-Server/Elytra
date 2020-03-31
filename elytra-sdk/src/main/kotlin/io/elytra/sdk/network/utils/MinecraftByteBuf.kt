@@ -1,6 +1,9 @@
 package io.elytra.sdk.network.utils
 
 import com.flowpowered.network.util.ByteBufUtils
+import io.elytra.api.chat.TextComponent
+import io.elytra.api.utils.asJson
+import io.elytra.api.utils.fromJson
 import io.netty.buffer.ByteBuf
 import io.netty.handler.codec.DecoderException
 import io.netty.handler.codec.EncoderException
@@ -10,15 +13,6 @@ import java.util.*
 val ByteBuf.minecraft get() = MinecraftByteBuf(this)
 
 inline class MinecraftByteBuf(private val byteBuf: ByteBuf){
-
-	fun writeVarIntToBuffer(input: Int) {
-		var input = input
-		while (input and -128 != 0) {
-			byteBuf.writeByte(input and 127 or 128)
-			input = input ushr 7
-		}
-		byteBuf.writeByte(input)
-	}
 
 	fun writeEnumValue(value: Enum<*>) {
 		ByteBufUtils.writeVarInt(byteBuf,value.ordinal)
@@ -35,6 +29,15 @@ inline class MinecraftByteBuf(private val byteBuf: ByteBuf){
 
 	fun readUuid(): UUID? {
 		return UUID(byteBuf.readLong(), byteBuf.readLong())
+	}
+
+	fun writeTextComponent(textComponent: TextComponent){
+		writeString(textComponent.asJson())
+	}
+
+	//TODO Verify this
+	fun readTextComponent() : TextComponent{
+		return TextComponent("").fromJson(readString(256))
 	}
 
 	fun writeString(string: String): ByteBuf? {
