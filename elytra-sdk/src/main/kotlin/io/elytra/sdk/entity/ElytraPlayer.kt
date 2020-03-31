@@ -25,7 +25,7 @@ data class ElytraPlayer(
 	override var exp: Int,
 	override var expLevel: Int,
 	override var gamemode: GameMode = GameMode.SURVIVAL,
-	override var position: Position
+	override var position: Position = Position.EMPTY
 ) : Player {
 
 	private fun session(): NetworkSession? {
