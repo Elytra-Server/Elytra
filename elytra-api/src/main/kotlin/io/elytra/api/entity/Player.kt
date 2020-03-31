@@ -1,11 +1,9 @@
 package io.elytra.api.entity
 
-import com.flowpowered.network.Message
 import com.mojang.authlib.GameProfile
 import io.elytra.api.chat.ChatComponent
-import io.elytra.api.world.enums.GameMode
 import io.elytra.api.world.Position
-import java.util.*
+import io.elytra.api.world.enums.GameMode
 
 interface Player {
 	var displayName: String
@@ -18,7 +16,6 @@ interface Player {
 	var exp: Int
 	var expLevel: Int
 
-	var position: Position
 	var gamemode: GameMode
 
 	fun kick(reason: String)
@@ -26,10 +23,9 @@ interface Player {
 	fun sendMessage(message: String)
 
 	fun sendMessage(chatComponent: ChatComponent)
-
 }
 
-enum class PlayerMode{
+enum class PlayerMode {
 	PREMIUM,
 	OFFLINE
 }

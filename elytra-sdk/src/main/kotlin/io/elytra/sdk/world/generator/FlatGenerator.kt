@@ -3,12 +3,12 @@ package io.elytra.sdk.world.generator
 import io.elytra.api.world.Chunk
 import io.elytra.api.world.World
 import io.elytra.api.world.generator.WorldGenerator
-import io.elytra.sdk.world.ElytraChunk
+import io.elytra.sdk.world.ElytraChunkColumn
 
 
 class FlatGenerator : WorldGenerator {
 	override fun generate(chunkX: Int, chunkY: Int, world: World): Chunk {
-		val chunk = ElytraChunk(chunkX, chunkY)
+		val chunk = ElytraChunkColumn(chunkX, chunkY)
 
 		for(x in 0..16){
 			for(y in 0..128){
