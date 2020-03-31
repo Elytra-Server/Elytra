@@ -1,4 +1,4 @@
-package io.elytra.sdk.console
+package io.elytra.sdk.io
 
 import io.elytra.api.io.ConsoleSender
 import io.elytra.api.utils.formatting.AnsiColors

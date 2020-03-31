@@ -4,12 +4,12 @@ import ch.qos.logback.classic.util.ContextInitializer
 import com.flowpowered.network.Message
 import com.mojang.authlib.minecraft.MinecraftSessionService
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
-import io.elytra.sdk.config.JsonConfigurationFile
+import io.elytra.sdk.io.config.JsonConfigurationFile
 import io.elytra.api.entity.Player
 import io.elytra.api.io.ConsoleSender
 import io.elytra.api.server.Server
 import io.elytra.api.server.ServerDescriptor
-import io.elytra.sdk.console.ElytraConsole
+import io.elytra.sdk.io.ElytraConsole
 import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.network.NetworkServer
 import io.elytra.sdk.network.SessionRegistry

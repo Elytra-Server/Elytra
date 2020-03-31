@@ -1,4 +1,4 @@
-package io.elytra.sdk.config
+package io.elytra.sdk.io.config
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
