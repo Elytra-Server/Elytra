@@ -4,6 +4,5 @@ enum class Protocol {
 	HANDSHAKE,
 	STATUS,
 	LOGIN,
-	PLAY,
-	NONE
+	PLAY
 }

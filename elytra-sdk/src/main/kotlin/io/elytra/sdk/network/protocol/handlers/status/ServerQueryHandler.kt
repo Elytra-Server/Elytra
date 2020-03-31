@@ -29,7 +29,7 @@ class ServerQueryHandler : ElytraMessageHandler<ServerQueryMessage>() {
                                 Elytra.server.playerRegistry.size(), //FIXME: Get from a player registry
                                 ArrayList()
                         ),
-                        Description("Elytra Server")//motd.description
+                        Description("Elytra Server")
                 )
 		)
 

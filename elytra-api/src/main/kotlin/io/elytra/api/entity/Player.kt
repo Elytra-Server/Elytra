@@ -1,11 +1,9 @@
 package io.elytra.api.entity
 
-import com.flowpowered.network.Message
 import com.mojang.authlib.GameProfile
-import io.elytra.api.chat.ChatComponent
+import io.elytra.api.chat.TextComponent
 import io.elytra.api.world.enums.GameMode
 import io.elytra.api.world.Position
-import java.util.*
 
 interface Player {
 	var displayName: String
@@ -25,7 +23,7 @@ interface Player {
 
 	fun sendMessage(message: String)
 
-	fun sendMessage(chatComponent: ChatComponent)
+	fun sendMessage(textComponent: TextComponent)
 
 }
 

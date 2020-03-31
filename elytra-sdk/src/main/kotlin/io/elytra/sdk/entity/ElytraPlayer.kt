@@ -2,7 +2,7 @@ package io.elytra.sdk.entity
 
 import com.flowpowered.network.Message
 import com.mojang.authlib.GameProfile
-import io.elytra.api.chat.ChatComponent
+import io.elytra.api.chat.TextComponent
 import io.elytra.api.chat.ChatMode
 import io.elytra.api.entity.Player
 import io.elytra.api.entity.PlayerMode
@@ -37,11 +37,11 @@ data class ElytraPlayer(
 	}
 
 	override fun sendMessage(message: String) {
-		sendMessage(ChatComponent(message))
+		sendMessage(TextComponent(message))
 	}
 
-	override fun sendMessage(chatComponent: ChatComponent) {
-		sendPacket(OutboundChatMessage(chatComponent.asJson(), ChatMode.PLAYER))
+	override fun sendMessage(textComponent: TextComponent) {
+		sendPacket(OutboundChatMessage(textComponent.asJson(), ChatMode.PLAYER))
 	}
 
 	fun sendPacket(packet: Message) {
