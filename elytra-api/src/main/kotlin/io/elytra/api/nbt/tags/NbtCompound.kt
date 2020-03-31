@@ -1,7 +1,5 @@
 package io.elytra.api.nbt.tags
 
-import world.crafty.common.serialization.LittleEndianDataInputStream
-import world.crafty.common.serialization.LittleEndianDataOutputStream
 import io.elytra.api.nbt.NbtInputStream
 import java.io.*
 import java.util.*
@@ -109,14 +107,14 @@ class NbtCompound(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(
 
     fun toBytes(littleEndian: Boolean = false) : ByteArray {
         val bs = ByteArrayOutputStream()
-        val os: DataOutput = if(littleEndian) LittleEndianDataOutputStream(bs) else DataOutputStream(bs)
+        val os: DataOutput =  DataOutputStream(bs)
         Codec.serialize(this, os)
         return bs.toByteArray()
     }
 
     companion object {
         fun deserialize(stream: InputStream, littleEndian: Boolean = false) : NbtCompound {
-            val os: DataInput = if(littleEndian) LittleEndianDataInputStream(stream) else DataInputStream(stream)
+            val os: DataInput = DataInputStream(stream)
             return Codec.deserialize(NbtInputStream(os)) as NbtCompound
         }
     }

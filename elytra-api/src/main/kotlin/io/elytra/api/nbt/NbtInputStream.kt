@@ -7,7 +7,7 @@ class NbtInputStream(stream: DataInput) : DataInput by stream {
 	constructor(bytes: ByteArray) : this(pickInputStream(bytes))
 	constructor(stream: InputStream) : this(DataInputStream(stream) as DataInput)
 
-	fun readTag(): NbtTag {
+	fun readTag(): NbtTag? {
 		val id = try {
 			readUnsignedByte()
 		} catch (ex: EOFException) {
