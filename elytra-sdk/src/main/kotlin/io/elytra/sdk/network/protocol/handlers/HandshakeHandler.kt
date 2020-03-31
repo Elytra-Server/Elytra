@@ -12,11 +12,10 @@ import io.elytra.sdk.server.Elytra
 class HandshakeHandler : ElytraMessageHandler<HandshakeMessage>() {
 
 	override fun handle(networkSession: NetworkSession, message: HandshakeMessage) {
-		val protocol: Protocol
 
-		when(message.state){
-			1 -> protocol = Protocol.STATUS
-			2 -> protocol = Protocol.LOGIN
+		val protocol: Protocol = when(message.state){
+			1 -> Protocol.STATUS
+			2 -> Protocol.LOGIN
 			else -> {
 				networkSession.disconnect("Invalid State")
 				return
