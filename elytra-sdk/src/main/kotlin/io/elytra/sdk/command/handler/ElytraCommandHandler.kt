@@ -8,9 +8,7 @@ import io.elytra.api.entity.Player
 import io.elytra.sdk.server.Elytra
 import io.elytra.sdk.utils.ElytraConsts
 
-class ElytraCommandHandler(commandRegistry: CommandRegistry) : CommandHandler {
-
-	private val registry = commandRegistry
+class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandler {
 
 	override fun handle(player: Player, string: String) {
 		if (!string.startsWith(ElytraConsts.COMMAND_PREFIX)) return
@@ -22,7 +20,7 @@ class ElytraCommandHandler(commandRegistry: CommandRegistry) : CommandHandler {
 
 		val commandName = split[0]
 
-		val command: Command? = registry.getCommandByName(commandName)
+		val command: Command? = commandRegistry.getCommandByName(commandName)
 
 		if (command == null) {
 			player.sendMessage(ElytraConsts.COMMAND_NOT_FOUND_MESSAGE)
