@@ -18,6 +18,7 @@ You can always join us on [Discord][discord-invite-link] if you want to get more
   * [Issue reporting](https://github.com/Elytra-Server/Elytra/issues)
   * [Releases](https://github.com/Elytra-Server/Elytra/releases)
   * [Compilation](#Compilation)
+  * [Sponsors](#Sponsors)
   * [Credits](#Credits)
 
 
@@ -27,7 +28,6 @@ Elytra is a Kotlin program which uses Gradle 2 for compilation. To compile from 
   1. Install gradle 2 and git
   2. Clone the repo - `git clone https://github.com/Elytra-Server/Elytra`
   3. Build the project using gradle - `gradle clean build`
-
 
 ### Credits
 
@@ -44,6 +44,9 @@ Elytra is a Kotlin program which uses Gradle 2 for compilation. To compile from 
 <td align="center"><a href="https://github.com/Heroslender"><img src="https://github.com/Heroslender.png?size=100" alt="Heroslender" align="center"/><br/><sub><b>Heroslender</b></sub></a></td>
 </tr>
 </table>
+
+## Sponsors
+<a href="https://fluxcdn.com"><img src="https://i.imgur.com/jxdRt4M.gif"></a>
 
 ## Donate
 <a href="https://www.buymeacoffee.com/kCEm5ra" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/lato-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
