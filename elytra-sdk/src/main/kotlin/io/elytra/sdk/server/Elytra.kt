@@ -4,13 +4,17 @@ import ch.qos.logback.classic.util.ContextInitializer
 import com.flowpowered.network.Message
 import com.mojang.authlib.minecraft.MinecraftSessionService
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
-import io.elytra.sdk.io.config.JsonConfigurationFile
+import io.elytra.api.command.handler.CommandHandler
+import io.elytra.api.command.registry.CommandRegistry
 import io.elytra.api.entity.Player
 import io.elytra.api.io.ConsoleSender
 import io.elytra.api.server.Server
 import io.elytra.api.server.ServerDescriptor
-import io.elytra.sdk.io.ElytraConsole
+import io.elytra.sdk.command.handler.ElytraCommandHandler
+import io.elytra.sdk.command.registry.ElytraCommandRegistry
 import io.elytra.sdk.entity.ElytraPlayer
+import io.elytra.sdk.io.ElytraConsole
+import io.elytra.sdk.io.config.JsonConfigurationFile
 import io.elytra.sdk.network.NetworkServer
 import io.elytra.sdk.network.SessionRegistry
 import io.elytra.sdk.network.protocol.PacketProvider
@@ -29,6 +33,8 @@ class Elytra private constructor(
 	)).createMinecraftSessionService(),
 	val playerRegistry: PlayerRegistry = PlayerRegistry(),
 	val sessionRegistry: SessionRegistry = SessionRegistry(),
+	val commandRegistry: CommandRegistry = ElytraCommandRegistry(),
+	val commandHandler: CommandHandler = ElytraCommandHandler(commandRegistry),
 	val keypair: KeyPair = cryptManager.generateKeyPair(),
 	val debug: Boolean = false,
 	private val port: Int = 25565,
@@ -50,7 +56,7 @@ class Elytra private constructor(
 	}
 
 	override fun boot() {
-		System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, "./logback.xml");
+		System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, "./logback.xml")
 
 		loadConfigs()
 		PacketProvider()
