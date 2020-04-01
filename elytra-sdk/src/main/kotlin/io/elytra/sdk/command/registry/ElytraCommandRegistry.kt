@@ -7,6 +7,7 @@ class ElytraCommandRegistry : CommandRegistry {
 
 	private val commandRegistry: MutableMap<String, Command> = HashMap()
 
+	@Synchronized
 	override fun register(command: Command) {
 		val commandName = command.name
 		if (commandRegistry.containsKey(commandName)) {
@@ -15,6 +16,7 @@ class ElytraCommandRegistry : CommandRegistry {
 		commandRegistry[commandName] = command
 	}
 
+	@Synchronized
 	override fun getCommandByName(commandName: String): Command? {
 		return commandRegistry[commandName]
 	}
