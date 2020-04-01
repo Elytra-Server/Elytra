@@ -8,7 +8,7 @@ import io.elytra.api.entity.Player
 import io.elytra.sdk.server.Elytra
 import io.elytra.sdk.utils.ElytraConsts
 
-class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandler {
+class ElytraCommandHandler(private val commandRegistry: CommandRegistry) : CommandHandler {
 
 	override fun handle(player: Player, string: String) {
 		if (!string.startsWith(ElytraConsts.COMMAND_PREFIX)) return

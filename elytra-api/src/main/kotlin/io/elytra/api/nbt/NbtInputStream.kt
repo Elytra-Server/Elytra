@@ -1,5 +1,6 @@
 package io.elytra.api.nbt
 
+import io.elytra.api.io.LittleEndianDataInputStream
 import io.elytra.api.nbt.tags.NbtTag
 import java.io.*
 
@@ -21,7 +22,7 @@ class NbtInputStream(stream: DataInput) : DataInput by stream {
 
 	companion object {
 		private fun pickInputStream(bytes: ByteArray): DataInput {
-			val bs = ByteArrayInputStream(bytes)
+			val bs = LittleEndianDataInputStream(ByteArrayInputStream(bytes))
 
 			return DataInputStream(bs)
 		}
