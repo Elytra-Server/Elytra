@@ -5,12 +5,12 @@ object ProtocolInfo {
 	/**
 	 * The protocol version supported by the server.
 	 */
-	const val CURRENT_PROTOCOL = 340
+	const val CURRENT_PROTOCOL = 578
 
 	/**
 	 * The game version supported by the server.
 	 */
-	const val MINECRAFT_VERSION = "12.2.2"
+	const val MINECRAFT_VERSION = "15.5.2"
 
 	//region PLAY
 	const val CONFIRM_TELEPORT: Int = 0x00

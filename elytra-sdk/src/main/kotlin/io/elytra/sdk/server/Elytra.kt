@@ -36,7 +36,7 @@ class Elytra private constructor(
 	val commandRegistry: CommandRegistry = ElytraCommandRegistry(),
 	val commandHandler: CommandHandler = ElytraCommandHandler(commandRegistry),
 	val keypair: KeyPair = cryptManager.generateKeyPair(),
-	val debug: Boolean = false,
+	val debug: Boolean = true,
 	private val port: Int = 25565,
 	private val scheduler: Scheduler = Scheduler(sessionRegistry)
 ) : Server {

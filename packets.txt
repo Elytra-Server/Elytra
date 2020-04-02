@@ -1,115 +1,139 @@
- CLIENTBOUND
- net.minecraft.network.play.server.SPacketSpawnObject:0:0x0
- net.minecraft.network.play.server.SPacketSpawnExperienceOrb:1:0x1
- net.minecraft.network.play.server.SPacketSpawnGlobalEntity:2:0x2
- net.minecraft.network.play.server.SPacketSpawnMob:3:0x3
- net.minecraft.network.play.server.SPacketSpawnPainting:4:0x4
- net.minecraft.network.play.server.SPacketSpawnPlayer:5:0x5
- net.minecraft.network.play.server.SPacketAnimation:6:0x6
- net.minecraft.network.play.server.SPacketStatistics:7:0x7
- net.minecraft.network.play.server.SPacketBlockBreakAnim:8:0x8
- net.minecraft.network.play.server.SPacketUpdateTileEntity:9:0x9
- net.minecraft.network.play.server.SPacketBlockAction:10:0xa
- net.minecraft.network.play.server.SPacketBlockChange:11:0xb
- net.minecraft.network.play.server.SPacketUpdateBossInfo:12:0xc
- net.minecraft.network.play.server.SPacketServerDifficulty:13:0xd
- net.minecraft.network.play.server.SPacketTabComplete:14:0xe
- net.minecraft.network.play.server.SPacketChat:15:0xf
- net.minecraft.network.play.server.SPacketMultiBlockChange:16:0x10
- net.minecraft.network.play.server.SPacketConfirmTransaction:17:0x11
- net.minecraft.network.play.server.SPacketCloseWindow:18:0x12
- net.minecraft.network.play.server.SPacketOpenWindow:19:0x13
- net.minecraft.network.play.server.SPacketWindowItems:20:0x14
- net.minecraft.network.play.server.SPacketWindowProperty:21:0x15
- net.minecraft.network.play.server.SPacketSetSlot:22:0x16
- net.minecraft.network.play.server.SPacketCooldown:23:0x17
- net.minecraft.network.play.server.SPacketCustomPayload:24:0x18
- net.minecraft.network.play.server.SPacketCustomSound:25:0x19
- net.minecraft.network.play.server.SPacketDisconnect:26:0x1a
- net.minecraft.network.play.server.SPacketEntityStatus:27:0x1b
- net.minecraft.network.play.server.SPacketExplosion:28:0x1c
- net.minecraft.network.play.server.SPacketUnloadChunk:29:0x1d
- net.minecraft.network.play.server.SPacketChangeGameState:30:0x1e
- net.minecraft.network.play.server.SPacketKeepAlive:31:0x1f
- net.minecraft.network.play.server.SPacketChunkData:32:0x20
- net.minecraft.network.play.server.SPacketEffect:33:0x21
- net.minecraft.network.play.server.SPacketParticles:34:0x22
- net.minecraft.network.play.server.SPacketJoinGame:35:0x23
- net.minecraft.network.play.server.SPacketMaps:36:0x24
- net.minecraft.network.play.server.SPacketEntity:37:0x25
- net.minecraft.network.play.server.SPacketEntity$S15PacketEntityRelMove:38:0x26
- net.minecraft.network.play.server.SPacketEntity$S17PacketEntityLookMove:39:0x27
- net.minecraft.network.play.server.SPacketEntity$S16PacketEntityLook:40:0x28
- net.minecraft.network.play.server.SPacketMoveVehicle:41:0x29
- net.minecraft.network.play.server.SPacketSignEditorOpen:42:0x2a
- net.minecraft.network.play.server.SPacketPlaceGhostRecipe:43:0x2b
- net.minecraft.network.play.server.SPacketPlayerAbilities:44:0x2c
- net.minecraft.network.play.server.SPacketCombatEvent:45:0x2d
- net.minecraft.network.play.server.SPacketPlayerListItem:46:0x2e
- net.minecraft.network.play.server.SPacketPlayerPosLook:47:0x2f
- net.minecraft.network.play.server.SPacketUseBed:48:0x30
- net.minecraft.network.play.server.SPacketRecipeBook:49:0x31
- net.minecraft.network.play.server.SPacketDestroyEntities:50:0x32
- net.minecraft.network.play.server.SPacketRemoveEntityEffect:51:0x33
- net.minecraft.network.play.server.SPacketResourcePackSend:52:0x34
- net.minecraft.network.play.server.SPacketRespawn:53:0x35
- net.minecraft.network.play.server.SPacketEntityHeadLook:54:0x36
- net.minecraft.network.play.server.SPacketSelectAdvancementsTab:55:0x37
- net.minecraft.network.play.server.SPacketWorldBorder:56:0x38
- net.minecraft.network.play.server.SPacketCamera:57:0x39
- net.minecraft.network.play.server.SPacketHeldItemChange:58:0x3a
- net.minecraft.network.play.server.SPacketDisplayObjective:59:0x3b
- net.minecraft.network.play.server.SPacketEntityMetadata:60:0x3c
- net.minecraft.network.play.server.SPacketEntityAttach:61:0x3d
- net.minecraft.network.play.server.SPacketEntityVelocity:62:0x3e
- net.minecraft.network.play.server.SPacketEntityEquipment:63:0x3f
- net.minecraft.network.play.server.SPacketSetExperience:64:0x40
- net.minecraft.network.play.server.SPacketUpdateHealth:65:0x41
- net.minecraft.network.play.server.SPacketScoreboardObjective:66:0x42
- net.minecraft.network.play.server.SPacketSetPassengers:67:0x43
- net.minecraft.network.play.server.SPacketTeams:68:0x44
- net.minecraft.network.play.server.SPacketUpdateScore:69:0x45
- net.minecraft.network.play.server.SPacketSpawnPosition:70:0x46
- net.minecraft.network.play.server.SPacketTimeUpdate:71:0x47
- net.minecraft.network.play.server.SPacketTitle:72:0x48
- net.minecraft.network.play.server.SPacketSoundEffect:73:0x49
- net.minecraft.network.play.server.SPacketPlayerListHeaderFooter:74:0x4a
- net.minecraft.network.play.server.SPacketCollectItem:75:0x4b
- net.minecraft.network.play.server.SPacketEntityTeleport:76:0x4c
- net.minecraft.network.play.server.SPacketAdvancementInfo:77:0x4d
- net.minecraft.network.play.server.SPacketEntityProperties:78:0x4e
- net.minecraft.network.play.server.SPacketEntityEffect:79:0x4f
- SERVERBOUND
- net.minecraft.network.play.client.CPacketConfirmTeleport:0:0x0
- net.minecraft.network.play.client.CPacketTabComplete:1:0x1
- net.minecraft.network.play.client.CPacketChatMessage:2:0x2
- net.minecraft.network.play.client.CPacketClientStatus:3:0x3
- net.minecraft.network.play.client.CPacketClientSettings:4:0x4
- net.minecraft.network.play.client.CPacketConfirmTransaction:5:0x5
- net.minecraft.network.play.client.CPacketEnchantItem:6:0x6
- net.minecraft.network.play.client.CPacketClickWindow:7:0x7
- net.minecraft.network.play.client.CPacketCloseWindow:8:0x8
- net.minecraft.network.play.client.CPacketCustomPayload:9:0x9
- net.minecraft.network.play.client.CPacketUseEntity:10:0xa
- net.minecraft.network.play.client.CPacketKeepAlive:11:0xb
- net.minecraft.network.play.client.CPacketPlayer:12:0xc
- net.minecraft.network.play.client.CPacketPlayer$Position:13:0xd
- net.minecraft.network.play.client.CPacketPlayer$PositionRotation:14:0xe
- net.minecraft.network.play.client.CPacketPlayer$Rotation:15:0xf
- net.minecraft.network.play.client.CPacketVehicleMove:16:0x10
- net.minecraft.network.play.client.CPacketSteerBoat:17:0x11
- net.minecraft.network.play.client.CPacketPlaceRecipe:18:0x12
- net.minecraft.network.play.client.CPacketPlayerAbilities:19:0x13
- net.minecraft.network.play.client.CPacketPlayerDigging:20:0x14
- net.minecraft.network.play.client.CPacketEntityAction:21:0x15
- net.minecraft.network.play.client.CPacketInput:22:0x16
- net.minecraft.network.play.client.CPacketRecipeInfo:23:0x17
- net.minecraft.network.play.client.CPacketResourcePackStatus:24:0x18
- net.minecraft.network.play.client.CPacketSeenAdvancements:25:0x19
- net.minecraft.network.play.client.CPacketHeldItemChange:26:0x1a
- net.minecraft.network.play.client.CPacketCreativeInventoryAction:27:0x1b
- net.minecraft.network.play.client.CPacketUpdateSign:28:0x1c
- net.minecraft.network.play.client.CPacketAnimation:29:0x1d
- net.minecraft.network.play.client.CPacketSpectate:30:0x1e
- net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock:31:0x1f
- net.minecraft.network.play.client.CPacketPlayerTryUseItem:32:0x20
+CLIENTBOUND:net.minecraft.network.play.server.SCloseWindowPacket:20:0x14
+CLIENTBOUND:net.minecraft.network.play.server.SMapDataPacket:39:0x27
+CLIENTBOUND:net.minecraft.network.play.server.SAnimateBlockBreakPacket:9:0x9
+CLIENTBOUND:net.minecraft.network.play.server.SSpawnExperienceOrbPacket:1:0x1
+CLIENTBOUND:net.minecraft.network.play.server.SPlaySoundEffectPacket:82:0x52
+CLIENTBOUND:net.minecraft.network.play.server.STeamsPacket:76:0x4c
+CLIENTBOUND:net.minecraft.network.play.server.SPlayerListItemPacket:52:0x34
+CLIENTBOUND:net.minecraft.network.play.server.SCombatPacket:51:0x33
+CLIENTBOUND:net.minecraft.network.play.server.SUpdateChunkPositionPacket:65:0x41
+CLIENTBOUND:net.minecraft.network.play.server.SSetPassengersPacket:75:0x4b
+CLIENTBOUND:net.minecraft.network.play.server.SKeepAlivePacket:33:0x21
+CLIENTBOUND:net.minecraft.network.play.server.SCustomPayloadPlayPacket:25:0x19
+CLIENTBOUND:net.minecraft.network.play.server.SChunkDataPacket:34:0x22
+CLIENTBOUND:net.minecraft.network.play.server.SUpdateRecipesPacket:91:0x5b
+CLIENTBOUND:net.minecraft.network.play.server.SAdvancementInfoPacket:88:0x58
+CLIENTBOUND:net.minecraft.network.play.server.SSpawnMovingSoundEffectPacket:81:0x51
+CLIENTBOUND:net.minecraft.network.play.server.SPlaySoundEventPacket:35:0x23
+CLIENTBOUND:net.minecraft.network.play.server.SMountEntityPacket:69:0x45
+CLIENTBOUND:net.minecraft.network.play.server.STitlePacket:80:0x50
+CLIENTBOUND:net.minecraft.network.play.server.SPlaceGhostRecipePacket:49:0x31
+CLIENTBOUND:net.minecraft.network.play.server.SEntityTeleportPacket:87:0x57
+CLIENTBOUND:net.minecraft.network.play.server.SStopSoundPacket:83:0x53
+CLIENTBOUND:net.minecraft.network.play.server.SSetExperiencePacket:72:0x48
+CLIENTBOUND:net.minecraft.network.play.server.SEntityEquipmentPacket:71:0x47
+CLIENTBOUND:net.minecraft.network.play.server.SSpawnGlobalEntityPacket:2:0x2
+CLIENTBOUND:net.minecraft.network.play.server.SPlayerLookPacket:53:0x35
+CLIENTBOUND:net.minecraft.network.play.server.SHeldItemChangePacket:64:0x40
+CLIENTBOUND:net.minecraft.network.play.server.SUpdateBossInfoPacket:13:0xd
+CLIENTBOUND:net.minecraft.network.play.server.SStatisticsPacket:7:0x7
+CLIENTBOUND:net.minecraft.network.play.server.SCooldownPacket:24:0x18
+CLIENTBOUND:net.minecraft.network.play.server.SBlockActionPacket:11:0xb
+CLIENTBOUND:net.minecraft.network.play.server.SUnloadChunkPacket:30:0x1e
+CLIENTBOUND:net.minecraft.network.play.server.SSetSlotPacket:23:0x17
+CLIENTBOUND:net.minecraft.network.play.server.SSpawnPlayerPacket:5:0x5
+CLIENTBOUND:net.minecraft.network.play.server.SMoveVehiclePacket:45:0x2d
+CLIENTBOUND:net.minecraft.network.play.server.SExplosionPacket:29:0x1d
+CLIENTBOUND:net.minecraft.network.play.server.SCameraPacket:63:0x3f
+CLIENTBOUND:net.minecraft.network.play.server.SRemoveEntityEffectPacket:57:0x39
+CLIENTBOUND:net.minecraft.network.play.server.SSpawnParticlePacket:36:0x24
+CLIENTBOUND:net.minecraft.network.play.server.SEntityPacket:44:0x2c
+CLIENTBOUND:net.minecraft.network.play.server.SEntityVelocityPacket:70:0x46
+CLIENTBOUND:net.minecraft.network.play.server.SMultiBlockChangePacket:16:0x10
+CLIENTBOUND:net.minecraft.network.play.server.SOpenWindowPacket:47:0x2f
+CLIENTBOUND:net.minecraft.network.play.server.SChangeBlockPacket:12:0xc
+CLIENTBOUND:net.minecraft.network.play.server.SCommandListPacket:18:0x12
+CLIENTBOUND:net.minecraft.network.play.server.SSpawnPaintingPacket:4:0x4
+CLIENTBOUND:net.minecraft.network.play.server.SServerDifficultyPacket:14:0xe
+CLIENTBOUND:net.minecraft.network.play.server.SOpenBookWindowPacket:46:0x2e
+CLIENTBOUND:net.minecraft.network.play.server.SMerchantOffersPacket:40:0x28
+CLIENTBOUND:net.minecraft.network.play.server.SUpdateTimePacket:79:0x4f
+CLIENTBOUND:net.minecraft.network.play.server.SSpawnPositionPacket:78:0x4e
+CLIENTBOUND:net.minecraft.network.play.server.SPlaySoundPacket:26:0x1a
+CLIENTBOUND:net.minecraft.network.play.server.STabCompletePacket:17:0x11
+CLIENTBOUND:net.minecraft.network.play.server.SJoinGamePacket:38:0x26
+CLIENTBOUND:net.minecraft.network.play.server.SEntityPacket$MovePacket:42:0x2a
+CLIENTBOUND:net.minecraft.network.play.server.SDisplayObjectivePacket:67:0x43
+CLIENTBOUND:net.minecraft.network.play.server.SEntityHeadLookPacket:60:0x3c
+CLIENTBOUND:net.minecraft.network.play.server.SDestroyEntitiesPacket:56:0x38
+CLIENTBOUND:net.minecraft.network.play.server.SSendResourcePackPacket:58:0x3a
+CLIENTBOUND:net.minecraft.network.play.server.SPlayerPositionLookPacket:54:0x36
+CLIENTBOUND:net.minecraft.network.play.server.SQueryNBTResponsePacket:85:0x55
+CLIENTBOUND:net.minecraft.network.play.server.SUpdateHealthPacket:73:0x49
+CLIENTBOUND:net.minecraft.network.play.server.SEntityStatusPacket:28:0x1c
+CLIENTBOUND:net.minecraft.network.play.server.SEntityPropertiesPacket:89:0x59
+CLIENTBOUND:net.minecraft.network.play.server.SRespawnPacket:59:0x3b
+CLIENTBOUND:net.minecraft.network.play.server.SWorldBorderPacket:62:0x3e
+CLIENTBOUND:net.minecraft.network.play.server.SEntityMetadataPacket:68:0x44
+CLIENTBOUND:net.minecraft.network.play.server.SUpdateViewDistancePacket:66:0x42
+CLIENTBOUND:net.minecraft.network.play.server.SSpawnMobPacket:3:0x3
+CLIENTBOUND:net.minecraft.network.play.server.SUpdateLightPacket:37:0x25
+CLIENTBOUND:net.minecraft.network.play.server.SWindowItemsPacket:21:0x15
+CLIENTBOUND:net.minecraft.network.play.server.SPlayerDiggingPacket:8:0x8
+CLIENTBOUND:net.minecraft.network.play.server.STagsListPacket:92:0x5c
+CLIENTBOUND:net.minecraft.network.play.server.SSelectAdvancementsTabPacket:61:0x3d
+CLIENTBOUND:net.minecraft.network.play.server.SUpdateScorePacket:77:0x4d
+CLIENTBOUND:net.minecraft.network.play.server.SChangeGameStatePacket:31:0x1f
+CLIENTBOUND:net.minecraft.network.play.server.SPlayerListHeaderFooterPacket:84:0x54
+CLIENTBOUND:net.minecraft.network.play.server.SUpdateTileEntityPacket:10:0xa
+CLIENTBOUND:net.minecraft.network.play.server.SEntityPacket$LookPacket:43:0x2b
+CLIENTBOUND:net.minecraft.network.play.server.SConfirmTransactionPacket:19:0x13
+CLIENTBOUND:net.minecraft.network.play.server.SChatPacket:15:0xf
+CLIENTBOUND:net.minecraft.network.play.server.SScoreboardObjectivePacket:74:0x4a
+CLIENTBOUND:net.minecraft.network.play.server.SSpawnObjectPacket:0:0x0
+CLIENTBOUND:net.minecraft.network.play.server.SDisconnectPacket:27:0x1b
+CLIENTBOUND:net.minecraft.network.play.server.SCollectItemPacket:86:0x56
+CLIENTBOUND:net.minecraft.network.play.server.SPlayEntityEffectPacket:90:0x5a
+CLIENTBOUND:net.minecraft.network.play.server.SOpenSignMenuPacket:48:0x30
+CLIENTBOUND:net.minecraft.network.play.server.SWindowPropertyPacket:22:0x16
+CLIENTBOUND:net.minecraft.network.play.server.SAnimateHandPacket:6:0x6
+CLIENTBOUND:net.minecraft.network.play.server.SEntityPacket$RelativeMovePacket:41:0x29
+CLIENTBOUND:net.minecraft.network.play.server.SPlayerAbilitiesPacket:50:0x32
+CLIENTBOUND:net.minecraft.network.play.server.SOpenHorseWindowPacket:32:0x20
+CLIENTBOUND:net.minecraft.network.play.server.SRecipeBookPacket:55:0x37
+SERVERBOUND:net.minecraft.network.play.client.CClientStatusPacket:4:0x4
+SERVERBOUND:net.minecraft.network.play.client.CPlayerDiggingPacket:26:0x1a
+SERVERBOUND:net.minecraft.network.play.client.CAnimateHandPacket:42:0x2a
+SERVERBOUND:net.minecraft.network.play.client.CUpdateSignPacket:41:0x29
+SERVERBOUND:net.minecraft.network.play.client.CUpdateStructureBlockPacket:40:0x28
+SERVERBOUND:net.minecraft.network.play.client.CCreativeInventoryActionPacket:38:0x26
+SERVERBOUND:net.minecraft.network.play.client.CHeldItemChangePacket:35:0x23
+SERVERBOUND:net.minecraft.network.play.client.CClickWindowPacket:9:0x9
+SERVERBOUND:net.minecraft.network.play.client.CCustomPayloadPacket:11:0xb
+SERVERBOUND:net.minecraft.network.play.client.CPlayerAbilitiesPacket:25:0x19
+SERVERBOUND:net.minecraft.network.play.client.CChatMessagePacket:3:0x3
+SERVERBOUND:net.minecraft.network.play.client.CPlayerPacket$PositionRotationPacket:18:0x12
+SERVERBOUND:net.minecraft.network.play.client.CUseEntityPacket:14:0xe
+SERVERBOUND:net.minecraft.network.play.client.CSeenAdvancementsPacket:32:0x20
+SERVERBOUND:net.minecraft.network.play.client.CUpdateJigsawBlockPacket:39:0x27
+SERVERBOUND:net.minecraft.network.play.client.CUpdateBeaconPacket:34:0x22
+SERVERBOUND:net.minecraft.network.play.client.CRecipeInfoPacket:29:0x1d
+SERVERBOUND:net.minecraft.network.play.client.CResourcePackStatusPacket:31:0x1f
+SERVERBOUND:net.minecraft.network.play.client.CPlaceRecipePacket:24:0x18
+SERVERBOUND:net.minecraft.network.play.client.CPlayerTryUseItemPacket:45:0x2d
+SERVERBOUND:net.minecraft.network.play.client.CSelectTradePacket:33:0x21
+SERVERBOUND:net.minecraft.network.play.client.CMoveVehiclePacket:21:0x15
+SERVERBOUND:net.minecraft.network.play.client.CPlayerPacket:20:0x14
+SERVERBOUND:net.minecraft.network.play.client.CPlayerTryUseItemOnBlockPacket:44:0x2c
+SERVERBOUND:net.minecraft.network.play.client.CEnchantItemPacket:8:0x8
+SERVERBOUND:net.minecraft.network.play.client.CInputPacket:28:0x1c
+SERVERBOUND:net.minecraft.network.play.client.CRenameItemPacket:30:0x1e
+SERVERBOUND:net.minecraft.network.play.client.CQueryEntityNBTPacket:13:0xd
+SERVERBOUND:net.minecraft.network.play.client.CUpdateMinecartCommandBlockPacket:37:0x25
+SERVERBOUND:net.minecraft.network.play.client.CUpdateCommandBlockPacket:36:0x24
+SERVERBOUND:net.minecraft.network.play.client.CCloseWindowPacket:10:0xa
+SERVERBOUND:net.minecraft.network.play.client.CEntityActionPacket:27:0x1b
+SERVERBOUND:net.minecraft.network.play.client.CEditBookPacket:12:0xc
+SERVERBOUND:net.minecraft.network.play.client.CConfirmTeleportPacket:0:0x0
+SERVERBOUND:net.minecraft.network.play.client.CSteerBoatPacket:22:0x16
+SERVERBOUND:net.minecraft.network.play.client.CClientSettingsPacket:5:0x5
+SERVERBOUND:net.minecraft.network.play.client.CPickItemPacket:23:0x17
+SERVERBOUND:net.minecraft.network.play.client.CLockDifficultyPacket:16:0x10
+SERVERBOUND:net.minecraft.network.play.client.CSpectatePacket:43:0x2b
+SERVERBOUND:net.minecraft.network.play.client.CSetDifficultyPacket:2:0x2
+SERVERBOUND:net.minecraft.network.play.client.CPlayerPacket$PositionPacket:17:0x11
+SERVERBOUND:net.minecraft.network.play.client.CTabCompletePacket:6:0x6
+SERVERBOUND:net.minecraft.network.play.client.CConfirmTransactionPacket:7:0x7
+SERVERBOUND:net.minecraft.network.play.client.CKeepAlivePacket:15:0xf
+SERVERBOUND:net.minecraft.network.play.client.CQueryTileEntityNBTPacket:1:0x1
+SERVERBOUND:net.minecraft.network.play.client.CPlayerPacket$RotationPacket:19:0x13
