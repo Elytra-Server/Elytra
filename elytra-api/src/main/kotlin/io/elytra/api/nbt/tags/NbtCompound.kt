@@ -29,7 +29,7 @@ class NbtCompound(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(
         tags.forEach { add(it) }
     }
 
-    fun remove(tag: NbtTag) : Boolean {
+    fun remove(tag: NbtTag): Boolean {
         val removed = tags.remove(tag.name) ?: return false
         removed.parent = null
         return true
@@ -40,14 +40,14 @@ class NbtCompound(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(
         tags.clear()
     }
 
-    fun contains(tag: NbtTag) : Boolean {
+    fun contains(tag: NbtTag): Boolean {
         return tags.containsValue(tag)
     }
 
     val size: Int
         get() = tags.size
 
-    operator fun get(tagName: String) : NbtTag? {
+    operator fun get(tagName: String): NbtTag? {
         return tags[tagName]
     }
 
@@ -62,18 +62,18 @@ class NbtCompound(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(
     }
 
     override fun prettyPrint(sb: StringBuilder, indentStr: String, indentLevel: Int) {
-        for(i in 0 until indentLevel)
+        for (i in 0 until indentLevel)
             sb.append(indentStr)
         sb.append(tagType.notchianName)
         sb.append("(\"$name\")")
         sb.append(": $size entries {")
-        if(size > 0) {
+        if (size > 0) {
             sb.appendln()
             this.forEach {
                 it.prettyPrint(sb, indentStr, indentLevel + 1)
                 sb.appendln()
             }
-            for(i in 0 until indentLevel)
+            for (i in 0 until indentLevel)
                 sb.append(indentStr)
         }
         sb.append('}')
@@ -86,7 +86,7 @@ class NbtCompound(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(
             serialize(obj, stream)
         }
         override fun serialize(obj: Any, stream: DataOutput) {
-            if(obj !is NbtCompound) throw IllegalArgumentException()
+            if (obj !is NbtCompound) throw IllegalArgumentException()
             obj.tags.values.forEach {
                 stream.writeByte(it.codec.id)
                 it.codec.serialize(it, stream)
@@ -95,9 +95,9 @@ class NbtCompound(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(
         }
         override fun deserialize(name: String?, stream: NbtInputStream): NbtTag {
             val children = ArrayList<NbtTag>(5)
-            while(true) {
+            while (true) {
                 val child = stream.readTag() ?: throw IllegalStateException("Null tag in NbtCompound")
-                if(child is NbtEnd)
+                if (child is NbtEnd)
                     break
                 children.add(child)
             }
@@ -105,15 +105,15 @@ class NbtCompound(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(
         }
     }
 
-    fun toBytes(littleEndian: Boolean = false) : ByteArray {
+    fun toBytes(littleEndian: Boolean = false): ByteArray {
         val bs = ByteArrayOutputStream()
-        val os: DataOutput =  DataOutputStream(bs)
+        val os: DataOutput = DataOutputStream(bs)
         Codec.serialize(this, os)
         return bs.toByteArray()
     }
 
     companion object {
-        fun deserialize(stream: InputStream, littleEndian: Boolean = false) : NbtCompound {
+        fun deserialize(stream: InputStream, littleEndian: Boolean = false): NbtCompound {
             val os: DataInput = DataInputStream(stream)
             return Codec.deserialize(NbtInputStream(os)) as NbtCompound
         }

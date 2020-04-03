@@ -8,20 +8,19 @@ import java.nio.file.Path
 */
 interface PluginWrapper {
 
-	/**
+    /**
 	 * Returns the created instance of [Plugin] if it is available.
 	 *
 	 * @return The instance if available
 	 */
-	fun <T : Plugin> getInstance() : T
+    fun <T : Plugin> getInstance(): T
 
-	/**
+    /**
 	 * Returns the absolute path the plugin was loaded from.
 	 *
 	 * @return The source the plugin was loaded from
 	 * @throws [PluginNotFoundException] if is unknown
 	 */
-	@Throws(PluginNotFoundException::class)
-	fun getAbsolutePath() : Path
-
+    @Throws(PluginNotFoundException::class)
+    fun getAbsolutePath(): Path
 }

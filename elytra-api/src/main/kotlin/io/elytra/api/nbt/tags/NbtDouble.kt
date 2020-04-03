@@ -19,7 +19,7 @@ class NbtDouble(name: String?, val value: Double) : NbtValueTag(name) {
         override val id = 6
 
         override fun serialize(obj: Any, stream: DataOutput) {
-            if(obj !is NbtDouble) throw IllegalArgumentException()
+            if (obj !is NbtDouble) throw IllegalArgumentException()
             stream.writeDouble(obj.value)
         }
         override fun deserialize(name: String?, stream: NbtInputStream): NbtTag {

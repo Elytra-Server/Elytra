@@ -9,22 +9,22 @@ import io.elytra.sdk.server.Elytra
 import org.apache.commons.lang3.Validate
 
 class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
-	override fun handle(session: NetworkSession, message: LoginStartMessage) {
-		Validate.validState(session.sessionState == SessionState.HELLO, "Unexpected hello packet")
+    override fun handle(session: NetworkSession, message: LoginStartMessage) {
+        Validate.validState(session.sessionState == SessionState.HELLO, "Unexpected hello packet")
 
-		session.gameProfile = message.gameProfile
+        session.gameProfile = message.gameProfile
 
-		if(!session.isActive){
-			session.onDisconnect();
-			return
-		}
+        if (!session.isActive) {
+            session.onDisconnect()
+            return
+        }
 
-		//TODO Then see why the customer has placed a check to verify the session and disconnect from the server after receiving the encryption request
-		if(Elytra.server.debug)
-			session.sessionState = SessionState.READY_TO_ACCEPT
-		else{
-			session.sessionState = SessionState.KEY
-			session.send(EncryptionRequestMessage("",Elytra.server.keypair.public,session.verifyToken))
-		}
-	}
+        // TODO Then see why the customer has placed a check to verify the session and disconnect from the server after receiving the encryption request
+        if (Elytra.server.debug)
+            session.sessionState = SessionState.READY_TO_ACCEPT
+        else {
+            session.sessionState = SessionState.KEY
+            session.send(EncryptionRequestMessage("", Elytra.server.keypair.public, session.verifyToken))
+        }
+    }
 }

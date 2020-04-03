@@ -4,10 +4,9 @@ import io.elytra.api.command.argument.ArgumentContext
 
 interface Command {
 
-	val name: String
+    val name: String
 
-	val executor: CommandExecutor
+    val executor: CommandExecutor
 
-	val arguments: List<ArgumentContext<Any>>
-
+    val arguments: List<ArgumentContext<Any>>
 }

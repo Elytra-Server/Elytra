@@ -4,6 +4,5 @@ import io.elytra.api.entity.Player
 
 interface CommandHandler {
 
-	fun handle(player: Player, string: String)
-
+    fun handle(player: Player, string: String)
 }

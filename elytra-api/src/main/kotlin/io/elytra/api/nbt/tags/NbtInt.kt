@@ -2,7 +2,6 @@ package io.elytra.api.nbt.tags
 
 import io.elytra.api.nbt.NbtInputStream
 import java.io.DataOutput
-import java.io.DataOutputStream
 
 class NbtInt(name: String?, val value: Int) : NbtValueTag(name) {
     override val tagType = NbtTagType.INT
@@ -12,7 +11,7 @@ class NbtInt(name: String?, val value: Int) : NbtValueTag(name) {
         return NbtInt(name, value)
     }
 
-    override fun prettyValueStr() : String {
+    override fun prettyValueStr(): String {
         return value.toString()
     }
 
@@ -20,7 +19,7 @@ class NbtInt(name: String?, val value: Int) : NbtValueTag(name) {
         override val id = 3
 
         override fun serialize(obj: Any, stream: DataOutput) {
-            if(obj !is NbtInt) throw IllegalArgumentException()
+            if (obj !is NbtInt) throw IllegalArgumentException()
             stream.writeInt(obj.value)
         }
         override fun deserialize(name: String?, stream: NbtInputStream): NbtTag {

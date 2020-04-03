@@ -8,22 +8,22 @@ import java.io.IOException
 
 class ChunkDataCodec : Codec<ChunkDataMessage> {
 
-	override fun encode(buf: ByteBuf, message: ChunkDataMessage): ByteBuf {
-		buf.writeInt(message.x)
-		buf.writeInt(message.z)
-		val data = message.data
+    override fun encode(buf: ByteBuf, message: ChunkDataMessage): ByteBuf {
+        buf.writeInt(message.x)
+        buf.writeInt(message.z)
+        val data = message.data
 
-		try{
-			ByteBufUtils.writeVarInt(buf, data.writerIndex())
-			buf.writeBytes(data)
-		}finally {
-		    data.release()
-		}
+        try {
+            ByteBufUtils.writeVarInt(buf, data.writerIndex())
+            buf.writeBytes(data)
+        } finally {
+            data.release()
+        }
 
-		return buf
-	}
+        return buf
+    }
 
-	override fun decode(buffer: ByteBuf): ChunkDataMessage {
-		throw IOException("No decode support for this")
-	}
+    override fun decode(buffer: ByteBuf): ChunkDataMessage {
+        throw IOException("No decode support for this")
+    }
 }

@@ -7,14 +7,13 @@ import io.netty.buffer.ByteBuf
 
 class ChatCodec : Codec<ChatMessage> {
 
-	override fun encode(buffer: ByteBuf, message: ChatMessage): ByteBuf {
-		buffer.minecraft.writeString(message.content)
-		return buffer
-	}
+    override fun encode(buffer: ByteBuf, message: ChatMessage): ByteBuf {
+        buffer.minecraft.writeString(message.content)
+        return buffer
+    }
 
-	override fun decode(buffer: ByteBuf): ChatMessage {
-		val json = buffer.minecraft.readString(256)
-		return ChatMessage(json)
-	}
-
+    override fun decode(buffer: ByteBuf): ChatMessage {
+        val json = buffer.minecraft.readString(256)
+        return ChatMessage(json)
+    }
 }

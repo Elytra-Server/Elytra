@@ -5,13 +5,11 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 
 object EventBus : IEventBus {
 
-	private val publisher: PublishSubject<Any> = PublishSubject.create()
+    private val publisher: PublishSubject<Any> = PublishSubject.create()
 
-	override fun listen(): Observable<Any> = publisher
+    override fun listen(): Observable<Any> = publisher
 
-	override fun post(event: ElytraEvent) = publisher.onNext(event)
-
+    override fun post(event: ElytraEvent) = publisher.onNext(event)
 }
 
 inline fun <reified T : ElytraEvent> EventBus.listen(): Observable<T> = listen().ofType(T::class.java)
-

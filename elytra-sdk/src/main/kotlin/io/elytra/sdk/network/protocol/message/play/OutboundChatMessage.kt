@@ -5,5 +5,5 @@ import io.elytra.api.chat.TextComponent
 import io.elytra.api.utils.asJson
 
 data class OutboundChatMessage(val content: String, val mode: Int) : Message {
-	constructor(component: TextComponent, mode: Int) : this(component.asJson(), mode)
+    constructor(component: TextComponent, mode: Int) : this(component.asJson(), mode)
 }

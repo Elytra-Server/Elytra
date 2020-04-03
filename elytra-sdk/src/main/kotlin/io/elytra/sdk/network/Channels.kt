@@ -7,26 +7,24 @@ import io.netty.channel.epoll.EpollServerSocketChannel
 import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.ServerSocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
-import java.util.concurrent.Executor
-import java.util.concurrent.ExecutorService
 
 object Channels {
 
-	private val EPOLL_AVAILABLE = Epoll.isAvailable()
+    private val EPOLL_AVAILABLE = Epoll.isAvailable()
 
-	fun pickBestChannel() : Class<out ServerSocketChannel> {
-		if (EPOLL_AVAILABLE) {
-			return EpollServerSocketChannel::class.java
-		}
+    fun pickBestChannel(): Class<out ServerSocketChannel> {
+        if (EPOLL_AVAILABLE) {
+            return EpollServerSocketChannel::class.java
+        }
 
-		return NioServerSocketChannel::class.java
-	}
+        return NioServerSocketChannel::class.java
+    }
 
-	fun pickBestEventLoopGroup(): EventLoopGroup {
-		if (EPOLL_AVAILABLE) {
-			return EpollEventLoopGroup()
-		}
+    fun pickBestEventLoopGroup(): EventLoopGroup {
+        if (EPOLL_AVAILABLE) {
+            return EpollEventLoopGroup()
+        }
 
-		return NioEventLoopGroup()
-	}
+        return NioEventLoopGroup()
+    }
 }

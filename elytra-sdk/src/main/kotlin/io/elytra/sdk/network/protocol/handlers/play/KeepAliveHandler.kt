@@ -4,10 +4,9 @@ import com.flowpowered.network.MessageHandler
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.message.play.KeepAliveMessage
 
-class KeepAliveHandler :MessageHandler<NetworkSession,KeepAliveMessage> {
+class KeepAliveHandler : MessageHandler<NetworkSession, KeepAliveMessage> {
 
-	override fun handle(session: NetworkSession, message: KeepAliveMessage) {
-		session.ping(message.id)
-	}
-
+    override fun handle(session: NetworkSession, message: KeepAliveMessage) {
+        session.ping(message.id)
+    }
 }

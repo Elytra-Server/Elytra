@@ -6,6 +6,6 @@ import io.elytra.sdk.network.protocol.message.play.ClientSettingsMessage
 
 class ClientSettingsHandler : MessageHandler<NetworkSession, ClientSettingsMessage> {
 
-	override fun handle(session: NetworkSession, message: ClientSettingsMessage) {
-	}
+    override fun handle(session: NetworkSession, message: ClientSettingsMessage) {
+    }
 }

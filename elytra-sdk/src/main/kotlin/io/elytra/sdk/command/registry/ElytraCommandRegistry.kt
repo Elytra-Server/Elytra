@@ -5,22 +5,21 @@ import io.elytra.api.command.registry.CommandRegistry
 
 class ElytraCommandRegistry : CommandRegistry {
 
-	private val commandRegistry: MutableMap<String, Command> = HashMap()
+    private val commandRegistry: MutableMap<String, Command> = HashMap()
 
-	@Synchronized
-	override fun register(command: Command) {
-		val commandName = command.name
-		if (commandRegistry.containsKey(commandName)) {
-			throw CommandAlreadyRegistered(commandName)
-		}
-		commandRegistry[commandName] = command
-	}
+    @Synchronized
+    override fun register(command: Command) {
+        val commandName = command.name
+        if (commandRegistry.containsKey(commandName)) {
+            throw CommandAlreadyRegistered(commandName)
+        }
+        commandRegistry[commandName] = command
+    }
 
-	@Synchronized
-	override fun getCommandByName(commandName: String): Command? {
-		return commandRegistry[commandName]
-	}
+    @Synchronized
+    override fun getCommandByName(commandName: String): Command? {
+        return commandRegistry[commandName]
+    }
 
-	class CommandAlreadyRegistered(commandName: String) : Exception("$commandName is already registered")
-
+    class CommandAlreadyRegistered(commandName: String) : Exception("$commandName is already registered")
 }

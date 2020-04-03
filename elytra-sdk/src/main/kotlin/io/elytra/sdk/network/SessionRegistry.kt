@@ -11,34 +11,34 @@ import java.util.concurrent.ConcurrentMap
  * @see [io.elytra.sdk.network.NetworkSession]
  */
 class SessionRegistry(
-	private var sessions: ConcurrentMap<NetworkSession, Boolean> = ConcurrentHashMap()
-) : Registry<NetworkSession,String>,Tickable {
+    private var sessions: ConcurrentMap<NetworkSession, Boolean> = ConcurrentHashMap()
+) : Registry<NetworkSession, String>, Tickable {
 
-	override fun add(target: NetworkSession) {
-		sessions[target] = true
-	}
+    override fun add(target: NetworkSession) {
+        sessions[target] = true
+    }
 
-	override fun remove(target: NetworkSession) {
-		sessions.remove(target)
-	}
+    override fun remove(target: NetworkSession) {
+        sessions.remove(target)
+    }
 
-	override fun get(target: String): NetworkSession? {
-		return sessions.keys.first { session -> session.sessionId == target };
-	}
+    override fun get(target: String): NetworkSession? {
+        return sessions.keys.first { session -> session.sessionId == target }
+    }
 
-	override fun size(): Int {
-		return sessions.size
-	}
+    override fun size(): Int {
+        return sessions.size
+    }
 
-	override fun clear() = sessions.clear()
+    override fun clear() = sessions.clear()
 
-	override fun tick() {
-		sessions.keys.forEach {
-			it.tick()
-		}
-	}
+    override fun tick() {
+        sessions.keys.forEach {
+            it.tick()
+        }
+    }
 
-	override fun iterator(): Iterator<NetworkSession> {
-		return sessions.keys.iterator()
-	}
+    override fun iterator(): Iterator<NetworkSession> {
+        return sessions.keys.iterator()
+    }
 }

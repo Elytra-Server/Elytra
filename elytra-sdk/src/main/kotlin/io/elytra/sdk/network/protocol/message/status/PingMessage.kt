@@ -4,5 +4,5 @@ import com.flowpowered.network.Message
 import io.elytra.api.utils.Asyncable
 
 data class PingMessage(
-	val time: Long
+    val time: Long
 ) : Message, Asyncable

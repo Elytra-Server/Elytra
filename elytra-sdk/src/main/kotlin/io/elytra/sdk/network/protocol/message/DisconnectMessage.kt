@@ -5,5 +5,5 @@ import io.elytra.api.chat.TextComponent
 import io.elytra.api.utils.Asyncable
 
 data class DisconnectMessage(val textComponent: TextComponent) : Message, Asyncable {
-	constructor(message: String) : this(TextComponent(message))
+    constructor(message: String) : this(TextComponent(message))
 }

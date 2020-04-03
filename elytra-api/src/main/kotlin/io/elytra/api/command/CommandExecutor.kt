@@ -5,6 +5,5 @@ import io.elytra.api.entity.Player
 
 interface CommandExecutor {
 
-	fun execute(player: Player, contextArguments: MutableList<Argument<*>>)
-
+    fun execute(player: Player, contextArguments: MutableList<Argument<*>>)
 }

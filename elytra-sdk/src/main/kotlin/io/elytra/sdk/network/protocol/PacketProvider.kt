@@ -10,8 +10,8 @@ import io.elytra.sdk.network.protocol.packets.StatusPacket
  * in order to make them locatable to the codecs
  */
 data class PacketProvider(
-        val statusPacket: StatusPacket = StatusPacket(),
-        val loginPacket: LoginPacket = LoginPacket(),
-        val handshakePacket: HandshakePacket = HandshakePacket(),
-        val playPacket: PlayPacket = PlayPacket()
+    val statusPacket: StatusPacket = StatusPacket(),
+    val loginPacket: LoginPacket = LoginPacket(),
+    val handshakePacket: HandshakePacket = HandshakePacket(),
+    val playPacket: PlayPacket = PlayPacket()
 )

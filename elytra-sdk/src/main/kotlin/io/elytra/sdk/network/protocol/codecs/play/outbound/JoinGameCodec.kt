@@ -9,21 +9,20 @@ import java.io.IOException
 
 class JoinGameCodec : Codec<JoinGameMessage> {
 
-	override fun encode(buffer: ByteBuf, message: JoinGameMessage): ByteBuf {
-		buffer.writeInt(message.id)
-		buffer.minecraft.writeEnumValue(message.gameMode)
-		buffer.writeInt(message.dimension)
-		buffer.writeLong(message.seed)
-		buffer.writeByte(message.maxPlayers)
-		buffer.minecraft.writeString(message.worldType)
-		ByteBufUtils.writeVarInt(buffer,message.viewDistance)
-		buffer.writeBoolean(message.reducedDebugInfo)
-		buffer.writeBoolean(message.respawnScreen)
-		return buffer
-	}
+    override fun encode(buffer: ByteBuf, message: JoinGameMessage): ByteBuf {
+        buffer.writeInt(message.id)
+        buffer.minecraft.writeEnumValue(message.gameMode)
+        buffer.writeInt(message.dimension)
+        buffer.writeLong(message.seed)
+        buffer.writeByte(message.maxPlayers)
+        buffer.minecraft.writeString(message.worldType)
+        ByteBufUtils.writeVarInt(buffer, message.viewDistance)
+        buffer.writeBoolean(message.reducedDebugInfo)
+        buffer.writeBoolean(message.respawnScreen)
+        return buffer
+    }
 
-	override fun decode(buffer: ByteBuf): JoinGameMessage {
-		throw IOException("No have decode support for this")
-	}
-
+    override fun decode(buffer: ByteBuf): JoinGameMessage {
+        throw IOException("No have decode support for this")
+    }
 }
