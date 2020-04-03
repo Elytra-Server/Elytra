@@ -41,13 +41,19 @@ class PlayerRegistry(
 		session.send(LoginSuccessMessage(gameProfile))
 		session.protocol(Protocol.PLAY)
 
-		val joinMessage = JoinGameMessage(player.id, player.gamemode, 0, Difficulty.NORMAL, 2, "flat", false)
+		val joinMessage = JoinGameMessage(
+			player.id,
+			player.gamemode,
+			0,
+			0,
+			2,
+			"flat",
+			32,
+			false,
+			false)
 		val positionMessage = PlayerPosLookMessage(player.position.x, player.position.y, player.position.z, player.position.yaw, player.position.pitch, 0x01, player.id)
 
 		session.send(joinMessage)
-		val version = Unpooled.buffer()
-		version.minecraft.writeString(ProtocolInfo.MINECRAFT_VERSION)
-		session.send(CustomPayloadMessage("MC|Brand",version))
 		session.send(HeldItemChangeMessage(4))
 		session.send(positionMessage)
 
