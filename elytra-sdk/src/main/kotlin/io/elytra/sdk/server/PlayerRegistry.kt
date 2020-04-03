@@ -33,9 +33,7 @@ class PlayerRegistry(
 			gameProfile,
 			if(gameProfile.isComplete) PlayerMode.PREMIUM else PlayerMode.OFFLINE,
 			online = false,
-			banned = false,
-			exp = 0,
-			expLevel = 0)
+			banned = false)
 		players = players.plus(player)
 
 		session.send(LoginSuccessMessage(gameProfile))

@@ -9,7 +9,7 @@ import io.elytra.api.world.World
 class ElytraWorld(
 	override val spawnPoint: Position,
 	private val chunkColumns: List<ChunkColumn> = mutableListOf(),
-	private val name: String = ""
+	override val name: String = ""
 ) : World {
 
 	override fun getChunkAt(x: Int, z: Int): Chunk? {
