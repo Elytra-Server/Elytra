@@ -33,6 +33,7 @@ interface Entity : Tickable {
 }
 
 enum class EntityState {
+	IDLE,
 	IMMOBILE,
 	SNEAKING,
 	SWIMMING,

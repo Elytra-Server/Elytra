@@ -20,18 +20,13 @@ import io.elytra.sdk.server.Elytra
 data class ElytraPlayer(
 	var id: Int,
 	var sessionId: String,
-	override var networkId: Int = 0,
 	override var displayName: String,
 	override var gameProfile: GameProfile?,
 	override var mode: PlayerMode,
 	override var online: Boolean,
 	override var banned: Boolean,
-	override var gamemode: GameMode = GameMode.SURVIVAL,
-	override var position: Position = Position.EMPTY,
-	override var state: EntityState,
-	override var namedTag: NbtCompound,
-	override var world: String
-) : Player, ElytraEntity() {
+	override var gamemode: GameMode = GameMode.SURVIVAL
+) : Player, ElytraEntity(0) {
 
 	override fun tick() {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
