@@ -8,6 +8,7 @@ import io.elytra.api.world.enums.WorldType
 import io.elytra.api.world.generator.WorldGenerator
 
 interface World : Tickable {
+	val name: String
 	val spawnPoint: Position
 
 	fun getChunkAt(x: Int, z: Int) : Chunk?

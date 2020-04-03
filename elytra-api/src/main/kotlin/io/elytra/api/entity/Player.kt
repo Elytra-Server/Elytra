@@ -13,18 +13,11 @@ interface Player {
 	var online: Boolean
 	var banned: Boolean
 
-	var exp: Int
-	var expLevel: Int
-
-	var position: Position
 	var gamemode: GameMode
 
 	fun kick(reason: String)
-
 	fun sendMessage(message: String)
-
 	fun sendMessage(textComponent: TextComponent)
-
 }
 
 enum class PlayerMode {

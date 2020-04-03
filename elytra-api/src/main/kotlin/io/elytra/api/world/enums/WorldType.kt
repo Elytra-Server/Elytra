@@ -1,7 +1,7 @@
 package io.elytra.api.world.enums
 
 
-enum class WorldType(val id: Int, val pretyName: String) {
+enum class WorldType(val id: Int, val prettyName: String) {
 	NORMAL(0,"normal"),
 	FLAT(1,"flat"),
 	NETHER(2,"nether"),
