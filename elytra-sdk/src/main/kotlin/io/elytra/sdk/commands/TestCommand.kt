@@ -7,13 +7,12 @@ import io.elytra.api.entity.Player
 
 class TestCommand : BaseCommand("test") {
 
-	init {
-		addArgument("testArgument", ArgumentTypes.STRING)
-	}
+    init {
+        addArgument("testArgument", ArgumentTypes.STRING)
+    }
 
-	override fun execute(player: Player, arguments: ArgumentList) {
-		val argument = arguments.getValue<String>("testArgument")
-		player.sendMessage("Your argument is \"$argument\"")
-	}
-
+    override fun execute(player: Player, arguments: ArgumentList) {
+        val argument = arguments.getValue<String>("testArgument")
+        player.sendMessage("Your argument is \"$argument\"")
+    }
 }

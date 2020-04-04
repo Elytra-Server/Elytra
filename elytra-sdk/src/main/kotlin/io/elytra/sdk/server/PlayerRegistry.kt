@@ -74,6 +74,10 @@ class PlayerRegistry(
         return players.first { player -> player.gameProfile!!.name == target }
     }
 
+    fun get(session: NetworkSession): Player? {
+        return players.first { player -> (player as ElytraPlayer).sessionId == session.sessionId }
+    }
+
     fun get(target: Int): Player? {
         return players.first { player -> (player as ElytraPlayer).id == target }
     }

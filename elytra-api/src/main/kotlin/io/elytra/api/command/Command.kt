@@ -7,12 +7,11 @@ import io.elytra.api.entity.Player
 
 interface Command {
 
-	val name: String
+    val name: String
 
-	fun getArguments(): List<ArgumentContext<Any>>
+    fun getArguments(): List<ArgumentContext<Any>>
 
-	fun addArgument(name: String, type: ArgumentType<*>, required: Boolean = true)
+    fun addArgument(name: String, type: ArgumentType<*>, required: Boolean = true)
 
-	fun execute(player: Player, arguments: ArgumentList)
-
+    fun execute(player: Player, arguments: ArgumentList)
 }

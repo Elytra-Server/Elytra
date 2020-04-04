@@ -13,7 +13,7 @@ class ChatHandler : MessageHandler<NetworkSession, ChatMessage> {
 
     override fun handle(session: NetworkSession, message: ChatMessage) {
         if (message.content.startsWith(ElytraConsts.COMMAND_PREFIX)) {
-            val player = Elytra.server.playerRegistry.get(session.sessionId)
+            val player = Elytra.server.playerRegistry.get(session)
             Elytra.server.commandHandler.handle(player!!, message.content)
             return
         }
