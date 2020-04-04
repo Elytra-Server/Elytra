@@ -8,8 +8,8 @@ interface Command {
 
 	val name: String
 
-	fun execute(player: Player, contextArguments: MutableList<Argument<*>>)
-
 	val arguments: List<ArgumentContext<Any>>
+
+	fun execute(player: Player, contextArguments: MutableList<Argument<*>>)
 
 }
