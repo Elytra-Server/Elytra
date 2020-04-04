@@ -1,15 +1,18 @@
 package io.elytra.api.command
 
-import io.elytra.api.command.argument.Argument
 import io.elytra.api.command.argument.ArgumentContext
+import io.elytra.api.command.argument.ArgumentList
+import io.elytra.api.command.argument.ArgumentType
 import io.elytra.api.entity.Player
 
 interface Command {
 
 	val name: String
 
-	val arguments: List<ArgumentContext<Any>>
+	fun getArguments(): List<ArgumentContext<Any>>
 
-	fun execute(player: Player, contextArguments: MutableList<Argument<*>>)
+	fun addArgument(name: String, type: ArgumentType<*>, required: Boolean = true)
+
+	fun execute(player: Player, arguments: ArgumentList)
 
 }

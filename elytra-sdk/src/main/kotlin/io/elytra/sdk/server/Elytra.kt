@@ -12,6 +12,7 @@ import io.elytra.api.server.Server
 import io.elytra.api.server.ServerDescriptor
 import io.elytra.sdk.command.handler.ElytraCommandHandler
 import io.elytra.sdk.command.registry.ElytraCommandRegistry
+import io.elytra.sdk.commands.TestCommand
 import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.io.ElytraConsole
 import io.elytra.sdk.io.config.JsonConfigurationFile
@@ -63,6 +64,8 @@ class Elytra private constructor(
 		scheduler.start()
 
 		NetworkServer(port, sessionRegistry).start()
+
+		commandRegistry.register(TestCommand())
 	}
 
 	override fun broadcastMessage(message: String) {

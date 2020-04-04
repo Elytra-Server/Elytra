@@ -5,19 +5,20 @@ import io.elytra.api.command.argument.Argument
 import io.elytra.api.command.handler.CommandHandler
 import io.elytra.api.command.registry.CommandRegistry
 import io.elytra.api.entity.Player
+import io.elytra.sdk.command.argument.ArgumentListImpl
 import io.elytra.sdk.utils.ElytraConsts
 
 class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandler {
 
-	override fun handle(player: Player, string: String) {
-		if (!string.startsWith(ElytraConsts.COMMAND_PREFIX)) return
+	override fun handle(player: Player, message: String) {
+		if (!message.startsWith(ElytraConsts.COMMAND_PREFIX)) return
 
-		val stringWithoutPrefix = string.substring(1)
-		val split = stringWithoutPrefix.split(" ")
+		val messageWithoutPrefix = message.substring(1)
+		val argumentStringArray = messageWithoutPrefix.split(" ")
 
-		if (split.isEmpty()) return
+		if (argumentStringArray.isEmpty()) return
 
-		val commandName = split[0]
+		val commandName = argumentStringArray[0]
 
 		val command: Command? = commandRegistry.getCommandByName(commandName)
 
@@ -26,21 +27,21 @@ class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandle
 			return
 		}
 
-		val argumentList: MutableList<Argument<*>> = ArrayList()
-		val stringArgumentList = split.subList(1, split.size)
+		val argumentList = ArgumentListImpl()
+		val stringArgumentList = argumentStringArray.subList(1, argumentStringArray.size)
 
-		val requiredArgumentNumber = command.arguments.filter { it.required }.count()
+		val requiredArgumentNumber = command.getArguments().filter { it.required }.count()
 
-		if (split.size < requiredArgumentNumber) {
+		if (argumentStringArray.size < requiredArgumentNumber) {
 			player.sendMessage("Wrong usage")
 			TODO("Implement command usage message")
 		}
 
-		for ((index, argumentContext) in command.arguments.withIndex()) {
-			val argument = argumentContext.type.parse(stringArgumentList, index)
+		for ((index, argumentContext) in command.getArguments().withIndex()) {
+			val argumentValue = argumentContext.type.parse(stringArgumentList, index)
 
-			if (argument != null) {
-				argumentList.add(argument as Argument<*>)
+			if (argumentValue != null) {
+				argumentList += Argument(argumentValue, argumentContext)
 				continue
 			}
 
@@ -57,10 +58,12 @@ class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandle
 		try {
 			command.execute(player, argumentList)
 		} catch (exception: Exception) {
-			// TODO: Log command exception
-			throw exception
+			throw CommandException(message, exception)
 		}
 
 	}
+
+	class CommandException(fullCommand: String, baseException: Exception) :
+		Exception("An error occured while executing $fullCommand:" + baseException.localizedMessage)
 
 }
