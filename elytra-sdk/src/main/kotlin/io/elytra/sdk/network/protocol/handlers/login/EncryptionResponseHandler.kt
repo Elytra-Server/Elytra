@@ -36,7 +36,7 @@ class EncryptionResponseHandler : ElytraMessageHandler<EncryptionResponseMessage
             session.gameProfile = gameProfile
             session.sessionState = SessionState.READY_TO_ACCEPT
         } else {
-            if (Elytra.server.serverDescriptor!!.options.onyPremium) {
+            if (Elytra.server.serverDescriptor!!.options.onlyPremium) {
                 session.disconnect("Username ${session.gameProfile!!.name} tried to join with an invalid session")
             } else {
                 session.sessionState = SessionState.READY_TO_ACCEPT

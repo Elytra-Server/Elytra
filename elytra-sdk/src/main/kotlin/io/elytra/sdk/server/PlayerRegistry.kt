@@ -28,7 +28,8 @@ class PlayerRegistry(
             if (gameProfile.isComplete) PlayerMode.PREMIUM else PlayerMode.OFFLINE,
             online = false,
             banned = false)
-        players = players.plus(player)
+
+        add(player)
 
         session.send(LoginSuccessMessage(gameProfile))
         session.protocol(Protocol.PLAY)

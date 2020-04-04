@@ -18,6 +18,7 @@ import io.elytra.sdk.io.config.JsonConfigurationFile
 import io.elytra.sdk.network.NetworkServer
 import io.elytra.sdk.network.SessionRegistry
 import io.elytra.sdk.network.protocol.PacketProvider
+import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.network.utils.cryptManager
 import io.elytra.sdk.scheduler.Scheduler
 import io.elytra.sdk.utils.ElytraConsts
@@ -66,7 +67,7 @@ class Elytra private constructor(
             loadConfigs()
 
             console.info("Bootstrapping the server...")
-            console.info("This version of Elytra is targeted for Minecraft 1.15.2")
+            console.info("This version of Elytra is targeted for Minecraft ${ProtocolInfo.MINECRAFT_VERSION}")
             PacketProvider()
             scheduler.start()
 

@@ -25,7 +25,7 @@ data class ElytraPlayer(
 ) : Player, ElytraEntity(0) {
 
     override fun tick() {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented")
     }
 
     override fun kick(reason: String) {
