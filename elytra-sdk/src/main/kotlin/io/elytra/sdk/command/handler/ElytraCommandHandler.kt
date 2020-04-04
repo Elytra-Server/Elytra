@@ -24,25 +24,36 @@ class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandle
 
 		if (command == null) {
 			player.sendMessage(ElytraConsts.COMMAND_NOT_FOUND_MESSAGE)
-			Elytra.console.debug("Command not found $commandName")
 			return
 		}
 
 		val argumentList: MutableList<Argument<*>> = ArrayList()
 		val stringArgumentList = split.subList(1, split.size)
 
+		val requiredArgumentNumber = command.arguments.filter { it.required }.count()
+
+		if (split.size < requiredArgumentNumber) {
+			player.sendMessage("Wrong usage")
+			TODO("Implement command usage message")
+		}
+
 		for ((index, argumentContext) in command.arguments.withIndex()) {
-			if (split.size <= index) {
-				player.sendMessage("Wrong usage")
-				TODO("Implement command usage message")
+			val argument = argumentContext.type.parse(stringArgumentList, index)
+
+			if (argument != null) {
+				argumentList.add(argument as Argument<*>)
+				continue
 			}
 
-			// TODO: Implement ArgumentContext required boolean
+			if (argumentContext.required) {
+				player.sendMessage(
+					ElytraConsts.COMMAND_COULDNT_PARSE_ARGUMENT.replace(
+						"<argumentName>",
+						argumentContext.name
+					)
+				)
+			}
 
-			val argument = argumentContext.type.parse(stringArgumentList, index)
-				?: TODO("Send message couldn't parse string")
-
-			argumentList.add(argument as Argument<*>)
 		}
 
 		command.execute(player, argumentList)
