@@ -5,5 +5,5 @@ import io.elytra.api.events.ElytraEvent
 
 class PlayerJoinEvent(
     val player: Player,
-    var message: String
+    var message: String = ""
 ) : ElytraEvent

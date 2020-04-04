@@ -5,8 +5,10 @@ import io.elytra.api.chat.Colors
 import io.elytra.api.chat.TextComponent
 import io.elytra.api.entity.Player
 import io.elytra.api.entity.PlayerMode
+import io.elytra.api.events.EventBus
 import io.elytra.api.registry.Registry
 import io.elytra.sdk.entity.ElytraPlayer
+import io.elytra.sdk.events.PlayerJoinEvent
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
 import io.elytra.sdk.network.protocol.message.play.*
@@ -30,6 +32,7 @@ class PlayerRegistry(
             banned = false)
 
         add(player)
+        EventBus.post(PlayerJoinEvent(player))
 
         session.send(LoginSuccessMessage(gameProfile))
         session.protocol(Protocol.PLAY)

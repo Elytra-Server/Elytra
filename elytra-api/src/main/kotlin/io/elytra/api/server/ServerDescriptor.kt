@@ -2,7 +2,6 @@ package io.elytra.api.server
 
 import io.elytra.api.server.motd.Motd
 
-
 data class WorldPojo(
     val initialWorld: String = "world",
     val renderDistance: Int = 20,

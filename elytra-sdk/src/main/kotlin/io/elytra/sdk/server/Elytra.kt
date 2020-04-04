@@ -13,6 +13,7 @@ import io.elytra.api.server.ServerDescriptor
 import io.elytra.sdk.command.handler.ElytraCommandHandler
 import io.elytra.sdk.command.registry.ElytraCommandRegistry
 import io.elytra.sdk.entity.ElytraPlayer
+import io.elytra.sdk.events.TemporaryEventRegister
 import io.elytra.sdk.io.ElytraConsole
 import io.elytra.sdk.io.config.JsonConfigurationFile
 import io.elytra.sdk.network.NetworkServer
@@ -37,10 +38,10 @@ class Elytra private constructor(
     )).createMinecraftSessionService(),
     val playerRegistry: PlayerRegistry = PlayerRegistry(),
     val sessionRegistry: SessionRegistry = SessionRegistry(),
-    val commandRegistry: CommandRegistry = ElytraCommandRegistry(),
-    val commandHandler: CommandHandler = ElytraCommandHandler(commandRegistry),
     val keypair: KeyPair = cryptManager.generateKeyPair(),
     val debug: Boolean = true,
+    private val commandRegistry: CommandRegistry = ElytraCommandRegistry(),
+    val commandHandler: CommandHandler = ElytraCommandHandler(commandRegistry),
     private val scheduler: Scheduler = Scheduler(sessionRegistry),
     val startedAt: Instant = Instant.now()
 ) : Server {
@@ -71,6 +72,7 @@ class Elytra private constructor(
             PacketProvider()
             scheduler.start()
 
+            TemporaryEventRegister().register()
             NetworkServer(serverDescriptor.options.port, sessionRegistry).start()
         } catch (e: BindException) {
             console.info(" ")
