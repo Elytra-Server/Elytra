@@ -22,9 +22,12 @@ import io.elytra.sdk.network.utils.cryptManager
 import io.elytra.sdk.scheduler.Scheduler
 import io.elytra.sdk.utils.ElytraConsts
 import io.elytra.sdk.utils.ResourceUtils
+import java.net.BindException
 import java.net.Proxy
 import java.security.KeyPair
+import java.time.Instant
 import java.util.*
+import kotlin.system.exitProcess
 import org.slf4j.LoggerFactory
 
 class Elytra private constructor(
@@ -37,8 +40,8 @@ class Elytra private constructor(
     val commandHandler: CommandHandler = ElytraCommandHandler(commandRegistry),
     val keypair: KeyPair = cryptManager.generateKeyPair(),
     val debug: Boolean = true,
-    private val port: Int = 25565,
-    private val scheduler: Scheduler = Scheduler(sessionRegistry)
+    private val scheduler: Scheduler = Scheduler(sessionRegistry),
+    val startedAt: Instant = Instant.now()
 ) : Server {
     override lateinit var serverDescriptor: ServerDescriptor
 
@@ -56,13 +59,25 @@ class Elytra private constructor(
     }
 
     override fun boot() {
-        System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, "./logback.xml")
+        try {
+            System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, "./logback.xml")
 
-        loadConfigs()
-        PacketProvider()
-        scheduler.start()
+            console.info("Loading server configuration")
+            loadConfigs()
 
-        NetworkServer(port, sessionRegistry).start()
+            console.info("Bootstrapping the server...")
+            console.info("This version of Elytra is targeted for Minecraft 1.15.2")
+            PacketProvider()
+            scheduler.start()
+
+            NetworkServer(serverDescriptor.options.port, sessionRegistry).start()
+        } catch (e: BindException) {
+            console.info(" ")
+            console.error("&c     FAILED TO BIND TO PORT")
+            console.error(" ")
+            console.error("&cThe port ${serverDescriptor.options.port} is already in use.")
+            exitProcess(1)
+        }
     }
 
     override fun broadcastMessage(message: String) {

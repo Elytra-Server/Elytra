@@ -7,6 +7,8 @@ import io.elytra.sdk.server.Elytra
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelOption
 import io.netty.channel.EventLoopGroup
+import java.time.Duration
+import java.time.Instant
 
 /**
  * Initializes a TCP server to handle the packets, codecs and packet handlers
@@ -41,7 +43,8 @@ internal class NetworkServer(
 
         if (server.isSuccess) {
             Elytra.console.info("&eServer running on port: $port")
-            Elytra.console.info("&2Ready for connections")
+            val time = Duration.between(Elytra.server.startedAt, Instant.now()).toMillis()
+            Elytra.console.info("&aServer initialized in ${time / 10 / 100F}s! &7Ready for connections")
         }
 
         server.channel().closeFuture().sync()

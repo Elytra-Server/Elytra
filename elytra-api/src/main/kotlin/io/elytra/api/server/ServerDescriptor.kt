@@ -9,6 +9,7 @@ data class WorldPojo(
 )
 
 data class ServerOptionsPojo(
+    val port: Int,
     val maxPlayers: Int,
     val onyPremium: Boolean,
     val eulaCheck: Boolean

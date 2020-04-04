@@ -26,9 +26,8 @@ class ElytraConsole(private val logger: Logger) : ConsoleSender {
     }
 
     override fun debug(message: String) {
-        send(message) {
-            logger.debug(it)
-        }
+        // Send raw message for debugging
+        logger.debug(message)
     }
 
     private fun send(

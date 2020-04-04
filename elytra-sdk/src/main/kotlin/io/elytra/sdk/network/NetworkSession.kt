@@ -49,8 +49,8 @@ class NetworkSession(
     var ping: Int = 0
 
     override fun send(message: Message?) {
-        if (Elytra.server.debug && (message !is KeepAliveMessage)) {
-            println("OUT $message")
+        if (message !is KeepAliveMessage) {
+            Elytra.console.debug("OUT $message")
         }
         super.send(message)
     }
@@ -126,8 +126,8 @@ class NetworkSession(
     }
 
     override fun messageReceived(message: Message) {
-        if (Elytra.server.debug && (message !is KeepAliveMessage)) {
-            println("IN $message")
+        if (message !is KeepAliveMessage) {
+            Elytra.console.debug("IN $message")
         }
         if (message is Asyncable) {
             super.messageReceived(message)
