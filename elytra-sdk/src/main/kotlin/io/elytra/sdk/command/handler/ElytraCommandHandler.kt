@@ -29,7 +29,7 @@ class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandle
 		}
 
 		val argumentList: MutableList<Argument<*>> = ArrayList()
-		val values = split.subList(1, split.size)
+		val stringArgumentList = split.subList(1, split.size)
 
 		for ((index, argumentContext) in command.arguments.withIndex()) {
 			if (split.size <= index) {
@@ -37,7 +37,10 @@ class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandle
 				TODO("Implement command usage message")
 			}
 
-			val argument = argumentContext.type.parse(values, index) ?: TODO("Send message couldn't parse string")
+			// TODO: Implement ArgumentContext required boolean
+
+			val argument = argumentContext.type.parse(stringArgumentList, index)
+				?: TODO("Send message couldn't parse string")
 
 			argumentList.add(argument as Argument<*>)
 		}

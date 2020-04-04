@@ -5,18 +5,18 @@ class ArgumentTypes {
 	companion object {
 
 		val STRING = object : ArgumentType<String?> {
-			override fun parse(values: List<String>, indexNumber: Int): String? = values[indexNumber]
+			override fun parse(stringArgumentList: List<String>, index: Int): String? = stringArgumentList[index]
 		}
 
 		val INT = object : ArgumentType<Int?> {
-			override fun parse(values: List<String>, indexNumber: Int): Int? = values[indexNumber].toIntOrNull()
+			override fun parse(stringArgumentList: List<String>, index: Int): Int? = stringArgumentList[index].toIntOrNull()
 		}
 
 		val JOINED_STRINGS = object : ArgumentType<String?> {
-			override fun parse(values: List<String>, indexNumber: Int): String? {
+			override fun parse(stringArgumentList: List<String>, index: Int): String? {
 				val stringBuilder: StringBuilder = StringBuilder()
-				for (valueIndex in indexNumber until values.size) {
-					stringBuilder.append(values[valueIndex])
+				for (valueIndex in index until stringArgumentList.size) {
+					stringBuilder.append(stringArgumentList[valueIndex])
 				}
 				return stringBuilder.toString()
 			}

@@ -2,6 +2,6 @@ package io.elytra.api.command.argument
 
 interface ArgumentType<T> {
 
-	fun parse(values: List<String>, indexNumber: Int): T?
+	fun parse(stringArgumentList: List<String>, index: Int): T?
 
 }

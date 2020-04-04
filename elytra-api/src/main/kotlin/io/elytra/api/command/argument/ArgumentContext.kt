@@ -6,4 +6,6 @@ interface ArgumentContext<T> {
 
 	val type: ArgumentType<T>
 
+	val required: Boolean
+
 }
