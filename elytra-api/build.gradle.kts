@@ -1,3 +1,3 @@
 dependencies {
-	implementation("org.jetbrains.kotlinx:kotlinx-io:0.1.7")
+    implementation("org.jetbrains.kotlinx:kotlinx-io:0.1.7")
 }

@@ -5,6 +5,5 @@ import io.elytra.api.world.World
 
 interface WorldGenerator {
 
-	fun generate(chunkX: Int, chunkY: Int, world: World) : ChunkColumn
-
+    fun generate(chunkX: Int, chunkY: Int, world: World): ChunkColumn
 }

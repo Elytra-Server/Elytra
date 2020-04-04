@@ -8,30 +8,30 @@ import io.netty.channel.SimpleChannelInboundHandler
 import java.util.concurrent.atomic.AtomicReference
 
 class MessageHandler(
-        private val session: AtomicReference<NetworkSession?> = AtomicReference(null),
-        private val connectionManager: ConnectionManager
+    private val session: AtomicReference<NetworkSession?> = AtomicReference(null),
+    private val connectionManager: ConnectionManager
 ) : SimpleChannelInboundHandler<Message>() {
 
-	override fun channelRead0(ctx: ChannelHandlerContext, msg: Message) {
-		session.get()?.messageReceived(msg);
-	}
+    override fun channelRead0(ctx: ChannelHandlerContext, msg: Message) {
+        session.get()?.messageReceived(msg)
+    }
 
-	override fun channelActive(ctx: ChannelHandlerContext?) {
-		val channel = ctx?.channel()
-		val newSession = connectionManager.newSession(channel) as NetworkSession
+    override fun channelActive(ctx: ChannelHandlerContext?) {
+        val channel = ctx?.channel()
+        val newSession = connectionManager.newSession(channel) as NetworkSession
 
-		if (!session.compareAndSet(null, newSession)) {
-			throw IllegalStateException("Session may not be set more than once");
-		}
+        if (!session.compareAndSet(null, newSession)) {
+            throw IllegalStateException("Session may not be set more than once")
+        }
 
-		newSession.onReady()
-	}
+        newSession.onReady()
+    }
 
-	override fun channelInactive(ctx: ChannelHandlerContext?) {
-		session.get()?.onDisconnect();
-	}
+    override fun channelInactive(ctx: ChannelHandlerContext?) {
+        session.get()?.onDisconnect()
+    }
 
-	override fun exceptionCaught(ctx: ChannelHandlerContext?, cause: Throwable?) {
-		session.get()?.onInboundThrowable(cause);
-	}
+    override fun exceptionCaught(ctx: ChannelHandlerContext?, cause: Throwable?) {
+        session.get()?.onInboundThrowable(cause)
+    }
 }

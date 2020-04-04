@@ -5,12 +5,11 @@ package io.elytra.api.io
  */
 interface ConsoleSender {
 
-	fun info(message: String)
+    fun info(message: String)
 
-	fun warn(message: String)
+    fun warn(message: String)
 
-	fun error(message: String)
+    fun error(message: String)
 
-	fun debug(message: String)
-
+    fun debug(message: String)
 }

@@ -4,24 +4,24 @@ import com.flowpowered.network.Message
 import io.elytra.api.utils.Asyncable
 
 data class EncryptionResponseMessage(
-	val secretKeyEncrypted: ByteArray,
-	val verifyTokenEncrypted: ByteArray
+    val secretKeyEncrypted: ByteArray,
+    val verifyTokenEncrypted: ByteArray
 ) : Message, Asyncable {
-	override fun equals(other: Any?): Boolean {
-		if (this === other) return true
-		if (javaClass != other?.javaClass) return false
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-		other as EncryptionResponseMessage
+        other as EncryptionResponseMessage
 
-		if (!secretKeyEncrypted.contentEquals(other.secretKeyEncrypted)) return false
-		if (!verifyTokenEncrypted.contentEquals(other.verifyTokenEncrypted)) return false
+        if (!secretKeyEncrypted.contentEquals(other.secretKeyEncrypted)) return false
+        if (!verifyTokenEncrypted.contentEquals(other.verifyTokenEncrypted)) return false
 
-		return true
-	}
+        return true
+    }
 
-	override fun hashCode(): Int {
-		var result = secretKeyEncrypted.contentHashCode()
-		result = 31 * result + verifyTokenEncrypted.contentHashCode()
-		return result
-	}
+    override fun hashCode(): Int {
+        var result = secretKeyEncrypted.contentHashCode()
+        result = 31 * result + verifyTokenEncrypted.contentHashCode()
+        return result
+    }
 }

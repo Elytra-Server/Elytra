@@ -2,7 +2,6 @@ package io.elytra.api.nbt.tags
 
 import io.elytra.api.nbt.NbtInputStream
 import java.io.DataOutput
-import java.io.DataOutputStream
 import java.util.*
 
 class NbtList(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(name), Iterable<NbtTag> {
@@ -10,15 +9,15 @@ class NbtList(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(name
     override val hasValue = false
     override val codec = Codec
 
-    val tags : MutableList<NbtTag> = mutableListOf()
-    var listType : NbtTagType = NbtTagType.UNKNOWN
+    val tags: MutableList<NbtTag> = mutableListOf()
+    var listType: NbtTagType = NbtTagType.UNKNOWN
         set(value) {
-            if(value == NbtTagType.END)
+            if (value == NbtTagType.END)
                 throw IllegalArgumentException("Only empty list tags may have TagType of End")
-            else if(value == NbtTagType.UNKNOWN)
+            else if (value == NbtTagType.UNKNOWN)
                 throw IllegalArgumentException("Not accepting an unknown type list beyond creation")
-            if(tags.isNotEmpty()) {
-                if(tags.any { it.tagType != value })
+            if (tags.isNotEmpty()) {
+                if (tags.any { it.tagType != value })
                     throw IllegalArgumentException("Assigned tag type $value doesn't match all elements in list")
             }
             field = value
@@ -32,7 +31,7 @@ class NbtList(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(name
         require(tag != this && tag != parent) { "Can't add list tag to itself or its child" }
         require(tag.parent == null) { "A tag may only be added to a single compount/list at a time" }
         require(tag.name == null) { "List tag strictly requires nameless childs" }
-        if(listType == NbtTagType.UNKNOWN)
+        if (listType == NbtTagType.UNKNOWN)
             listType = tag.tagType
         else
             require(tag.tagType == listType) { "Incompatible type added to list, accepts: $listType, given: ${tag.tagType}" }
@@ -44,8 +43,8 @@ class NbtList(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(name
         tags.forEach { add(it) }
     }
 
-    fun remove(tag: NbtTag) : Boolean {
-        if(! tags.remove(tag))
+    fun remove(tag: NbtTag): Boolean {
+        if (! tags.remove(tag))
             return false
         tag.parent = null
         return true
@@ -61,14 +60,14 @@ class NbtList(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(name
         tags.clear()
     }
 
-    fun contains(tag: NbtTag) : Boolean {
+    fun contains(tag: NbtTag): Boolean {
         return tags.contains(tag)
     }
 
     val size: Int
         get() = tags.size
 
-    fun get(index: Int) : NbtTag {
+    fun get(index: Int): NbtTag {
         return tags[index]
     }
 
@@ -83,22 +82,22 @@ class NbtList(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(name
     }
 
     override fun prettyPrint(sb: StringBuilder, indentStr: String, indentLevel: Int) {
-        for(i in 0 until indentLevel) {
+        for (i in 0 until indentLevel) {
             sb.append(indentStr)
         }
         sb.append(tagType.notchianName)
-        if(! name.isNullOrEmpty()) {
+        if (! name.isNullOrEmpty()) {
             sb.append("(\"$name\")")
         }
         sb.append(": ${tags.size} entries {")
 
-        if(size > 0) {
+        if (size > 0) {
             sb.appendln()
             tags.forEach {
                 it.prettyPrint(sb, indentStr, indentLevel + 1)
                 sb.appendln()
             }
-            for(i in 0 until indentLevel)
+            for (i in 0 until indentLevel)
                 sb.append(indentStr)
         }
         sb.append("}")
@@ -108,7 +107,7 @@ class NbtList(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(name
         override val id = 9
 
         override fun serialize(obj: Any, stream: DataOutput) {
-            if(obj !is NbtList) throw IllegalArgumentException()
+            if (obj !is NbtList) throw IllegalArgumentException()
             stream.writeByte(obj.listType.codec.id)
             stream.writeInt(obj.tags.size)
             obj.tags.forEach { it.codec.serialize(it, stream) }
@@ -118,7 +117,7 @@ class NbtList(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(name
             val codec = NbtTagType.idToCodec[tagTypeId] ?: throw IllegalStateException("Unknown id $tagTypeId while reading NbtList")
             val ln = stream.readInt()
             val tags = ArrayList<NbtTag>(ln)
-            for(i in 0 until ln) {
+            for (i in 0 until ln) {
                 val tag = codec.deserialize(null, stream)
                 tags.add(tag)
             }

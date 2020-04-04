@@ -4,12 +4,8 @@ root = true
 end_of_line = lf
 insert_final_newline = true
 
-[*.kt]
+[*.{kt,kts}]
 charset = utf-8
-indent_style = tab
+indent_style = space
 indent_size = 4
-
-# Tab indentation (no size specified)
-[*.gradle.kts]
-indent_style = tab
-
+disabled_rules=no-wildcard-imports

@@ -13,31 +13,30 @@ import io.netty.handler.codec.MessageToMessageCodec
 
 class CodecsHandler(private val packet: BasicPacket) : MessageToMessageCodec<ByteBuf, Message>() {
 
-	override fun encode(ctx: ChannelHandlerContext, msg: Message, out: MutableList<Any>) {
-		val clazz: Class<out Message> = msg::class.java
-		val reg: CodecRegistration = packet.getCodecRegistration(clazz)
-			?: throw EncoderException("Unknown message type: $clazz.")
+    override fun encode(ctx: ChannelHandlerContext, msg: Message, out: MutableList<Any>) {
+        val clazz: Class<out Message> = msg::class.java
+        val reg: CodecRegistration = packet.getCodecRegistration(clazz)
+            ?: throw EncoderException("Unknown message type: $clazz.")
 
-		val headerBuf = ctx.alloc().buffer(8)
-		ByteBufUtils.writeVarInt(headerBuf, reg.opcode)
+        val headerBuf = ctx.alloc().buffer(8)
+        ByteBufUtils.writeVarInt(headerBuf, reg.opcode)
 
-		var messageBuf = ctx.alloc().buffer()
-		messageBuf = reg.getCodec<Message>().encode(messageBuf, msg)
+        var messageBuf = ctx.alloc().buffer()
+        messageBuf = reg.getCodec<Message>().encode(messageBuf, msg)
 
-		out.add(Unpooled.wrappedBuffer(headerBuf, messageBuf))
-	}
+        out.add(Unpooled.wrappedBuffer(headerBuf, messageBuf))
+    }
 
-	override fun decode(ctx: ChannelHandlerContext, msg: ByteBuf, out: MutableList<Any>) {
-		val codec: Codec<*>? = packet.newReadHeader(msg)
-		val decoded = codec?.decode(msg)
+    override fun decode(ctx: ChannelHandlerContext, msg: ByteBuf, out: MutableList<Any>) {
+        val codec: Codec<*>? = packet.newReadHeader(msg)
+        val decoded = codec?.decode(msg)
 
-		if (msg.readableBytes() > 0) {
-			println("Message is too long (${msg.readableBytes()}) - $decoded")
-		}
+        if (msg.readableBytes() > 0) {
+            println("Message is too long (${msg.readableBytes()}) - $decoded")
+        }
 
-		if (decoded != null) {
-			out.add(decoded)
-		}
-	}
-
+        if (decoded != null) {
+            out.add(decoded)
+        }
+    }
 }

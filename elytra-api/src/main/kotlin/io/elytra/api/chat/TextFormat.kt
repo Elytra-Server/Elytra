@@ -5,17 +5,17 @@ package io.elytra.api.chat
  */
 object TextFormat {
 
-	const val OBSFUSCATED = "§k"
+    const val OBSFUSCATED = "§k"
 
-	const val BOLD = "§l"
+    const val BOLD = "§l"
 
-	const val STRIKETHROUGH = "§m"
+    const val STRIKETHROUGH = "§m"
 
-	const val UNDERLINE = "§n"
+    const val UNDERLINE = "§n"
 
-	const val ITALIC = "§o"
+    const val ITALIC = "§o"
 
-	const val RESET = "§r"
+    const val RESET = "§r"
 
-	const val NEW_LINE = "\\\\n"
+    const val NEW_LINE = "\\\\n"
 }

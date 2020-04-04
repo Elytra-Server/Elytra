@@ -11,15 +11,15 @@ import io.elytra.sdk.utils.ElytraConsts
 
 class ChatHandler : MessageHandler<NetworkSession, ChatMessage> {
 
-	override fun handle(session: NetworkSession, message: ChatMessage) {
-		if (message.content.startsWith(ElytraConsts.COMMAND_PREFIX)) {
-			val player = Elytra.server.playerRegistry.get(session.sessionId)
-			Elytra.server.commandHandler.handle(player!!, message.content)
-			return
-		}
+    override fun handle(session: NetworkSession, message: ChatMessage) {
+        if (message.content.startsWith(ElytraConsts.COMMAND_PREFIX)) {
+            val player = Elytra.server.playerRegistry.get(session.sessionId)
+            Elytra.server.commandHandler.handle(player!!, message.content)
+            return
+        }
 
-		val content = message.content.replace('&', '\u00A7')
-		val textComponent = TextComponent("${session.gameProfile?.name}: $content")
-		session.send(OutboundChatMessage(textComponent, ChatMode.PLAYER))
-	}
+        val content = message.content.replace('&', '\u00A7')
+        val textComponent = TextComponent("${session.gameProfile?.name}: $content")
+        session.send(OutboundChatMessage(textComponent, ChatMode.PLAYER))
+    }
 }

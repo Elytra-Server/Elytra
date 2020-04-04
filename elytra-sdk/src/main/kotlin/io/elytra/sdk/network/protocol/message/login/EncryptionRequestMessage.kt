@@ -5,27 +5,27 @@ import io.elytra.api.utils.Asyncable
 import java.security.PublicKey
 
 data class EncryptionRequestMessage(
-	val hashedServerId: String,
-	val publicKey: PublicKey,
-	val verifyToken: ByteArray
+    val hashedServerId: String,
+    val publicKey: PublicKey,
+    val verifyToken: ByteArray
 ) : Message, Asyncable {
-	override fun equals(other: Any?): Boolean {
-		if (this === other) return true
-		if (javaClass != other?.javaClass) return false
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-		other as EncryptionRequestMessage
+        other as EncryptionRequestMessage
 
-		if (hashedServerId != other.hashedServerId) return false
-		if (publicKey != other.publicKey) return false
-		if (!verifyToken.contentEquals(other.verifyToken)) return false
+        if (hashedServerId != other.hashedServerId) return false
+        if (publicKey != other.publicKey) return false
+        if (!verifyToken.contentEquals(other.verifyToken)) return false
 
-		return true
-	}
+        return true
+    }
 
-	override fun hashCode(): Int {
-		var result = hashedServerId.hashCode()
-		result = 31 * result + publicKey.hashCode()
-		result = 31 * result + verifyToken.contentHashCode()
-		return result
-	}
+    override fun hashCode(): Int {
+        var result = hashedServerId.hashCode()
+        result = 31 * result + publicKey.hashCode()
+        result = 31 * result + verifyToken.contentHashCode()
+        return result
+    }
 }

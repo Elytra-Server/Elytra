@@ -5,5 +5,5 @@ import com.mojang.authlib.GameProfile
 import io.elytra.api.utils.Asyncable
 
 data class LoginSuccessMessage(
-	val gameProfile: GameProfile
+    val gameProfile: GameProfile
 ) : Message, Asyncable

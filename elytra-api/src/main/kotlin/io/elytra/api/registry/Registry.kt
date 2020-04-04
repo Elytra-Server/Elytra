@@ -1,18 +1,16 @@
 package io.elytra.api.registry
 
-
 interface Registry <T, K> {
 
-	fun add(target: T)
+    fun add(target: T)
 
-	fun remove(target: T)
+    fun remove(target: T)
 
-	fun get(target: K): T?
+    fun get(target: K): T?
 
-	fun iterator(): Iterator<T>
+    fun iterator(): Iterator<T>
 
-	fun size(): Int
+    fun size(): Int
 
-	fun clear()
-
+    fun clear()
 }
