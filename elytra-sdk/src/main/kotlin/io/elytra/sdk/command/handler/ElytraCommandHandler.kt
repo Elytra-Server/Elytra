@@ -42,7 +42,7 @@ class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandle
 			argumentList.add(argument as Argument<*>)
 		}
 
-		command.executor.execute(player, argumentList)
+		command.execute(player, argumentList)
 		Elytra.console.debug("Executed command $command")
 	}
 
