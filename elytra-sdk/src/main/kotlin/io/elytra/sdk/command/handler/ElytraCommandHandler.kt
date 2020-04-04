@@ -5,7 +5,6 @@ import io.elytra.api.command.argument.Argument
 import io.elytra.api.command.handler.CommandHandler
 import io.elytra.api.command.registry.CommandRegistry
 import io.elytra.api.entity.Player
-import io.elytra.sdk.server.Elytra
 import io.elytra.sdk.utils.ElytraConsts
 
 class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandler {
@@ -55,9 +54,13 @@ class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandle
 			}
 
 		}
+		try {
+			command.execute(player, argumentList)
+		} catch (exception: Exception) {
+			// TODO: Log command exception
+			throw exception
+		}
 
-		command.execute(player, argumentList)
-		Elytra.console.debug("Executed command $command")
 	}
 
 }
