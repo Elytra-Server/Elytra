@@ -14,25 +14,23 @@ import io.elytra.sdk.server.Elytra
 class ServerQueryHandler : ElytraMessageHandler<ServerQueryMessage>() {
 
     override fun handle(session: NetworkSession, message: ServerQueryMessage) {
-        // val serverDescriptor = session.server?.serverDescriptor ?: return
-        // val motd = serverDescriptor.motd
+        val serverDescriptor = Elytra.server.serverDescriptor
 
         val json: String = Gson().toJson(
                 StatusResponse(
                         Version(
-                                "Elytra",
+                                serverDescriptor.motd.pingText,
                                 ProtocolInfo.CURRENT_PROTOCOL
                         ),
                         Players(
-                                1,
-                                Elytra.server.playerRegistry.size(), // FIXME: Get from a player registry
+                                serverDescriptor.options.maxPlayers,
+                                Elytra.server.playerRegistry.size(),
                                 ArrayList()
                         ),
-                        Description("Elytra Server")
+                        Description(serverDescriptor.motd.description)
                 )
         )
 
-        // serverDescriptor.motd = motd
         session.send(ServerInfoMessage(json))
     }
 
