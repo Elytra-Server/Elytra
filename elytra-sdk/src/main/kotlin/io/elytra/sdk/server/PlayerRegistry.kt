@@ -20,7 +20,7 @@ class PlayerRegistry(
 ) : Registry<Player, String> {
 
     fun initialize(session: NetworkSession, gameProfile: GameProfile) {
-        var player: ElytraPlayer = ElytraPlayer(
+        val player = ElytraPlayer(
             currentId.getAndIncrement(),
             session.sessionId,
             gameProfile.name,
@@ -49,7 +49,7 @@ class PlayerRegistry(
         session.send(HeldItemChangeMessage(4))
         session.send(positionMessage)
 
-        Elytra.sendPacketToAll(OutboundChatMessage(TextComponent("${Colors.YELLOW} ${player.displayName} joined the game"), 1))
+        Elytra.sendPacketToAll(OutboundChatMessage(TextComponent("${Colors.YELLOW}${player.displayName} joined the game"), 1))
         Elytra.sendPacketToAll(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0, player.gamemode, player.gameProfile!!, TextComponent(player.displayName)))))
         players.iterator().forEach { it: Player ->
             session.send(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0, it.gamemode, player.gameProfile!!, TextComponent(it.displayName)))))
