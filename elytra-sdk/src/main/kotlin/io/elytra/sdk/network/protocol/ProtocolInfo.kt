@@ -31,6 +31,7 @@ object ProtocolInfo {
     const val O_KEEP_ALIVE: Int = 0x21
     const val I_KEEP_ALIVE: Int = 0x0F
     const val BOSS_INFO: Int = 0x0D
+    const val TITLE: Int = 0x50
     //endregion
 
     //region STATUS
