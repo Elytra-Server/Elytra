@@ -278,5 +278,5 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/linux,macos,maven,kotlin,windows,eclipse,intellij+all
 
-./logs
+/logs
 /server.json
