@@ -14,6 +14,7 @@ class ElytraCommandRegistry : CommandRegistry {
             throw CommandAlreadyRegistered(commandName)
         }
         commandRegistry[commandName] = command
+        // TODO("Validate command: arguments, name, etc.")
     }
 
     @Synchronized

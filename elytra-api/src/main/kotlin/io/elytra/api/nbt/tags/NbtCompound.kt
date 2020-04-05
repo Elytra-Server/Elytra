@@ -44,8 +44,8 @@ class NbtCompound(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(
         return tags.containsValue(tag)
     }
 
-    fun contains(tagName: String): Boolean {
-        return tags.containsKey(tagName)
+    fun contains(key: String): Boolean {
+        return tags.containsKey(key)
     }
 
     val size: Int
@@ -109,7 +109,7 @@ class NbtCompound(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(
         }
     }
 
-    fun toBytes(): ByteArray {
+    fun toBytes(littleEndian: Boolean = false): ByteArray {
         val bs = ByteArrayOutputStream()
         val os: DataOutput = DataOutputStream(bs)
         Codec.serialize(this, os)
@@ -117,7 +117,7 @@ class NbtCompound(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(
     }
 
     companion object {
-        fun deserialize(stream: InputStream): NbtCompound {
+        fun deserialize(stream: InputStream, littleEndian: Boolean = false): NbtCompound {
             val os: DataInput = DataInputStream(stream)
             return Codec.deserialize(NbtInputStream(os)) as NbtCompound
         }
