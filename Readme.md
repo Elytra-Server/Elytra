@@ -46,6 +46,7 @@ Elytra is written in Kotlin and utilizes Gradle 2 as build management tool. To c
 </tr>
 </table>
 
+
 ## Sponsors
 <a href="https://fluxcdn.com"><img src="https://i.imgur.com/jxdRt4M.gif"></a>
 
