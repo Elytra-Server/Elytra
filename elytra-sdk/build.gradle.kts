@@ -2,7 +2,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 dependencies {
     implementation(project(":elytra-api"))
-    implementation("it.unimi.dsi:fastutil:8.3.1")
     implementation("org.fusesource.jansi:jansi:1.17")
     testImplementation("io.mockk:mockk:1.9")
 }

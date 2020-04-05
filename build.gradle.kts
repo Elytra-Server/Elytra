@@ -35,16 +35,12 @@ allprojects {
     dependencies {
         // Kotlin stuff
         implementation(kotlin("stdlib-jdk8"))
-        implementation(kotlin("reflect"))
-
         // Project dependencies
         implementation("com.google.code.gson:gson:2.8.6")
         implementation("io.reactivex.rxjava3:rxkotlin:3.0.0")
         implementation("io.projectreactor.netty:reactor-netty:0.9.6.RELEASE")
         implementation("com.flowpowered:flow-network:1.0.0")
         implementation("com.mojang:authlib:1.5.21")
-        implementation("org.apache.commons:commons-lang3:3.9")
-
         // Logging dependencies
         implementation("org.slf4j:slf4j-api:2.0.0-alpha1")
         implementation("ch.qos.logback:logback-classic:1.3.0-alpha5")
