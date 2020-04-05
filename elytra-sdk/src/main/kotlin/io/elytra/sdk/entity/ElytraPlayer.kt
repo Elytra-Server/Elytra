@@ -17,7 +17,7 @@ import io.elytra.sdk.server.Elytra
 
 data class ElytraPlayer(
     var id: Int,
-    override var sessionId: String,
+    var sessionId: String,
     override var displayName: String,
     override var gameProfile: GameProfile, // TODO: Remove since its an internal thing
     override var mode: PlayerMode,
@@ -57,11 +57,11 @@ data class ElytraPlayer(
         sendPacket(SpawnPlayerMessage(id, gameProfile.id, x, y, z, yaw, pitch))
     }
 
-    private fun session(): NetworkSession? {
-        return Elytra.server.sessionRegistry.get(sessionId)
+    override fun sendPacket(packet: Message) {
+        session()?.sendWithFuture(packet)
     }
 
-    fun sendPacket(packet: Message) {
-        session()?.sendWithFuture(packet)
+    private fun session(): NetworkSession? {
+        return Elytra.server.sessionRegistry.get(sessionId)
     }
 }

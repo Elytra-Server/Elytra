@@ -31,9 +31,9 @@ import kotlin.random.Random
 class NetworkSession(
     channel: Channel,
     var protocol: Protocol = Protocol.HANDSHAKE,
-    @Volatile private var disconnected: Boolean = false,
     private var packetProvider: PacketProvider = PacketProvider(),
-    private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque()
+    private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque(),
+    @Volatile private var disconnected: Boolean = false
 ) : BasicSession(channel, HandshakePacket()), Tickable {
 
     // TODO Refactor this and make the ping functional
@@ -80,7 +80,9 @@ class NetworkSession(
             }
             Protocol.PLAY -> {
                 ++networkTickCount
+
                 if (disconnected) disconnect("Exit the game")
+
                 if (this.networkTickCount - this.lastSentPingPacket > 40L) {
                     this.lastSentPingPacket = this.networkTickCount.toLong()
                     lastPingTime = System.currentTimeMillis()
@@ -89,7 +91,9 @@ class NetworkSession(
                 }
             }
         }
+
         var message: Message?
+
         while (messageQueue.poll().also { message = it } != null) {
             if (disconnected) break
             super.messageReceived(message)
@@ -98,6 +102,7 @@ class NetworkSession(
 
     fun protocol(protocol: Protocol) {
         this.protocol = protocol
+
         when (protocol) {
             Protocol.LOGIN -> setProtocol(packetProvider.loginPacket)
             Protocol.PLAY -> setProtocol(packetProvider.playPacket)

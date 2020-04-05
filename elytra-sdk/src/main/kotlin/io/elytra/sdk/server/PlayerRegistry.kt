@@ -29,7 +29,7 @@ class PlayerRegistry(
             gameProfile.name,
             gameProfile,
             playerMode,
-            online = false,
+            session.isActive,
             banned = false,
             position = Position.EMPTY
         )
@@ -55,8 +55,6 @@ class PlayerRegistry(
         session.send(PlayerRotationMessage(player.position))
 
         EventBus.post(PlayerJoinEvent(player))
-
-        player.spawn()
     }
 
     override fun add(target: Player) {

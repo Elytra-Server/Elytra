@@ -1,5 +1,6 @@
 package io.elytra.api.entity
 
+import com.flowpowered.network.Message
 import com.mojang.authlib.GameProfile
 import io.elytra.api.chat.TextComponent
 import io.elytra.api.world.Position
@@ -15,7 +16,6 @@ interface Player {
 
     var gamemode: GameMode
     var position: Position
-    var sessionId: String
 
     fun kick(reason: String)
 
@@ -26,6 +26,8 @@ interface Player {
     fun spawn()
 
     fun spawnAt(position: Position)
+
+    fun sendPacket(packet: Message)
 }
 
 enum class PlayerMode {

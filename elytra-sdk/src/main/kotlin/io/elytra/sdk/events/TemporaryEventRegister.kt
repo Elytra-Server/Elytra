@@ -33,15 +33,16 @@ class TemporaryEventRegister : Registrable {
                 Elytra.sendPacketToAll(PlayerListItemMessage(Action.ADD_PLAYER, ImmutableList.of(playerListData)))
 
                 onlinePlayers.forEach { onlinePlayer ->
-                    val session = Elytra.server.sessionRegistry.get(player.sessionId)
                     val onlinePlayerListData = AddPlayerData(
                         0,
                         onlinePlayer.gamemode,
                         player.gameProfile, TextComponent(onlinePlayer.displayName)
                     )
 
-                    session?.send(PlayerListItemMessage(Action.ADD_PLAYER, ImmutableList.of(onlinePlayerListData)))
+                    onlinePlayer.sendPacket(PlayerListItemMessage(Action.ADD_PLAYER, ImmutableList.of(onlinePlayerListData)))
                 }
+
+                player.spawn()
             }
     }
 }
