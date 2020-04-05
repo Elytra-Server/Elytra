@@ -42,7 +42,7 @@ Elytra is written in Kotlin and utilizes Gradle 2 as build management tool. To c
 <td align="center"><a href="https://github.com/wiljafor1"><img src="https://github.com/wiljafor1.png?size=100" alt="wiljafor1" align="center"/><br/><sub><b>Wiljafor1</b></sub></a></td>
 <td align="center"><a href="https://github.com/JPereirax"><img src="https://github.com/JPereirax.png?size=100" alt="JPereirax" align="center"/><br/><sub><b>Jailson Pereira</b></sub></a></td>
 <td align="center"><a href="https://github.com/Heroslender"><img src="https://github.com/Heroslender.png?size=100" alt="Heroslender" align="center"/><br/><sub><b>Heroslender</b></sub></a></td>
-<td align="center"><a href="https://github.com/chicoferreira"><img src="https://github.com/chicoferreira.png?size=100" alt="Chico Ferreira" align="center"/><br/><sub><b>Chico Ferreira</b></sub></a></td>
+<td align="center"><a href="https://github.com/chicoferreira"><img src="https://github.com/chicoferreira.png?size=100" alt="Chico Ferreira" align="center"/><br/><sub><b>chico ferreira</b></sub></a></td>
 </tr>
 </table>
 
