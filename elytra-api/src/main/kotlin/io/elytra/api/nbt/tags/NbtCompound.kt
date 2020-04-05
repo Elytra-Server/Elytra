@@ -44,6 +44,10 @@ class NbtCompound(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(
         return tags.containsValue(tag)
     }
 
+    fun contains(key: String): Boolean {
+        return tags.containsKey(key)
+    }
+
     val size: Int
         get() = tags.size
 
