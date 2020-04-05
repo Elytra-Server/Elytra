@@ -1,17 +1,20 @@
 package io.elytra.api.world
 
-import io.elytra.api.io.NibbleArray
-
 interface Chunk {
 
-    val blocks: ByteArray
-    val data: NibbleArray
-    val blockLight: NibbleArray
-    val skyLight: NibbleArray
+    fun createColumns()
 
-    fun setType(x: Int, y: Int, z: Int, type: Int, metadata: Int)
+    fun getChunkAt(y: Int)
 
-    fun setBlockLight(x: Int, y: Int, z: Int, level: Int)
+    fun getBlockAt(x: Int, y: Int, z: Int)
 
-    fun setSkyLight(x: Int, y: Int, z: Int, level: Int)
+    fun getSkyLight(x: Int, y: Int, z: Int)
+
+    fun getBlockLight(x: Int, y: Int, z: Int)
+
+    fun setSkyLight(x: Int, y: Int, z: Int, skyLight: Int)
+
+    fun setBlockLight(x: Int, y: Int, z: Int, blockLight: Int)
+
+    fun getBiome(x: Int, z: Int)
 }
