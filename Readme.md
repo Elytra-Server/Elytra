@@ -27,7 +27,7 @@ To follow news and get involved with the project, join our [Discord][discord-inv
 Elytra is written in Kotlin and utilizes Gradle 2 as build management tool. To compile it from the source, perform the following steps:
   1. Make sure to have Git and Gradle 2 installed
   2. Clone the repository with `git clone https://github.com/Elytra-Server/Elytra`
-  3. Build the project with `gradle clean build`
+  3. Build the project with `gradle clean shadowJar build`
 
 ### Credits
 
