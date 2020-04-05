@@ -25,7 +25,6 @@ import io.elytra.sdk.network.utils.cryptManager
 import io.elytra.sdk.scheduler.Scheduler
 import io.elytra.sdk.utils.ElytraConsts
 import io.elytra.sdk.utils.ResourceUtils
-import io.elytra.sdk.world.strategy.AnvilWorldStrategy
 import java.net.BindException
 import java.net.Proxy
 import java.security.KeyPair
@@ -77,7 +76,7 @@ class Elytra private constructor(
             commandRegistry.register(TestCommand())
 
             TemporaryEventRegister().register()
-            AnvilWorldStrategy().load(javaClass.classLoader.getResource("bitch").path)
+        //    AnvilWorldStrategy().load(javaClass.classLoader.getResource("bitch").path)
             NetworkServer(serverDescriptor.options.port, sessionRegistry).start()
         } catch (e: BindException) {
             console.info(" ")

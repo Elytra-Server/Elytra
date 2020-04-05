@@ -7,6 +7,7 @@ import io.elytra.api.entity.Player
 import io.elytra.api.entity.PlayerMode
 import io.elytra.api.events.EventBus
 import io.elytra.api.registry.Registry
+import io.elytra.api.world.Position
 import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.events.PlayerJoinEvent
 import io.elytra.sdk.network.NetworkSession
@@ -22,16 +23,21 @@ class PlayerRegistry(
 ) : Registry<Player, String> {
 
     fun initialize(session: NetworkSession, gameProfile: GameProfile) {
+        val playerMode = if (gameProfile.isComplete) PlayerMode.PREMIUM else PlayerMode.OFFLINE
+
         val player = ElytraPlayer(
             currentId.getAndIncrement(),
             session.sessionId,
             gameProfile.name,
             gameProfile,
-            if (gameProfile.isComplete) PlayerMode.PREMIUM else PlayerMode.OFFLINE,
+            playerMode,
             online = false,
-            banned = false)
+            banned = false,
+            position = Position.EMPTY
+        )
 
         add(player)
+
         EventBus.post(PlayerJoinEvent(player))
 
         session.send(LoginSuccessMessage(gameProfile))
@@ -47,6 +53,7 @@ class PlayerRegistry(
             32,
             false,
             false)
+
         val positionMessage = PlayerPosLookMessage(player.position.x, player.position.y, player.position.z, player.position.yaw, player.position.pitch, 0x01, player.id)
 
         session.send(joinMessage)
@@ -55,9 +62,12 @@ class PlayerRegistry(
 
         Elytra.sendPacketToAll(OutboundChatMessage(TextComponent("${Colors.YELLOW}${player.displayName} joined the game"), 1))
         Elytra.sendPacketToAll(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0, player.gamemode, player.gameProfile!!, TextComponent(player.displayName)))))
+
         players.iterator().forEach { it: Player ->
             session.send(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0, it.gamemode, player.gameProfile!!, TextComponent(it.displayName)))))
         }
+
+        player.spawnAt(player.position)
     }
 
     override fun add(target: Player) {

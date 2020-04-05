@@ -27,7 +27,7 @@ inline class MinecraftByteBuf(private val byteBuf: ByteBuf) {
         byteBuf.writeLong(uuid.leastSignificantBits)
     }
 
-    fun readUuid(): UUID? {
+    fun readUuid(): UUID {
         return UUID(byteBuf.readLong(), byteBuf.readLong())
     }
 

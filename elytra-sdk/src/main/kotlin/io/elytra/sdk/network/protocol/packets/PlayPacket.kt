@@ -7,6 +7,7 @@ import io.elytra.sdk.network.protocol.codecs.play.KeepAliveCodec
 import io.elytra.sdk.network.protocol.codecs.play.inbound.ChatCodec
 import io.elytra.sdk.network.protocol.codecs.play.inbound.ClientSettingsCodec
 import io.elytra.sdk.network.protocol.codecs.play.inbound.ConfirmTeleportCodec
+import io.elytra.sdk.network.protocol.codecs.play.inbound.PlayerPositionCodec
 import io.elytra.sdk.network.protocol.codecs.play.outbound.*
 import io.elytra.sdk.network.protocol.handlers.play.*
 import io.elytra.sdk.network.protocol.message.DisconnectMessage
@@ -53,6 +54,12 @@ class PlayPacket : BasicPacket("PLAY", 0x96) {
             KeepAliveHandler::class.java
         )
 
+        inbound(ProtocolInfo.I_PLAYER_POSITION,
+            PlayerPositionMessage::class.java,
+            PlayerPositionCodec::class.java,
+            PlayerUpdateHandler::class.java
+        )
+
         outbound(ProtocolInfo.HELD_ITEM_CHANGE, HeldItemChangeMessage::class.java, HeldItemChangeCodec::class.java) // Maybe 0x39 // 0x3A
         outbound(ProtocolInfo.PLAYER_ABILITIES, PlayerAbilitiesMessage::class.java, PlayerAbilitiesCodec::class.java)
         outbound(ProtocolInfo.SERVER_DIFFICULTY, ServerDifficultyMessage::class.java, ServerDifficultyCodec::class.java)
@@ -67,5 +74,6 @@ class PlayPacket : BasicPacket("PLAY", 0x96) {
         outbound(ProtocolInfo.O_KEEP_ALIVE, KeepAliveMessage::class.java, KeepAliveCodec::class.java)
         outbound(ProtocolInfo.BOSS_INFO, BossInfoMessage::class.java, BossInfoCodec::class.java)
         outbound(ProtocolInfo.TITLE, TitleMessage::class.java, TitleCodec::class.java)
+        outbound(ProtocolInfo.O_SPAWNPLAYER, SpawnPlayerMessage::class.java, SpawnPlayerCodec::class.java)
     }
 }
