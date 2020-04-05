@@ -17,7 +17,7 @@ import io.elytra.sdk.server.Elytra
 
 data class ElytraPlayer(
     var id: Int,
-    var sessionId: String,
+    override var sessionId: String,
     override var displayName: String,
     override var gameProfile: GameProfile, // TODO: Remove since its an internal thing
     override var mode: PlayerMode,

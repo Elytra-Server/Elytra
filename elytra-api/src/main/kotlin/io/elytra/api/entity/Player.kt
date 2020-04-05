@@ -15,6 +15,7 @@ interface Player {
 
     var gamemode: GameMode
     var position: Position
+    var sessionId: String
 
     fun kick(reason: String)
 

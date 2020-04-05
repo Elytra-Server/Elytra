@@ -1,8 +1,6 @@
 package io.elytra.sdk.server
 
 import com.mojang.authlib.GameProfile
-import io.elytra.api.chat.Colors
-import io.elytra.api.chat.TextComponent
 import io.elytra.api.entity.Player
 import io.elytra.api.entity.PlayerMode
 import io.elytra.api.events.EventBus
@@ -38,8 +36,6 @@ class PlayerRegistry(
 
         add(player)
 
-        EventBus.post(PlayerJoinEvent(player))
-
         session.send(LoginSuccessMessage(gameProfile))
         session.protocol(Protocol.PLAY)
 
@@ -54,26 +50,13 @@ class PlayerRegistry(
             false,
             false)
 
-        val positionMessage = PlayerRotationMessage(
-            player.position.x,
-            player.position.y,
-            player.position.z,
-            (player.position.yaw % 360 + 360) % 360,
-            player.position.pitch
-        )
-
         session.send(joinMessage)
         session.send(HeldItemChangeMessage(4))
-        session.send(positionMessage)
+        session.send(PlayerRotationMessage(player.position))
 
-        Elytra.sendPacketToAll(OutboundChatMessage(TextComponent("${Colors.YELLOW}${player.displayName} joined the game"), 1))
-        Elytra.sendPacketToAll(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0, player.gamemode, player.gameProfile!!, TextComponent(player.displayName)))))
+        EventBus.post(PlayerJoinEvent(player))
 
-        players.iterator().forEach { it: Player ->
-            session.send(PlayerListItemMessage(Action.ADD_PLAYER, listOf(AddPlayerData(0, it.gamemode, player.gameProfile!!, TextComponent(it.displayName)))))
-        }
-
-        player.spawnAt(player.position)
+        player.spawn()
     }
 
     override fun add(target: Player) {
