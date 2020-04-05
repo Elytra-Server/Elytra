@@ -1,0 +1,6 @@
+- https://wiki.vg/Protocol#Player_Movement
+
+Player Movement:
+    Includes:
+        - Player Position (play, serverbound) [0x11]
+        - Player Look (play, serverbound) [0x11]

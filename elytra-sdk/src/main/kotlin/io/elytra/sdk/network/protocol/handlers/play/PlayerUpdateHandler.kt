@@ -1,21 +1,19 @@
 package io.elytra.sdk.network.protocol.handlers.play
 
-import com.flowpowered.network.MessageHandler
 import io.elytra.sdk.network.NetworkSession
-import io.elytra.sdk.network.protocol.message.play.PlayerPositionMessage
+import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
+import io.elytra.sdk.network.protocol.message.play.PlayerUpdateMessage
 import io.elytra.sdk.server.Elytra
 
-class PlayerUpdateHandler : MessageHandler<NetworkSession, PlayerPositionMessage> {
+class PlayerUpdateHandler : ElytraMessageHandler<PlayerUpdateMessage>() {
 
-    override fun handle(session: NetworkSession?, message: PlayerPositionMessage) {
-        val player = Elytra.server.playerRegistry.get(session?.sessionId!!)
-        println("Andando ${message.x}")
+    override fun handle(session: NetworkSession?, message: PlayerUpdateMessage) {
+        val player = Elytra.server.playerRegistry.get(session!!)
+        println("Andando")
 
-        require(player != null) { "Player cannot be null" }
+        val oldPosition = player?.position
+        val newPosition = oldPosition?.clone()
 
-        val oldPosition = player.position
-        val newPosition = oldPosition.clone()
-
-        message.update(newPosition)
+        message.update(newPosition!!)
     }
 }

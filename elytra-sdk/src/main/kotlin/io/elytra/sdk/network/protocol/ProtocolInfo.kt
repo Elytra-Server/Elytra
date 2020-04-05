@@ -16,7 +16,7 @@ object ProtocolInfo {
     const val CONFIRM_TELEPORT: Int = 0x00
     const val I_CUSTOM_PAYLOAD: Int = 0x0B // 0x9
     const val I_CHAT: Int = 0x03
-    const val I_PLAYER_POSITION = 0x10
+    const val I_PLAYER_UPDATE = 0x14
     const val I_KEEP_ALIVE: Int = 0x0F
     const val O_CHAT: Int = 0x0F
     const val O_SPAWNPLAYER = 0x05

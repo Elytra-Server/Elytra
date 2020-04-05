@@ -54,7 +54,13 @@ class PlayerRegistry(
             false,
             false)
 
-        val positionMessage = PlayerPosLookMessage(player.position.x, player.position.y, player.position.z, player.position.yaw, player.position.pitch, 0x01, player.id)
+        val positionMessage = PlayerRotationMessage(
+            player.position.x,
+            player.position.y,
+            player.position.z,
+            (player.position.yaw % 360 + 360) % 360,
+            player.position.pitch
+        )
 
         session.send(joinMessage)
         session.send(HeldItemChangeMessage(4))
@@ -80,8 +86,8 @@ class PlayerRegistry(
         currentId.getAndDecrement()
     }
 
-    override fun get(target: String): Player? {
-        return players.first { player -> player.gameProfile!!.name == target }
+    override fun get(username: String): Player? {
+        return players.first { player -> player.gameProfile.name == username }
     }
 
     fun get(session: NetworkSession): Player? {

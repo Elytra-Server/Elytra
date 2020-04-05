@@ -4,10 +4,7 @@ import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.network.protocol.codecs.DisconnectCodec
 import io.elytra.sdk.network.protocol.codecs.play.CustomPayloadCodec
 import io.elytra.sdk.network.protocol.codecs.play.KeepAliveCodec
-import io.elytra.sdk.network.protocol.codecs.play.inbound.ChatCodec
-import io.elytra.sdk.network.protocol.codecs.play.inbound.ClientSettingsCodec
-import io.elytra.sdk.network.protocol.codecs.play.inbound.ConfirmTeleportCodec
-import io.elytra.sdk.network.protocol.codecs.play.inbound.PlayerPositionCodec
+import io.elytra.sdk.network.protocol.codecs.play.inbound.*
 import io.elytra.sdk.network.protocol.codecs.play.outbound.*
 import io.elytra.sdk.network.protocol.handlers.play.*
 import io.elytra.sdk.network.protocol.message.DisconnectMessage
@@ -54,9 +51,9 @@ class PlayPacket : BasicPacket("PLAY", 0x96) {
             KeepAliveHandler::class.java
         )
 
-        inbound(ProtocolInfo.I_PLAYER_POSITION,
-            PlayerPositionMessage::class.java,
-            PlayerPositionCodec::class.java,
+        inbound(ProtocolInfo.I_PLAYER_UPDATE,
+            PlayerUpdateMessage::class.java,
+            PlayerUpdateCodec::class.java,
             PlayerUpdateHandler::class.java
         )
 
@@ -65,7 +62,7 @@ class PlayPacket : BasicPacket("PLAY", 0x96) {
         outbound(ProtocolInfo.SERVER_DIFFICULTY, ServerDifficultyMessage::class.java, ServerDifficultyCodec::class.java)
         outbound(ProtocolInfo.O_CUSTOM_PAYLOAD, CustomPayloadMessage::class.java, CustomPayloadCodec::class.java)
         outbound(ProtocolInfo.JOIN_GAME, JoinGameMessage::class.java, JoinGameCodec::class.java)
-        outbound(ProtocolInfo.PLAYER_POS_LOOK, PlayerPosLookMessage::class.java, PlayerPosLookCodec::class.java)
+        outbound(ProtocolInfo.PLAYER_POS_LOOK, PlayerRotationMessage::class.java, PlayerRotationCodec::class.java)
         outbound(ProtocolInfo.ENTITY_STATUS, EntityStatusMessage::class.java, EntityStatusCodec::class.java)
         outbound(ProtocolInfo.PLAY_DISCONNECT, DisconnectMessage::class.java, DisconnectCodec::class.java)
         // outbound(ProtocolInfo.LOAD_CHUNK_DATA, ChunkDataMessage::class.java, ChunkDataCodec::class.java)
