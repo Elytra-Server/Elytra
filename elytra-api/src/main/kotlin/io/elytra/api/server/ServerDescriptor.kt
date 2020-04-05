@@ -3,16 +3,16 @@ package io.elytra.api.server
 import io.elytra.api.server.motd.Motd
 
 data class WorldPojo(
-    val initialWorld: String,
-    val renderDistance: Int,
-    val disableMobs: Boolean
+    val initialWorld: String = "world",
+    val renderDistance: Int = 20,
+    val disableMobs: Boolean = false
 )
 
 data class ServerOptionsPojo(
-    val port: Int,
-    val maxPlayers: Int,
-    val onyPremium: Boolean,
-    val eulaCheck: Boolean
+    val port: Int = 25565,
+    val maxPlayers: Int = 60,
+    val onlyPremium: Boolean = true,
+    val eulaCheck: Boolean = false
 )
 
 /**

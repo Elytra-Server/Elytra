@@ -7,7 +7,8 @@
   "options": {
     "maxPlayers": 100,
     "onlyPremium": false,
-    "eulaCheck": true
+    "eulaCheck": true,
+    "port": 25565
   },
   "motd": {
     "description": "§6Hello §eWorld!",

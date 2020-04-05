@@ -12,16 +12,20 @@ import io.elytra.api.server.Server
 import io.elytra.api.server.ServerDescriptor
 import io.elytra.sdk.command.handler.ElytraCommandHandler
 import io.elytra.sdk.command.registry.ElytraCommandRegistry
+import io.elytra.sdk.commands.TestCommand
 import io.elytra.sdk.entity.ElytraPlayer
+import io.elytra.sdk.events.TemporaryEventRegister
 import io.elytra.sdk.io.ElytraConsole
 import io.elytra.sdk.io.config.JsonConfigurationFile
 import io.elytra.sdk.network.NetworkServer
 import io.elytra.sdk.network.SessionRegistry
 import io.elytra.sdk.network.protocol.PacketProvider
+import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.network.utils.cryptManager
 import io.elytra.sdk.scheduler.Scheduler
 import io.elytra.sdk.utils.ElytraConsts
 import io.elytra.sdk.utils.ResourceUtils
+import io.elytra.sdk.world.strategy.AnvilWorldStrategy
 import java.net.BindException
 import java.net.Proxy
 import java.security.KeyPair
@@ -36,10 +40,10 @@ class Elytra private constructor(
     )).createMinecraftSessionService(),
     val playerRegistry: PlayerRegistry = PlayerRegistry(),
     val sessionRegistry: SessionRegistry = SessionRegistry(),
-    val commandRegistry: CommandRegistry = ElytraCommandRegistry(),
-    val commandHandler: CommandHandler = ElytraCommandHandler(commandRegistry),
     val keypair: KeyPair = cryptManager.generateKeyPair(),
     val debug: Boolean = true,
+    private val commandRegistry: CommandRegistry = ElytraCommandRegistry(),
+    val commandHandler: CommandHandler = ElytraCommandHandler(commandRegistry),
     private val scheduler: Scheduler = Scheduler(sessionRegistry),
     val startedAt: Instant = Instant.now()
 ) : Server {
@@ -66,10 +70,14 @@ class Elytra private constructor(
             loadConfigs()
 
             console.info("Bootstrapping the server...")
-            console.info("This version of Elytra is targeted for Minecraft 1.15.2")
+            console.info("This version of Elytra is targeted for Minecraft ${ProtocolInfo.MINECRAFT_VERSION}")
             PacketProvider()
             scheduler.start()
 
+            commandRegistry.register(TestCommand())
+
+            TemporaryEventRegister().register()
+            AnvilWorldStrategy().load(javaClass.classLoader.getResource("bitch").path)
             NetworkServer(serverDescriptor.options.port, sessionRegistry).start()
         } catch (e: BindException) {
             console.info(" ")

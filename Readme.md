@@ -9,9 +9,9 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?color=1bcc1b)](https://choosealicense.com/licenses/mit)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
-A Server API to battle those who struggle with the non multi-threaded bukkit/spigot api.
+Elytra is a multi-threaded Minecraft server implementation and plugin API. It serves as an alternative and improvement on the single-threaded nature of the official server and Bukkit/Spigot APIs, which build upon it.
 
-You can always join us on [Discord][discord-invite-link] if you want to get more involved in the project.
+To follow news and get involved with the project, join our [Discord][discord-invite-link].
 
 ### Contents:
 
@@ -24,15 +24,15 @@ You can always join us on [Discord][discord-invite-link] if you want to get more
 
 ### Compilation
 
-Elytra is a Kotlin program which uses Gradle 2 for compilation. To compile from Git, simply perform the following steps:
-  1. Install gradle 2 and git
-  2. Clone the repo - `git clone https://github.com/Elytra-Server/Elytra`
-  3. Build the project using gradle - `gradle clean build`
+Elytra is written in Kotlin and utilizes Gradle 2 as build management tool. To compile it from the source, perform the following steps:
+  1. Make sure to have Git and Gradle 2 installed
+  2. Clone the repository with `git clone https://github.com/Elytra-Server/Elytra`
+  3. Build the project with `gradle clean shadowJar build`
 
 ### Credits
 
-  * [Protocol Wiki](http://wiki.vg) for helping to know which protocols exists and the login flow
-  * [MCP](http://www.modcoderpack.com/) for helping with the protocol flow
+  * [Protocol Wiki](http://wiki.vg) community for providing extensive information on the most up-to-date protocol
+  * [MCP](http://www.modcoderpack.com/) for proving client-side code and documentation to help with the protocol flow
 
 ## Contributors
 
@@ -42,9 +42,10 @@ Elytra is a Kotlin program which uses Gradle 2 for compilation. To compile from 
 <td align="center"><a href="https://github.com/wiljafor1"><img src="https://github.com/wiljafor1.png?size=100" alt="wiljafor1" align="center"/><br/><sub><b>Wiljafor1</b></sub></a></td>
 <td align="center"><a href="https://github.com/JPereirax"><img src="https://github.com/JPereirax.png?size=100" alt="JPereirax" align="center"/><br/><sub><b>Jailson Pereira</b></sub></a></td>
 <td align="center"><a href="https://github.com/Heroslender"><img src="https://github.com/Heroslender.png?size=100" alt="Heroslender" align="center"/><br/><sub><b>Heroslender</b></sub></a></td>
-<td align="center"><a href="https://github.com/chicoferreira"><img src="https://github.com/chicoferreira.png?size=100" alt="Chico Ferreira" align="center"/><br/><sub><b>Chico Ferreira</b></sub></a></td>
+<td align="center"><a href="https://github.com/chicoferreira"><img src="https://github.com/chicoferreira.png?size=100" alt="Chico Ferreira" align="center"/><br/><sub><b>chico ferreira</b></sub></a></td>
 </tr>
 </table>
+
 
 ## Sponsors
 <a href="https://fluxcdn.com"><img src="https://i.imgur.com/jxdRt4M.gif"></a>

@@ -65,5 +65,7 @@ class PlayPacket : BasicPacket("PLAY", 0x96) {
         outbound(ProtocolInfo.O_CHAT, OutboundChatMessage::class.java, OutboundChatCodec::class.java)
         outbound(ProtocolInfo.PLAYER_LIST_ITEM, PlayerListItemMessage::class.java, PlayerListItemCodec::class.java)
         outbound(ProtocolInfo.O_KEEP_ALIVE, KeepAliveMessage::class.java, KeepAliveCodec::class.java)
+        outbound(ProtocolInfo.BOSS_INFO, BossInfoMessage::class.java, BossInfoCodec::class.java)
+        outbound(ProtocolInfo.TITLE, TitleMessage::class.java, TitleCodec::class.java)
     }
 }
