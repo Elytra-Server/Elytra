@@ -1,6 +1,5 @@
 package io.elytra.sdk.network.protocol.handlers.login
 
-import io.elytra.api.utils.isValid
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.SessionState
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
@@ -20,7 +19,9 @@ class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
             return
         }
 
-        if(Elytra.player(message.gameProfile.name).isValid()){
+        println(message.gameProfile.name)
+
+        if (Elytra.online(message.gameProfile.name)) {
             session.disconnect("")
             return
         }

@@ -39,25 +39,27 @@ class TemporaryEventRegister : Registrable {
 
                     onlinePlayer.sendPacket(PlayerListItemMessage(Action.ADD_PLAYER, ImmutableList.of(onlinePlayerListData)))
 
-                    val spawnPlayer = SpawnPlayerMessage(
-                        (player as ElytraPlayer).id,
-                        player.gameProfile.id,
-                        player.position.x,
-                        player.position.y,
-                        player.position.z,
-                        player.position.pitch,
-                        player.position.yaw)
-                    onlinePlayer.sendPacket(spawnPlayer)
+                    if ((onlinePlayer as ElytraPlayer).id != (player as ElytraPlayer).id) {
+                        val spawnPlayer = SpawnPlayerMessage(
+                            player.id,
+                            player.gameProfile.id,
+                            player.position.x,
+                            player.position.y,
+                            player.position.z,
+                            player.position.pitch,
+                            player.position.yaw)
+                        onlinePlayer.sendPacket(spawnPlayer)
 
-                    val spawnPlayerMe = SpawnPlayerMessage(
-                        (onlinePlayer as ElytraPlayer).id,
-                        onlinePlayer.gameProfile.id,
-                        onlinePlayer.position.x,
-                        onlinePlayer.position.y,
-                        onlinePlayer.position.z,
-                        onlinePlayer.position.pitch,
-                        onlinePlayer.position.yaw)
-                    player.sendPacket(spawnPlayerMe)
+                        val spawnPlayerMe = SpawnPlayerMessage(
+                            onlinePlayer.id,
+                            onlinePlayer.gameProfile.id,
+                            onlinePlayer.position.x,
+                            onlinePlayer.position.y,
+                            onlinePlayer.position.z,
+                            onlinePlayer.position.pitch,
+                            onlinePlayer.position.yaw)
+                        player.sendPacket(spawnPlayerMe)
+                    }
                 }
 
                 player.sendPacket(PlayerPositionAndLookMessage(player.position))

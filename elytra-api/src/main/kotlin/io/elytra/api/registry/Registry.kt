@@ -8,6 +8,8 @@ interface Registry <T, K> {
 
     fun get(target: K): T?
 
+    fun has(target: K): Boolean
+
     fun iterator(): Iterator<T>
 
     fun size(): Int

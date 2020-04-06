@@ -55,6 +55,9 @@ class Elytra private constructor(
 
         fun player(username: String): Player? = server.playerRegistry.get(username)
 
+        // Rename pls
+        fun online(username: String): Boolean = server.playerRegistry.has(username)
+
         fun sendPacketToAll(message: Message) {
             for (player in players()) {
                 (player as ElytraPlayer).sendPacket(message)

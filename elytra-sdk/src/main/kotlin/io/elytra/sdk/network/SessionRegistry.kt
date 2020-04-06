@@ -26,6 +26,10 @@ class SessionRegistry(
         return sessions.keys.first { session -> session.sessionId == target }
     }
 
+    override fun has(target: String): Boolean {
+        return sessions.keys.any { session -> session.sessionId == target }
+    }
+
     override fun size(): Int {
         return sessions.size
     }

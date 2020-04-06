@@ -73,6 +73,10 @@ class PlayerRegistry(
         return players.first { player -> player.gameProfile.name == username }
     }
 
+    override fun has(username: String): Boolean {
+        return players.any { player -> player.gameProfile.name == username }
+    }
+
     fun get(session: NetworkSession): Player? {
         return players.first { player -> (player as ElytraPlayer).sessionId == session.sessionId }
     }
