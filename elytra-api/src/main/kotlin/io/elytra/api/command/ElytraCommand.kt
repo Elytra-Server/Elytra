@@ -3,6 +3,11 @@ package io.elytra.api.command
 import io.elytra.api.command.argument.ArgumentContext
 import io.elytra.api.command.argument.ArgumentType
 
+/**
+ * Representation of a server command
+ *
+ * All commands must extends this in order to be functional
+ */
 abstract class ElytraCommand() : Command {
 
     private val argumentList: MutableList<ArgumentContext<Any>> = ArrayList()
