@@ -1,38 +1,35 @@
 package io.elytra.sdk.world
 
-import io.elytra.api.world.Chunk
+import io.elytra.api.io.NibbleArray
+import io.elytra.api.world.ChunkColumn
 
-class ElytraChunk() : Chunk {
+const val chunksPerColumn = 16
 
-    override fun createColumns() {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+data class ElytraChunkColumn(
+    override val palette: List<Int>,
+    override val data: ByteArray,
+    override val skyLight: NibbleArray,
+    override val blockLight: NibbleArray
+) : ChunkColumn {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as ElytraChunkColumn
+
+        if (palette != other.palette) return false
+        if (!data.contentEquals(other.data)) return false
+        if (skyLight != other.skyLight) return false
+        if (blockLight != other.blockLight) return false
+
+        return true
     }
 
-    override fun getChunkAt(y: Int) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getBlockAt(x: Int, y: Int, z: Int) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getSkyLight(x: Int, y: Int, z: Int) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getBlockLight(x: Int, y: Int, z: Int) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setSkyLight(x: Int, y: Int, z: Int, skyLight: Int) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setBlockLight(x: Int, y: Int, z: Int, blockLight: Int) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getBiome(x: Int, z: Int) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+    override fun hashCode(): Int {
+        var result = palette.hashCode()
+        result = 31 * result + data.contentHashCode()
+        result = 31 * result + skyLight.hashCode()
+        result = 31 * result + blockLight.hashCode()
+        return result
     }
 }
