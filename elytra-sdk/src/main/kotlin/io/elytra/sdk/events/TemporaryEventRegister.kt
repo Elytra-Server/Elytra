@@ -1,8 +1,8 @@
 package io.elytra.sdk.events
 
 import com.google.common.collect.ImmutableList
+import io.elytra.api.chat.ChatColor
 import io.elytra.api.chat.ChatMode
-import io.elytra.api.chat.Colors
 import io.elytra.api.chat.TextComponent
 import io.elytra.api.events.EventBus
 import io.elytra.api.events.Registrable
@@ -19,7 +19,7 @@ class TemporaryEventRegister : Registrable {
                 val player = it.player
                 val onlinePlayers = Elytra.players()
 
-                val joinMessage = TextComponent("${Colors.YELLOW}${player.displayName} joined the game")
+                val joinMessage = TextComponent("${ChatColor.YELLOW}${player.displayName} joined the game")
                 val playerListData = AddPlayerData(
                     0,
                     player.gamemode,

@@ -3,7 +3,7 @@ package io.elytra.api.chat
 /**
  * Enumeration of the colors supported by the client
  */
-object Colors {
+object ChatColor {
     const val BLACK = "§b"
 
     const val DARK_BLUE = "§1"

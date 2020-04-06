@@ -3,8 +3,10 @@ package io.elytra.sdk.entity
 import com.flowpowered.network.Message
 import com.mojang.authlib.GameProfile
 import io.elytra.api.chat.ChatMode
+import io.elytra.api.chat.TextComponent
 import io.elytra.api.entity.Player
 import io.elytra.api.entity.PlayerMode
+import io.elytra.api.utils.asJson
 import io.elytra.api.world.Position
 import io.elytra.api.world.enums.GameMode
 import io.elytra.sdk.network.NetworkSession
@@ -35,7 +37,10 @@ data class ElytraPlayer(
     }
 
     override fun sendMessage(message: String) {
-        sendPacket(OutboundChatMessage(message, ChatMode.PLAYER))
+        val textComponent = TextComponent(message)
+        textComponent.text = textComponent.text.replace('&', '§')
+
+        sendPacket(OutboundChatMessage(textComponent.asJson(), ChatMode.PLAYER))
     }
 
     override fun sendMessage(vararg messages: String) {
