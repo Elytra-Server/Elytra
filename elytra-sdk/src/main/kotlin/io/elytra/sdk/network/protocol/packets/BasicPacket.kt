@@ -26,7 +26,7 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
         handlers = HandlerLookupService()
     }
 
-    protected open fun <M : Message, C : Codec<M>, H : MessageHandler<*, M>> inbound(
+    protected open fun <M : Message, C : Codec<in M>, H : MessageHandler<*, in M>> inbound(
         opcode: Int,
         message: Class<M>,
         codec: Class<C>,
@@ -44,7 +44,7 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
         }
     }
 
-    protected open fun <M : Message, C : Codec<M>, H : MessageHandler<*, in M>> inbound(
+    protected open fun <M : Message, C : Codec<in M>, H : MessageHandler<*, in M>> inbound(
         opcode: Int,
         message: Class<M>,
         codec: Class<C>,

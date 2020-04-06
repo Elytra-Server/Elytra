@@ -57,6 +57,12 @@ class PlayPacket : BasicPacket("PLAY", 0x96) {
             PlayerUpdateHandler::class.java
         )
 
+        inbound(ProtocolInfo.I_PLAYER_LOOK,
+            PlayerLookMessage::class.java,
+            PlayerLookCodec::class.java,
+            PlayerUpdateHandler::class.java
+        )
+
         outbound(ProtocolInfo.HELD_ITEM_CHANGE, HeldItemChangeMessage::class.java, HeldItemChangeCodec::class.java) // Maybe 0x39 // 0x3A
         outbound(ProtocolInfo.PLAYER_ABILITIES, PlayerAbilitiesMessage::class.java, PlayerAbilitiesCodec::class.java)
         outbound(ProtocolInfo.SERVER_DIFFICULTY, ServerDifficultyMessage::class.java, ServerDifficultyCodec::class.java)

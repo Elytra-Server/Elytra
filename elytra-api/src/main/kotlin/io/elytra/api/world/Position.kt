@@ -6,8 +6,8 @@ data class Position(
     var x: Double,
     var y: Double,
     var z: Double,
-    val yaw: Float,
-    val pitch: Float
+    var yaw: Float,
+    var pitch: Float
 ) : Cloneable, Serializable {
     companion object {
         val EMPTY: Position = Position(0.0, 0.0, 0.0, 0.0f, 0.0f)
