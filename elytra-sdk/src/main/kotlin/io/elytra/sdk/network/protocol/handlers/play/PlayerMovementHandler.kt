@@ -14,6 +14,5 @@ class PlayerMovementHandler : ElytraMessageHandler<PlayerMovementMessage>() {
         val newPosition = oldPosition?.clone()
 
         message.update(newPosition!!)
-        player.position = newPosition
     }
 }
