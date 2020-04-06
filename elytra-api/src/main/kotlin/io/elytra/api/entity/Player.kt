@@ -2,11 +2,11 @@ package io.elytra.api.entity
 
 import com.flowpowered.network.Message
 import com.mojang.authlib.GameProfile
-import io.elytra.api.chat.TextComponent
+import io.elytra.api.command.CommandSender
 import io.elytra.api.world.Position
 import io.elytra.api.world.enums.GameMode
 
-interface Player {
+interface Player : CommandSender {
     var displayName: String
     var gameProfile: GameProfile
 
@@ -18,10 +18,6 @@ interface Player {
     var position: Position
 
     fun kick(reason: String)
-
-    fun sendMessage(message: String)
-
-    fun sendMessage(textComponent: TextComponent)
 
     fun sendPacket(packet: Message)
 }

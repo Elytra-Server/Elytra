@@ -3,10 +3,8 @@ package io.elytra.sdk.entity
 import com.flowpowered.network.Message
 import com.mojang.authlib.GameProfile
 import io.elytra.api.chat.ChatMode
-import io.elytra.api.chat.TextComponent
 import io.elytra.api.entity.Player
 import io.elytra.api.entity.PlayerMode
-import io.elytra.api.utils.asJson
 import io.elytra.api.world.Position
 import io.elytra.api.world.enums.GameMode
 import io.elytra.sdk.network.NetworkSession
@@ -37,11 +35,17 @@ data class ElytraPlayer(
     }
 
     override fun sendMessage(message: String) {
-        sendMessage(TextComponent(message))
+        sendPacket(OutboundChatMessage(message, ChatMode.PLAYER))
     }
 
-    override fun sendMessage(textComponent: TextComponent) {
-        sendPacket(OutboundChatMessage(textComponent.asJson(), ChatMode.PLAYER))
+    override fun sendMessage(vararg messages: String) {
+        val builder = StringBuilder()
+
+        for (arg in messages) {
+            builder.append(" ").append(arg)
+        }
+
+        sendMessage(builder.toString())
     }
 
     override fun sendPacket(packet: Message) {

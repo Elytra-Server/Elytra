@@ -1,22 +1,25 @@
 package io.elytra.sdk.command.handler
 
 import io.elytra.api.command.Command
+import io.elytra.api.command.CommandSender
 import io.elytra.api.command.argument.Argument
 import io.elytra.api.command.handler.CommandHandler
 import io.elytra.api.command.registry.CommandRegistry
-import io.elytra.api.entity.Player
 import io.elytra.sdk.command.argument.ArgumentListImpl
 import io.elytra.sdk.utils.ElytraConsts
+import io.elytra.sdk.utils.localeMessage
 
-class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandler {
+class ElytraCommandHandler(
+    private val commandRegistry: CommandRegistry
+) : CommandHandler {
 
-    override fun handle(player: Player, message: String) {
+    override fun handle(sender: CommandSender, message: String) {
         if (!message.startsWith(ElytraConsts.COMMAND_PREFIX)) return
 
         val messageWithoutPrefix = message.substring(1)
 
         if (messageWithoutPrefix.isEmpty()) {
-            player.sendMessage(ElytraConsts.COMMAND_NOT_FOUND_MESSAGE)
+            sender.localeMessage("command.not.found")
             return
         }
 
@@ -27,7 +30,7 @@ class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandle
         val command: Command? = commandRegistry.getCommandByName(commandName)
 
         if (command == null) {
-            player.sendMessage(ElytraConsts.COMMAND_NOT_FOUND_MESSAGE)
+            sender.localeMessage("command.not.found")
             return
         }
 
@@ -38,7 +41,7 @@ class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandle
         val stringArgumentList = messageArray.subList(1, messageArray.size)
 
         if (stringArgumentList.size < requiredArgumentNumber) {
-            player.sendMessage("Wrong usage")
+            sender.localeMessage("command.wrong.usage")
             return
         }
 
@@ -51,16 +54,13 @@ class ElytraCommandHandler(val commandRegistry: CommandRegistry) : CommandHandle
             }
 
             if (argumentContext.required) {
-                player.sendMessage(
-                    ElytraConsts.COMMAND_COULDNT_PARSE_ARGUMENT.replace(
-                        "<argumentName>",
-                        argumentContext.name
-                    )
-                )
+                sender.localeMessage("command.couldnt.parse.argument") {
+                    with("argumentName", argumentContext.name)
+                }
             }
         }
         try {
-            command.execute(player, argumentList)
+            command.execute(sender, argumentList)
         } catch (exception: Exception) {
             throw CommandException(message, exception)
         }

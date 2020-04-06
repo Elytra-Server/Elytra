@@ -1,8 +1,8 @@
 package io.elytra.api.command.handler
 
-import io.elytra.api.entity.Player
+import io.elytra.api.command.CommandSender
 
 interface CommandHandler {
 
-    fun handle(player: Player, message: String)
+    fun handle(sender: CommandSender, message: String)
 }
