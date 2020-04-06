@@ -7,7 +7,7 @@ import io.elytra.sdk.network.protocol.codecs.play.KeepAliveCodec
 import io.elytra.sdk.network.protocol.codecs.play.inbound.*
 import io.elytra.sdk.network.protocol.codecs.play.outbound.*
 import io.elytra.sdk.network.protocol.handlers.play.*
-import io.elytra.sdk.network.protocol.message.play.*
+import io.elytra.sdk.network.protocol.message.play.KeepAliveMessage
 import io.elytra.sdk.network.protocol.message.play.inbound.*
 import io.elytra.sdk.network.protocol.message.play.outbound.*
 import io.elytra.sdk.network.protocol.message.play.outbound.DisconnectMessage
@@ -71,6 +71,8 @@ class PlayPacket : BasicPacket("PLAY", 0x55) {
             PlayerUpdateHandler::class.java
         )
 
+        inbound(ProtocolInfo.I_TAB_COMPLETE, TabCompleteMessage::class.java, TabCompleteCodec::class.java, TabCompleteHandler::class.java)
+
         outbound(ProtocolInfo.HELD_ITEM_CHANGE, HeldItemChangeMessage::class.java, HeldItemChangeCodec::class.java) // Maybe 0x39 // 0x3A
         outbound(ProtocolInfo.PLAYER_ABILITIES, PlayerAbilitiesMessage::class.java, PlayerAbilitiesCodec::class.java)
         outbound(ProtocolInfo.SERVER_DIFFICULTY, ServerDifficultyMessage::class.java, ServerDifficultyCodec::class.java)
@@ -89,5 +91,6 @@ class PlayPacket : BasicPacket("PLAY", 0x55) {
         outbound(ProtocolInfo.O_SPAWN_POSITION, SpawnPositionMessage::class.java, SpawnPositionCodec::class.java)
         outbound(ProtocolInfo.O_CHANGE_GAME_STATE, ChangeGameStateMessage::class.java, ChangeGameStateCodec::class.java)
         outbound(ProtocolInfo.O_ENTITY_ANIMATION, EntityAnimationMessage::class.java, EntityAnimationCodec::class.java)
+        outbound(ProtocolInfo.O_TAB_COMPLETE, TabCompleteResponseMessage::class.java, TabCompleteResponseCodec::class.java)
     }
 }

@@ -46,7 +46,7 @@ class PlayerRegistry(
             player.gamemode,
             0,
             0,
-            2,
+            Elytra.server.serverDescriptor.options.maxPlayers,
             "flat",
             32,
             false,
