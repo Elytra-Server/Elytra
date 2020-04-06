@@ -1,9 +1,9 @@
-package io.elytra.sdk.network.protocol.message.play
+package io.elytra.sdk.network.protocol.message.play.outbound
 
 import com.flowpowered.network.Message
 import io.elytra.api.world.Position
 
-data class PlayerRotationMessage(
+data class PlayerPositionAndLookMessage(
     val x: Double,
     val y: Double,
     val z: Double,

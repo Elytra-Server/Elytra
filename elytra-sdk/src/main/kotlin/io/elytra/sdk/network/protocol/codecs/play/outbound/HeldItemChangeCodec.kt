@@ -1,7 +1,7 @@
 package io.elytra.sdk.network.protocol.codecs.play.outbound
 
 import com.flowpowered.network.Codec
-import io.elytra.sdk.network.protocol.message.play.HeldItemChangeMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.HeldItemChangeMessage
 import io.netty.buffer.ByteBuf
 import java.io.IOException
 

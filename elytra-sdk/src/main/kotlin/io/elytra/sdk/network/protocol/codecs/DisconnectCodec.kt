@@ -2,7 +2,7 @@ package io.elytra.sdk.network.protocol.codecs
 
 import com.flowpowered.network.Codec
 import io.elytra.api.utils.asJson
-import io.elytra.sdk.network.protocol.message.DisconnectMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.DisconnectMessage
 import io.elytra.sdk.network.utils.minecraft
 import io.netty.buffer.ByteBuf
 

@@ -1,7 +1,7 @@
 package io.elytra.sdk.network.protocol.codecs.play.outbound
 
 import com.flowpowered.network.Codec
-import io.elytra.sdk.network.protocol.message.play.PlayerAbilitiesMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.PlayerAbilitiesMessage
 import io.netty.buffer.ByteBuf
 import java.io.IOException
 import kotlin.experimental.or

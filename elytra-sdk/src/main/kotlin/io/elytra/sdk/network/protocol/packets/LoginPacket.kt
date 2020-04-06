@@ -8,11 +8,11 @@ import io.elytra.sdk.network.protocol.codecs.login.outbound.EncryptionRequestCod
 import io.elytra.sdk.network.protocol.codecs.login.outbound.LoginSuccessCodec
 import io.elytra.sdk.network.protocol.handlers.login.EncryptionResponseHandler
 import io.elytra.sdk.network.protocol.handlers.login.LoginStartHandler
-import io.elytra.sdk.network.protocol.message.DisconnectMessage
 import io.elytra.sdk.network.protocol.message.login.EncryptionRequestMessage
 import io.elytra.sdk.network.protocol.message.login.EncryptionResponseMessage
 import io.elytra.sdk.network.protocol.message.login.LoginStartMessage
 import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.DisconnectMessage
 
 class LoginPacket : BasicPacket("LOGIN", 5) {
 

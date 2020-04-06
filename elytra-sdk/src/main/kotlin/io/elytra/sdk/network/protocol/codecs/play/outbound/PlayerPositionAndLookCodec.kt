@@ -2,13 +2,13 @@ package io.elytra.sdk.network.protocol.codecs.play.outbound
 
 import com.flowpowered.network.Codec
 import com.flowpowered.network.util.ByteBufUtils
-import io.elytra.sdk.network.protocol.message.play.PlayerRotationMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.PlayerPositionAndLookMessage
 import io.netty.buffer.ByteBuf
 import java.io.IOException
 
-class PlayerRotationCodec : Codec<PlayerRotationMessage> {
+class PlayerPositionAndLookCodec : Codec<PlayerPositionAndLookMessage> {
 
-    override fun encode(buffer: ByteBuf, message: PlayerRotationMessage): ByteBuf {
+    override fun encode(buffer: ByteBuf, message: PlayerPositionAndLookMessage): ByteBuf {
         buffer.writeDouble(message.x)
         buffer.writeDouble(message.y)
         buffer.writeDouble(message.z)
@@ -20,7 +20,7 @@ class PlayerRotationCodec : Codec<PlayerRotationMessage> {
         return buffer
     }
 
-    override fun decode(buffer: ByteBuf): PlayerRotationMessage {
+    override fun decode(buffer: ByteBuf): PlayerPositionAndLookMessage {
         throw IOException("No have decode support for this")
     }
 }

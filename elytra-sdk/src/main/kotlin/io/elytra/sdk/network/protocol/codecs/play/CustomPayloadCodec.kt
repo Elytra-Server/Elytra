@@ -1,7 +1,7 @@
 package io.elytra.sdk.network.protocol.codecs.play
 
 import com.flowpowered.network.Codec
-import io.elytra.sdk.network.protocol.message.play.CustomPayloadMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.CustomPayloadMessage
 import io.elytra.sdk.network.utils.minecraft
 import io.netty.buffer.ByteBuf
 import java.io.IOException

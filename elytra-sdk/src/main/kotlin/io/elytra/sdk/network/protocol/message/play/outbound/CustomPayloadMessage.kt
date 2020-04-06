@@ -1,4 +1,4 @@
-package io.elytra.sdk.network.protocol.message.play
+package io.elytra.sdk.network.protocol.message.play.outbound
 
 import com.flowpowered.network.Message
 import io.netty.buffer.ByteBuf

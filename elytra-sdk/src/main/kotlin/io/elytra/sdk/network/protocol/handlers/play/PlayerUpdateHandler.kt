@@ -2,7 +2,7 @@ package io.elytra.sdk.network.protocol.handlers.play
 
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
-import io.elytra.sdk.network.protocol.message.play.PlayerUpdateMessage
+import io.elytra.sdk.network.protocol.message.play.inbound.PlayerUpdateMessage
 import io.elytra.sdk.server.Elytra
 
 class PlayerUpdateHandler : ElytraMessageHandler<PlayerUpdateMessage>() {

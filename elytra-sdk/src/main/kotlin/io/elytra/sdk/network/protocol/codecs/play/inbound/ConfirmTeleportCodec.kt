@@ -2,7 +2,7 @@ package io.elytra.sdk.network.protocol.codecs.play.inbound
 
 import com.flowpowered.network.Codec
 import com.flowpowered.network.util.ByteBufUtils
-import io.elytra.sdk.network.protocol.message.play.ConfirmTeleportMessage
+import io.elytra.sdk.network.protocol.message.play.inbound.ConfirmTeleportMessage
 import io.netty.buffer.ByteBuf
 
 class ConfirmTeleportCodec : Codec<ConfirmTeleportMessage> {

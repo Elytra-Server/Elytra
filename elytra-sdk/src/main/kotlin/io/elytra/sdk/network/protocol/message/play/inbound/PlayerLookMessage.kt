@@ -1,4 +1,4 @@
-package io.elytra.sdk.network.protocol.message.play
+package io.elytra.sdk.network.protocol.message.play.inbound
 
 import io.elytra.api.world.Position
 

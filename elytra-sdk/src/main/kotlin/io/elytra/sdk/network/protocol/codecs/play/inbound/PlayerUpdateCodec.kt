@@ -1,7 +1,7 @@
 package io.elytra.sdk.network.protocol.codecs.play.inbound
 
 import com.flowpowered.network.Codec
-import io.elytra.sdk.network.protocol.message.play.PlayerUpdateMessage
+import io.elytra.sdk.network.protocol.message.play.inbound.PlayerUpdateMessage
 import io.netty.buffer.ByteBuf
 
 class PlayerUpdateCodec : Codec<PlayerUpdateMessage> {

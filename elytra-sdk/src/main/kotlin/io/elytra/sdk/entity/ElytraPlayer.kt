@@ -10,9 +10,9 @@ import io.elytra.api.utils.asJson
 import io.elytra.api.world.Position
 import io.elytra.api.world.enums.GameMode
 import io.elytra.sdk.network.NetworkSession
-import io.elytra.sdk.network.protocol.message.DisconnectMessage
-import io.elytra.sdk.network.protocol.message.play.OutboundChatMessage
-import io.elytra.sdk.network.protocol.message.play.SpawnPlayerMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.DisconnectMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.OutboundChatMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.SpawnPlayerMessage
 import io.elytra.sdk.server.Elytra
 
 data class ElytraPlayer(

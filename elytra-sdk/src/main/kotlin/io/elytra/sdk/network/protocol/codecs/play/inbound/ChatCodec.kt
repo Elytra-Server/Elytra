@@ -1,7 +1,7 @@
 package io.elytra.sdk.network.protocol.codecs.play.inbound
 
 import com.flowpowered.network.Codec
-import io.elytra.sdk.network.protocol.message.play.ChatMessage
+import io.elytra.sdk.network.protocol.message.play.inbound.ChatMessage
 import io.elytra.sdk.network.utils.minecraft
 import io.netty.buffer.ByteBuf
 

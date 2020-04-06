@@ -1,7 +1,7 @@
 package io.elytra.sdk.network.protocol.codecs.play.inbound
 
 import com.flowpowered.network.Codec
-import io.elytra.sdk.network.protocol.message.play.PlayerPositionMessage
+import io.elytra.sdk.network.protocol.message.play.inbound.PlayerPositionMessage
 import io.netty.buffer.ByteBuf
 
 class PlayerPositionCodec : Codec<PlayerPositionMessage> {

@@ -3,8 +3,8 @@ package io.elytra.sdk.network.protocol.codecs.play.outbound
 import com.flowpowered.network.Codec
 import com.flowpowered.network.util.ByteBufUtils
 import io.elytra.api.utils.asJson
-import io.elytra.sdk.network.protocol.message.play.Action
-import io.elytra.sdk.network.protocol.message.play.PlayerListItemMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.Action
+import io.elytra.sdk.network.protocol.message.play.outbound.PlayerListItemMessage
 import io.elytra.sdk.network.utils.minecraft
 import io.netty.buffer.ByteBuf
 import java.io.IOException

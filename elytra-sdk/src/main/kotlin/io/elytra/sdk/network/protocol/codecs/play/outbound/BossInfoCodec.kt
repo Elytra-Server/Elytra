@@ -1,8 +1,8 @@
 package io.elytra.sdk.network.protocol.codecs.play.outbound
 
 import com.flowpowered.network.Codec
-import io.elytra.sdk.network.protocol.message.play.BossInfoMessage
-import io.elytra.sdk.network.protocol.message.play.BossInfoMessage.Operation
+import io.elytra.sdk.network.protocol.message.play.outbound.BossInfoMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.BossInfoMessage.Operation
 import io.elytra.sdk.network.utils.minecraft
 import io.netty.buffer.ByteBuf
 

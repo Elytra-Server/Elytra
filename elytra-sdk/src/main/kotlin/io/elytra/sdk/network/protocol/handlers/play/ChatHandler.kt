@@ -4,8 +4,8 @@ import com.flowpowered.network.MessageHandler
 import io.elytra.api.chat.ChatMode
 import io.elytra.api.chat.TextComponent
 import io.elytra.sdk.network.NetworkSession
-import io.elytra.sdk.network.protocol.message.play.ChatMessage
-import io.elytra.sdk.network.protocol.message.play.OutboundChatMessage
+import io.elytra.sdk.network.protocol.message.play.inbound.ChatMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.OutboundChatMessage
 import io.elytra.sdk.server.Elytra
 import io.elytra.sdk.utils.ElytraConsts
 

@@ -10,7 +10,9 @@ import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.events.PlayerJoinEvent
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
-import io.elytra.sdk.network.protocol.message.play.*
+import io.elytra.sdk.network.protocol.message.play.outbound.HeldItemChangeMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.JoinGameMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.PlayerPositionAndLookMessage
 import io.elytra.sdk.network.protocol.packets.Protocol
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
@@ -52,7 +54,7 @@ class PlayerRegistry(
 
         session.send(joinMessage)
         session.send(HeldItemChangeMessage(4))
-        session.send(PlayerRotationMessage(player.position))
+        session.send(PlayerPositionAndLookMessage(player.position))
 
         EventBus.post(PlayerJoinEvent(player))
     }

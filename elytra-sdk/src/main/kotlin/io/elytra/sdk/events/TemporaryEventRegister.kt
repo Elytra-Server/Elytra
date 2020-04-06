@@ -7,10 +7,10 @@ import io.elytra.api.chat.TextComponent
 import io.elytra.api.events.EventBus
 import io.elytra.api.events.Registrable
 import io.elytra.api.events.listen
-import io.elytra.sdk.network.protocol.message.play.Action
-import io.elytra.sdk.network.protocol.message.play.AddPlayerData
-import io.elytra.sdk.network.protocol.message.play.OutboundChatMessage
-import io.elytra.sdk.network.protocol.message.play.PlayerListItemMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.Action
+import io.elytra.sdk.network.protocol.message.play.outbound.AddPlayerData
+import io.elytra.sdk.network.protocol.message.play.outbound.OutboundChatMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.PlayerListItemMessage
 import io.elytra.sdk.server.Elytra
 
 @Deprecated("Only used for development testing")

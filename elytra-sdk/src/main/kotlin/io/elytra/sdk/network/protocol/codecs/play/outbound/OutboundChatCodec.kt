@@ -2,7 +2,7 @@ package io.elytra.sdk.network.protocol.codecs.play.outbound
 
 import com.flowpowered.network.Codec
 import com.flowpowered.network.util.ByteBufUtils
-import io.elytra.sdk.network.protocol.message.play.OutboundChatMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.OutboundChatMessage
 import io.netty.buffer.ByteBuf
 
 class OutboundChatCodec : Codec<OutboundChatMessage> {
