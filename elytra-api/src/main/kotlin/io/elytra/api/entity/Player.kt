@@ -23,10 +23,6 @@ interface Player {
 
     fun sendMessage(textComponent: TextComponent)
 
-    fun spawn()
-
-    fun spawnAt(position: Position)
-
     fun sendPacket(packet: Message)
 }
 

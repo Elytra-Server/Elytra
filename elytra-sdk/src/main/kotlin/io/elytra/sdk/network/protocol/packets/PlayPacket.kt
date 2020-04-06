@@ -15,7 +15,7 @@ import io.elytra.sdk.network.protocol.message.play.outbound.DisconnectMessage
 /**
  * @param [opcode] in this case means whats the highest packet id on the play packets
  */
-class PlayPacket : BasicPacket("PLAY", 0x96) {
+class PlayPacket : BasicPacket("PLAY", 0x55) {
 
     init {
         inbound(
@@ -85,6 +85,8 @@ class PlayPacket : BasicPacket("PLAY", 0x96) {
         outbound(ProtocolInfo.O_KEEP_ALIVE, KeepAliveMessage::class.java, KeepAliveCodec::class.java)
         outbound(ProtocolInfo.BOSS_INFO, BossInfoMessage::class.java, BossInfoCodec::class.java)
         outbound(ProtocolInfo.TITLE, TitleMessage::class.java, TitleCodec::class.java)
-        outbound(ProtocolInfo.O_SPAWNPLAYER, SpawnPlayerMessage::class.java, SpawnPlayerCodec::class.java)
+        outbound(ProtocolInfo.O_SPAWN_PLAYER, SpawnPlayerMessage::class.java, SpawnPlayerCodec::class.java)
+        outbound(ProtocolInfo.O_SPAWN_POSITION, SpawnPositionMessage::class.java, SpawnPositionCodec::class.java)
+        outbound(ProtocolInfo.O_ENTITY_ANIMATION, EntityAnimationMessage::class.java, EntityAnimationCodec::class.java)
     }
 }

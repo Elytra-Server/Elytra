@@ -72,11 +72,10 @@ class Elytra private constructor(
             console.info("This version of Elytra is targeted for Minecraft ${ProtocolInfo.MINECRAFT_VERSION}")
             PacketProvider()
             scheduler.start()
-
             commandRegistry.register(TestCommand())
 
             TemporaryEventRegister().register()
-        //    AnvilWorldStrategy().load(javaClass.classLoader.getResource("bitch").path)
+            // AnvilWorldStrategy().load(javaClass.classLoader.getResource("bitch").path)
             NetworkServer(serverDescriptor.options.port, sessionRegistry).start()
         } catch (e: BindException) {
             console.info(" ")

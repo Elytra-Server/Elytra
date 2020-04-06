@@ -7,10 +7,7 @@ import io.elytra.api.chat.TextComponent
 import io.elytra.api.events.EventBus
 import io.elytra.api.events.Registrable
 import io.elytra.api.events.listen
-import io.elytra.sdk.network.protocol.message.play.outbound.Action
-import io.elytra.sdk.network.protocol.message.play.outbound.AddPlayerData
-import io.elytra.sdk.network.protocol.message.play.outbound.OutboundChatMessage
-import io.elytra.sdk.network.protocol.message.play.outbound.PlayerListItemMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.*
 import io.elytra.sdk.server.Elytra
 
 @Deprecated("Only used for development testing")
@@ -42,7 +39,7 @@ class TemporaryEventRegister : Registrable {
                     onlinePlayer.sendPacket(PlayerListItemMessage(Action.ADD_PLAYER, ImmutableList.of(onlinePlayerListData)))
                 }
 
-                player.spawn()
+                player.sendPacket(PlayerPositionAndLookMessage(player.position))
             }
     }
 }

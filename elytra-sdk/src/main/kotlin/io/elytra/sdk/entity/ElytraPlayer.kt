@@ -43,20 +43,6 @@ data class ElytraPlayer(
         sendPacket(OutboundChatMessage(textComponent.asJson(), ChatMode.PLAYER))
     }
 
-    override fun spawn() {
-        spawnAt(position)
-    }
-
-    override fun spawnAt(position: Position) {
-        val x: Double = position.x
-        val y: Double = position.y
-        val z: Double = position.z
-        val yaw: Float = position.yaw
-        val pitch: Float = position.pitch
-
-        sendPacket(SpawnPlayerMessage(id, gameProfile.id, x, y, z, yaw, pitch))
-    }
-
     override fun sendPacket(packet: Message) {
         session()?.sendWithFuture(packet)
     }
