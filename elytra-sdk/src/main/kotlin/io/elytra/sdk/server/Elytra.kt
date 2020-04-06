@@ -53,6 +53,8 @@ class Elytra private constructor(
 
         fun players(): Iterator<Player> = server.playerRegistry.iterator()
 
+        fun player(username: String): Player? = server.playerRegistry.get(username)
+
         fun sendPacketToAll(message: Message) {
             for (player in players()) {
                 (player as ElytraPlayer).sendPacket(message)

@@ -7,6 +7,7 @@ import io.elytra.api.chat.TextComponent
 import io.elytra.api.events.EventBus
 import io.elytra.api.events.Registrable
 import io.elytra.api.events.listen
+import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.network.protocol.message.play.outbound.*
 import io.elytra.sdk.server.Elytra
 
@@ -37,6 +38,26 @@ class TemporaryEventRegister : Registrable {
                     )
 
                     onlinePlayer.sendPacket(PlayerListItemMessage(Action.ADD_PLAYER, ImmutableList.of(onlinePlayerListData)))
+
+                    val spawnPlayer = SpawnPlayerMessage(
+                        (player as ElytraPlayer).id,
+                        player.gameProfile.id,
+                        player.position.x,
+                        player.position.y,
+                        player.position.z,
+                        player.position.pitch,
+                        player.position.yaw)
+                    onlinePlayer.sendPacket(spawnPlayer)
+
+                    val spawnPlayerMe = SpawnPlayerMessage(
+                        (onlinePlayer as ElytraPlayer).id,
+                        onlinePlayer.gameProfile.id,
+                        onlinePlayer.position.x,
+                        onlinePlayer.position.y,
+                        onlinePlayer.position.z,
+                        onlinePlayer.position.pitch,
+                        onlinePlayer.position.yaw)
+                    player.sendPacket(spawnPlayerMe)
                 }
 
                 player.sendPacket(PlayerPositionAndLookMessage(player.position))

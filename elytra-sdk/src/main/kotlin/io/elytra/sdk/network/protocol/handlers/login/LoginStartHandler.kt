@@ -1,5 +1,6 @@
 package io.elytra.sdk.network.protocol.handlers.login
 
+import io.elytra.api.utils.isValid
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.SessionState
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
@@ -19,7 +20,12 @@ class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
             return
         }
 
-        // TODO Then see why the customer has placed a check to verify the session and disconnect from the server after receiving the encryption request
+        if(Elytra.player(message.gameProfile.name).isValid()){
+            session.disconnect("")
+            return
+        }
+
+        // TODO Then see why the player has placed a check to verify the session and disconnect from the server after receiving the encryption request
         if (Elytra.server.debug)
             session.sessionState = SessionState.READY_TO_ACCEPT
         else {
