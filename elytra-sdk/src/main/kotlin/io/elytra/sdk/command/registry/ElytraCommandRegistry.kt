@@ -1,9 +1,12 @@
 package io.elytra.sdk.command.registry
 
 import io.elytra.api.command.Command
+import io.elytra.api.command.CommandInfo
 import io.elytra.api.command.registry.CommandRegistry
 import io.elytra.sdk.commands.GamemodeCommand
 import io.elytra.sdk.commands.TestCommand
+import kotlin.reflect.KClass
+import kotlin.reflect.full.findAnnotation
 
 class ElytraCommandRegistry : CommandRegistry {
 
@@ -15,7 +18,13 @@ class ElytraCommandRegistry : CommandRegistry {
 
     @Synchronized
     override fun register(command: Command) {
-        val commandName = command.name
+        val commandClazz: KClass<Command> = command::class as KClass<Command>
+        val commandInfo = commandClazz.findAnnotation<CommandInfo>()
+
+        require(commandInfo != null) { "Elytra command must have a @CommandInfo" }
+
+        val commandName = commandInfo.label
+
         if (commandRegistry.containsKey(commandName)) {
             throw CommandAlreadyRegistered(commandName)
         }

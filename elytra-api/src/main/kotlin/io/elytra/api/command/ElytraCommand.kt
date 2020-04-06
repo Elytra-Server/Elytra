@@ -3,7 +3,7 @@ package io.elytra.api.command
 import io.elytra.api.command.argument.ArgumentContext
 import io.elytra.api.command.argument.ArgumentType
 
-abstract class BaseCommand(override val name: String) : Command {
+abstract class ElytraCommand() : Command {
 
     private val argumentList: MutableList<ArgumentContext<Any>> = ArrayList()
 

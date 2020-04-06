@@ -1,12 +1,14 @@
 package io.elytra.sdk.commands
 
-import io.elytra.api.command.BaseCommand
+import io.elytra.api.command.CommandInfo
 import io.elytra.api.command.CommandSender
+import io.elytra.api.command.ElytraCommand
 import io.elytra.api.command.argument.ArgumentList
 import io.elytra.api.command.argument.ArgumentTypes
 import io.elytra.api.entity.Player
 
-class TestCommand : BaseCommand("test") {
+@CommandInfo("test")
+class TestCommand : ElytraCommand() {
 
     init {
         addArgument("testArgument", ArgumentTypes.STRING)

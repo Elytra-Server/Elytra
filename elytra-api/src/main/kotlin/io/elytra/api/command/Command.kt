@@ -6,8 +6,6 @@ import io.elytra.api.command.argument.ArgumentType
 
 interface Command {
 
-    val name: String
-
     fun getArguments(): List<ArgumentContext<Any>>
 
     fun addArgument(name: String, type: ArgumentType<*>, required: Boolean = true)
