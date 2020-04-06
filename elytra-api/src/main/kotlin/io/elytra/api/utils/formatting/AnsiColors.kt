@@ -20,14 +20,62 @@ enum class AnsiColors(val ansi: String, private val color: String) {
     WHITE("\u001B[97m", "&f");
 
     companion object {
-        fun replaceByColor(text: String): String {
-            var message = text.replace("§", "&")
+        fun replaceColors(text: String): String {
+            val replaces = values()
+            val toIgnore = Array(replaces.size) { false }
 
-            values().forEach {
-                message = message.replace(it.color, it.ansi)
+            val builder = StringBuilder()
+            // The point to start searching for a match to replace
+            var start = 0
+            // The index of the value to replace in the text
+            var textIndex: Int
+            // The index of the replacement in the [replaces]
+            var replaceIndex: Int
+            do {
+                textIndex = -1
+                replaceIndex = -1
+                replaces.forEachIndexed { i, replace ->
+                    // Get the next match to replace
+                    if (toIgnore[i]) {
+                        // We already checked this value and it wasn't found in the text, so skip it
+                        return@forEachIndexed
+                    }
+
+                    val index = text.indexOf(replace.color, start)
+                    if (index == -1) {
+                        toIgnore[i] = true
+                    } else {
+                        if (textIndex == -1 || index < textIndex) {
+                            // Found a match, save the indexes
+                            textIndex = index
+                            replaceIndex = i
+                        }
+                    }
+                }
+
+                if (textIndex == -1) {
+                    // No more matches found
+                    break
+                }
+
+                // Add everything until the match
+                for (i in start until textIndex) {
+                    builder.append(text[i])
+                }
+
+                // Place the replacement
+                builder.append(replaces[replaceIndex].ansi)
+
+                // Increment the next starting point
+                // 2 is the text length of the color, e.g. `&a`
+                start = textIndex + 2
+            } while (textIndex != -1)
+
+            for (i in start until text.length) {
+                builder.append(text[i])
             }
 
-            return message
+            return builder.toString()
         }
     }
 }

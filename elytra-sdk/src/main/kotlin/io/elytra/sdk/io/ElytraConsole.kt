@@ -30,11 +30,6 @@ class ElytraConsole(private val logger: Logger) : ConsoleSender {
         logger.debug(message)
     }
 
-    private fun send(
-        msg: String,
-        execute: (msg: String) -> Unit = {}
-    ) {
-        val message = AnsiColors.replaceByColor("$msg&r")
-        execute.invoke(message)
-    }
+    private fun send(msg: String, execute: (msg: String) -> Unit) =
+        execute.invoke(AnsiColors.replaceColors("$msg&r"))
 }
