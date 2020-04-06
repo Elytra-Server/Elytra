@@ -1,11 +1,10 @@
 package io.elytra.api.entity
 
 import io.elytra.api.nbt.tags.NbtCompound
-import io.elytra.api.utils.Tickable
 import io.elytra.api.world.Position
 import io.elytra.api.world.World
 
-interface Entity : Tickable {
+interface Entity {
     /*var id: Long
 	var health: Double
 	var maxHealth: Double
@@ -30,6 +29,8 @@ interface Entity : Tickable {
     fun teleport(position: Position)
     fun teleport(position: Position, world: World)
     fun kill()
+
+    fun move(position: Position)
 }
 
 enum class EntityState {

@@ -10,9 +10,9 @@ import io.elytra.api.utils.asJson
 import io.elytra.api.world.Position
 import io.elytra.api.world.enums.GameMode
 import io.elytra.sdk.network.NetworkSession
+import io.elytra.sdk.network.protocol.message.play.outbound.ChangeGameStateMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.DisconnectMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.OutboundChatMessage
-import io.elytra.sdk.network.protocol.message.play.outbound.SpawnPlayerMessage
 import io.elytra.sdk.server.Elytra
 
 data class ElytraPlayer(
@@ -23,13 +23,14 @@ data class ElytraPlayer(
     override var mode: PlayerMode,
     override var online: Boolean,
     override var banned: Boolean,
-    override var gamemode: GameMode = GameMode.SURVIVAL,
     override var position: Position
 ) : Player, ElytraEntity(0) {
 
-    override fun tick() {
-        TODO("not implemented")
-    }
+    override var gamemode: GameMode = GameMode.SURVIVAL
+        set(value) {
+            field = value
+            sendPacket(ChangeGameStateMessage(ChangeGameStateMessage.Reason.GAMEMODE, value.value.toFloat()))
+        }
 
     override fun kick(reason: String) {
         session()?.send(DisconnectMessage(reason))

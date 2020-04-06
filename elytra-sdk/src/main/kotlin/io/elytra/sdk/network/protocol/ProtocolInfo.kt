@@ -24,6 +24,7 @@ object ProtocolInfo {
     const val O_SPAWN_PLAYER = 0x05
     const val O_ENTITY_ANIMATION = 0x06
     const val O_SPAWN_POSITION = 0x49
+    const val O_CHANGE_GAME_STATE = 0x1F
     const val O_CUSTOM_PAYLOAD: Int = 0x19
     const val O_KEEP_ALIVE: Int = 0x21
     const val CLIENT_SETTINGS: Int = 0x05

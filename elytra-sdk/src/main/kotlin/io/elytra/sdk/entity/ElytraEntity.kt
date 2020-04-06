@@ -25,4 +25,8 @@ abstract class ElytraEntity(
     override fun kill() {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun move(position: Position) {
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+    }
 }

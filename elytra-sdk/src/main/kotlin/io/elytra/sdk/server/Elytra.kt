@@ -12,7 +12,6 @@ import io.elytra.api.server.Server
 import io.elytra.api.server.ServerDescriptor
 import io.elytra.sdk.command.handler.ElytraCommandHandler
 import io.elytra.sdk.command.registry.ElytraCommandRegistry
-import io.elytra.sdk.commands.TestCommand
 import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.events.TemporaryEventRegister
 import io.elytra.sdk.io.ElytraConsole
@@ -72,7 +71,6 @@ class Elytra private constructor(
             console.info("This version of Elytra is targeted for Minecraft ${ProtocolInfo.MINECRAFT_VERSION}")
             PacketProvider()
             scheduler.start()
-            commandRegistry.register(TestCommand())
 
             TemporaryEventRegister().register()
             // AnvilWorldStrategy().load(javaClass.classLoader.getResource("bitch").path)

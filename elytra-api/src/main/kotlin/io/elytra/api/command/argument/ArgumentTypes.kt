@@ -1,5 +1,7 @@
 package io.elytra.api.command.argument
 
+import io.elytra.api.entity.Player
+
 class ArgumentTypes {
 
     companion object {

@@ -40,6 +40,7 @@ class TemporaryEventRegister : Registrable {
                 }
 
                 player.sendPacket(PlayerPositionAndLookMessage(player.position))
+                player.online = true
             }
     }
 }

@@ -87,6 +87,7 @@ class PlayPacket : BasicPacket("PLAY", 0x55) {
         outbound(ProtocolInfo.TITLE, TitleMessage::class.java, TitleCodec::class.java)
         outbound(ProtocolInfo.O_SPAWN_PLAYER, SpawnPlayerMessage::class.java, SpawnPlayerCodec::class.java)
         outbound(ProtocolInfo.O_SPAWN_POSITION, SpawnPositionMessage::class.java, SpawnPositionCodec::class.java)
+        outbound(ProtocolInfo.O_CHANGE_GAME_STATE, ChangeGameStateMessage::class.java, ChangeGameStateCodec::class.java)
         outbound(ProtocolInfo.O_ENTITY_ANIMATION, EntityAnimationMessage::class.java, EntityAnimationCodec::class.java)
     }
 }
