@@ -7,9 +7,9 @@ interface World : Tickable {
     val name: String
     val spawnPoint: Position
 
-    fun getChunkAt(x: Int, z: Int): Chunk?
+    fun getChunk(x: Int, z: Int): Chunk?
 
-    fun setChunkAt(x: Int, y: Int, z: Int, blockId: Int)
+    fun setChunk(x: Int, z: Int, chunk: Chunk)
 
     fun teleport(player: Player, position: Position)
 }

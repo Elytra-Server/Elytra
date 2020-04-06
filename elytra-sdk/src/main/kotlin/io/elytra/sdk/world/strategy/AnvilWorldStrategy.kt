@@ -9,11 +9,11 @@ class AnvilWorldStrategy : WorldLoadStrategy {
         TODO("Not implemented yet")
     }
 
-    private fun readRegion(file: File): List<ChunkColumn> {
+    private fun readRegion(file: File): List<Chunk> {
         TODO("Not implemented yet")
     }
 
-    private fun readChunk(nbt: NbtCompound): ChunkColumn {
+    private fun readChunk(nbt: NbtCompound): Chunk {
         TODO("Not implemented yet")
     }
 }

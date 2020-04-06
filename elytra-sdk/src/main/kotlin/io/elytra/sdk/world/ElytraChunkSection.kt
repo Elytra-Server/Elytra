@@ -1,38 +1,27 @@
 package io.elytra.sdk.world
 
-import io.elytra.api.world.Chunk
+import com.flowpowered.network.util.ByteBufUtils
+import io.elytra.api.world.ChunkSection
+import io.netty.buffer.ByteBuf
 
-class ElytraChunk() : Chunk {
+class ElytraChunkSection(
+    override val palette: List<Int> = listOf(0),
+    override val data: ByteArray = ByteArray(4096),
+    var nonAirBlocks: Int = 0
+) : ChunkSection {
 
-    override fun createColumns() {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getChunkAt(y: Int) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getBlockAt(x: Int, y: Int, z: Int) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getSkyLight(x: Int, y: Int, z: Int) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getBlockLight(x: Int, y: Int, z: Int) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setSkyLight(x: Int, y: Int, z: Int, skyLight: Int) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun setBlockLight(x: Int, y: Int, z: Int, blockLight: Int) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun getBiome(x: Int, z: Int) {
-        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
+    fun write(buffer: ByteBuf) {
+        buffer.writeShort(nonAirBlocks)
+        buffer.writeByte(8)
+        ByteBufUtils.writeVarInt(buffer, palette.size)
+        for (blockId in palette) {
+            ByteBufUtils.writeVarInt(buffer, blockId)
+        }
+        ByteBufUtils.writeVarInt(buffer, data.size / 8)
+        for (i in 0 until data.size / 8) {
+            for (j in 0 until 8) {
+                buffer.writeByte(data[i * 8 + 7 - j].toInt())
+            }
+        }
     }
 }

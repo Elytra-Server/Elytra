@@ -2,22 +2,19 @@ package io.elytra.sdk.world
 
 import io.elytra.api.entity.Player
 import io.elytra.api.world.Chunk
-import io.elytra.api.world.ChunkColumn
 import io.elytra.api.world.Position
 import io.elytra.api.world.World
 
 class ElytraWorld(
     override val spawnPoint: Position,
-    private val chunkColumns: List<ChunkColumn> = mutableListOf(),
+    private val chunks: MutableMap<Long, Chunk> = mutableMapOf(),
     override val name: String = ""
 ) : World {
 
-    override fun getChunkAt(x: Int, z: Int): Chunk? {
-        TODO("Not yet implemented")
-    }
+    override fun getChunk(x: Int, z: Int) = chunks[(x * 4000000 + z).toLong()] ?: ElytraChunk()
 
-    override fun setChunkAt(x: Int, y: Int, z: Int, blockId: Int) {
-        TODO("Not yet implemented")
+    override fun setChunk(x: Int, z: Int, chunk: Chunk) {
+        this.chunks[(x * 4000000 + z).toLong()] = chunk
     }
 
     override fun teleport(player: Player, position: Position) {

@@ -1,20 +1,18 @@
 package io.elytra.api.world
 
-interface Chunk {
+/**
+ * One of the 16 16x16x16 sections of a Chunk
+ */
+interface ChunkSection {
 
-    fun createColumns()
+    /**
+     * The block palette mapping. Maps block ids contained in this chunk section to the ids in the global palette
+     */
+    val palette: List<Int>
 
-    fun getChunkAt(y: Int)
-
-    fun getBlockAt(x: Int, y: Int, z: Int)
-
-    fun getSkyLight(x: Int, y: Int, z: Int)
-
-    fun getBlockLight(x: Int, y: Int, z: Int)
-
-    fun setSkyLight(x: Int, y: Int, z: Int, skyLight: Int)
-
-    fun setBlockLight(x: Int, y: Int, z: Int, blockLight: Int)
-
-    fun getBiome(x: Int, z: Int)
+    /**
+     * Variable size bit array containing the blocks ids from the local palette.
+     * TODO The size of elements in this array is variable, but for is fixed at 8 for testing
+     */
+    val data: ByteArray
 }

@@ -10,10 +10,12 @@ import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.events.PlayerJoinEvent
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.ChunkDataMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.HeldItemChangeMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.JoinGameMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.PlayerPositionAndLookMessage
 import io.elytra.sdk.network.protocol.packets.Protocol
+import io.elytra.sdk.world.ElytraChunk
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -57,6 +59,19 @@ class PlayerRegistry(
         session.send(PlayerPositionAndLookMessage(player.position))
 
         EventBus.post(PlayerJoinEvent(player))
+        val spawn = Elytra.server.mainWorld.spawnPoint
+
+        Thread {
+            for (x in -1 until ((spawn.x * 2) / 16 + 1).toInt()) {
+                for (z in -1 until ((spawn.z * 2) / 16 + 1).toInt()) {
+                    val chunk = Elytra.server.mainWorld.getChunk(x, z)
+                    session.send(ChunkDataMessage(x, z, chunk as ElytraChunk))
+                    Thread.sleep(50)
+                }
+            }
+        }.start()
+
+        session.send(PlayerPositionAndLookMessage(spawn))
     }
 
     override fun add(target: Player) {
