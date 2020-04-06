@@ -3,6 +3,7 @@ package io.elytra.sdk.command.registry
 import io.elytra.api.command.Command
 import io.elytra.api.command.CommandInfo
 import io.elytra.api.command.registry.CommandRegistry
+import io.elytra.sdk.commands.DebugCommand
 import io.elytra.sdk.commands.GamemodeCommand
 import io.elytra.sdk.commands.TestCommand
 import kotlin.reflect.KClass
@@ -41,6 +42,7 @@ class ElytraCommandRegistry : CommandRegistry {
     private fun registerDefaults() {
         register(TestCommand())
         register(GamemodeCommand())
+        register(DebugCommand())
     }
 
     class CommandAlreadyRegistered(commandName: String) : Exception("$commandName is already registered")

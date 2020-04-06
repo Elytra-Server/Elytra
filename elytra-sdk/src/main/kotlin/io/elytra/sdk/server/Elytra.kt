@@ -81,7 +81,7 @@ class Elytra private constructor(
             scheduler.start()
 
             TemporaryEventRegister().register()
-            mainWorld = ClassicWorldStrategy().load(javaClass.classLoader.getResource("Huge.cw").path) as ElytraWorld
+            mainWorld = ClassicWorldStrategy().load(javaClass.classLoader.getResource("Test2.cw").path) as ElytraWorld
             NetworkServer(serverDescriptor.options.port, sessionRegistry).start()
         } catch (e: BindException) {
             console.info(" ")

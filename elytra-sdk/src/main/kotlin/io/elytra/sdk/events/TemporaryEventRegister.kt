@@ -34,12 +34,12 @@ class TemporaryEventRegister : Registrable {
                     val onlinePlayerListData = AddPlayerData(
                         0,
                         onlinePlayer.gamemode,
-                        player.gameProfile, TextComponent(onlinePlayer.displayName)
+                        onlinePlayer.gameProfile, TextComponent(onlinePlayer.displayName)
                     )
-
-                    onlinePlayer.sendPacket(PlayerListItemMessage(Action.ADD_PLAYER, ImmutableList.of(onlinePlayerListData)))
+                    player.sendPacket(PlayerListItemMessage(Action.ADD_PLAYER, ImmutableList.of(onlinePlayerListData)))
 
                     if ((onlinePlayer as ElytraPlayer).id != (player as ElytraPlayer).id) {
+                        onlinePlayer.sendMessage("Send spawm")
                         val spawnPlayer = SpawnPlayerMessage(
                             player.id,
                             player.gameProfile.id,
@@ -59,6 +59,7 @@ class TemporaryEventRegister : Registrable {
                             onlinePlayer.position.pitch,
                             onlinePlayer.position.yaw)
                         player.sendPacket(spawnPlayerMe)
+                        player.sendMessage("Send spawm")
                     }
                 }
 

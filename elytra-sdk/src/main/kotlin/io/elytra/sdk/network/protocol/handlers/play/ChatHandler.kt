@@ -20,6 +20,6 @@ class ChatHandler : MessageHandler<NetworkSession, ChatMessage> {
 
         val content = message.content.replace('&', '\u00A7')
         val textComponent = TextComponent("${session.gameProfile?.name}: $content")
-        session.send(OutboundChatMessage(textComponent, ChatMode.PLAYER))
+        Elytra.sendPacketToAll(OutboundChatMessage(textComponent, ChatMode.PLAYER))
     }
 }

@@ -43,6 +43,8 @@ class PlayerRegistry(
         session.send(LoginSuccessMessage(gameProfile))
         session.protocol(Protocol.PLAY)
 
+        val spawn = Elytra.server.mainWorld.spawnPoint
+
         val joinMessage = JoinGameMessage(
             player.id,
             player.gamemode,
@@ -55,23 +57,23 @@ class PlayerRegistry(
             false)
 
         session.send(joinMessage)
-        session.send(HeldItemChangeMessage(4))
-        session.send(PlayerPositionAndLookMessage(player.position))
-
-        EventBus.post(PlayerJoinEvent(player))
-        val spawn = Elytra.server.mainWorld.spawnPoint
 
         Thread {
             for (x in -1 until ((spawn.x * 2) / 16 + 1).toInt()) {
                 for (z in -1 until ((spawn.z * 2) / 16 + 1).toInt()) {
                     val chunk = Elytra.server.mainWorld.getChunk(x, z)
                     session.send(ChunkDataMessage(x, z, chunk as ElytraChunk))
-                    Thread.sleep(50)
+                    Thread.sleep(10)
                 }
             }
-        }.start()
 
-        session.send(PlayerPositionAndLookMessage(spawn))
+            session.send(HeldItemChangeMessage(4))
+            session.send(PlayerPositionAndLookMessage(player.position))
+
+            EventBus.post(PlayerJoinEvent(player))
+
+            session.send(PlayerPositionAndLookMessage(spawn))
+        }.start()
     }
 
     override fun add(target: Player) {

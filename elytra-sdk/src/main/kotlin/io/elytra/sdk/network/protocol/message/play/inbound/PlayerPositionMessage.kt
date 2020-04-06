@@ -13,7 +13,5 @@ class PlayerPositionMessage(
         record.x = x
         record.y = feetY
         record.z = z
-
-        println("poosssss")
     }
 }
