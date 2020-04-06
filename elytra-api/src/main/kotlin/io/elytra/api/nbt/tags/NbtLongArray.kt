@@ -16,7 +16,7 @@ class NbtLongArray(name: String?, val value: LongArray) : NbtValueTag(name) {
     }
 
     object Codec : NbtTagCodec() {
-        override val id = 11
+        override val id = 12
 
         override fun serialize(obj: Any, stream: DataOutput) {
             if (obj !is NbtLongArray) throw IllegalArgumentException()

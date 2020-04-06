@@ -1,10 +1,14 @@
 package io.elytra.api.world
 
+import io.elytra.api.io.NibbleArray
+
+/**
+ * A chunk of size 16x256x16
+ */
 interface Chunk {
 
-    fun createColumns()
-
-    fun getChunkAt(y: Int)
+    val skyLight: NibbleArray
+    val blockLight: NibbleArray
 
     fun getBlockAt(x: Int, y: Int, z: Int)
 
@@ -16,5 +20,7 @@ interface Chunk {
 
     fun setBlockLight(x: Int, y: Int, z: Int, blockLight: Int)
 
-    fun getBiome(x: Int, z: Int)
+    fun getSectionAt(y: Int): ChunkSection
+
+    fun getBiome(x: Int, y: Int, z: Int)
 }

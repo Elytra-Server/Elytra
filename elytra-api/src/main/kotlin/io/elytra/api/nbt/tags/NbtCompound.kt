@@ -91,8 +91,11 @@ class NbtCompound(name: String?, tags: Iterable<NbtTag> = emptyList()) : NbtTag(
         }
         override fun serialize(obj: Any, stream: DataOutput) {
             if (obj !is NbtCompound) throw IllegalArgumentException()
+            stream.writeByte(NbtCompound.Codec.id)
+            stream.writeUTF(obj.name ?: "")
             obj.tags.values.forEach {
                 stream.writeByte(it.codec.id)
+                stream.writeUTF(it.name ?: "")
                 it.codec.serialize(it, stream)
             }
             stream.writeByte(NbtEnd.Codec.id)

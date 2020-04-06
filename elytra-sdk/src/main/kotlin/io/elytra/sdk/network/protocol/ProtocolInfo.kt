@@ -22,6 +22,7 @@ object ProtocolInfo {
     const val I_KEEP_ALIVE: Int = 0x0F
     const val I_TAB_COMPLETE: Int = 0x06
     const val O_TAB_COMPLETE: Int = 0x11
+    const val O_CHUNK_DATA: Int = 0x22
     const val O_CHAT: Int = 0x0F
     const val O_SPAWN_PLAYER = 0x05
     const val O_ENTITY_ANIMATION = 0x06

@@ -26,7 +26,7 @@ data class ElytraPlayer(
     override var position: Position
 ) : Player, ElytraEntity(0) {
 
-    override var gamemode: GameMode = GameMode.SURVIVAL
+    override var gamemode: GameMode = GameMode.CREATIVE
         set(value) {
             field = value
             sendPacket(ChangeGameStateMessage(ChangeGameStateMessage.Reason.GAMEMODE, value.value.toFloat()))
