@@ -56,19 +56,19 @@ class PlayPacket : BasicPacket("PLAY", 0x55) {
         inbound(ProtocolInfo.I_PLAYER_POSITION,
             PlayerPositionMessage::class.java,
             PlayerPositionCodec::class.java,
-            PlayerUpdateHandler::class.java
+            PlayerMovementHandler::class.java
         )
 
-        inbound(ProtocolInfo.I_PLAYER_UPDATE,
-            PlayerUpdateMessage::class.java,
+        inbound(ProtocolInfo.I_PLAYER_MOVEMENT,
+            PlayerMovementMessage::class.java,
             PlayerUpdateCodec::class.java,
-            PlayerUpdateHandler::class.java
+            PlayerMovementHandler::class.java
         )
 
         inbound(ProtocolInfo.I_PLAYER_LOOK,
             PlayerLookMessage::class.java,
             PlayerLookCodec::class.java,
-            PlayerUpdateHandler::class.java
+            PlayerMovementHandler::class.java
         )
 
         inbound(ProtocolInfo.I_TAB_COMPLETE, TabCompleteMessage::class.java, TabCompleteCodec::class.java, TabCompleteHandler::class.java)
@@ -78,7 +78,7 @@ class PlayPacket : BasicPacket("PLAY", 0x55) {
         outbound(ProtocolInfo.SERVER_DIFFICULTY, ServerDifficultyMessage::class.java, ServerDifficultyCodec::class.java)
         outbound(ProtocolInfo.O_CUSTOM_PAYLOAD, CustomPayloadMessage::class.java, CustomPayloadCodec::class.java)
         outbound(ProtocolInfo.JOIN_GAME, JoinGameMessage::class.java, JoinGameCodec::class.java)
-        outbound(ProtocolInfo.PLAYER_POS_LOOK, PlayerPositionAndLookMessage::class.java, PlayerPositionAndLookCodec::class.java)
+        outbound(ProtocolInfo.O_PLAYER_POS_LOOK, PlayerPositionAndLookMessage::class.java, PlayerPositionAndLookCodec::class.java)
         outbound(ProtocolInfo.ENTITY_STATUS, EntityStatusMessage::class.java, EntityStatusCodec::class.java)
         outbound(ProtocolInfo.PLAY_DISCONNECT, DisconnectMessage::class.java, DisconnectCodec::class.java)
         // outbound(ProtocolInfo.LOAD_CHUNK_DATA, ChunkDataMessage::class.java, ChunkDataCodec::class.java)

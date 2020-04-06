@@ -4,7 +4,7 @@ import com.flowpowered.network.Message
 import io.elytra.api.utils.Updatable
 import io.elytra.api.world.Position
 
-open class PlayerUpdateMessage(
+open class PlayerMovementMessage(
     val onGround: Boolean
 ) : Message, Updatable<Position> {
     override fun update(record: Position) {}

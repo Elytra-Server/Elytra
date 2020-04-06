@@ -6,7 +6,7 @@ class PlayerLookMessage(
     var yaw: Float = 0f,
     var pitch: Float,
     onGround: Boolean
-) : PlayerUpdateMessage(onGround) {
+) : PlayerMovementMessage(onGround) {
 
     init {
         this.yaw = (yaw % 360 + 360) % 360

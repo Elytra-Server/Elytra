@@ -8,7 +8,7 @@ class PlayerPositionCodec : Codec<PlayerPositionMessage> {
 
     override fun encode(buf: ByteBuf, message: PlayerPositionMessage): ByteBuf {
         buf.writeDouble(message.x)
-        buf.writeDouble(message.y)
+        buf.writeDouble(message.feetY)
         buf.writeDouble(message.z)
         buf.writeBoolean(message.onGround)
 

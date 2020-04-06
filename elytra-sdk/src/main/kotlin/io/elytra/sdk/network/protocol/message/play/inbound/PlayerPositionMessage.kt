@@ -4,14 +4,16 @@ import io.elytra.api.world.Position
 
 class PlayerPositionMessage(
     val x: Double,
-    val y: Double,
+    val feetY: Double,
     val z: Double,
     onGround: Boolean
-) : PlayerUpdateMessage(onGround) {
+) : PlayerMovementMessage(onGround) {
 
     override fun update(record: Position) {
         record.x = x
-        record.y = y
+        record.y = feetY
         record.z = z
+
+        println("poosssss")
     }
 }
