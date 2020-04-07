@@ -1,8 +1,9 @@
 package io.elytra.sdk.command.registry
 
 import io.elytra.api.command.Command
-import io.elytra.api.command.CommandInfo
+import io.elytra.api.command.CommandSpec
 import io.elytra.api.command.registry.CommandRegistry
+import io.elytra.sdk.commands.ChunkCommand
 import io.elytra.sdk.commands.DebugCommand
 import io.elytra.sdk.commands.GamemodeCommand
 import io.elytra.sdk.commands.TestCommand
@@ -20,7 +21,7 @@ class ElytraCommandRegistry : CommandRegistry {
     @Synchronized
     override fun register(command: Command) {
         val commandClazz: KClass<Command> = command::class as KClass<Command>
-        val commandInfo = commandClazz.findAnnotation<CommandInfo>()
+        val commandInfo = commandClazz.findAnnotation<CommandSpec>()
 
         require(commandInfo != null) { "Elytra command must have a @CommandInfo" }
 
@@ -43,6 +44,7 @@ class ElytraCommandRegistry : CommandRegistry {
         register(TestCommand())
         register(GamemodeCommand())
         register(DebugCommand())
+        register(ChunkCommand())
     }
 
     class CommandAlreadyRegistered(commandName: String) : Exception("$commandName is already registered")

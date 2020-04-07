@@ -23,11 +23,13 @@ interface Entity {
     var state: EntityState
     var namedTag: NbtCompound
 
-    var world: String
+    var world: World
     var position: Position
 
     fun teleport(position: Position)
+
     fun teleport(position: Position, world: World)
+
     fun kill()
 
     fun move(position: Position)

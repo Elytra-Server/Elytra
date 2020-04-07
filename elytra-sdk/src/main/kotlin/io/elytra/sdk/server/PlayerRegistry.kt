@@ -35,7 +35,8 @@ class PlayerRegistry(
             playerMode,
             session.isActive,
             banned = false,
-            position = Position.EMPTY
+            position = Position.EMPTY,
+            world = Elytra.server.mainWorld
         )
 
         add(player)
@@ -61,7 +62,7 @@ class PlayerRegistry(
         Thread {
             for (x in -1 until ((spawn.x * 2) / 16 + 1).toInt()) {
                 for (z in -1 until ((spawn.z * 2) / 16 + 1).toInt()) {
-                    val chunk = Elytra.server.mainWorld.getChunk(x, z)
+                    val chunk = Elytra.server.mainWorld.getChunkAt(x, z)
                     session.send(ChunkDataMessage(x, z, chunk as ElytraChunk))
                     Thread.sleep(10)
                 }

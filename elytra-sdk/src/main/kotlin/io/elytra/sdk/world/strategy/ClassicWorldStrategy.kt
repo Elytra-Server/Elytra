@@ -1,6 +1,5 @@
 package io.elytra.sdk.world.strategy
 
-import io.elytra.api.io.NibbleArray
 import io.elytra.api.nbt.NbtInputStream
 import io.elytra.api.nbt.tags.NbtByteArray
 import io.elytra.api.nbt.tags.NbtCompound
@@ -53,7 +52,7 @@ class ClassicWorldStrategy : WorldLoadStrategy {
 
         for (chunkX in 0 until chunksX) {
             for (chunkZ in 0 until chunksZ) {
-                world.setChunk(chunkX, chunkZ, convertToChunk(blockData, sizeX, sizeY, sizeZ, chunkX, chunkZ, chunkSections))
+                world.setChunkAt(chunkX, chunkZ, convertToChunk(blockData, sizeX, sizeY, sizeZ, chunkX, chunkZ, chunkSections))
             }
         }
 
@@ -63,10 +62,12 @@ class ClassicWorldStrategy : WorldLoadStrategy {
     private fun convertToChunk(blocks: ByteArray, sizeX: Int, sizeY: Int, sizeZ: Int, chunkX: Int, chunkZ: Int, chunkSections: Int): ElytraChunk {
         val xyzToIndex = { x: Int, y: Int, z: Int -> y * sizeX * sizeZ + z * sizeX + x }
         val sections = mutableListOf<ElytraChunkSection>()
+
         for (section in 0 until chunkSections) {
             sections.add(convertToChunkSection(blocks, chunkX, section, chunkZ, xyzToIndex))
         }
-        return ElytraChunk(NibbleArray(2048), NibbleArray(2048), sections, IntArray(1024) { 73 })
+
+        return ElytraChunk(chunkX, chunkZ, sections, IntArray(1024) { 73 })
     }
 
     private fun convertToChunkSection(blocks: ByteArray, chunkX: Int, chunkY: Int, chunkZ: Int, f: (Int, Int, Int) -> Int): ElytraChunkSection {
@@ -93,7 +94,7 @@ class ClassicWorldStrategy : WorldLoadStrategy {
             }
         }
 
-        return ElytraChunkSection(classicPalette, data, nonAirBlocks)
+        return ElytraChunkSection(classicPalette, data, nonAirBlocks = nonAirBlocks)
     }
 
     private fun decompressStream(compressed: ByteArray): ByteArray {

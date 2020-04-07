@@ -1,7 +1,7 @@
 package io.elytra.sdk.commands
 
-import io.elytra.api.command.CommandInfo
 import io.elytra.api.command.CommandSender
+import io.elytra.api.command.CommandSpec
 import io.elytra.api.command.ElytraCommand
 import io.elytra.api.command.argument.ArgumentList
 import io.elytra.api.command.argument.ArgumentTypes
@@ -10,7 +10,7 @@ import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.network.protocol.message.play.outbound.SpawnPlayerMessage
 import io.elytra.sdk.server.Elytra
 
-@CommandInfo("debug")
+@CommandSpec("debug")
 class DebugCommand : ElytraCommand() {
 
     init {

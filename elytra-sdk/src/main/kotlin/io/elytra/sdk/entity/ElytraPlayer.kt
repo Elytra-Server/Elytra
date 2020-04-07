@@ -8,6 +8,7 @@ import io.elytra.api.entity.Player
 import io.elytra.api.entity.PlayerMode
 import io.elytra.api.utils.asJson
 import io.elytra.api.world.Position
+import io.elytra.api.world.World
 import io.elytra.api.world.enums.GameMode
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.message.play.outbound.ChangeGameStateMessage
@@ -23,8 +24,9 @@ data class ElytraPlayer(
     override var mode: PlayerMode,
     override var online: Boolean,
     override var banned: Boolean,
-    override var position: Position
-) : Player, ElytraEntity(0) {
+    override var position: Position,
+    override var world: World
+) : Player {
 
     override var gamemode: GameMode = GameMode.CREATIVE
         set(value) {

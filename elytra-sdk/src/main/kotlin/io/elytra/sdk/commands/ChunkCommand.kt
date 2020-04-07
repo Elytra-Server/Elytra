@@ -4,19 +4,17 @@ import io.elytra.api.command.CommandSender
 import io.elytra.api.command.CommandSpec
 import io.elytra.api.command.ElytraCommand
 import io.elytra.api.command.argument.ArgumentList
-import io.elytra.api.command.argument.ArgumentTypes
 import io.elytra.api.entity.Player
 
-@CommandSpec("test")
-class TestCommand : ElytraCommand() {
-
-    init {
-        addArgument("testArgument", ArgumentTypes.STRING)
-    }
+@CommandSpec(label = "chunk")
+class ChunkCommand : ElytraCommand() {
 
     override fun execute(sender: CommandSender, arguments: ArgumentList) {
         val player = sender as Player
-        val argument = arguments.getValue<String>("testArgument")
-        player.sendMessage("Your argument is \"$argument\"")
+
+        if (player.world != null) {
+            val chunk = player.world.getChunkAt(player.position)
+            player.sendMessage("chunk at: ${chunk?.x} - ${chunk?.z}")
+        }
     }
 }

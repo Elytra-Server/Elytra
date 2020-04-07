@@ -4,6 +4,7 @@ import com.flowpowered.network.Message
 import com.mojang.authlib.GameProfile
 import io.elytra.api.command.CommandSender
 import io.elytra.api.world.Position
+import io.elytra.api.world.World
 import io.elytra.api.world.enums.GameMode
 
 interface Player : CommandSender {
@@ -16,6 +17,8 @@ interface Player : CommandSender {
 
     var gamemode: GameMode
     var position: Position
+
+    var world: World
 
     fun kick(reason: String)
 

@@ -1,7 +1,7 @@
 package io.elytra.sdk.commands
 
-import io.elytra.api.command.CommandInfo
 import io.elytra.api.command.CommandSender
+import io.elytra.api.command.CommandSpec
 import io.elytra.api.command.ElytraCommand
 import io.elytra.api.command.argument.ArgumentList
 import io.elytra.api.command.argument.ArgumentTypes
@@ -9,7 +9,7 @@ import io.elytra.api.entity.Player
 import io.elytra.api.world.enums.GameMode
 import io.elytra.sdk.utils.localeMessage
 
-@CommandInfo(label = "gamemode")
+@CommandSpec(label = "gamemode")
 class GamemodeCommand : ElytraCommand() {
 
     init {
