@@ -2,9 +2,9 @@ package io.elytra.api.registry
 
 interface Registry <T, K> {
 
-    fun add(target: T)
+    suspend fun add(target: T): Unit
 
-    fun remove(target: T)
+    suspend fun remove(target: T): Unit
 
     fun get(target: K): T?
 

@@ -18,11 +18,15 @@ import io.elytra.sdk.network.protocol.packets.Protocol
 import io.elytra.sdk.world.ElytraChunk
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
+import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
-class PlayerRegistry(
-    private var players: Set<Player> = ConcurrentHashMap.newKeySet(),
+class PlayerRegistry : Registry<Player, String> {
+
+    private val mutex = Mutex()
+    private var players: Set<Player> = ConcurrentHashMap.newKeySet()
     private var currentId: AtomicInteger = AtomicInteger(0)
-) : Registry<Player, String> {
 
     fun initialize(session: NetworkSession, gameProfile: GameProfile) {
         val playerMode = if (gameProfile.isComplete) PlayerMode.PREMIUM else PlayerMode.OFFLINE
@@ -39,7 +43,11 @@ class PlayerRegistry(
             world = Elytra.server.mainWorld
         )
 
-        add(player)
+        runBlocking {
+            withContext(Dispatchers.IO) {
+                add(player)
+            }
+        }
 
         session.send(LoginSuccessMessage(gameProfile))
         session.protocol(Protocol.PLAY)
@@ -59,40 +67,37 @@ class PlayerRegistry(
 
         session.send(joinMessage)
 
-        Thread {
+        GlobalScope.launch(Dispatchers.IO) {
             for (x in -1 until ((spawn.x * 2) / 16 + 1).toInt()) {
                 for (z in -1 until ((spawn.z * 2) / 16 + 1).toInt()) {
                     val chunk = Elytra.server.mainWorld.getChunkAt(x, z)
                     session.send(ChunkDataMessage(x, z, chunk as ElytraChunk))
-                    Thread.sleep(10)
                 }
             }
 
             session.send(HeldItemChangeMessage(4))
-            session.send(PlayerPositionAndLookMessage(player.position))
-
             EventBus.post(PlayerJoinEvent(player))
 
             session.send(PlayerPositionAndLookMessage(spawn))
-        }.start()
+        }
     }
 
-    override fun add(target: Player) {
+    override suspend fun add(target: Player): Unit = mutex.withLock {
         players = players.plusElement(target)
         currentId.getAndIncrement()
     }
 
-    override fun remove(target: Player) {
+    override suspend fun remove(target: Player): Unit = mutex.withLock {
         players = players.minusElement(target)
         currentId.getAndDecrement()
     }
 
-    override fun get(username: String): Player? {
-        return players.first { player -> player.gameProfile.name == username }
+    override fun get(target: String): Player? {
+        return players.first { player -> player.gameProfile.name == target }
     }
 
-    override fun has(username: String): Boolean {
-        return players.any { player -> player.gameProfile.name == username }
+    override fun has(target: String): Boolean {
+        return players.any { player -> player.gameProfile.name == target }
     }
 
     fun get(session: NetworkSession): Player? {

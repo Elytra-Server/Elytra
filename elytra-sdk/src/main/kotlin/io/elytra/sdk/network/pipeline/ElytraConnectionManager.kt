@@ -5,6 +5,8 @@ import com.flowpowered.network.session.Session
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.SessionRegistry
 import io.netty.channel.Channel
+import java.util.concurrent.atomic.AtomicReference
+import kotlinx.coroutines.runBlocking
 
 /**
  * Manages the connections within the netty channels
@@ -14,13 +16,22 @@ class ElytraConnectionManager(
 ) : ConnectionManager {
 
     override fun sessionInactivated(session: Session) {
-        sessionRegistry.remove(session as NetworkSession)
+        runBlocking {
+            sessionRegistry.remove(session as NetworkSession)
+        }
     }
 
     override fun newSession(c: Channel): Session {
-        val session = NetworkSession(c)
-        sessionRegistry.add(session)
-        return session
+        val atomicReference = AtomicReference<NetworkSession>()
+
+        runBlocking {
+            val newSession = NetworkSession(c)
+            atomicReference.set(newSession)
+
+            sessionRegistry.add(atomicReference.acquire)
+        }
+
+        return atomicReference.acquire
     }
 
     override fun shutdown() {

@@ -14,11 +14,11 @@ class SessionRegistry(
     private var sessions: ConcurrentMap<NetworkSession, Boolean> = ConcurrentHashMap()
 ) : Registry<NetworkSession, String>, Tickable {
 
-    override fun add(target: NetworkSession) {
+    override suspend fun add(target: NetworkSession) {
         sessions[target] = true
     }
 
-    override fun remove(target: NetworkSession) {
+    override suspend fun remove(target: NetworkSession) {
         sessions.remove(target)
     }
 

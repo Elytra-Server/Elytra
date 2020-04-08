@@ -27,6 +27,7 @@ import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingDeque
 import javax.crypto.SecretKey
 import kotlin.random.Random
+import kotlinx.coroutines.runBlocking
 
 class NetworkSession(
     channel: Channel,
@@ -63,7 +64,9 @@ class NetworkSession(
     }
 
     override fun disconnect() {
-        disconnect("No reason specified.")
+        runBlocking {
+            disconnect("No reason specified.")
+        }
     }
 
     override fun tick() {
@@ -146,11 +149,17 @@ class NetworkSession(
     }
 
     fun disconnect(reason: String) {
-        if (protocol == Protocol.PLAY) {
-            Elytra.server.playerRegistry.remove(Elytra.server.playerRegistry.get(gameProfile!!.name)!!)
+        val session = this
+
+        runBlocking {
+            if (protocol == Protocol.PLAY) {
+                val player = gameProfile?.name?.let { Elytra.server.playerRegistry.get(it) }!!
+                Elytra.server.playerRegistry.remove(player)
+            }
+
+            sendWithFuture(DisconnectMessage(reason))?.addListener(ChannelFutureListener.CLOSE)
+            Elytra.server.sessionRegistry.remove(session)
         }
-        sendWithFuture(DisconnectMessage(reason))?.addListener(ChannelFutureListener.CLOSE)
-        Elytra.server.sessionRegistry.remove(this)
     }
 
     private fun updatePipeline(key: String, handler: ChannelHandler) {
