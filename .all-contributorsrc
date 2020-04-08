@@ -5,6 +5,15 @@
   "imageSize": 100,
   "commit": false,
   "contributors": [
+    {
+      "login": "wiljafor1",
+      "name": "Wiljafor1",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/11604183?v=4",
+      "profile": "https://github.com/wiljafor1",
+      "contributions": [
+        "code"
+      ]
+    },
      {
       "login": "WinX64",
       "name": "Lucas",
