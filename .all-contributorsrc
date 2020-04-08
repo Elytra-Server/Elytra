@@ -5,7 +5,7 @@
   "imageSize": 100,
   "commit": false,
   "contributors": [
-    {
+     {
       "login": "TommyAlmeida",
       "name": "Tomas Almeida",
       "avatar_url": "https://avatars3.githubusercontent.com/u/13879589?v=4",
@@ -23,6 +23,16 @@
         "code"
       ]
     },
+    {
+      "login": "heroslender",
+      "name": "Bruno Martins",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/16785313?v=4",
+      "profile": "https://heroslender.com/",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    }
   ],
   "contributorsPerLine": 7,
   "projectName": "Elytra",
