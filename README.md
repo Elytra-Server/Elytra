@@ -1,4 +1,7 @@
 <img src="https://github.com/Elytra-Server.png?size=96" alt="Elytra" title="Elytra" align="right"/>
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Elytra
 
@@ -37,6 +40,18 @@ Elytra is written in Kotlin and utilizes Gradle 2 as build management tool. To c
 ## Contributors
 
 <table>
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/wiljafor1"><img src="https://avatars3.githubusercontent.com/u/11604183?v=4" width="100px;" alt=""/><br /><sub><b>Wiljafor1</b></sub></a><br /><a href="https://github.com/Elytra-Server/Elytra/commits?author=wiljafor1" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 <tr>
 <td align="center"><a href="https://github.com/TommyAlmeida"><img src="https://github.com/TommyAlmeida.png?size=100" alt="TommyAlmeida" align="center"/><br/><sub><b>Tomas Almeida</b></sub></a></td>
 <td align="center"><a href="https://github.com/wiljafor1"><img src="https://github.com/wiljafor1.png?size=100" alt="wiljafor1" align="center"/><br/><sub><b>Wiljafor1</b></sub></a></td>
