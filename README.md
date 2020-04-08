@@ -39,28 +39,20 @@ Elytra is written in Kotlin and utilizes Gradle 2 as build management tool. To c
 
 ## Contributors
 
-<table>
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
   <tr>
+    <td align="center"><a href="https://github.com/chicoferreira"><img src="https://avatars1.githubusercontent.com/u/36338391?v=4" width="100px;" alt=""/><br /><sub><b>chico ferreira</b></sub></a><br /><a href="https://github.com/Elytra-Server/Elytra/commits?author=chicoferreira" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/TommyAlmeida"><img src="https://avatars3.githubusercontent.com/u/13879589?v=4" width="100px;" alt=""/><br /><sub><b>Tomas Almeida</b></sub></a><br /><a href="https://github.com/Elytra-Server/Elytra/commits?author=TommyAlmeida" title="Code">💻</a></td>
     <td align="center"><a href="https://heroslender.com/"><img src="https://avatars1.githubusercontent.com/u/16785313?v=4" width="100px;" alt=""/><br /><sub><b>Bruno Martins</b></sub></a><br /><a href="https://github.com/Elytra-Server/Elytra/commits?author=heroslender" title="Code">💻</a> <a href="https://github.com/Elytra-Server/Elytra/commits?author=heroslender" title="Documentation">📖</a></td>
-  </tr>
+ </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-<tr>
-<td align="center"><a href="https://github.com/TommyAlmeida"><img src="https://github.com/TommyAlmeida.png?size=100" alt="TommyAlmeida" align="center"/><br/><sub><b>Tomas Almeida</b></sub></a></td>
-<td align="center"><a href="https://github.com/wiljafor1"><img src="https://github.com/wiljafor1.png?size=100" alt="wiljafor1" align="center"/><br/><sub><b>Wiljafor1</b></sub></a></td>
-<td align="center"><a href="https://github.com/JPereirax"><img src="https://github.com/JPereirax.png?size=100" alt="JPereirax" align="center"/><br/><sub><b>Jailson Pereira</b></sub></a></td>
-<td align="center"><a href="https://github.com/Heroslender"><img src="https://github.com/Heroslender.png?size=100" alt="Heroslender" align="center"/><br/><sub><b>Heroslender</b></sub></a></td>
-<td align="center"><a href="https://github.com/chicoferreira"><img src="https://github.com/chicoferreira.png?size=100" alt="Chico Ferreira" align="center"/><br/><sub><b>chico ferreira</b></sub></a></td>
-</tr>
-</table>
-
 
 ## Sponsors
 <a href="https://fluxcdn.com"><img src="https://i.imgur.com/jxdRt4M.gif"></a>

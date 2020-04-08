@@ -5,6 +5,24 @@
   "imageSize": 100,
   "commit": false,
   "contributors": [
+     {
+      "login": "TommyAlmeida",
+      "name": "Tomas Almeida",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/13879589?v=4",
+      "profile": "https://github.com/TommyAlmeida",
+      "contributions": [
+        "code"
+      ]
+    }, 
+    {
+      "login": "chicoferreira",
+      "name": "chico ferreira",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/36338391?v=4",
+      "profile": "https://github.com/chicoferreira",
+      "contributions": [
+        "code"
+      ]
+    },
     {
       "login": "heroslender",
       "name": "Bruno Martins",
