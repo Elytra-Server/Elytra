@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "TommyAlmeida",
+      "name": "Tomas Almeida",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/13879589?v=4",
+      "profile": "https://github.com/TommyAlmeida",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "Elytra",
+  "projectOwner": "Elytra-Server",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
