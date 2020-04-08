@@ -4,21 +4,24 @@ import io.elytra.api.registry.Registry
 import io.elytra.api.utils.Tickable
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 /**
  * Manages the connection sessions
  *
  * @see [io.elytra.sdk.network.NetworkSession]
  */
-class SessionRegistry(
-    private var sessions: ConcurrentMap<NetworkSession, Boolean> = ConcurrentHashMap()
-) : Registry<NetworkSession, String>, Tickable {
+class SessionRegistry : Registry<NetworkSession, String>, Tickable {
 
-    override suspend fun add(target: NetworkSession) {
+    private val sessions: ConcurrentMap<NetworkSession, Boolean> = ConcurrentHashMap()
+    private val mutex = Mutex()
+
+    override suspend fun add(target: NetworkSession) = mutex.withLock {
         sessions[target] = true
     }
 
-    override suspend fun remove(target: NetworkSession) {
+    override suspend fun remove(target: NetworkSession): Unit = mutex.withLock {
         sessions.remove(target)
     }
 
