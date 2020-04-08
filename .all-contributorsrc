@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "heroslender",
+      "name": "Bruno Martins",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/16785313?v=4",
+      "profile": "https://heroslender.com/",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "Elytra",
+  "projectOwner": "Elytra-Server",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
