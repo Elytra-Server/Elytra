@@ -47,6 +47,7 @@ Elytra is written in Kotlin and utilizes Gradle 2 as build management tool. To c
     <td align="center"><a href="https://github.com/chicoferreira"><img src="https://avatars1.githubusercontent.com/u/36338391?v=4" width="100px;" alt=""/><br /><sub><b>chico ferreira</b></sub></a><br /><a href="https://github.com/Elytra-Server/Elytra/commits?author=chicoferreira" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/TommyAlmeida"><img src="https://avatars3.githubusercontent.com/u/13879589?v=4" width="100px;" alt=""/><br /><sub><b>Tomas Almeida</b></sub></a><br /><a href="https://github.com/Elytra-Server/Elytra/commits?author=TommyAlmeida" title="Code">💻</a></td>
     <td align="center"><a href="https://heroslender.com/"><img src="https://avatars1.githubusercontent.com/u/16785313?v=4" width="100px;" alt=""/><br /><sub><b>Bruno Martins</b></sub></a><br /><a href="https://github.com/Elytra-Server/Elytra/commits?author=heroslender" title="Code">💻</a> <a href="https://github.com/Elytra-Server/Elytra/commits?author=heroslender" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/WinX64"><img src="https://avatars1.githubusercontent.com/u/6293922?v=4" width="100px;" alt=""/><br /><sub><b>Lucas</b></sub></a><br /><a href="https://github.com/Elytra-Server/Elytra/commits?author=WinX64" title="Code">💻</a></td>
  </tr>
 </table>
 
