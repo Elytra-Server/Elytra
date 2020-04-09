@@ -7,4 +7,6 @@ interface CommandRegistry {
     fun register(command: Command)
 
     fun getCommandByName(commandName: String): Command?
+
+    fun disableCommand(commandName: String)
 }

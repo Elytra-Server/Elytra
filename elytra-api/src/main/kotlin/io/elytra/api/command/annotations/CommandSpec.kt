@@ -1,4 +1,4 @@
-package io.elytra.api.command
+package io.elytra.api.command.annotations
 
 /**
  * Command meta information to define a command

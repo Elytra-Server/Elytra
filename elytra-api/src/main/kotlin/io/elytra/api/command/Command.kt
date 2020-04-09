@@ -1,14 +1,11 @@
 package io.elytra.api.command
 
-import io.elytra.api.command.argument.ArgumentContext
+import io.elytra.api.command.annotations.CommandArgument
 import io.elytra.api.command.argument.ArgumentList
-import io.elytra.api.command.argument.ArgumentType
 
 interface Command {
 
-    fun getArguments(): List<ArgumentContext<Any>>
-
-    fun addArgument(name: String, type: ArgumentType<*>, required: Boolean = true)
+    fun getArguments(): List<CommandArgument>
 
     fun execute(sender: CommandSender, arguments: ArgumentList)
 }

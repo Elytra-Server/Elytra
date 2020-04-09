@@ -2,24 +2,21 @@ package io.elytra.api.command.argument
 
 class ArgumentTypes {
 
-    companion object {
+    class Default : ArgumentType<String?> {
+        override fun parse(stringArgumentList: List<String>, index: Int): String? = stringArgumentList[index]
+    }
 
-        val STRING = object : ArgumentType<String?> {
-            override fun parse(stringArgumentList: List<String>, index: Int): String? = stringArgumentList[index]
-        }
+    class Integer : ArgumentType<Int?> {
+        override fun parse(stringArgumentList: List<String>, index: Int): Int? = stringArgumentList[index].toIntOrNull()
+    }
 
-        val INT = object : ArgumentType<Int?> {
-            override fun parse(stringArgumentList: List<String>, index: Int): Int? = stringArgumentList[index].toIntOrNull()
-        }
-
-        val JOINED_STRINGS = object : ArgumentType<String?> {
-            override fun parse(stringArgumentList: List<String>, index: Int): String? {
-                val stringBuilder: StringBuilder = StringBuilder()
-                for (valueIndex in index until stringArgumentList.size) {
-                    stringBuilder.append(stringArgumentList[valueIndex])
-                }
-                return stringBuilder.toString()
+    class JoinedString : ArgumentType<String?> {
+        override fun parse(stringArgumentList: List<String>, index: Int): String? {
+            val stringBuilder: StringBuilder = StringBuilder()
+            for (valueIndex in index until stringArgumentList.size) {
+                stringBuilder.append(stringArgumentList[valueIndex])
             }
+            return stringBuilder.toString()
         }
     }
 }
