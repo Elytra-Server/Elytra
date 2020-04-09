@@ -1,6 +1,5 @@
 package io.elytra.sdk.server
 
-import ch.qos.logback.classic.util.ContextInitializer
 import com.flowpowered.network.Message
 import com.mojang.authlib.minecraft.MinecraftSessionService
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
@@ -29,26 +28,33 @@ import io.elytra.sdk.world.strategy.ClassicWorldStrategy
 import java.net.BindException
 import java.net.Proxy
 import java.security.KeyPair
-import java.time.Instant
 import java.util.*
 import kotlin.system.exitProcess
 import org.slf4j.LoggerFactory
 
-class Elytra private constructor(
+class Elytra : Server {
+
+    private val commandRegistry: CommandRegistry = ElytraCommandRegistry()
+
+    val playerRegistry: PlayerRegistry = PlayerRegistry()
+
+    val sessionRegistry: SessionRegistry = SessionRegistry()
+
+    private val scheduler: Scheduler = Scheduler(sessionRegistry)
+
+    override lateinit var serverDescriptor: ServerDescriptor
+
+    lateinit var mainWorld: ElytraWorld
+
+    val keypair: KeyPair = cryptManager.generateKeyPair()
+
+    val commandHandler: CommandHandler = ElytraCommandHandler(commandRegistry)
+
+    val debug: Boolean = false
+
     val sessionService: MinecraftSessionService = (YggdrasilAuthenticationService(
         Proxy.NO_PROXY, UUID.randomUUID().toString()
-    )).createMinecraftSessionService(),
-    val playerRegistry: PlayerRegistry = PlayerRegistry(),
-    val sessionRegistry: SessionRegistry = SessionRegistry(),
-    val keypair: KeyPair = cryptManager.generateKeyPair(),
-    val debug: Boolean = true,
-    private val commandRegistry: CommandRegistry = ElytraCommandRegistry(),
-    val commandHandler: CommandHandler = ElytraCommandHandler(commandRegistry),
-    private val scheduler: Scheduler = Scheduler(sessionRegistry),
-    val startedAt: Instant = Instant.now()
-) : Server {
-    override lateinit var serverDescriptor: ServerDescriptor
-    lateinit var mainWorld: ElytraWorld
+    )).createMinecraftSessionService()
 
     companion object {
         val server = Elytra()
@@ -70,7 +76,6 @@ class Elytra private constructor(
 
     override fun boot() {
         try {
-            System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, "./logback.xml")
 
             console.info("Loading server configuration")
             loadConfigs()

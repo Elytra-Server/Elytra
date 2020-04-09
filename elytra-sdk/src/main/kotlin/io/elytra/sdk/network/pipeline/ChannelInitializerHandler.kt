@@ -21,13 +21,7 @@ class ChannelInitializerHandler(
 		 * The time in seconds which are elapsed before a client is disconnected due
 		 * to a read timeout.
 		 */
-        val readTimeout: Int = 20
-
-        /**
-		 * The time in seconds which are elapsed before a client is deemed idle due
-		 * to a write timeout.
-		 */
-        val writeIdleTimeout: Int = 15
+        val readTimeout = 20
 
         try {
             ch.config().setOption(ChannelOption.IP_TOS, 0x18)
@@ -39,7 +33,6 @@ class ChannelInitializerHandler(
             .addLast("framing", decoderHandler)
             .addLast("codecs", codecsHandler)
             .addLast("readtimeout", ReadTimeoutHandler(readTimeout))
-            // .addLast("writeidletimeout", IdleStateHandler(readTimeout, writeIdleTimeout, 0))
             .addLast("handler", messagesHandler)
     }
 }

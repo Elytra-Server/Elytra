@@ -41,9 +41,11 @@ internal class NetworkServer(
 
         val server = bootstrap.bind(port).sync()
 
+        val startedAt: Instant = Instant.now()
+
         if (server.isSuccess) {
             Elytra.console.info("&eServer running on port: $port")
-            val time = Duration.between(Elytra.server.startedAt, Instant.now()).toMillis()
+            val time = Duration.between(startedAt, Instant.now()).toMillis()
             Elytra.console.info("&aServer initialized in ${time / 10 / 100F}s! &7Ready for connections")
         }
 

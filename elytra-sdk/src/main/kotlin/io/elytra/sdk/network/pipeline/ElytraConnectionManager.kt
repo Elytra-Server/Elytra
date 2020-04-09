@@ -31,6 +31,7 @@ class ElytraConnectionManager(
             sessionRegistry.add(atomicReference.acquire)
         }
 
+        println("got new session ${atomicReference.acquire}")
         return atomicReference.acquire
     }
 

@@ -8,10 +8,12 @@ import com.mojang.authlib.GameProfile
 import io.elytra.api.utils.Asyncable
 import io.elytra.api.utils.Tickable
 import io.elytra.sdk.network.pipeline.CodecsHandler
+import io.elytra.sdk.network.pipeline.CompressionHandler
 import io.elytra.sdk.network.pipeline.EncryptionHandler
 import io.elytra.sdk.network.protocol.PacketProvider
 import io.elytra.sdk.network.protocol.message.play.KeepAliveMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.DisconnectMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.SetCompressionMessage
 import io.elytra.sdk.network.protocol.packets.BasicPacket
 import io.elytra.sdk.network.protocol.packets.HandshakePacket
 import io.elytra.sdk.network.protocol.packets.Protocol
@@ -30,29 +32,39 @@ import kotlin.random.Random
 import kotlinx.coroutines.runBlocking
 
 class NetworkSession(
-    channel: Channel,
-    var protocol: Protocol = Protocol.HANDSHAKE,
-    private var packetProvider: PacketProvider = PacketProvider(),
-    private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque(),
-    @Volatile private var disconnected: Boolean = false
+    channel: Channel
 ) : BasicSession(channel, HandshakePacket()), Tickable {
 
-    // TODO Refactor this and make the ping functional
-    private var connectionTimer: Int = 0
-    var sessionState: SessionState = SessionState.HELLO
     val verifyToken: ByteArray = Random.nextBytes(4)
-    var gameProfile: GameProfile? = null
-    var encrypted: Boolean = false
+
+    private var packetProvider: PacketProvider = PacketProvider()
+    private val messageQueue: BlockingQueue<Message> = LinkedBlockingDeque()
+
+    private var protocol: Protocol = Protocol.HANDSHAKE
+    var sessionState: SessionState = SessionState.HELLO
+
+    private var connectionTimer: Int = 0
     private var networkTickCount: Int = 0
+    private var ping: Int = 0
+
     private var keepAliveId: Long = 0
     private var lastPingTime: Long = 0
     private var lastSentPingPacket: Long = 0
-    var ping: Int = 0
+
+    var gameProfile: GameProfile? = null
+    private var encrypted: Boolean = false
+
+    @Volatile
+    private var disconnected: Boolean = false
+
+    @Volatile
+    private var compresssionSent = false
 
     override fun send(message: Message?) {
         if (message !is KeepAliveMessage) {
             Elytra.console.debug("OUT $message")
         }
+
         super.send(message)
     }
 
@@ -60,6 +72,7 @@ class NetworkSession(
         if (!isActive) {
             return null
         }
+
         return super.sendWithFuture(message)
     }
 
@@ -93,6 +106,7 @@ class NetworkSession(
                     send(KeepAliveMessage(this.keepAliveId))
                 }
             }
+            else -> println("No protocol available for tick ${protocol.name}")
         }
 
         var message: Message?
@@ -112,6 +126,14 @@ class NetworkSession(
             Protocol.STATUS -> setProtocol(packetProvider.statusPacket)
             Protocol.HANDSHAKE -> setProtocol(packetProvider.handshakePacket)
             else -> disconnect()
+        }
+    }
+
+    fun enableCompression(threshold: Int) {
+        if (!compresssionSent) {
+            send(SetCompressionMessage(threshold))
+            updatePipeline("compression", CompressionHandler(threshold))
+            compresssionSent = true
         }
     }
 
@@ -137,10 +159,12 @@ class NetworkSession(
         if (message !is KeepAliveMessage) {
             Elytra.console.debug("IN $message")
         }
+
         if (message is Asyncable) {
             super.messageReceived(message)
             return
         }
+
         messageQueue.add(message)
     }
 
@@ -153,8 +177,11 @@ class NetworkSession(
 
         runBlocking {
             if (protocol == Protocol.PLAY) {
-                val player = gameProfile?.name?.let { Elytra.server.playerRegistry.get(it) }!!
-                Elytra.server.playerRegistry.remove(player)
+                val player = gameProfile?.name?.let { Elytra.server.playerRegistry.get(it) }
+
+                if (player != null) {
+                    Elytra.server.playerRegistry.remove(player)
+                }
             }
 
             sendWithFuture(DisconnectMessage(reason))?.addListener(ChannelFutureListener.CLOSE)
@@ -174,9 +201,12 @@ class NetworkSession(
     // TODO Then put this somewhere else maybe
     private fun tryLogin() {
         if (!gameProfile!!.isComplete) {
-            gameProfile = GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + gameProfile!!.name.toLowerCase()).toByteArray(StandardCharsets.UTF_8)), gameProfile!!.name)
+            gameProfile =
+                GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + gameProfile!!.name.toLowerCase()).toByteArray(StandardCharsets.UTF_8)), gameProfile!!.name)
         }
+
         Elytra.server.playerRegistry.initialize(this, gameProfile!!)
+        enableCompression(9)
     }
 
     fun ping(id: Long) {

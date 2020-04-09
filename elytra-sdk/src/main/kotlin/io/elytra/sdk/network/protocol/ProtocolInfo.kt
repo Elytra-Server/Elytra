@@ -21,7 +21,9 @@ object ProtocolInfo {
     const val I_KEEP_ALIVE: Int = 0x0F
     const val I_TAB_COMPLETE: Int = 0x06
     const val O_TAB_COMPLETE: Int = 0x11
-    const val O_CHUNK_DATA: Int = 0x22
+    const val O_CHUNK_LOAD: Int = 0x22
+    const val O_UNLOAD_CHUNK: Int = 0x1E
+    const val O_SET_COMPRESSION: Int = 0x03
     const val O_CHAT: Int = 0x0F
     const val O_SPAWN_PLAYER = 0x05
     const val O_ENTITY_ANIMATION = 0x06
@@ -36,7 +38,6 @@ object ProtocolInfo {
     const val SERVER_DIFFICULTY: Int = 0x0E
     const val JOIN_GAME: Int = 0x26
     const val O_PLAYER_POS_LOOK: Int = 0x36
-    // const val LOAD_CHUNK_DATA: Int = 0x21
     const val ENTITY_STATUS: Int = 0x1C
     const val PLAY_DISCONNECT: Int = 0x1B
     const val PLAYER_LIST_ITEM: Int = 0x34

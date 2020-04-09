@@ -93,6 +93,7 @@ class PlayPacket : BasicPacket("PLAY", 0x55) {
         outbound(ProtocolInfo.O_ENTITY_ANIMATION, EntityAnimationMessage::class.java, EntityAnimationCodec::class.java)
         outbound(ProtocolInfo.O_ENTITY_TELEPORT, EntityTeleportMessage::class.java, EntityTeleportCodec::class.java)
         outbound(ProtocolInfo.O_TAB_COMPLETE, TabCompleteResponseMessage::class.java, TabCompleteResponseCodec::class.java)
-        outbound(ProtocolInfo.O_CHUNK_DATA, ChunkDataMessage::class.java, ChunkDataCodec::class.java)
+        outbound(ProtocolInfo.O_CHUNK_LOAD, ChunkDataMessage::class.java, ChunkDataCodec::class.java)
+        outbound(ProtocolInfo.O_UNLOAD_CHUNK, UnloadChunkMessage::class.java, UnloadChunkCodec::class.java)
     }
 }
