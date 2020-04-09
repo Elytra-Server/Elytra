@@ -106,7 +106,6 @@ class NetworkSession(
                     send(KeepAliveMessage(this.keepAliveId))
                 }
             }
-            else -> println("No protocol available for tick ${protocol.name}")
         }
 
         var message: Message?
