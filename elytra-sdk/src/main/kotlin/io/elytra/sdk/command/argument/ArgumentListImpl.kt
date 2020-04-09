@@ -1,20 +1,20 @@
 package io.elytra.sdk.command.argument
 
-import io.elytra.api.command.argument.Argument
+import io.elytra.api.command.argument.ArgumentContainer
 import io.elytra.api.command.argument.ArgumentList
 
 class ArgumentListImpl : ArgumentList {
 
-    private val map: MutableMap<String, Argument<Any>> = HashMap()
-    private val list: MutableList<Argument<Any>> = ArrayList()
+    private val map: MutableMap<String, ArgumentContainer<Any>> = HashMap()
+    private val list: MutableList<ArgumentContainer<Any>> = ArrayList()
 
-    override fun <T> getArgument(argumentContextName: String): Argument<T> = map[argumentContextName] as Argument<T>
+    override fun <T> getArgument(argumentContextName: String): ArgumentContainer<T> = map[argumentContextName] as ArgumentContainer<T>
 
-    override fun <T> getArgument(argumentIndex: Int): Argument<T> = list[argumentIndex] as Argument<T>
+    override fun <T> getArgument(argumentIndex: Int): ArgumentContainer<T> = list[argumentIndex] as ArgumentContainer<T>
 
-    override fun <T> getUnrequiredArgument(argumentContextName: String): Argument<T>? = map[argumentContextName] as Argument<T>?
+    override fun <T> getUnrequiredArgument(argumentContextName: String): ArgumentContainer<T>? = map[argumentContextName] as ArgumentContainer<T>?
 
-    override fun <T> getUnrequiredArgument(argumentIndex: Int): Argument<T>? = list[argumentIndex] as Argument<T>?
+    override fun <T> getUnrequiredArgument(argumentIndex: Int): ArgumentContainer<T>? = list[argumentIndex] as ArgumentContainer<T>?
 
     override fun <T> getValue(argumentContextName: String): T = getArgument<T>(argumentContextName).value
 
@@ -24,14 +24,14 @@ class ArgumentListImpl : ArgumentList {
 
     override fun <T> getUnrequiredValue(argumentIndex: Int): T? = getUnrequiredArgument<T>(argumentIndex)?.value
 
-    override fun getAll(): List<Argument<*>> = list
+    override fun getAll(): List<ArgumentContainer<*>> = list
 
-    fun add(argument: Argument<Any>) {
-        map[argument.context.name] = argument
-        list.add(argument)
+    fun add(argumentContainer: ArgumentContainer<Any>) {
+        map[argumentContainer.context.name] = argumentContainer
+        list.add(argumentContainer)
     }
 
-    operator fun plusAssign(argument: Argument<Any>) {
-        add(argument)
+    operator fun plusAssign(argumentContainer: ArgumentContainer<Any>) {
+        add(argumentContainer)
     }
 }

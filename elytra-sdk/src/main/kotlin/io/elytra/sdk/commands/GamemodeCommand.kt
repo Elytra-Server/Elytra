@@ -1,6 +1,6 @@
 package io.elytra.sdk.commands
 
-import io.elytra.api.command.CommandSender
+import io.elytra.api.command.CommandIssuer
 import io.elytra.api.command.ElytraCommand
 import io.elytra.api.command.annotations.CommandArgument
 import io.elytra.api.command.annotations.CommandSpec
@@ -14,8 +14,8 @@ import io.elytra.sdk.utils.localeMessage
 class GamemodeCommand : ElytraCommand() {
 
     @CommandArgument("type", ArgumentTypes.Default::class)
-    override fun execute(sender: CommandSender, arguments: ArgumentList) {
-        val player = sender as Player
+    override fun execute(issuer: CommandIssuer, arguments: ArgumentList) {
+        val player = issuer as Player
         val arg = arguments.getValue<String>(0)
 
         val gamemode = GameMode.get(arg)

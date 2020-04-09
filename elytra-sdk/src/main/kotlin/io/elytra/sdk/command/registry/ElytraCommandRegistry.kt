@@ -28,11 +28,11 @@ class ElytraCommandRegistry : CommandRegistry {
 
         val elytraCommand = command as ElytraCommand
 
-        val executeFun = commandClazz.declaredFunctions.first { it.name == "execute" }
+        val executeFun = commandClazz.declaredFunctions.first { it.name.toLowerCase() == "execute" }
+
         for (annotation in executeFun.annotations) {
             if (annotation is CommandArgument) {
-                val commandArgument = annotation
-                elytraCommand.addArgument(commandArgument)
+                elytraCommand.addArgument(annotation)
             }
         }
 

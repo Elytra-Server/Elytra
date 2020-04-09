@@ -43,7 +43,7 @@ class PlayerRegistry : Registry<Player, String> {
             world = Elytra.server.mainWorld
         )
 
-        runBlocking {
+        runBlocking(CoroutineName("player-registry-worker")) {
             withContext(Dispatchers.IO) {
                 add(player)
             }

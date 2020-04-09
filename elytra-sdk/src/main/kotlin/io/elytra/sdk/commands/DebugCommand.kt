@@ -1,6 +1,6 @@
 package io.elytra.sdk.commands
 
-import io.elytra.api.command.CommandSender
+import io.elytra.api.command.CommandIssuer
 import io.elytra.api.command.ElytraCommand
 import io.elytra.api.command.annotations.CommandArgument
 import io.elytra.api.command.annotations.CommandSpec
@@ -15,8 +15,8 @@ import io.elytra.sdk.server.Elytra
 class DebugCommand : ElytraCommand() {
 
     @CommandArgument("spawn", ArgumentTypes.Default::class)
-    override fun execute(sender: CommandSender, arguments: ArgumentList) {
-        val player = sender as ElytraPlayer
+    override fun execute(issuer: CommandIssuer, arguments: ArgumentList) {
+        val player = issuer as ElytraPlayer
         Elytra.players().forEach { onlinePlayers: Player ->
             if ((onlinePlayers as ElytraPlayer).id != player.id) {
                 player.sendMessage("KABUM! KRL")

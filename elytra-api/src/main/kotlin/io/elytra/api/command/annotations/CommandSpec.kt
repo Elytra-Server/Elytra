@@ -10,5 +10,6 @@ package io.elytra.api.command.annotations
 @Retention(AnnotationRetention.RUNTIME)
 annotation class CommandSpec(
     val label: String,
-    val usage: String = ""
+    val usage: String = "",
+    val aliases: Array<String> = [""]
 )

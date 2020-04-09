@@ -1,8 +1,8 @@
 package io.elytra.sdk.command.handler
 
 import io.elytra.api.command.Command
-import io.elytra.api.command.CommandSender
-import io.elytra.api.command.argument.Argument
+import io.elytra.api.command.CommandIssuer
+import io.elytra.api.command.argument.ArgumentContainer
 import io.elytra.api.command.argument.ArgumentType
 import io.elytra.api.command.handler.CommandHandler
 import io.elytra.api.command.registry.CommandRegistry
@@ -18,13 +18,13 @@ class ElytraCommandHandler(
 
     private val argumentClassTypePool: ArgumentClassTypePool = ArgumentClassTypePool()
 
-    override fun handle(sender: CommandSender, message: String) {
+    override fun handle(issuer: CommandIssuer, message: String) {
         if (!message.startsWith(ElytraConsts.COMMAND_PREFIX)) return
 
         val messageWithoutPrefix = message.substring(1)
 
         if (messageWithoutPrefix.isEmpty()) {
-            sender.localeMessage("command.not.found")
+            issuer.localeMessage("command.not.found")
             return
         }
 
@@ -35,7 +35,7 @@ class ElytraCommandHandler(
         val command: Command? = commandRegistry.getCommandByName(commandName)
 
         if (command == null) {
-            sender.localeMessage("command.not.found")
+            issuer.localeMessage("command.not.found")
             return
         }
 
@@ -46,7 +46,7 @@ class ElytraCommandHandler(
         val stringArgumentList = messageArray.subList(1, messageArray.size)
 
         if (stringArgumentList.size < requiredArgumentNumber) {
-            sender.localeMessage("command.wrong.usage")
+            issuer.localeMessage("command.wrong.usage")
             return
         }
 
@@ -55,18 +55,18 @@ class ElytraCommandHandler(
             val argumentValue = type.parse(stringArgumentList, index)
 
             if (argumentValue != null) {
-                argumentList += Argument(argumentValue, commandArgument)
+                argumentList += ArgumentContainer(argumentValue, commandArgument)
                 continue
             }
 
             if (commandArgument.required) {
-                sender.localeMessage("command.couldnt.parse.argument") {
+                issuer.localeMessage("command.couldnt.parse.argument") {
                     with("argumentName", commandArgument.name)
                 }
             }
         }
         try {
-            command.execute(sender, argumentList)
+            command.execute(issuer, argumentList)
         } catch (exception: Exception) {
             throw CommandException(message, exception)
         }

@@ -2,12 +2,12 @@ package io.elytra.api.entity
 
 import com.flowpowered.network.Message
 import com.mojang.authlib.GameProfile
-import io.elytra.api.command.CommandSender
+import io.elytra.api.command.CommandIssuer
 import io.elytra.api.world.Position
 import io.elytra.api.world.World
 import io.elytra.api.world.enums.GameMode
 
-interface Player : CommandSender {
+interface Player : CommandIssuer {
     var displayName: String
     var gameProfile: GameProfile
 

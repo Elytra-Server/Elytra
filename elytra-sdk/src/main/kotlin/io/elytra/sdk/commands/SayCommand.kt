@@ -1,6 +1,6 @@
 package io.elytra.sdk.commands
 
-import io.elytra.api.command.CommandSender
+import io.elytra.api.command.CommandIssuer
 import io.elytra.api.command.ElytraCommand
 import io.elytra.api.command.annotations.CommandSpec
 import io.elytra.api.command.argument.ArgumentList
@@ -8,6 +8,6 @@ import io.elytra.api.command.argument.ArgumentList
 @CommandSpec(label = "say")
 class SayCommand : ElytraCommand() {
 
-    override fun execute(sender: CommandSender, arguments: ArgumentList) {
+    override fun execute(issuer: CommandIssuer, arguments: ArgumentList) {
     }
 }
