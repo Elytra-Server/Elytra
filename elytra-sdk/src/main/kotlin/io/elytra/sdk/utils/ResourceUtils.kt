@@ -1,8 +1,8 @@
 package io.elytra.sdk.utils
 
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
-import java.io.IOException
 
 object ResourceUtils {
 
@@ -14,7 +14,7 @@ object ResourceUtils {
         }
 
         val inputStream = javaClass.classLoader.getResourceAsStream(resource.removePrefix("./"))
-            ?: throw IOException("Could not find the resource '$resource'")
+            ?: throw FileNotFoundException("Could not find the resource '$resource'")
 
         // Make sure parent directory exists
         outputFile.parentFile.mkdirs()

@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import io.elytra.sdk.utils.ResourceUtils
 import java.io.*
-import java.util.logging.Level
 
 open class JsonConfigurationFile(var name: String) {
     companion object {
@@ -72,20 +71,18 @@ open class JsonConfigurationFile(var name: String) {
         val parent = configFile.parentFile
         if (!parent.exists()) {
             if (!parent.mkdirs()) {
-                log(Level.SEVERE, "Ocurreu um erro ao criar a config!")
-                return
+                throw IOException("Failed to create the directory ${parent.absolutePath} for the file ${configFile.name}")
             }
         }
         if (!configFile.exists()) {
             try {
                 ResourceUtils.saveResource(configFile.name)
-            } catch (e: IllegalArgumentException) {
+            } catch (e: FileNotFoundException) {
+                // File not found in the jar, create a blank one
+                if (!configFile.createNewFile()) {
+                    throw IOException("Failed to create the file ${configFile.name}")
+                }
             }
-            log(Level.WARNING, "A config \"" + configFile.name + "\" não foi encontrada, a criar uma nova...")
-            if (configFile.createNewFile())
-                log(Level.INFO, "A config foi criada com sucesso!")
-            else
-                log(Level.SEVERE, "Ocurreu um erro ao criar a config!")
         }
     }
 
@@ -101,9 +98,5 @@ open class JsonConfigurationFile(var name: String) {
         } catch (e: IOException) {
             empty
         }
-    }
-
-    private fun log(logLevel: Level, msg: String) {
-        println("[JsonConfiguration] $msg")
     }
 }
