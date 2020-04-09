@@ -1,3 +1,5 @@
 package io.elytra.api.command.argument
 
-class Argument<T>(val value: T, val context: ArgumentContext<T>)
+import io.elytra.api.command.annotations.CommandArgument
+
+class Argument<T>(val value: T, val context: CommandArgument)

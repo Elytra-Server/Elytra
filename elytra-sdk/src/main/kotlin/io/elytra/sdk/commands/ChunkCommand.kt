@@ -1,8 +1,8 @@
 package io.elytra.sdk.commands
 
 import io.elytra.api.command.CommandSender
-import io.elytra.api.command.CommandSpec
 import io.elytra.api.command.ElytraCommand
+import io.elytra.api.command.annotations.CommandSpec
 import io.elytra.api.command.argument.ArgumentList
 import io.elytra.api.entity.Player
 
