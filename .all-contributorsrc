@@ -14,7 +14,7 @@
         "code"
       ]
     },
-     {
+    {
       "login": "WinX64",
       "name": "Lucas",
       "avatar_url": "https://avatars1.githubusercontent.com/u/6293922?v=4",
@@ -22,8 +22,8 @@
       "contributions": [
         "code"
       ]
-     },
-     {
+    },
+    {
       "login": "TommyAlmeida",
       "name": "Tomas Almeida",
       "avatar_url": "https://avatars3.githubusercontent.com/u/13879589?v=4",
@@ -31,7 +31,7 @@
       "contributions": [
         "code"
       ]
-    }, 
+    },
     {
       "login": "chicoferreira",
       "name": "chico ferreira",
@@ -50,7 +50,7 @@
         "code",
         "doc"
       ]
-     },
+    }
   ],
   "contributorsPerLine": 7,
   "projectName": "Elytra",
