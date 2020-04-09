@@ -18,8 +18,12 @@ open class JsonConfigurationFile(var name: String) {
 
         fun saveToConfig(value: Any, filePath: String) {
             val file = File(filePath)
-            if (!file.exists()) {
-                throw IOException("Could not find the file $filePath")
+            val parent = file.parentFile
+            if (!parent.exists() && !parent.mkdirs()) {
+                throw IOException("Failed to create the directory ${parent.absolutePath} for the file ${file.name}")
+            }
+            if (!file.exists() && !file.createNewFile()) {
+                throw IOException("Failed to create the file ${file.name}")
             }
 
             OutputStreamWriter(FileOutputStream(file), "UTF-8")
