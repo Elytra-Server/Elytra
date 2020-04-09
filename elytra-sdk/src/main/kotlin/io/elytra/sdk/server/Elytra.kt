@@ -33,11 +33,10 @@ import kotlin.system.exitProcess
 import org.slf4j.LoggerFactory
 
 class Elytra : Server {
+    val startedAt: Long = System.currentTimeMillis()
 
     private val commandRegistry: CommandRegistry = ElytraCommandRegistry()
-
     val playerRegistry: PlayerRegistry = PlayerRegistry()
-
     val sessionRegistry: SessionRegistry = SessionRegistry()
 
     private val scheduler: Scheduler = Scheduler(sessionRegistry)
@@ -85,7 +84,7 @@ class Elytra : Server {
             scheduler.start()
 
             TemporaryEventRegister().register()
-            mainWorld = ClassicWorldStrategy().load(javaClass.classLoader.getResource("Test2.cw").path) as ElytraWorld
+            mainWorld = ClassicWorldStrategy().load(javaClass.classLoader!!.getResource("Test2.cw")!!.path) as ElytraWorld
             NetworkServer(serverDescriptor.options.port, sessionRegistry).start()
         } catch (e: BindException) {
             console.info(" ")
