@@ -16,6 +16,16 @@ open class JsonConfigurationFile(var name: String) {
             .disableHtmlEscaping()
             .create()
 
+        fun saveToConfig(value: Any, filePath: String) {
+            val file = File(filePath)
+            if (!file.exists()) {
+                throw IOException("Could not find the file $filePath")
+            }
+
+            OutputStreamWriter(FileOutputStream(file), "UTF-8")
+                .use { writer -> gson.toJson(value, writer) }
+        }
+
         inline fun <reified T> getConfig(filePath: String): T {
             val file = File(filePath)
             if (!file.exists()) {

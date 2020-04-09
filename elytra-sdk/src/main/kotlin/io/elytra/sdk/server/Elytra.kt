@@ -12,7 +12,6 @@ import io.elytra.api.server.ServerDescriptor
 import io.elytra.sdk.command.handler.ElytraCommandHandler
 import io.elytra.sdk.command.registry.ElytraCommandRegistry
 import io.elytra.sdk.entity.ElytraPlayer
-import io.elytra.sdk.events.TemporaryEventRegister
 import io.elytra.sdk.io.ElytraConsole
 import io.elytra.sdk.io.config.JsonConfigurationFile
 import io.elytra.sdk.network.NetworkServer
@@ -24,7 +23,6 @@ import io.elytra.sdk.scheduler.Scheduler
 import io.elytra.sdk.utils.ElytraConsts
 import io.elytra.sdk.utils.ResourceUtils
 import io.elytra.sdk.world.ElytraWorld
-import io.elytra.sdk.world.strategy.ClassicWorldStrategy
 import java.net.BindException
 import java.net.Proxy
 import java.security.KeyPair
@@ -76,7 +74,6 @@ class Elytra : Server {
 
     override fun boot() {
         try {
-
             console.info("Loading server configuration")
             loadConfigs()
 
@@ -85,8 +82,9 @@ class Elytra : Server {
             PacketProvider()
             scheduler.start()
 
-            TemporaryEventRegister().register()
-            mainWorld = ClassicWorldStrategy().load(javaClass.classLoader.getResource("Test2.cw").path) as ElytraWorld
+//            TemporaryEventRegister().register()
+//            mainWorld = ClassicWorldStrategy().load(javaClass.classLoader.getResource("Test2.cw").path) as ElytraWorld
+            println(serverDescriptor.options.port)
             NetworkServer(serverDescriptor.options.port, sessionRegistry).start()
         } catch (e: BindException) {
             console.info(" ")
@@ -110,6 +108,12 @@ class Elytra : Server {
     private fun loadConfigs() {
         ResourceUtils.saveResource("server.json", ElytraConsts.SERVER_CONFIG_PATH, false)
 
-        serverDescriptor = JsonConfigurationFile.getConfig(ElytraConsts.SERVER_CONFIG_PATH)
+        val serverDescriptor: ServerDescriptor = JsonConfigurationFile.getConfig(ElytraConsts.SERVER_CONFIG_PATH)
+        this.serverDescriptor = serverDescriptor.copy(motd = serverDescriptor.motd.copy(
+            description = serverDescriptor.motd.description.replace('&', '§'),
+            pingText = serverDescriptor.motd.pingText.replace('&', '§')
+        ))
+
+        JsonConfigurationFile.saveToConfig(serverDescriptor, ElytraConsts.SERVER_CONFIG_PATH)
     }
 }

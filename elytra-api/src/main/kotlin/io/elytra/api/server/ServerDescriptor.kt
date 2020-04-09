@@ -1,7 +1,5 @@
 package io.elytra.api.server
 
-import io.elytra.api.server.motd.Motd
-
 data class WorldPojo(
     val initialWorld: String = "world",
     val renderDistance: Int = 20,
@@ -15,11 +13,16 @@ data class ServerOptionsPojo(
     val eulaCheck: Boolean = false
 )
 
+data class Motd(
+    val description: String = "A minecraft server",
+    val pingText: String = "Elytra 1.15.2"
+)
+
 /**
  * Describes the server settings setted on the file server.json
  */
 data class ServerDescriptor(
-    var motd: Motd,
     val options: ServerOptionsPojo,
-    val world: WorldPojo
+    val world: WorldPojo,
+    var motd: Motd
 )
