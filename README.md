@@ -57,6 +57,16 @@ Elytra is written in Kotlin and utilizes Gradle 2 as build management tool. To c
 ## Sponsors
 <a href="https://fluxcdn.com"><img src="https://i.imgur.com/jxdRt4M.gif"></a>
 
+[![YourKit](https://www.yourkit.com/images/yklogo.png)](https://www.yourkit.com/java/profiler/)
+
+We are proudly using the YourKit Java Profiler to improve the performance and find high memory usage. Thank you for this amazing tool and we can fully recommend it to all Java developers! 
+
+YourKit supports open source projects with innovative and intelligent tools
+for monitoring and profiling Java and .NET applications.
+YourKit is the creator of <a href="https://www.yourkit.com/java/profiler/">YourKit Java Profiler</a>,
+<a href="https://www.yourkit.com/.net/profiler/">YourKit .NET Profiler</a>,
+and <a href="https://www.yourkit.com/youmonitor/">YourKit YouMonitor</a>.
+
 ## Donate
 <a href="https://www.buymeacoffee.com/RFxKDB3" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/lato-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>
 
