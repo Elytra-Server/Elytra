@@ -6,7 +6,6 @@ import io.netty.channel.ChannelException
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.ChannelOption
 import io.netty.channel.socket.SocketChannel
-import io.netty.handler.timeout.ReadTimeoutHandler
 
 class ChannelInitializerHandler(
     private val connectionManager: ConnectionManager
@@ -32,7 +31,7 @@ class ChannelInitializerHandler(
         ch.pipeline()
             .addLast("framing", decoderHandler)
             .addLast("codecs", codecsHandler)
-            .addLast("readtimeout", ReadTimeoutHandler(readTimeout))
+            // .addLast("readtimeout", ReadTimeoutHandler(readTimeout))
             .addLast("handler", messagesHandler)
     }
 }

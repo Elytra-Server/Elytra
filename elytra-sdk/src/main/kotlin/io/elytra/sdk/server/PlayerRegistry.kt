@@ -67,19 +67,19 @@ class PlayerRegistry : Registry<String, Player> {
 
         session.send(joinMessage)
 
-        GlobalScope.launch(Dispatchers.IO) {
+        GlobalScope.launch(Dispatchers.Default) {
             for (x in -1 until ((spawn.x * 2) / 16 + 1).toInt()) {
                 for (z in -1 until ((spawn.z * 2) / 16 + 1).toInt()) {
                     val chunk = Elytra.server.mainWorld.getChunkAt(x, z)
                     session.send(ChunkDataMessage(x, z, chunk as ElytraChunk))
                 }
             }
-
-            session.send(HeldItemChangeMessage(4))
-            EventBus.post(PlayerJoinEvent(player))
-
-            session.send(PlayerPositionAndLookMessage(spawn))
         }
+
+        session.send(HeldItemChangeMessage(4))
+        EventBus.post(PlayerJoinEvent(player))
+
+        session.send(PlayerPositionAndLookMessage(spawn))
     }
 
     override suspend fun add(target: Player): Unit = mutex.withLock {
