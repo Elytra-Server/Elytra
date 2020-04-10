@@ -7,7 +7,7 @@ import io.elytra.api.events.EventBus
 import io.elytra.api.registry.Registry
 import io.elytra.api.world.Position
 import io.elytra.sdk.entity.ElytraPlayer
-import io.elytra.sdk.events.PlayerJoinEvent
+import io.elytra.sdk.events.player.PlayerJoinEvent
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.ChunkDataMessage

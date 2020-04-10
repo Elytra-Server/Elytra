@@ -28,7 +28,7 @@ class ElytraConsole(private val logger: Logger) : ConsoleSender {
     private fun send(logLevel: LogLevel, msg: String) {
         val replacedMsg = AnsiColors.replaceColors("$msg&r")
 
-        when(logLevel){
+        when (logLevel) {
             INFO -> logger.info(replacedMsg)
             ERROR -> logger.error(replacedMsg)
             WARN -> logger.warn(replacedMsg)

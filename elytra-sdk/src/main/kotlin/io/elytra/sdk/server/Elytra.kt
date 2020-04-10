@@ -2,15 +2,11 @@ package io.elytra.sdk.server
 
 import com.flowpowered.network.Message
 import com.mojang.authlib.minecraft.MinecraftSessionService
-import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
 import io.elytra.api.command.handler.CommandHandler
-import io.elytra.api.command.registry.CommandRegistry
 import io.elytra.api.entity.Player
 import io.elytra.api.io.ConsoleSender
 import io.elytra.api.server.Server
 import io.elytra.api.server.ServerDescriptor
-import io.elytra.sdk.command.handler.ElytraCommandHandler
-import io.elytra.sdk.command.registry.ElytraCommandRegistry
 import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.events.TemporaryEventRegister
 import io.elytra.sdk.io.ElytraConsole
@@ -26,60 +22,34 @@ import io.elytra.sdk.utils.ResourceUtils
 import io.elytra.sdk.world.ElytraWorld
 import io.elytra.sdk.world.strategy.ClassicWorldStrategy
 import java.net.BindException
-import java.net.Proxy
 import java.security.KeyPair
-import java.util.*
 import kotlin.system.exitProcess
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import org.slf4j.LoggerFactory
 
-class Elytra : Server {
+class Elytra : Server, KoinComponent {
+
     val startedAt: Long = System.currentTimeMillis()
-
-    private val commandRegistry: CommandRegistry = ElytraCommandRegistry()
-    val playerRegistry: PlayerRegistry = PlayerRegistry()
-    val sessionRegistry: SessionRegistry = SessionRegistry()
-
-    private val scheduler: Scheduler = Scheduler(sessionRegistry)
+    val keypair: KeyPair = cryptManager.generateKeyPair()
+    val debug: Boolean = false
+    val scheduler: Scheduler by inject()
+    val playerRegistry: PlayerRegistry by inject()
+    val sessionRegistry: SessionRegistry by inject()
+    val commandHandler: CommandHandler by inject()
+    val sessionService: MinecraftSessionService by inject()
 
     override lateinit var serverDescriptor: ServerDescriptor
-
-    val keypair: KeyPair = cryptManager.generateKeyPair()
-
-    val commandHandler: CommandHandler = ElytraCommandHandler(commandRegistry)
-
-    val debug: Boolean = false
-
-    val sessionService: MinecraftSessionService = (YggdrasilAuthenticationService(
-        Proxy.NO_PROXY, UUID.randomUUID().toString()
-    )).createMinecraftSessionService()
-
     lateinit var mainWorld: ElytraWorld
-
-    companion object {
-        val server = Elytra()
-        val console: ConsoleSender = ElytraConsole(LoggerFactory.getLogger("Elytra"))
-
-        fun players(): Iterator<Player> = server.playerRegistry.iterator()
-
-        fun player(username: String): Player? = server.playerRegistry.get(username)
-
-        // Rename pls
-        fun online(username: String): Boolean = server.playerRegistry.has(username)
-
-        fun sendPacketToAll(message: Message) {
-            for (player in players()) {
-                (player as ElytraPlayer).sendPacket(message)
-            }
-        }
-    }
 
     override fun boot() {
         try {
+            printUglyLogo()
             console.info("Loading server configuration")
             loadConfigs()
-
             console.info("Bootstrapping the server...")
             console.info("This version of Elytra is targeted for Minecraft ${ProtocolInfo.MINECRAFT_VERSION}")
+
             PacketProvider()
             scheduler.start()
 
@@ -115,5 +85,36 @@ class Elytra : Server {
         ))
 
         JsonConfigurationFile.saveToConfig(serverDescriptor, ElytraConsts.SERVER_CONFIG_PATH)
+    }
+
+    private fun printUglyLogo() {
+        println("""
+ _____  _         _               
+|  ___|| |       | |              
+| |__  | | _   _ | |_  _ __  __ _ 
+|  __| | || | | || __|| '__|/ _` |
+| |___ | || |_| || |_ | |  | (_| |
+\____/ |_| \__, | \__||_|   \__,_|
+            __/ |                 
+           |___/                               
+            """)
+    }
+
+    companion object {
+        val server = Elytra()
+        val console: ConsoleSender = ElytraConsole(LoggerFactory.getLogger("Elytra"))
+
+        fun players(): Iterator<Player> = server.playerRegistry.iterator()
+
+        fun player(username: String): Player? = server.playerRegistry.get(username)
+
+        // Rename pls
+        fun online(username: String): Boolean = server.playerRegistry.has(username)
+
+        fun sendPacketToAll(message: Message) {
+            for (player in players()) {
+                (player as ElytraPlayer).sendPacket(message)
+            }
+        }
     }
 }

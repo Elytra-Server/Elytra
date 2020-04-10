@@ -7,7 +7,7 @@ import java.io.IOException
 
 class ServerDifficultyCodec : Codec<ServerDifficultyMessage> {
     override fun encode(buffer: ByteBuf, message: ServerDifficultyMessage): ByteBuf {
-        buffer.writeByte(message.difficulty.value)
+        buffer.writeByte(message.difficulty.ordinal)
         return buffer
     }
 

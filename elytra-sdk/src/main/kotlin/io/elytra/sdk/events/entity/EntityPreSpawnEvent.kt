@@ -1,4 +1,4 @@
-package io.elytra.sdk.events
+package io.elytra.sdk.events.entity
 
 import io.elytra.api.events.ElytraEvent
 import io.elytra.api.world.Position

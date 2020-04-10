@@ -36,8 +36,6 @@ class ElytraCommandRegistry : CommandRegistry {
             }
         }
 
-        println(commandClazz.annotations.joinToString(";"))
-
         require(commandInfo != null) { "Elytra command must have a @CommandInfo" }
 
         val commandName = commandInfo.label
