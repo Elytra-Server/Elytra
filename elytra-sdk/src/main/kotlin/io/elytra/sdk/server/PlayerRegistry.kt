@@ -62,7 +62,7 @@ class PlayerRegistry : Registry<String, Player> {
             0,
             Elytra.server.serverDescriptor.options.maxPlayers,
             WorldType.FLAT.prettyName,
-            Elytra.server.serverDescriptor.world.renderDistance,
+            32,
             false,
             false)
 
@@ -77,7 +77,7 @@ class PlayerRegistry : Registry<String, Player> {
             }
         }
 
-        session.send(HeldItemChangeMessage(0))
+        session.send(HeldItemChangeMessage(4))
         session.send(PlayerPositionAndLookMessage(spawn))
 
         EventBus.post(PlayerJoinEvent(player))

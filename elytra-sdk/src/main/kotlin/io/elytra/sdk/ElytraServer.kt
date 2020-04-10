@@ -1,8 +1,6 @@
 package io.elytra.sdk
 
 import io.elytra.sdk.server.Elytra
-import io.elytra.sdk.server.internalModules
-import io.elytra.sdk.server.registryModules
 import org.koin.core.context.startKoin
 
 object ElytraServer {

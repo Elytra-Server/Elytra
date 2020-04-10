@@ -45,6 +45,7 @@ class ElytraCommandRegistry : CommandRegistry {
         }
 
         commandRegistry[commandName] = command
+        println("Command $commandName has been registered.")
         // TODO("Validate command: arguments, name, etc.")
     }
 

@@ -27,7 +27,7 @@
     <!-- Only warning logs for netty -->
     <logger name="io.netty" level="WARN"/>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>

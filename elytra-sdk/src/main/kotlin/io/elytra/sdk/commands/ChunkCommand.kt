@@ -12,9 +12,7 @@ class ChunkCommand : ElytraCommand() {
     override fun execute(issuer: CommandIssuer, arguments: ArgumentList) {
         val player = issuer as Player
 
-        if (player.world != null) {
-            val chunk = player.world.getChunkAt(player.position)
-            player.sendMessage("chunk at: ${chunk?.x} - ${chunk?.z}")
-        }
+        val chunk = player.world.getChunkAt(player.position)
+        player.sendMessage("chunk at: ${chunk?.x} - ${chunk?.z}")
     }
 }

@@ -23,6 +23,7 @@ object ProtocolInfo {
     const val O_TAB_COMPLETE: Int = 0x11
     const val O_CHUNK_LOAD: Int = 0x22
     const val O_UNLOAD_CHUNK: Int = 0x1E
+    const val O_PLAY_EFFECT: Int = 0x23
     const val O_SET_COMPRESSION: Int = 0x03
     const val O_CHAT: Int = 0x0F
     const val O_SPAWN_PLAYER = 0x05
