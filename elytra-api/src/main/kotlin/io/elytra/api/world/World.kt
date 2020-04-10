@@ -3,6 +3,9 @@ package io.elytra.api.world
 import io.elytra.api.entity.Player
 import io.elytra.api.utils.Tickable
 
+/**
+ * Represents a minecraft world
+ */
 interface World : Tickable {
     val name: String
     val spawnPoint: Position

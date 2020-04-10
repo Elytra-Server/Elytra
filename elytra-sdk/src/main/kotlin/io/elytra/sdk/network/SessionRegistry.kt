@@ -12,7 +12,7 @@ import kotlinx.coroutines.sync.withLock
  *
  * @see [io.elytra.sdk.network.NetworkSession]
  */
-class SessionRegistry : Registry<NetworkSession, String>, Tickable {
+class SessionRegistry : Registry<String, NetworkSession>, Tickable {
 
     private val sessions: ConcurrentMap<NetworkSession, Boolean> = ConcurrentHashMap()
     private val mutex = Mutex()
@@ -25,12 +25,12 @@ class SessionRegistry : Registry<NetworkSession, String>, Tickable {
         sessions.remove(target)
     }
 
-    override fun get(target: String): NetworkSession? {
-        return sessions.keys.first { session -> session.sessionId == target }
+    override fun get(key: String): NetworkSession? {
+        return sessions.keys.first { session -> session.sessionId == key }
     }
 
-    override fun has(target: String): Boolean {
-        return sessions.keys.any { session -> session.sessionId == target }
+    override fun has(key: String): Boolean {
+        return sessions.keys.any { session -> session.sessionId == key }
     }
 
     override fun size(): Int {

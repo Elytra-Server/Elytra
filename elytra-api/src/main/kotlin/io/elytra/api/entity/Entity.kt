@@ -42,6 +42,5 @@ enum class EntityState {
     SWIMMING,
     SPRINTING,
     GLIDING,
-    CLIMBING,
-    DEAD
+    CLIMBING
 }

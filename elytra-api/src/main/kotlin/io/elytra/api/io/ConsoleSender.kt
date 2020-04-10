@@ -1,7 +1,7 @@
 package io.elytra.api.io
 
 /**
- * Uses the elytra logger to dispatch messages to the console
+ * Providers basic logging operations
  */
 interface ConsoleSender {
 

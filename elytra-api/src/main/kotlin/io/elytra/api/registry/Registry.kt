@@ -1,16 +1,22 @@
 package io.elytra.api.registry
 
-interface Registry <T, K> {
+/**
+ * Provides basic crud operations
+ *
+ * @param [K] key
+ * @param [V] value
+ */
+interface Registry <K, V> {
 
-    suspend fun add(target: T): Unit
+    suspend fun add(target: V)
 
-    suspend fun remove(target: T): Unit
+    suspend fun remove(target: V)
 
-    fun get(target: K): T?
+    fun get(key: K): V?
 
-    fun has(target: K): Boolean
+    fun has(key: K): Boolean
 
-    fun iterator(): Iterator<T>
+    fun iterator(): Iterator<V>
 
     fun size(): Int
 

@@ -5,7 +5,12 @@ import java.io.DataInputStream
 import java.io.FilterInputStream
 import java.io.InputStream
 
-class LittleEndianDataInputStream(private val inc: InputStream) : FilterInputStream(inc), DataInput {
+/**
+ * Provides a way to read bytes on a LE order
+ *
+ * @param [inputStream] inputstream to read from
+ */
+class LittleEndianDataInputStream(private val inputStream: InputStream) : FilterInputStream(inputStream), DataInput {
     override fun readLine(): String {
         throw UnsupportedOperationException()
     }
@@ -19,11 +24,11 @@ class LittleEndianDataInputStream(private val inc: InputStream) : FilterInputStr
     }
 
     override fun skipBytes(n: Int): Int {
-        return inc.skip(n.toLong()).toInt()
+        return inputStream.skip(n.toLong()).toInt()
     }
 
     override fun readUnsignedByte(): Int {
-        return inc.read()
+        return inputStream.read()
     }
 
     override fun readUnsignedShort(): Int {
@@ -71,7 +76,7 @@ class LittleEndianDataInputStream(private val inc: InputStream) : FilterInputStr
     }
 
     override fun readUTF(): String {
-        return DataInputStream(inc).readUTF()
+        return DataInputStream(inputStream).readUTF()
     }
 
     override fun readShort(): Short {

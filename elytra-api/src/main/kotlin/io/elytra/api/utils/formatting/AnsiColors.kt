@@ -1,5 +1,8 @@
 package io.elytra.api.utils.formatting
 
+/**
+ * Represents a bunch of ansi colors
+ */
 enum class AnsiColors(val ansi: String, private val color: String) {
     RESET("\u001B[0m", "&r"),
     BLACK("\u001B[30m", "&0"),
@@ -20,6 +23,12 @@ enum class AnsiColors(val ansi: String, private val color: String) {
     WHITE("\u001B[97m", "&f");
 
     companion object {
+        /**
+         * Replace the [color] with the [ansi] code and builts
+         * into a string
+         *
+         * @return string with the replaced colors to the ansi codes
+         */
         fun replaceColors(text: String): String {
             val replaces = values()
             val toIgnore = Array(replaces.size) { false }

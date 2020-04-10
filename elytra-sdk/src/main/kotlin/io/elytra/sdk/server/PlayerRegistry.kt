@@ -22,7 +22,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-class PlayerRegistry : Registry<Player, String> {
+class PlayerRegistry : Registry<String, Player> {
 
     private val mutex = Mutex()
     private var players: Set<Player> = ConcurrentHashMap.newKeySet()
@@ -92,12 +92,12 @@ class PlayerRegistry : Registry<Player, String> {
         currentId.getAndDecrement()
     }
 
-    override fun get(target: String): Player? {
-        return players.first { player -> player.gameProfile.name == target }
+    override fun get(key: String): Player? {
+        return players.first { player -> player.gameProfile.name == key }
     }
 
-    override fun has(target: String): Boolean {
-        return players.any { player -> player.gameProfile.name == target }
+    override fun has(key: String): Boolean {
+        return players.any { player -> player.gameProfile.name == key }
     }
 
     fun get(session: NetworkSession): Player? {

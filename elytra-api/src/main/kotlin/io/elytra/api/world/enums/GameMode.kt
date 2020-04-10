@@ -1,5 +1,11 @@
 package io.elytra.api.world.enums
 
+/**
+ * Represents the type of gamemode the player is in
+ *
+ * @param [value] gamemode value alias
+ * @param [aliases] aliases of the gamemode name
+ */
 enum class GameMode(val value: Int, val aliases: List<String>) {
 
     SURVIVAL(0, listOf("s")),
