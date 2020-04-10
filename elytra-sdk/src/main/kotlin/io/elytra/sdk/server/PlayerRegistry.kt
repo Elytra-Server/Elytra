@@ -6,6 +6,7 @@ import io.elytra.api.entity.PlayerMode
 import io.elytra.api.events.EventBus
 import io.elytra.api.registry.Registry
 import io.elytra.api.world.Position
+import io.elytra.api.world.enums.WorldType
 import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.events.player.PlayerJoinEvent
 import io.elytra.sdk.network.NetworkSession
@@ -60,8 +61,8 @@ class PlayerRegistry : Registry<String, Player> {
             0,
             0,
             Elytra.server.serverDescriptor.options.maxPlayers,
-            "flat",
-            32,
+            WorldType.FLAT.prettyName,
+            Elytra.server.serverDescriptor.world.renderDistance,
             false,
             false)
 
@@ -76,10 +77,10 @@ class PlayerRegistry : Registry<String, Player> {
             }
         }
 
-        session.send(HeldItemChangeMessage(4))
-        EventBus.post(PlayerJoinEvent(player))
-
+        session.send(HeldItemChangeMessage(0))
         session.send(PlayerPositionAndLookMessage(spawn))
+
+        EventBus.post(PlayerJoinEvent(player))
     }
 
     override suspend fun add(target: Player): Unit = mutex.withLock {
