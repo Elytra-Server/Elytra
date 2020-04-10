@@ -59,6 +59,18 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "AtlvntiS",
+      "name": "João Victor G. Cruz",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/46955998?v=4",
+      "profile": "https://atlvntis.com",
+      "contributions": [
+        "code",
+        "doc",
+        "blog",
+        "question"
+      ]
     }
   ],
   "contributorsPerLine": 7,
