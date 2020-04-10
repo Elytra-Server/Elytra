@@ -1,28 +1,23 @@
 package io.elytra.sdk.io
 
 import io.elytra.api.io.ConsoleSender
+import io.elytra.api.io.LogLevel
+import io.elytra.api.io.LogLevel.*
 import io.elytra.api.utils.formatting.AnsiColors
 import org.slf4j.Logger
 
-// TODO: refactor post-poned
 class ElytraConsole(private val logger: Logger) : ConsoleSender {
 
     override fun info(message: String) {
-        send(message) {
-            logger.info(it)
-        }
+        send(INFO, message)
     }
 
     override fun warn(message: String) {
-        send(message) {
-            logger.warn(it)
-        }
+        send(WARN, message)
     }
 
     override fun error(message: String) {
-        send(message) {
-            logger.error(it)
-        }
+        send(ERROR, message)
     }
 
     override fun debug(message: String) {
@@ -30,6 +25,14 @@ class ElytraConsole(private val logger: Logger) : ConsoleSender {
         logger.debug(message)
     }
 
-    private fun send(msg: String, execute: (msg: String) -> Unit) =
-        execute.invoke(AnsiColors.replaceColors("$msg&r"))
+    private fun send(logLevel: LogLevel, msg: String) {
+        val replacedMsg = AnsiColors.replaceColors("$msg&r")
+
+        when(logLevel){
+            INFO -> logger.info(replacedMsg)
+            ERROR -> logger.error(replacedMsg)
+            WARN -> logger.warn(replacedMsg)
+            DEBUG -> logger.debug(replacedMsg)
+        }
+    }
 }

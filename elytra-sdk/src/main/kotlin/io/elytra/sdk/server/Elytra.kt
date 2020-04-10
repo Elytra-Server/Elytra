@@ -43,8 +43,6 @@ class Elytra : Server {
 
     override lateinit var serverDescriptor: ServerDescriptor
 
-    lateinit var mainWorld: ElytraWorld
-
     val keypair: KeyPair = cryptManager.generateKeyPair()
 
     val commandHandler: CommandHandler = ElytraCommandHandler(commandRegistry)
@@ -54,6 +52,8 @@ class Elytra : Server {
     val sessionService: MinecraftSessionService = (YggdrasilAuthenticationService(
         Proxy.NO_PROXY, UUID.randomUUID().toString()
     )).createMinecraftSessionService()
+
+    lateinit var mainWorld: ElytraWorld
 
     companion object {
         val server = Elytra()
