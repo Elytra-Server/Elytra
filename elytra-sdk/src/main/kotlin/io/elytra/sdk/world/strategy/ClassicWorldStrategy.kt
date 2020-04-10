@@ -21,9 +21,9 @@ class ClassicWorldStrategy : WorldLoadStrategy {
     /**
      * A mapping of the classic block ids to the global palette block state ids
      */
-    private val classicPalette = listOf(0, 1, 9, 10, 14, 15, 21, 33, 34, 34, 50, 50, 66, 68, 69, 70, 71, 73, 157,
-        228, 230, 1383, 1384, 1385, 1386, 1387, 1388, 1389, 1390, 1391, 1392, 1393, 1394, 1395, 1396, 1397,
-        1398, 1411, 1412, 1424, 1425, 1426, 1427, 7811, 7809, 1428, 1430, 1431, 1432, 1433)
+    private val classicPalette = listOf(0, 1, 9, 10, 14, 15, 21, 33, 34, 34, 50, 50, 66, 68, 69, 70, 71, 73, 157, 228,
+        230, 1397, 1384, 1387, 1388, 1388, 1392, 1386, 1386, 1394, 1393, 1389, 1385, 1385, 1390, 1391, 1383, 1411, 1412,
+        1424, 1425, 1426, 1427, 7811, 7809, 1428, 1430, 1431, 1432, 1433)
 
     override fun load(path: String): World {
         val file = File(path)
@@ -52,14 +52,14 @@ class ClassicWorldStrategy : WorldLoadStrategy {
 
         for (chunkX in 0 until chunksX) {
             for (chunkZ in 0 until chunksZ) {
-                world.setChunkAt(chunkX, chunkZ, convertToChunk(blockData, sizeX, sizeY, sizeZ, chunkX, chunkZ, chunkSections))
+                world.setChunkAt(chunkX, chunkZ, convertToChunk(blockData, sizeX, sizeZ, chunkX, chunkZ, chunkSections))
             }
         }
 
         return world
     }
 
-    private fun convertToChunk(blocks: ByteArray, sizeX: Int, sizeY: Int, sizeZ: Int, chunkX: Int, chunkZ: Int, chunkSections: Int): ElytraChunk {
+    private fun convertToChunk(blocks: ByteArray, sizeX: Int, sizeZ: Int, chunkX: Int, chunkZ: Int, chunkSections: Int): ElytraChunk {
         val xyzToIndex = { x: Int, y: Int, z: Int -> y * sizeX * sizeZ + z * sizeX + x }
         val sections = mutableListOf<ElytraChunkSection>()
 
@@ -67,7 +67,7 @@ class ClassicWorldStrategy : WorldLoadStrategy {
             sections.add(convertToChunkSection(blocks, chunkX, section, chunkZ, xyzToIndex))
         }
 
-        return ElytraChunk(chunkX, chunkZ, sections, IntArray(1024) { 73 })
+        return ElytraChunk(chunkX, chunkZ, sections, IntArray(1024))
     }
 
     private fun convertToChunkSection(blocks: ByteArray, chunkX: Int, chunkY: Int, chunkZ: Int, f: (Int, Int, Int) -> Int): ElytraChunkSection {
@@ -95,28 +95,5 @@ class ClassicWorldStrategy : WorldLoadStrategy {
         }
 
         return ElytraChunkSection(classicPalette, data, nonAirBlocks = nonAirBlocks)
-    }
-
-    private fun decompressStream(compressed: ByteArray): ByteArray {
-        val decompressed = ByteArrayOutputStream()
-        val gzip = GZIPInputStream(ByteArrayInputStream(compressed))
-        val buffer = ByteArray(1024)
-
-        var len = 0
-        do {
-            len = gzip.read(buffer)
-            if (len != -1) {
-                decompressed.write(buffer, 0, len)
-            }
-        } while (len != -1)
-
-        return decompressed.toByteArray()
-    }
-
-    companion object {
-        @JvmStatic
-        fun main(args: Array<String>) {
-            ClassicWorldStrategy().load("E:\\Users\\WinX64\\Desktop\\Lucas\\Games\\ClassiCube\\maps\\Flat.cw")
-        }
     }
 }
