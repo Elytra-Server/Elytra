@@ -15,23 +15,33 @@ class ServerQueryHandler : ElytraMessageHandler<ServerQueryMessage>() {
     override fun handle(session: NetworkSession, message: ServerQueryMessage) {
         val serverDescriptor = Elytra.server.serverDescriptor
 
-        val json = """
-            {
-                "version": {
-                    "name": "${ProtocolInfo.MINECRAFT_VERSION}",
-                    "protocol": ${ProtocolInfo.CURRENT_PROTOCOL}
-                },
-                "players": {
-                    "max": ${serverDescriptor.options.maxPlayers},
-                    "online": ${Elytra.server.playerRegistry.size()},
-                    "sample": []
-                },	
-                "description": {
-                    "text": "${serverDescriptor.motd.description}"
-                }
+        val players = StringBuilder().run {
+            Elytra.players().forEach {
+                append("{\"name\":\"")
+                append(it.displayName)
+                append("\",\"id\":\"")
+                append(it.gameProfile.id.toString())
+                append("\"},")
             }
-        """
 
-        session.send(ServerInfoMessage(json.replace('\"', '"')))
+            if (!isEmpty() && get(length - 1) == ',') {
+                return@run substring(0, length - 1)
+            }
+
+            return@run toString()
+        }
+
+        val json = """
+{"version": {
+    "name": "${ProtocolInfo.MINECRAFT_VERSION}",
+    "protocol": ${ProtocolInfo.CURRENT_PROTOCOL}
+},"players": {
+    "max": ${serverDescriptor.options.maxPlayers},
+    "online": ${Elytra.server.playerRegistry.size()},
+    "sample": [${players.also { println(it) }}]
+},"description": {"text": "${serverDescriptor.motd.description}"}}"""
+
+        session.send(ServerInfoMessage(json))
+        Elytra.console.info("Server query received from ${session.address.address.hostAddress}!")
     }
 }
