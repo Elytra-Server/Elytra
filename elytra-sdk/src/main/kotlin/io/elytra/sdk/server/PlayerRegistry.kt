@@ -40,7 +40,7 @@ class PlayerRegistry : Registry<String, Player> {
             playerMode,
             session.isActive,
             banned = false,
-            position = Position.EMPTY,
+            position = Position(3.0, 1.5, 3.0, 0.0f, 0.0f),
             world = Elytra.server.mainWorld
         )
 
