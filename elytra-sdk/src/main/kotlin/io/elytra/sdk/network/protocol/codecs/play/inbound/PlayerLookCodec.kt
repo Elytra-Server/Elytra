@@ -14,9 +14,15 @@ class PlayerLookCodec : Codec<PlayerLookMessage> {
     }
 
     override fun decode(buffer: ByteBuf): PlayerLookMessage {
-        val yaw = buffer.readFloat()
+        val x = buffer.readDouble()
+        val y = buffer.readDouble()
+        val z = buffer.readDouble()
+
+        var yaw = buffer.readFloat()
+        yaw = (yaw % 360 + 360) % 360
+
         val pitch = buffer.readFloat()
         val onGround = buffer.readBoolean()
-        return PlayerLookMessage(yaw, pitch, onGround)
+        return PlayerLookMessage(x, y, z, onGround, yaw, pitch)
     }
 }

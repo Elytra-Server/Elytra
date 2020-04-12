@@ -2,7 +2,7 @@ package io.elytra.sdk.network.protocol.message.play.inbound
 
 import io.elytra.api.world.Position
 
-class PlayerPositionMessage(
+open class PlayerPositionMessage(
     val x: Double,
     val feetY: Double,
     val z: Double,
