@@ -15,6 +15,7 @@ class ChannelInitializerHandler(
         val codecsHandler = CodecsHandler(HandshakePacket())
         val decoderHandler = FramingHandler()
         val messagesHandler = MessageHandler(connectionManager = connectionManager)
+        val compressionHandler = CompressionHandler(9)
 
         /**
 		 * The time in seconds which are elapsed before a client is disconnected due
@@ -33,5 +34,6 @@ class ChannelInitializerHandler(
             .addLast("codecs", codecsHandler)
             // .addLast("readtimeout", ReadTimeoutHandler(readTimeout))
             .addLast("handler", messagesHandler)
+            .addLast("compression", compressionHandler)
     }
 }

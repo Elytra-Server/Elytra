@@ -14,6 +14,9 @@ import io.netty.buffer.Unpooled
 import java.io.IOException
 import java.lang.reflect.InvocationTargetException
 
+/**
+ * @param [opcode] in this case means whats the highest packet id on the play packets
+ */
 abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
     private val inboundCodecs: CodecLookupService = CodecLookupService(opcode + 1)
     private val outboundCodecs: CodecLookupService = CodecLookupService(opcode + 1)
@@ -114,7 +117,7 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
     }
 
     @Throws(IOException::class, IllegalOpcodeException::class)
-    open fun newReadHeader(input: ByteBuf): Codec<*>? {
+    open fun newReadHeader(input: ByteBuf): Codec<*> {
         val opcode = ByteBufUtils.readVarInt(input)
         return inboundCodecs.find(opcode)
     }
