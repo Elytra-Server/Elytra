@@ -16,8 +16,8 @@ class MessageHandler(
         session.get()?.messageReceived(msg)
     }
 
-    override fun channelActive(ctx: ChannelHandlerContext?) {
-        val channel = ctx?.channel()
+    override fun channelActive(ctx: ChannelHandlerContext) {
+        val channel = ctx.channel()
         val newSession = connectionManager.newSession(channel) as NetworkSession
 
         if (!session.compareAndSet(null, newSession)) {

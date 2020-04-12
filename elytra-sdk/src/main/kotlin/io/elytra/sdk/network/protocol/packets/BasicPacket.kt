@@ -15,16 +15,9 @@ import java.io.IOException
 import java.lang.reflect.InvocationTargetException
 
 abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
-
-    private var inboundCodecs: CodecLookupService? = null
-    private var outboundCodecs: CodecLookupService? = null
-    private var handlers: HandlerLookupService? = null
-
-    init {
-        inboundCodecs = CodecLookupService(opcode + 1)
-        outboundCodecs = CodecLookupService(opcode + 1)
-        handlers = HandlerLookupService()
-    }
+    private val inboundCodecs: CodecLookupService = CodecLookupService(opcode + 1)
+    private val outboundCodecs: CodecLookupService = CodecLookupService(opcode + 1)
+    private val handlers: HandlerLookupService = HandlerLookupService()
 
     protected open fun <M : Message, C : Codec<in M>, H : MessageHandler<*, in M>> inbound(
         opcode: Int,
@@ -33,8 +26,8 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
         handler: Class<H>
     ) {
         try {
-            inboundCodecs?.bind(message, codec, opcode)
-            handlers?.bind(message, handler)
+            inboundCodecs.bind(message, codec, opcode)
+            handlers.bind(message, handler)
         } catch (e: InstantiationException) {
             logger.error("Error registering inbound $opcode in $name", e)
         } catch (e: IllegalAccessException) {
@@ -51,8 +44,8 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
         handler: H
     ) {
         try {
-            inboundCodecs!!.bind(message, codec, opcode)
-            handlers?.bind(message, handler::class.java)
+            inboundCodecs.bind(message, codec, opcode)
+            handlers.bind(message, handler::class.java)
         } catch (e: InstantiationException) {
             logger.error("Error registering inbound $opcode in $name", e)
         } catch (e: IllegalAccessException) {
@@ -68,7 +61,7 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
         codec: Class<C>?
     ) {
         try {
-            outboundCodecs!!.bind(message, codec, opcode)
+            outboundCodecs.bind(message, codec, opcode)
         } catch (e: InstantiationException) {
             logger.error("Error registering outbound $opcode in $name", e)
         } catch (e: IllegalAccessException) {
@@ -79,11 +72,11 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
     }
 
     override fun <M : Message?> getMessageHandle(clazz: Class<M>): MessageHandler<*, M>? {
-        return handlers?.find(clazz)
+        return handlers.find(clazz)
     }
 
     override fun <M : Message> getCodecRegistration(clazz: Class<M>): Codec.CodecRegistration? {
-        val reg = outboundCodecs?.find(clazz)
+        val reg = outboundCodecs.find(clazz)
 
         if (reg == null) {
             println("No codec to write ${clazz.simpleName} in $name")
@@ -109,7 +102,7 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
             length = ByteBufUtils.readVarInt(buf)
             buf.markReaderIndex()
             opcode = ByteBufUtils.readVarInt(buf)
-            inboundCodecs!!.find(opcode)
+            inboundCodecs.find(opcode)
         } catch (e: IOException) {
             throw UnknownPacketException("Failed to read packet data (corrupt?)", opcode,
                 length)
@@ -123,6 +116,6 @@ abstract class BasicPacket(name: String, opcode: Int) : AbstractProtocol(name) {
     @Throws(IOException::class, IllegalOpcodeException::class)
     open fun newReadHeader(input: ByteBuf): Codec<*>? {
         val opcode = ByteBufUtils.readVarInt(input)
-        return inboundCodecs?.find(opcode)
+        return inboundCodecs.find(opcode)
     }
 }

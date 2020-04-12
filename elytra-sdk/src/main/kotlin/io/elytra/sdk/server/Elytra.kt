@@ -55,8 +55,9 @@ class Elytra : Server, KoinComponent {
             PacketProvider()
             scheduler.start()
 
+            ResourceUtils.saveResource("Test2.cw", "./Test2.cw", false)
             TemporaryEventRegister().register()
-            mainWorld = ClassicWorldStrategy().load(javaClass.classLoader!!.getResource("Test2.cw")!!.path) as ElytraWorld
+            mainWorld = ClassicWorldStrategy().load("./Test2.cw") as ElytraWorld
             NetworkServer(serverDescriptor.options.port, sessionRegistry).start()
         } catch (e: BindException) {
             console.info(" ")
@@ -82,8 +83,12 @@ class Elytra : Server, KoinComponent {
 
         val serverDescriptor: ServerDescriptor = JsonConfigurationFile.getConfig(ElytraConsts.SERVER_CONFIG_PATH)
         this.serverDescriptor = serverDescriptor.copy(motd = serverDescriptor.motd.copy(
-            description = serverDescriptor.motd.description.replace('&', '§'),
-            pingText = serverDescriptor.motd.pingText.replace('&', '§')
+            description = serverDescriptor.motd.description
+                .replace('&', '§')
+                .replace("(?<!\\\\)\"".toRegex(), "\\\\\""),
+            pingText = serverDescriptor.motd.pingText
+                .replace('&', '§')
+                .replace("(?<!\\\\)\"".toRegex(), "\\\\\"")
         ))
 
         JsonConfigurationFile.saveToConfig(serverDescriptor, ElytraConsts.SERVER_CONFIG_PATH)
