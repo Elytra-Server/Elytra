@@ -10,8 +10,6 @@ import io.elytra.api.world.WorldLoadStrategy
 import io.elytra.sdk.world.ElytraChunk
 import io.elytra.sdk.world.ElytraChunkSection
 import io.elytra.sdk.world.ElytraWorld
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileInputStream
 import java.util.zip.GZIPInputStream

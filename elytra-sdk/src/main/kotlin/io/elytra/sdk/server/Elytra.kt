@@ -53,8 +53,9 @@ class Elytra : Server, KoinComponent {
             PacketProvider()
             scheduler.start()
 
+            ResourceUtils.saveResource("Test2.cw", "./Test2.cw", false)
             TemporaryEventRegister().register()
-            mainWorld = ClassicWorldStrategy().load(javaClass.classLoader!!.getResource("Test2.cw")!!.path) as ElytraWorld
+            mainWorld = ClassicWorldStrategy().load("./Test2.cw") as ElytraWorld
             NetworkServer(serverDescriptor.options.port, sessionRegistry).start()
         } catch (e: BindException) {
             console.info(" ")
