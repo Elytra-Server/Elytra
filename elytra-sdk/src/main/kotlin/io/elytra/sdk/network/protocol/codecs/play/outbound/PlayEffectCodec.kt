@@ -1,11 +1,10 @@
 package io.elytra.sdk.network.protocol.codecs.play.outbound
 
-import com.flowpowered.network.Codec
+import io.elytra.sdk.network.protocol.codecs.OutboundCodec
 import io.elytra.sdk.network.protocol.message.play.outbound.PlayEffectMessage
 import io.netty.buffer.ByteBuf
-import io.netty.handler.codec.DecoderException
 
-class PlayEffectCodec : Codec<PlayEffectMessage> {
+class PlayEffectCodec : OutboundCodec<PlayEffectMessage>() {
 
     override fun encode(buf: ByteBuf, message: PlayEffectMessage): ByteBuf {
         buf.writeInt(message.id)
@@ -16,9 +15,5 @@ class PlayEffectCodec : Codec<PlayEffectMessage> {
         buf.writeBoolean(message.ignoreDistance)
 
         return buf
-    }
-
-    override fun decode(buffer: ByteBuf): PlayEffectMessage {
-        throw DecoderException("Cannot decode PlayEffectMessage")
     }
 }

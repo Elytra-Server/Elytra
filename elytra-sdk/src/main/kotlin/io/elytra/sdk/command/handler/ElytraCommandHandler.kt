@@ -65,6 +65,7 @@ class ElytraCommandHandler(
                 }
             }
         }
+
         try {
             command.execute(issuer, argumentList)
         } catch (exception: Exception) {

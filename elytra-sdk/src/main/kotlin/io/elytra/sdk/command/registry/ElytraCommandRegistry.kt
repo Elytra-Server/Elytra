@@ -5,10 +5,7 @@ import io.elytra.api.command.ElytraCommand
 import io.elytra.api.command.annotations.CommandArgument
 import io.elytra.api.command.annotations.CommandSpec
 import io.elytra.api.command.registry.CommandRegistry
-import io.elytra.sdk.commands.ChunkCommand
-import io.elytra.sdk.commands.DebugCommand
-import io.elytra.sdk.commands.GamemodeCommand
-import io.elytra.sdk.commands.TestCommand
+import io.elytra.sdk.commands.*
 import kotlin.reflect.KClass
 import kotlin.reflect.full.declaredFunctions
 import kotlin.reflect.full.findAnnotation
@@ -64,6 +61,7 @@ class ElytraCommandRegistry : CommandRegistry {
         register(GamemodeCommand())
         register(DebugCommand())
         register(ChunkCommand())
+        register(SayCommand())
     }
 
     class CommandAlreadyRegistered(commandName: String) : Exception("$commandName is already registered")

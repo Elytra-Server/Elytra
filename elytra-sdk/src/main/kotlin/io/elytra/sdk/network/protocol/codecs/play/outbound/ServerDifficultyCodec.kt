@@ -1,17 +1,12 @@
 package io.elytra.sdk.network.protocol.codecs.play.outbound
 
-import com.flowpowered.network.Codec
+import io.elytra.sdk.network.protocol.codecs.OutboundCodec
 import io.elytra.sdk.network.protocol.message.play.outbound.ServerDifficultyMessage
 import io.netty.buffer.ByteBuf
-import java.io.IOException
 
-class ServerDifficultyCodec : Codec<ServerDifficultyMessage> {
+class ServerDifficultyCodec : OutboundCodec<ServerDifficultyMessage>() {
     override fun encode(buffer: ByteBuf, message: ServerDifficultyMessage): ByteBuf {
         buffer.writeByte(message.difficulty.ordinal)
         return buffer
-    }
-
-    override fun decode(buffer: ByteBuf): ServerDifficultyMessage {
-        throw IOException("No have decode support for this")
     }
 }

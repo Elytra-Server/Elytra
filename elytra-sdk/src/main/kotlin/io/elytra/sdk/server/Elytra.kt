@@ -7,6 +7,8 @@ import io.elytra.api.entity.Player
 import io.elytra.api.io.ConsoleSender
 import io.elytra.api.server.Server
 import io.elytra.api.server.ServerDescriptor
+import io.elytra.sdk.command.handler.ElytraCommandHandler
+import io.elytra.sdk.command.registry.ElytraCommandRegistry
 import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.events.TemporaryEventRegister
 import io.elytra.sdk.io.ElytraConsole

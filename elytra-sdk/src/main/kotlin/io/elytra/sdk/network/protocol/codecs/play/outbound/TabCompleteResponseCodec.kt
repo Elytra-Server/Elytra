@@ -1,12 +1,11 @@
 package io.elytra.sdk.network.protocol.codecs.play.outbound
 
-import com.flowpowered.network.Codec
 import com.flowpowered.network.util.ByteBufUtils
+import io.elytra.sdk.network.protocol.codecs.OutboundCodec
 import io.elytra.sdk.network.protocol.message.play.outbound.TabCompleteResponseMessage
 import io.netty.buffer.ByteBuf
-import io.netty.handler.codec.DecoderException
 
-class TabCompleteResponseCodec : Codec<TabCompleteResponseMessage> {
+class TabCompleteResponseCodec : OutboundCodec<TabCompleteResponseMessage>() {
 
     override fun encode(buf: ByteBuf, message: TabCompleteResponseMessage): ByteBuf {
         ByteBufUtils.writeVarInt(buf, message.transactionId)
@@ -26,9 +25,5 @@ class TabCompleteResponseCodec : Codec<TabCompleteResponseMessage> {
         }
 
         return buf
-    }
-
-    override fun decode(buffer: ByteBuf): TabCompleteResponseMessage {
-        throw DecoderException("No decode available")
     }
 }
