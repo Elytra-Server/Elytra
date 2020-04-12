@@ -38,7 +38,7 @@ class ServerQueryHandler : ElytraMessageHandler<ServerQueryMessage>() {
 },"players": {
     "max": ${serverDescriptor.options.maxPlayers},
     "online": ${Elytra.server.playerRegistry.size()},
-    "sample": [${players.also { println(it) }}]
+    "sample": [$players]
 },"description": {"text": "${serverDescriptor.motd.description}"}}"""
 
         session.send(ServerInfoMessage(json))

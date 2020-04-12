@@ -4,12 +4,10 @@ import com.flowpowered.network.Message
 import com.mojang.authlib.minecraft.MinecraftSessionService
 import io.elytra.api.command.handler.CommandHandler
 import io.elytra.api.entity.Player
-import io.elytra.api.io.ConsoleSender
 import io.elytra.api.server.Server
 import io.elytra.api.server.ServerDescriptor
 import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.events.TemporaryEventRegister
-import io.elytra.sdk.io.ElytraConsole
 import io.elytra.sdk.io.config.JsonConfigurationFile
 import io.elytra.sdk.network.NetworkServer
 import io.elytra.sdk.network.SessionRegistry
@@ -21,12 +19,13 @@ import io.elytra.sdk.utils.ElytraConsts
 import io.elytra.sdk.utils.ResourceUtils
 import io.elytra.sdk.world.ElytraWorld
 import io.elytra.sdk.world.strategy.ClassicWorldStrategy
+import org.koin.core.KoinComponent
+import org.koin.core.inject
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.net.BindException
 import java.security.KeyPair
 import kotlin.system.exitProcess
-import org.koin.core.KoinComponent
-import org.koin.core.inject
-import org.slf4j.LoggerFactory
 
 class Elytra : Server, KoinComponent {
 
@@ -107,7 +106,7 @@ class Elytra : Server, KoinComponent {
 
     companion object {
         val server = Elytra()
-        val console: ConsoleSender = ElytraConsole(LoggerFactory.getLogger("Elytra"))
+        val console: Logger = LoggerFactory.getLogger("Elytra")
 
         fun players(): Iterator<Player> = server.playerRegistry.iterator()
 
