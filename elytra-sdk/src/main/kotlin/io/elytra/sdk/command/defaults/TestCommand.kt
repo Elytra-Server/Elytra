@@ -1,4 +1,4 @@
-package io.elytra.sdk.commands
+package io.elytra.sdk.command.defaults
 
 import io.elytra.api.command.CommandIssuer
 import io.elytra.api.command.ElytraCommand

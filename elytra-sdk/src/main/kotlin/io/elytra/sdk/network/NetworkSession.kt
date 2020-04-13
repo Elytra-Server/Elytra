@@ -144,7 +144,7 @@ class NetworkSession(
 
     override fun onInboundThrowable(throwable: Throwable?) {
         if (throwable is CodecException) {
-            println("Error in inbound network: $throwable")
+            Elytra.console.error("Error in inbound network: $throwable")
             return
         }
 
@@ -152,7 +152,7 @@ class NetworkSession(
     }
 
     override fun onHandlerThrowable(message: Message?, handle: MessageHandler<*, *>?, throwable: Throwable?) {
-        println("Error while handling $message (${handle?.javaClass?.simpleName}) - $throwable")
+        Elytra.console.error("Error while handling $message (${handle?.javaClass?.simpleName}) - $throwable")
     }
 
     override fun messageReceived(message: Message) {

@@ -1,4 +1,4 @@
-package io.elytra.sdk.command.argument
+package io.elytra.sdk.command
 
 import io.elytra.api.command.argument.ArgumentContainer
 import io.elytra.api.command.argument.ArgumentList
