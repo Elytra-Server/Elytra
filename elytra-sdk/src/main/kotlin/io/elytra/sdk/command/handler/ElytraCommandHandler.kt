@@ -28,7 +28,7 @@ class ElytraCommandHandler(
             return
         }
 
-        val messageArray = messageWithoutPrefix.split(" ")
+        val messageArray = messageWithoutPrefix.replaceMoreThanOneSpace().split(" ")
 
         val commandName = messageArray[0]
 
@@ -90,5 +90,9 @@ class ElytraCommandHandler(
             map[argumentTypeClass] = argumentInstance
             return argumentInstance
         }
+    }
+
+    private fun String.replaceMoreThanOneSpace(): String {
+        return this.trim().replace(" +", " ")
     }
 }

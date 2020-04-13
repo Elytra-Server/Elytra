@@ -21,7 +21,7 @@ class ElytraCommandRegistry : CommandRegistry {
     @Synchronized
     override fun register(command: Command) {
         val commandClazz: KClass<Command> = command::class as KClass<Command>
-        val commandInfo = commandClazz.findAnnotation<CommandSpec>()
+        val commandSpec = commandClazz.findAnnotation<CommandSpec>()
 
         val elytraCommand = command as ElytraCommand
 
@@ -33,9 +33,9 @@ class ElytraCommandRegistry : CommandRegistry {
             }
         }
 
-        require(commandInfo != null) { "Elytra command must have a @CommandInfo" }
+        require(commandSpec != null) { "Elytra command must have a @CommandInfo" }
 
-        val commandName = commandInfo.label
+        val commandName = commandSpec.label
 
         if (commandRegistry.containsKey(commandName)) {
             throw CommandAlreadyRegistered(commandName)
