@@ -96,7 +96,7 @@ class PlayPacket : BasicPacket("PLAY", 0x55) {
         outbound(ProtocolInfo.O_TAB_COMPLETE, TabCompleteResponseMessage::class.java, TabCompleteResponseCodec::class.java)
         outbound(ProtocolInfo.O_CHUNK_LOAD, ChunkDataMessage::class.java, ChunkDataCodec::class.java)
         outbound(ProtocolInfo.O_UNLOAD_CHUNK, UnloadChunkMessage::class.java, UnloadChunkCodec::class.java)
-        outbound(ProtocolInfo.O_PLAY_EFFECT, PlayEffectMessage::class.java, PlayEffectCodec::class.java)
+        //outbound(ProtocolInfo.O_PLAY_EFFECT, PlayEffectMessage::class.java, PlayEffectCodec::class.java)
         outbound(ProtocolInfo.O_UPDATE_HEALTH, UpdateHealthMessage::class.java, UpdateHealthCodec::class.java)
     }
 }

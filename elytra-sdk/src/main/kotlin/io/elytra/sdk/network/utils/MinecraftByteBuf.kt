@@ -2,6 +2,7 @@ package io.elytra.sdk.network.utils
 
 import com.flowpowered.network.util.ByteBufUtils
 import io.elytra.api.chat.TextComponent
+import io.elytra.api.world.Position
 import io.elytra.sdk.utils.asJson
 import io.elytra.sdk.utils.fromJson
 import io.netty.buffer.ByteBuf
@@ -16,6 +17,26 @@ inline class MinecraftByteBuf(private val byteBuf: ByteBuf) {
 
     fun writeEnumValue(value: Enum<*>) {
         ByteBufUtils.writeVarInt(byteBuf, value.ordinal)
+    }
+
+    // Formula from https://wiki.vg/Data_types
+    fun readPosition(): Position {
+        val positionFromBuffer: Long = byteBuf.readLong()
+
+        val x = positionFromBuffer shr 38
+        val y = positionFromBuffer and 0xFFF
+        val z = positionFromBuffer shl 26 shr 38
+
+        return Position(x.toDouble(), y.toDouble(), z.toDouble())
+    }
+
+    // Formula from https://wiki.vg/Data_types
+    fun writePosition(position: Position) {
+        val x = position.x.toInt()
+        val y = position.y.toInt()
+        val z = position.z.toInt()
+
+        byteBuf.writeLong((x and 0x3ffffff shl 38 or (z and 0x3FFFFFF shl 12) or (y and 0xFFF)).toLong())
     }
 
     fun <T : Enum<T>?> readEnumValue(enumClass: Class<T>): T {
