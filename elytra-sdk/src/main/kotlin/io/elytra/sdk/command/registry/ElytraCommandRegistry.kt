@@ -6,49 +6,66 @@ import io.elytra.api.command.annotations.CommandArgument
 import io.elytra.api.command.annotations.CommandSpec
 import io.elytra.api.command.registry.CommandRegistry
 import io.elytra.sdk.commands.*
+import io.elytra.sdk.server.Elytra
 import kotlin.reflect.KClass
 import kotlin.reflect.full.declaredFunctions
 import kotlin.reflect.full.findAnnotation
+import kotlin.system.measureTimeMillis
 
 class ElytraCommandRegistry : CommandRegistry {
 
     private val commandRegistry: MutableMap<String, Command> = HashMap()
+    private val commandAliasRegistry: MutableMap<String, Command> = HashMap()
 
     init {
-        registerDefaults()
+        println("registerDefaults: ${measureTimeMillis(this::registerDefaults)}ms")
     }
 
     @Synchronized
     override fun register(command: Command) {
-        val commandClazz: KClass<Command> = command::class as KClass<Command>
+        val commandClazz: KClass<out Command> = command::class
         val commandSpec = commandClazz.findAnnotation<CommandSpec>()
 
-        val elytraCommand = command as ElytraCommand
+        command as ElytraCommand
 
         val executeFun = commandClazz.declaredFunctions.first { it.name.toLowerCase() == "execute" }
-
-        for (annotation in executeFun.annotations) {
-            if (annotation is CommandArgument) {
-                elytraCommand.addArgument(annotation)
-            }
-        }
 
         require(commandSpec != null) { "Elytra command must have a @CommandInfo" }
 
         val commandName = commandSpec.label
+        val aliases = commandSpec.aliases
 
-        if (commandRegistry.containsKey(commandName)) {
-            throw CommandAlreadyRegistered(commandName)
+        require(!commandRegistry.containsKey(commandName)) { "$commandName is already registered" }
+
+        for (alias in aliases) {
+            val commandByAlias = getCommandByAlias(alias)
+            require(commandByAlias == null) { "$alias alias is already registered in ${commandByAlias!!.label}" }
         }
 
         commandRegistry[commandName] = command
-        println("Command $commandName has been registered.")
+        command.label = commandSpec.label
+
+        for (alias in aliases) {
+            commandAliasRegistry[alias] = command
+            command.aliases += alias
+        }
+
+        executeFun.annotations
+            .filterIsInstance<CommandArgument>()
+            .forEach { command.argumentList += it }
+
+        Elytra.console.debug("Command $commandName has been registered.")
         // TODO("Validate command: arguments, name, etc.")
     }
 
     @Synchronized
     override fun getCommandByName(commandName: String): Command? {
         return commandRegistry[commandName]
+    }
+
+    @Synchronized
+    override fun getCommandByAlias(alias: String): Command? {
+        return commandAliasRegistry[alias]
     }
 
     @Synchronized
@@ -63,6 +80,4 @@ class ElytraCommandRegistry : CommandRegistry {
         register(ChunkCommand())
         register(SayCommand())
     }
-
-    class CommandAlreadyRegistered(commandName: String) : Exception("$commandName is already registered")
 }

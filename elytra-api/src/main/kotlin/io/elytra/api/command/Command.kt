@@ -9,12 +9,26 @@ import io.elytra.api.command.argument.ArgumentList
 interface Command {
 
     /**
+     * Command label
+     *
+     * @return [String]
+     */
+    val label: String
+
+    /**
      * All arguments registered on the command using the annotation
      * [CommandArgument]
      *
      * @return [List] of [CommandArgument]
      */
-    fun getArguments(): List<CommandArgument>
+    val argumentList: List<CommandArgument>
+
+    /**
+     * All aliases the command has.
+     *
+     * @return [List] of [String]
+     */
+    val aliases: List<String>
 
     /**
      * Executor that is dispatched when the command is entered by the

@@ -11,7 +11,7 @@ import io.elytra.api.enum.Effect
 import io.elytra.api.world.enums.GameMode
 import io.elytra.sdk.utils.localeMessage
 
-@CommandSpec(label = "gamemode")
+@CommandSpec(label = "gamemode", aliases = ["gm"])
 class GamemodeCommand : ElytraCommand() {
 
     @CommandArgument("type", ArgumentTypes.Default::class)
