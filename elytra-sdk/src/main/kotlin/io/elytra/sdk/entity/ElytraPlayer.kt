@@ -6,7 +6,7 @@ import io.elytra.api.chat.ChatMode
 import io.elytra.api.chat.TextComponent
 import io.elytra.api.entity.Player
 import io.elytra.api.entity.PlayerMode
-import io.elytra.api.utils.asJson
+import io.elytra.api.enum.Effect
 import io.elytra.api.world.Position
 import io.elytra.api.world.World
 import io.elytra.api.world.enums.GameMode
@@ -14,7 +14,9 @@ import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.message.play.outbound.ChangeGameStateMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.DisconnectMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.OutboundChatMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.PlayEffectMessage
 import io.elytra.sdk.server.Elytra
+import io.elytra.sdk.utils.asJson
 
 data class ElytraPlayer(
     var id: Int,
@@ -53,6 +55,10 @@ data class ElytraPlayer(
         }
 
         sendMessage(builder.toString())
+    }
+
+    override fun playEffect(position: Position, effect: Effect, metadata: Int) {
+        sendPacket(PlayEffectMessage(effect.id, position, metadata))
     }
 
     override fun sendPacket(packet: Message) {

@@ -47,6 +47,7 @@ Elytra is written in Kotlin and utilizes Gradle 2 as build management tool. To c
     <td align="center"><a href="https://github.com/chicoferreira"><img src="https://avatars1.githubusercontent.com/u/36338391?v=4" width="100px;" alt=""/><br /><sub><b>chico ferreira</b></sub></a><br /><a href="https://github.com/Elytra-Server/Elytra/commits?author=chicoferreira" title="Code">💻</a></td>
     <td align="center"><a href="https://heroslender.com/"><img src="https://avatars1.githubusercontent.com/u/16785313?v=4" width="100px;" alt=""/><br /><sub><b>Bruno Martins</b></sub></a><br /><a href="https://github.com/Elytra-Server/Elytra/commits?author=heroslender" title="Code">💻</a> <a href="https://github.com/Elytra-Server/Elytra/commits?author=heroslender" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/JPereirax"><img src="https://avatars2.githubusercontent.com/u/39743726?v=4" width="100px;" alt=""/><br /><sub><b>Jailson Pereira</b></sub></a><br /><a href="https://github.com/Elytra-Server/Elytra/commits?author=JPereirax" title="Code">💻</a></td>
+    <td align="center"><a href="https://atlvntis.com"><img src="https://avatars3.githubusercontent.com/u/46955998?v=4" width="100px;" alt=""/><br /><sub><b>João Victor G. Cruz</b></sub></a><br /><a href="https://github.com/Elytra-Server/Elytra/commits?author=AtlvntiS" title="Code">💻</a> <a href="https://github.com/Elytra-Server/Elytra/commits?author=AtlvntiS" title="Documentation">📖</a> <a href="#blog-AtlvntiS" title="Blogposts">📝</a> <a href="#question-AtlvntiS" title="Answering Questions">💬</a></td>
   </tr>
 </table>
 
@@ -56,6 +57,16 @@ Elytra is written in Kotlin and utilizes Gradle 2 as build management tool. To c
 
 ## Sponsors
 <a href="https://fluxcdn.com"><img src="https://i.imgur.com/jxdRt4M.gif"></a>
+
+[![YourKit](https://www.yourkit.com/images/yklogo.png)](https://www.yourkit.com/java/profiler/)
+
+We are proudly using the YourKit Java Profiler to improve the performance and find high memory usage. Thank you for this amazing tool and we can fully recommend it to all Java developers! 
+
+YourKit supports open source projects with innovative and intelligent tools
+for monitoring and profiling Java and .NET applications.
+YourKit is the creator of <a href="https://www.yourkit.com/java/profiler/">YourKit Java Profiler</a>,
+<a href="https://www.yourkit.com/.net/profiler/">YourKit .NET Profiler</a>,
+and <a href="https://www.yourkit.com/youmonitor/">YourKit YouMonitor</a>.
 
 ## Donate
 <a href="https://www.buymeacoffee.com/RFxKDB3" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/lato-orange.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" ></a>

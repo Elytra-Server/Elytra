@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import io.elytra.sdk.utils.ResourceUtils
 import java.io.*
-import java.util.logging.Level
 
 open class JsonConfigurationFile(var name: String) {
     companion object {
@@ -16,6 +15,20 @@ open class JsonConfigurationFile(var name: String) {
             .setPrettyPrinting()
             .disableHtmlEscaping()
             .create()
+
+        fun saveToConfig(value: Any, filePath: String) {
+            val file = File(filePath)
+            val parent = file.parentFile
+            if (!parent.exists() && !parent.mkdirs()) {
+                throw IOException("Failed to create the directory ${parent.absolutePath} for the file ${file.name}")
+            }
+            if (!file.exists() && !file.createNewFile()) {
+                throw IOException("Failed to create the file ${file.name}")
+            }
+
+            OutputStreamWriter(FileOutputStream(file), "UTF-8")
+                .use { writer -> gson.toJson(value, writer) }
+        }
 
         inline fun <reified T> getConfig(filePath: String): T {
             val file = File(filePath)
@@ -72,20 +85,18 @@ open class JsonConfigurationFile(var name: String) {
         val parent = configFile.parentFile
         if (!parent.exists()) {
             if (!parent.mkdirs()) {
-                log(Level.SEVERE, "Ocurreu um erro ao criar a config!")
-                return
+                throw IOException("Failed to create the directory ${parent.absolutePath} for the file ${configFile.name}")
             }
         }
         if (!configFile.exists()) {
             try {
                 ResourceUtils.saveResource(configFile.name)
-            } catch (e: IllegalArgumentException) {
+            } catch (e: FileNotFoundException) {
+                // File not found in the jar, create a blank one
+                if (!configFile.createNewFile()) {
+                    throw IOException("Failed to create the file ${configFile.name}")
+                }
             }
-            log(Level.WARNING, "A config \"" + configFile.name + "\" não foi encontrada, a criar uma nova...")
-            if (configFile.createNewFile())
-                log(Level.INFO, "A config foi criada com sucesso!")
-            else
-                log(Level.SEVERE, "Ocurreu um erro ao criar a config!")
         }
     }
 
@@ -101,9 +112,5 @@ open class JsonConfigurationFile(var name: String) {
         } catch (e: IOException) {
             empty
         }
-    }
-
-    private fun log(logLevel: Level, msg: String) {
-        println("[JsonConfiguration] $msg")
     }
 }

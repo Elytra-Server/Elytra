@@ -11,10 +11,8 @@ import io.elytra.sdk.network.protocol.message.play.KeepAliveMessage
 import io.elytra.sdk.network.protocol.message.play.inbound.*
 import io.elytra.sdk.network.protocol.message.play.outbound.*
 import io.elytra.sdk.network.protocol.message.play.outbound.DisconnectMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.PlayEffectMessage
 
-/**
- * @param [opcode] in this case means whats the highest packet id on the play packets
- */
 class PlayPacket : BasicPacket("PLAY", 0x55) {
 
     init {
@@ -95,5 +93,7 @@ class PlayPacket : BasicPacket("PLAY", 0x55) {
         outbound(ProtocolInfo.O_TAB_COMPLETE, TabCompleteResponseMessage::class.java, TabCompleteResponseCodec::class.java)
         outbound(ProtocolInfo.O_CHUNK_LOAD, ChunkDataMessage::class.java, ChunkDataCodec::class.java)
         outbound(ProtocolInfo.O_UNLOAD_CHUNK, UnloadChunkMessage::class.java, UnloadChunkCodec::class.java)
+        outbound(ProtocolInfo.O_PLAY_EFFECT, PlayEffectMessage::class.java, PlayEffectCodec::class.java)
+        outbound(ProtocolInfo.O_UPDATE_HEALTH, UpdateHealthMessage::class.java, UpdateHealthCodec::class.java)
     }
 }

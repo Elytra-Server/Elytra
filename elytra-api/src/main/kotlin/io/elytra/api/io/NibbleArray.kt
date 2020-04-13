@@ -1,5 +1,8 @@
 package io.elytra.api.io
 
+/**
+ * Represents a [ByteArray] with half size
+ */
 class NibbleArray(val arr: ByteArray) {
     constructor(size: Int) : this(ByteArray(size / 2))
 

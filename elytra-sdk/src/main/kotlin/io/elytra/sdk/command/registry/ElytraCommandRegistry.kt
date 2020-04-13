@@ -5,10 +5,7 @@ import io.elytra.api.command.ElytraCommand
 import io.elytra.api.command.annotations.CommandArgument
 import io.elytra.api.command.annotations.CommandSpec
 import io.elytra.api.command.registry.CommandRegistry
-import io.elytra.sdk.commands.ChunkCommand
-import io.elytra.sdk.commands.DebugCommand
-import io.elytra.sdk.commands.GamemodeCommand
-import io.elytra.sdk.commands.TestCommand
+import io.elytra.sdk.commands.*
 import kotlin.reflect.KClass
 import kotlin.reflect.full.declaredFunctions
 import kotlin.reflect.full.findAnnotation
@@ -28,11 +25,11 @@ class ElytraCommandRegistry : CommandRegistry {
 
         val elytraCommand = command as ElytraCommand
 
-        val executeFun = commandClazz.declaredFunctions.first { it.name == "execute" }
+        val executeFun = commandClazz.declaredFunctions.first { it.name.toLowerCase() == "execute" }
+
         for (annotation in executeFun.annotations) {
             if (annotation is CommandArgument) {
-                val commandArgument = annotation
-                elytraCommand.addArgument(commandArgument)
+                elytraCommand.addArgument(annotation)
             }
         }
 
@@ -45,6 +42,7 @@ class ElytraCommandRegistry : CommandRegistry {
         }
 
         commandRegistry[commandName] = command
+        println("Command $commandName has been registered.")
         // TODO("Validate command: arguments, name, etc.")
     }
 
@@ -63,6 +61,7 @@ class ElytraCommandRegistry : CommandRegistry {
         register(GamemodeCommand())
         register(DebugCommand())
         register(ChunkCommand())
+        register(SayCommand())
     }
 
     class CommandAlreadyRegistered(commandName: String) : Exception("$commandName is already registered")

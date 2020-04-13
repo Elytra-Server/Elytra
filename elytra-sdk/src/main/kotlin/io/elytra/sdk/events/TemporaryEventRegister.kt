@@ -8,6 +8,7 @@ import io.elytra.api.events.EventBus
 import io.elytra.api.events.Registrable
 import io.elytra.api.events.listen
 import io.elytra.sdk.entity.ElytraPlayer
+import io.elytra.sdk.events.player.PlayerJoinEvent
 import io.elytra.sdk.network.protocol.message.play.outbound.*
 import io.elytra.sdk.server.Elytra
 

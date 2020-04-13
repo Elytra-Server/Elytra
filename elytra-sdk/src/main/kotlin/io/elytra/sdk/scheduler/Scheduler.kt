@@ -1,6 +1,7 @@
 package io.elytra.sdk.scheduler
 
 import io.elytra.sdk.network.SessionRegistry
+import io.elytra.sdk.server.Elytra
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -20,7 +21,8 @@ class Scheduler(
             try {
                 tick()
             } catch (ex: Exception) {
-                println("Error while ticking")
+                Elytra.console.error("Error while ticking")
+                ex.printStackTrace()
             }
         }, 0, tickEvery, TimeUnit.MILLISECONDS)
     }

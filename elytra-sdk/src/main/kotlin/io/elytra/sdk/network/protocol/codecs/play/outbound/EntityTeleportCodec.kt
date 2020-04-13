@@ -1,12 +1,11 @@
 package io.elytra.sdk.network.protocol.codecs.play.outbound
 
-import com.flowpowered.network.Codec
 import com.flowpowered.network.util.ByteBufUtils
+import io.elytra.sdk.network.protocol.codecs.OutboundCodec
 import io.elytra.sdk.network.protocol.message.play.outbound.EntityTeleportMessage
 import io.netty.buffer.ByteBuf
-import java.io.IOException
 
-class EntityTeleportCodec : Codec<EntityTeleportMessage> {
+class EntityTeleportCodec : OutboundCodec<EntityTeleportMessage>() {
     override fun encode(buffer: ByteBuf, message: EntityTeleportMessage): ByteBuf {
         ByteBufUtils.writeVarInt(buffer, message.entityId)
         buffer.writeDouble(message.position.x)
@@ -16,9 +15,5 @@ class EntityTeleportCodec : Codec<EntityTeleportMessage> {
         buffer.writeByte(0)
         buffer.writeBoolean(message.ground)
         return buffer
-    }
-
-    override fun decode(buffer: ByteBuf): EntityTeleportMessage {
-        throw IOException("No have decode support for this")
     }
 }

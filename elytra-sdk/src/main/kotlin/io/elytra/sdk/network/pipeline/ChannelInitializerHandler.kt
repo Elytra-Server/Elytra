@@ -6,7 +6,6 @@ import io.netty.channel.ChannelException
 import io.netty.channel.ChannelInitializer
 import io.netty.channel.ChannelOption
 import io.netty.channel.socket.SocketChannel
-import io.netty.handler.timeout.ReadTimeoutHandler
 
 class ChannelInitializerHandler(
     private val connectionManager: ConnectionManager
@@ -16,6 +15,7 @@ class ChannelInitializerHandler(
         val codecsHandler = CodecsHandler(HandshakePacket())
         val decoderHandler = FramingHandler()
         val messagesHandler = MessageHandler(connectionManager = connectionManager)
+        val compressionHandler = CompressionHandler(9)
 
         /**
 		 * The time in seconds which are elapsed before a client is disconnected due
@@ -32,7 +32,8 @@ class ChannelInitializerHandler(
         ch.pipeline()
             .addLast("framing", decoderHandler)
             .addLast("codecs", codecsHandler)
-            .addLast("readtimeout", ReadTimeoutHandler(readTimeout))
+            // .addLast("readtimeout", ReadTimeoutHandler(readTimeout))
             .addLast("handler", messagesHandler)
+            .addLast("compression", compressionHandler)
     }
 }

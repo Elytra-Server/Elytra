@@ -1,5 +1,10 @@
 package io.elytra.api.chat
 
+/**
+ * Represents a chat message
+ *
+ * @see [Chat formatting](https://wiki.vg/Chat)
+ */
 data class TextComponent(
     var text: String,
     var clickEvent: ClickEvent? = null,

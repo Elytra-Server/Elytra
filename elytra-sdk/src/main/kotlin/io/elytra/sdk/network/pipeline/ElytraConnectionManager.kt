@@ -4,6 +4,7 @@ import com.flowpowered.network.ConnectionManager
 import com.flowpowered.network.session.Session
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.SessionRegistry
+import io.elytra.sdk.server.Elytra
 import io.netty.channel.Channel
 import java.util.concurrent.atomic.AtomicReference
 import kotlinx.coroutines.runBlocking
@@ -31,7 +32,7 @@ class ElytraConnectionManager(
             sessionRegistry.add(atomicReference.acquire)
         }
 
-        println("got new session ${atomicReference.acquire}")
+        Elytra.console.trace("got new session ${atomicReference.acquire}")
         return atomicReference.acquire
     }
 

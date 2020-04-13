@@ -19,5 +19,6 @@ interface ChunkSection {
     val data: ByteArray
 
     val skyLight: NibbleArray
+
     val blockLight: NibbleArray
 }

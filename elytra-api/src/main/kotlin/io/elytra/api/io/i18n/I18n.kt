@@ -3,6 +3,9 @@ package io.elytra.api.io.i18n
 import java.util.*
 import org.jetbrains.annotations.PropertyKey
 
+/**
+ * Providers internacionalization through resource bundles
+ */
 class I18n(locale: Locale) {
     companion object {
         /** Translations file location */

@@ -2,6 +2,9 @@ package io.elytra.api.io.i18n
 
 import java.util.*
 
+/**
+ * Provides some default locales
+ */
 object I18nLocale {
     private val ENGLISH: Locale = Locale.ENGLISH
 

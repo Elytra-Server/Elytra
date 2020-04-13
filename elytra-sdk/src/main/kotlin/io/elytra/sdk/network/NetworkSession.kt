@@ -29,6 +29,7 @@ import java.util.concurrent.BlockingQueue
 import java.util.concurrent.LinkedBlockingDeque
 import javax.crypto.SecretKey
 import kotlin.random.Random
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.runBlocking
 
 class NetworkSession(
@@ -174,7 +175,7 @@ class NetworkSession(
     fun disconnect(reason: String) {
         val session = this
 
-        runBlocking {
+        runBlocking(CoroutineName("network-session-worker")) {
             if (protocol == Protocol.PLAY) {
                 val player = gameProfile?.name?.let { Elytra.server.playerRegistry.get(it) }
 

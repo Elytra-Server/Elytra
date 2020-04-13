@@ -1,6 +1,5 @@
 package io.elytra.sdk.network.protocol.handlers.status
 
-import com.google.gson.Gson
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
@@ -16,39 +15,33 @@ class ServerQueryHandler : ElytraMessageHandler<ServerQueryMessage>() {
     override fun handle(session: NetworkSession, message: ServerQueryMessage) {
         val serverDescriptor = Elytra.server.serverDescriptor
 
-        val json: String = Gson().toJson(
-                StatusResponse(
-                        Version(
-                                serverDescriptor.motd.pingText,
-                                ProtocolInfo.CURRENT_PROTOCOL
-                        ),
-                        Players(
-                                serverDescriptor.options.maxPlayers,
-                                Elytra.server.playerRegistry.size(),
-                                ArrayList()
-                        ),
-                        Description(serverDescriptor.motd.description)
-                )
-        )
+        val players = StringBuilder().run {
+            Elytra.players().forEach {
+                append("{\"name\":\"")
+                append(it.displayName)
+                append("\",\"id\":\"")
+                append(it.gameProfile.id.toString())
+                append("\"},")
+            }
+
+            if (!isEmpty() && get(length - 1) == ',') {
+                return@run substring(0, length - 1)
+            }
+
+            return@run toString()
+        }
+
+        val json = """
+{"version": {
+    "name": "${ProtocolInfo.MINECRAFT_VERSION}",
+    "protocol": ${ProtocolInfo.CURRENT_PROTOCOL}
+},"players": {
+    "max": ${serverDescriptor.options.maxPlayers},
+    "online": ${Elytra.server.playerRegistry.size()},
+    "sample": [$players]
+},"description": {"text": "${serverDescriptor.motd.description}"}}"""
 
         session.send(ServerInfoMessage(json))
+        Elytra.console.info("Server query received from ${session.address.address.hostAddress}!")
     }
-
-    private data class StatusResponse(
-        val version: Version,
-        val players: Players,
-        val description: Description
-    )
-
-    private data class Description(val text: String)
-
-    private data class Players(
-        val max: Int,
-        val online: Int,
-        val sample: List<Player>
-    )
-
-    private data class Player(val name: String, val id: String)
-
-    private data class Version(val name: String, val protocol: Int)
 }

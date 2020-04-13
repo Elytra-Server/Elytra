@@ -6,12 +6,12 @@ import io.elytra.api.entity.PlayerMode
 import io.elytra.api.events.EventBus
 import io.elytra.api.registry.Registry
 import io.elytra.api.world.Position
+import io.elytra.api.world.enums.WorldType
 import io.elytra.sdk.entity.ElytraPlayer
-import io.elytra.sdk.events.PlayerJoinEvent
+import io.elytra.sdk.events.player.PlayerJoinEvent
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.ChunkDataMessage
-import io.elytra.sdk.network.protocol.message.play.outbound.HeldItemChangeMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.JoinGameMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.PlayerPositionAndLookMessage
 import io.elytra.sdk.network.protocol.packets.Protocol
@@ -22,7 +22,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
-class PlayerRegistry : Registry<Player, String> {
+class PlayerRegistry : Registry<String, Player> {
 
     private val mutex = Mutex()
     private var players: Set<Player> = ConcurrentHashMap.newKeySet()
@@ -39,11 +39,11 @@ class PlayerRegistry : Registry<Player, String> {
             playerMode,
             session.isActive,
             banned = false,
-            position = Position.EMPTY,
+            position = Position(3.0, 1.5, 3.0, 0.0f, 0.0f),
             world = Elytra.server.mainWorld
         )
 
-        runBlocking {
+        runBlocking(CoroutineName("player-registry-worker")) {
             withContext(Dispatchers.IO) {
                 add(player)
             }
@@ -60,25 +60,35 @@ class PlayerRegistry : Registry<Player, String> {
             0,
             0,
             Elytra.server.serverDescriptor.options.maxPlayers,
-            "flat",
+            WorldType.FLAT.prettyName,
             32,
             false,
             false)
 
         session.send(joinMessage)
 
-        GlobalScope.launch(Dispatchers.IO) {
+        GlobalScope.launch(Dispatchers.Default) {
+            var i = 0
             for (x in -1 until ((spawn.x * 2) / 16 + 1).toInt()) {
                 for (z in -1 until ((spawn.z * 2) / 16 + 1).toInt()) {
                     val chunk = Elytra.server.mainWorld.getChunkAt(x, z)
                     session.send(ChunkDataMessage(x, z, chunk as ElytraChunk))
+                    i++
+
+                    if (i == 100) {
+                        // Load 100 chunks during the "Loading terrain" screen
+                        // and only then let the player join, to prevent client side lag
+                        withContext(Dispatchers.Default) {
+                            session.send(PlayerPositionAndLookMessage(spawn))
+                            EventBus.post(PlayerJoinEvent(player))
+                        }
+                    }
+                    if (i > 100) {
+                        // After the player joined, keep sending the missing chunks with 50ms delay
+                        delay(50)
+                    }
                 }
             }
-
-            session.send(HeldItemChangeMessage(4))
-            EventBus.post(PlayerJoinEvent(player))
-
-            session.send(PlayerPositionAndLookMessage(spawn))
         }
     }
 
@@ -92,12 +102,12 @@ class PlayerRegistry : Registry<Player, String> {
         currentId.getAndDecrement()
     }
 
-    override fun get(target: String): Player? {
-        return players.first { player -> player.gameProfile.name == target }
+    override fun get(key: String): Player? {
+        return players.first { player -> player.gameProfile.name == key }
     }
 
-    override fun has(target: String): Boolean {
-        return players.any { player -> player.gameProfile.name == target }
+    override fun has(key: String): Boolean {
+        return players.any { player -> player.gameProfile.name == key }
     }
 
     fun get(session: NetworkSession): Player? {

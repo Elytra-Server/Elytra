@@ -1,13 +1,12 @@
 package io.elytra.sdk.network.protocol.codecs.play.outbound
 
-import com.flowpowered.network.Codec
 import com.flowpowered.network.util.ByteBufUtils
+import io.elytra.sdk.network.protocol.codecs.OutboundCodec
 import io.elytra.sdk.network.protocol.message.play.outbound.JoinGameMessage
 import io.elytra.sdk.network.utils.minecraft
 import io.netty.buffer.ByteBuf
-import java.io.IOException
 
-class JoinGameCodec : Codec<JoinGameMessage> {
+class JoinGameCodec : OutboundCodec<JoinGameMessage>() {
 
     override fun encode(buffer: ByteBuf, message: JoinGameMessage): ByteBuf {
         buffer.writeInt(message.id)
@@ -20,9 +19,5 @@ class JoinGameCodec : Codec<JoinGameMessage> {
         buffer.writeBoolean(message.reducedDebugInfo)
         buffer.writeBoolean(message.respawnScreen)
         return buffer
-    }
-
-    override fun decode(buffer: ByteBuf): JoinGameMessage {
-        throw IOException("No have decode support for this")
     }
 }

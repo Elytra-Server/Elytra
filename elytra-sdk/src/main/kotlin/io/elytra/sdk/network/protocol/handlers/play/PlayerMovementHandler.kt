@@ -8,14 +8,17 @@ import io.elytra.sdk.server.Elytra
 
 class PlayerMovementHandler : ElytraMessageHandler<PlayerMovementMessage>() {
 
-    override fun handle(session: NetworkSession?, message: PlayerMovementMessage) {
-        val player = Elytra.server.playerRegistry.get(session!!) as ElytraPlayer
+    override fun handle(session: NetworkSession, message: PlayerMovementMessage) {
+        val player = Elytra.server.playerRegistry.get(session) as ElytraPlayer
 
-        val oldPosition = player?.position
-        val newPosition = oldPosition?.clone()
+        val oldPosition = player.position
+        val newPosition = oldPosition.clone()
+        message.update(newPosition)
+
+        if (oldPosition != newPosition) {
+            player.position = newPosition
+        }
 
         // Elytra.sendPacketToAll(EntityTeleportMessage(player.id, player.position, true))
-
-        message.update(newPosition!!)
     }
 }

@@ -1,12 +1,11 @@
 package io.elytra.sdk.network.protocol.codecs.play.outbound
 
-import com.flowpowered.network.Codec
+import io.elytra.sdk.network.protocol.codecs.OutboundCodec
 import io.elytra.sdk.network.protocol.message.play.outbound.PlayerAbilitiesMessage
 import io.netty.buffer.ByteBuf
-import java.io.IOException
 import kotlin.experimental.or
 
-class PlayerAbilitiesCodec : Codec<PlayerAbilitiesMessage> {
+class PlayerAbilitiesCodec : OutboundCodec<PlayerAbilitiesMessage>() {
     override fun encode(buffer: ByteBuf, message: PlayerAbilitiesMessage): ByteBuf {
         var b0: Byte = 0
 
@@ -30,9 +29,5 @@ class PlayerAbilitiesCodec : Codec<PlayerAbilitiesMessage> {
         buffer.writeFloat(message.flySpeed)
         buffer.writeFloat(message.walkSpeed)
         return buffer
-    }
-
-    override fun decode(buffer: ByteBuf): PlayerAbilitiesMessage {
-        throw IOException("No have decode support for this")
     }
 }

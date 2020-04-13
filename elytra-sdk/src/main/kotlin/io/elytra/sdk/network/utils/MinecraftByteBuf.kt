@@ -2,8 +2,8 @@ package io.elytra.sdk.network.utils
 
 import com.flowpowered.network.util.ByteBufUtils
 import io.elytra.api.chat.TextComponent
-import io.elytra.api.utils.asJson
-import io.elytra.api.utils.fromJson
+import io.elytra.sdk.utils.asJson
+import io.elytra.sdk.utils.fromJson
 import io.netty.buffer.ByteBuf
 import io.netty.handler.codec.DecoderException
 import io.netty.handler.codec.EncoderException
@@ -37,7 +37,7 @@ inline class MinecraftByteBuf(private val byteBuf: ByteBuf) {
 
     // TODO Verify this
     fun readTextComponent(): TextComponent {
-        return TextComponent("").fromJson(readString(256))
+        return fromJson(readString(256))
     }
 
     fun writeString(string: String): ByteBuf? {

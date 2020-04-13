@@ -23,12 +23,14 @@ object ProtocolInfo {
     const val O_TAB_COMPLETE: Int = 0x11
     const val O_CHUNK_LOAD: Int = 0x22
     const val O_UNLOAD_CHUNK: Int = 0x1E
+    const val O_PLAY_EFFECT: Int = 0x23
+    const val O_UPDATE_HEALTH: Int = 0x49
     const val O_SET_COMPRESSION: Int = 0x03
     const val O_CHAT: Int = 0x0F
     const val O_SPAWN_PLAYER = 0x05
     const val O_ENTITY_ANIMATION = 0x06
     const val O_ENTITY_TELEPORT = 0x2B
-    const val O_SPAWN_POSITION = 0x49
+    const val O_SPAWN_POSITION = 0x4E
     const val O_CHANGE_GAME_STATE = 0x1F
     const val O_CUSTOM_PAYLOAD: Int = 0x19
     const val O_KEEP_ALIVE: Int = 0x21

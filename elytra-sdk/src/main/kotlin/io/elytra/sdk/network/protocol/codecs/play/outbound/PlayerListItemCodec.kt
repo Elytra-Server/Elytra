@@ -1,15 +1,14 @@
 package io.elytra.sdk.network.protocol.codecs.play.outbound
 
-import com.flowpowered.network.Codec
 import com.flowpowered.network.util.ByteBufUtils
-import io.elytra.api.utils.asJson
+import io.elytra.sdk.network.protocol.codecs.OutboundCodec
 import io.elytra.sdk.network.protocol.message.play.outbound.Action
 import io.elytra.sdk.network.protocol.message.play.outbound.PlayerListItemMessage
 import io.elytra.sdk.network.utils.minecraft
+import io.elytra.sdk.utils.asJson
 import io.netty.buffer.ByteBuf
-import java.io.IOException
 
-class PlayerListItemCodec : Codec<PlayerListItemMessage> {
+class PlayerListItemCodec : OutboundCodec<PlayerListItemMessage>() {
     override fun encode(buffer: ByteBuf, message: PlayerListItemMessage): ByteBuf {
         buffer.minecraft.writeEnumValue(message.action)
         ByteBufUtils.writeVarInt(buffer, message.players.size)
@@ -57,9 +56,5 @@ class PlayerListItemCodec : Codec<PlayerListItemMessage> {
             }
         }
         return buffer
-    }
-
-    override fun decode(buffer: ByteBuf?): PlayerListItemMessage {
-        throw IOException("No have decode support for this")
     }
 }
