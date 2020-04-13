@@ -28,11 +28,15 @@ class ElytraCommandHandler(
             return
         }
 
-        val messageArray = messageWithoutPrefix.split(" ")
+        val messageArray = messageWithoutPrefix.replaceMoreThanOneSpace().split(" ")
 
-        val commandName = messageArray[0]
+        val label = messageArray[0]
 
-        val command: Command? = commandRegistry.getCommandByName(commandName)
+        var command: Command? = commandRegistry.getCommandByName(label)
+
+        if (command == null) {
+            command = commandRegistry.getCommandByAlias(label)
+        }
 
         if (command == null) {
             issuer.localeMessage("command.not.found")
@@ -41,7 +45,7 @@ class ElytraCommandHandler(
 
         val argumentList = ArgumentListImpl()
 
-        val requiredArgumentNumber = command.getArguments().filter { it.required }.count()
+        val requiredArgumentNumber = command.argumentList.filter { it.required }.count()
 
         val stringArgumentList = messageArray.subList(1, messageArray.size)
 
@@ -50,7 +54,7 @@ class ElytraCommandHandler(
             return
         }
 
-        for ((index, commandArgument) in command.getArguments().withIndex()) {
+        for ((index, commandArgument) in command.argumentList.withIndex()) {
             val type = argumentClassTypePool.getOrCreateArgumentType(commandArgument.classType)
             val argumentValue = type.parse(stringArgumentList, index)
 
@@ -90,5 +94,9 @@ class ElytraCommandHandler(
             map[argumentTypeClass] = argumentInstance
             return argumentInstance
         }
+    }
+
+    private fun String.replaceMoreThanOneSpace(): String {
+        return this.trim().replace(" +", " ")
     }
 }

@@ -8,7 +8,7 @@ import io.elytra.api.command.argument.ArgumentList
 import io.elytra.api.command.argument.ArgumentTypes
 import io.elytra.api.entity.Player
 
-@CommandSpec("test")
+@CommandSpec("test", aliases = ["t"])
 class TestCommand : ElytraCommand() {
 
     @CommandArgument("testArgument", ArgumentTypes.Default::class)
