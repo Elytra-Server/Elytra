@@ -13,9 +13,6 @@ import io.elytra.sdk.network.protocol.message.play.outbound.*
 import io.elytra.sdk.network.protocol.message.play.outbound.DisconnectMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.PlayEffectMessage
 
-/**
- * @param [opcode] in this case means whats the highest packet id on the play packets
- */
 class PlayPacket : BasicPacket("PLAY", 0x55) {
 
     init {

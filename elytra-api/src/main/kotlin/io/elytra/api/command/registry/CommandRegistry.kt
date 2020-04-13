@@ -21,6 +21,13 @@ interface CommandRegistry {
     fun getCommandByName(commandName: String): Command?
 
     /**
+     * Returns a command by one of his alias
+     *
+     * @return [Command] command
+     */
+    fun getCommandByAlias(alias: String): Command?
+
+    /**
      * Removes a registered command by his name
      */
     fun disableCommand(commandName: String)

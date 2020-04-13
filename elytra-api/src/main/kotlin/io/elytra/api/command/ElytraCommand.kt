@@ -8,10 +8,7 @@ import io.elytra.api.command.annotations.CommandArgument
  * All commands must extends this in order to be functional
  */
 abstract class ElytraCommand : Command {
-
-    private val argumentList: MutableList<CommandArgument> = ArrayList()
-
-    override fun getArguments(): List<CommandArgument> = argumentList
-
-    fun addArgument(commandArgument: CommandArgument) = argumentList.add(commandArgument)
+    override var label: String = ""
+    override val aliases: MutableList<String> = ArrayList()
+    override val argumentList: MutableList<CommandArgument> = ArrayList()
 }

@@ -12,7 +12,6 @@ import io.elytra.sdk.events.player.PlayerJoinEvent
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.ChunkDataMessage
-import io.elytra.sdk.network.protocol.message.play.outbound.HeldItemChangeMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.JoinGameMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.PlayerPositionAndLookMessage
 import io.elytra.sdk.network.protocol.packets.Protocol
@@ -69,18 +68,28 @@ class PlayerRegistry : Registry<String, Player> {
         session.send(joinMessage)
 
         GlobalScope.launch(Dispatchers.Default) {
+            var i = 0
             for (x in -1 until ((spawn.x * 2) / 16 + 1).toInt()) {
                 for (z in -1 until ((spawn.z * 2) / 16 + 1).toInt()) {
                     val chunk = Elytra.server.mainWorld.getChunkAt(x, z)
                     session.send(ChunkDataMessage(x, z, chunk as ElytraChunk))
+                    i++
+
+                    if (i == 100) {
+                        // Load 100 chunks during the "Loading terrain" screen
+                        // and only then let the player join, to prevent client side lag
+                        withContext(Dispatchers.Default) {
+                            session.send(PlayerPositionAndLookMessage(spawn))
+                            EventBus.post(PlayerJoinEvent(player))
+                        }
+                    }
+                    if (i > 100) {
+                        // After the player joined, keep sending the missing chunks with 50ms delay
+                        delay(50)
+                    }
                 }
             }
         }
-
-        session.send(HeldItemChangeMessage(4))
-        session.send(PlayerPositionAndLookMessage(spawn))
-
-        EventBus.post(PlayerJoinEvent(player))
     }
 
     override suspend fun add(target: Player): Unit = mutex.withLock {
