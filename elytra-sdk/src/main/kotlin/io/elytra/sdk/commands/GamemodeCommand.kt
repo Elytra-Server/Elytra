@@ -31,7 +31,5 @@ class GamemodeCommand : ElytraCommand() {
         player.localeMessage("command.gamemode.success") {
             with("gamemode", gamemode.name.toLowerCase())
         }
-
-        player.playEffect(player.position, Effect.FIREWORK)
     }
 }
