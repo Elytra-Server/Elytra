@@ -10,10 +10,6 @@ class MessageBuilder(
     @PropertyKey(resourceBundle = I18n.BUNDLE_BASE_NAME) val messageKey: String,
     private val locale: Locale = I18nLocale.DEFAULT
 ) {
-    companion object {
-        val pattern: Pattern = Pattern.compile("\\{@@(\\w+(?:\\.\\w+)*)+}")
-    }
-
     private val placeholders = mutableMapOf<String, String>()
     private val messages = mutableMapOf<Locale, String>()
 
@@ -47,11 +43,7 @@ class MessageBuilder(
      * and builds it with the [placeholders] defined.
      */
     fun build(locale: Locale = this.locale): MessageBuilder {
-        var inputText = I18n[messageKey, locale]
-
-        val matcher: Matcher = pattern.matcher(inputText)
-        inputText = matcher.replaceAll { I18n[it.group(1), locale] }
-
+        val inputText = I18n[messageKey, locale]
         this.messages[locale] = build(inputText)
 
         return this

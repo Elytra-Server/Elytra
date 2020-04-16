@@ -81,6 +81,8 @@ class PlayerRegistry : Registry<String, Player> {
                         withContext(Dispatchers.Default) {
                             session.send(PlayerPositionAndLookMessage(spawn))
                             EventBus.post(PlayerJoinEvent(player))
+
+                            Elytra.console.info("Player joined ${player.displayName}[${player.gameProfile.id}]")
                         }
                     }
                     if (i > 100) {

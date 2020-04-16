@@ -19,10 +19,10 @@ class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
             return
         }
 
-        println(message.gameProfile.name)
+        Elytra.console.info("Player connecting ${message.gameProfile.name}[${session.address.address.hostAddress}]")
 
         if (Elytra.online(message.gameProfile.name)) {
-            session.disconnect("")
+            session.disconnect("Already online!")
             return
         }
 
