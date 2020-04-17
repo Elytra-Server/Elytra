@@ -4,6 +4,7 @@ import com.mojang.authlib.GameProfile
 import io.elytra.api.entity.Player
 import io.elytra.api.entity.PlayerMode
 import io.elytra.api.events.EventBus
+import io.elytra.api.io.i18n.MessageBuilder
 import io.elytra.api.registry.Registry
 import io.elytra.api.world.Position
 import io.elytra.api.world.enums.WorldType
@@ -82,7 +83,10 @@ class PlayerRegistry : Registry<String, Player> {
                             session.send(PlayerPositionAndLookMessage(spawn))
                             EventBus.post(PlayerJoinEvent(player))
 
-                            Elytra.console.info("Player joined ${player.displayName}[${player.gameProfile.id}]")
+                            MessageBuilder("console.player.joined").with(
+                                "player" to player.displayName,
+                                "uuid" to player.gameProfile.id
+                            ).getOrBuild().also(Elytra.console::info)
                         }
                     }
                     if (i > 100) {

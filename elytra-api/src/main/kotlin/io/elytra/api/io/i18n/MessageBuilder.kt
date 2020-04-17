@@ -1,8 +1,6 @@
 package io.elytra.api.io.i18n
 
 import java.util.*
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 import org.apache.commons.lang3.StringUtils
 import org.jetbrains.annotations.PropertyKey
 
