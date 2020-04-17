@@ -18,10 +18,13 @@ class ElytraCommandRegistry : CommandRegistry {
     private val commandAliasRegistry: MutableMap<String, Command> = HashMap()
 
     init {
-        println("registerDefaults: ${measureTimeMillis(this::registerDefaults)}ms")
+        val timeTilRegisterDefaults = measureTimeMillis {
+            registerDefaults()
+        }
+
+        Elytra.console.debug("Registered default commands in ${timeTilRegisterDefaults}ms!")
     }
 
-    @Synchronized
     override fun register(command: Command) {
         val commandClazz: KClass<out Command> = command::class
         val commandSpec = commandClazz.findAnnotation<CommandSpec>()
