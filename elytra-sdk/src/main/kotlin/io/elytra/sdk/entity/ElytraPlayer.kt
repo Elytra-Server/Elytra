@@ -40,7 +40,7 @@ data class ElytraPlayer(
     }
 
     override fun sendMessage(message: String) {
-        sendPacket(OutboundChatMessage(TextComponent(message), ChatMode.PLAYER))
+        sendPacket(OutboundChatMessage(TextComponent(message), ChatMode.FEEDBACK))
     }
 
     override fun sendMessage(vararg messages: String) {

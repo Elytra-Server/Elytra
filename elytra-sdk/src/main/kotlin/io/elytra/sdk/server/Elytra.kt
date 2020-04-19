@@ -24,14 +24,14 @@ import io.elytra.sdk.utils.ElytraConsts
 import io.elytra.sdk.utils.ResourceUtils
 import io.elytra.sdk.world.ElytraWorld
 import io.elytra.sdk.world.strategy.ClassicWorldStrategy
+import java.net.BindException
+import java.security.KeyPair
+import kotlin.system.exitProcess
 import org.jetbrains.annotations.PropertyKey
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.net.BindException
-import java.security.KeyPair
-import kotlin.system.exitProcess
 
 class Elytra : Server, KoinComponent {
     val startedAt: Long = System.currentTimeMillis()
@@ -78,7 +78,7 @@ class Elytra : Server, KoinComponent {
         broadcastMessage(TextComponent(message), filter)
 
     fun broadcastMessage(component: TextComponent, filter: (player: Player) -> Boolean) {
-        val packet = OutboundChatMessage(component, ChatMode.PLAYER)
+        val packet = OutboundChatMessage(component, ChatMode.FEEDBACK)
         for (player in players()) {
             if (filter.invoke(player)) sendPacketToAll(packet)
         }

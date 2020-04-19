@@ -1,10 +1,9 @@
 package io.elytra.api.chat
 
 /**
- * Represents a bunch of ansi colors
+ * Helper enum for handling colors in code.
  */
 enum class ChatColor(val code: String, val colorName: String, val ansi: String) {
-    RESET("r", "reset", "\u001B[0m"),
     BLACK("0", "black", "\u001B[30m"),
     BLUE("1", "dark_blue", "\u001B[34m"),
     GREEN("2", "dark_green", "\u001B[32m"),
@@ -20,19 +19,31 @@ enum class ChatColor(val code: String, val colorName: String, val ansi: String) 
     LIGHT_RED("c", "red", "\u001B[91m"),
     LIGHT_PURPLE("d", "light_purple", "\u001B[95m"),
     LIGHT_YELLOW("e", "yellow", "\u001B[93m"),
-    WHITE("f", "white", "\u001B[97m");
+    WHITE("f", "white", "\u001B[97m"),
+    RESET("r", "reset", "\u001B[0m"),
+    OBFUSCATED("k", "obfuscated", ""),
+    BOLD("l", "bold", ""),
+    STRIKETHROUGH("m", "strikethrough", ""),
+    UNDERLINE("n", "underlined", ""),
+    ITALIC("o", "italic", "");
 
+    /** The color string used by developers */
     val color by lazy { COLOR_CHAR + code }
+
+    /** The color string used by minecraft */
     val minecraft by lazy { MINECRAFT_COLOR_CHAR + code }
 
     companion object {
+        /** The color char used by developers */
         const val COLOR_CHAR = '&'
+        /** The color char used by minecraft */
         const val MINECRAFT_COLOR_CHAR = '§'
+
         /**
-         * Replace the [color] with the [toAnsi] code and builts
-         * into a string
+         * Replace the [color] with the [minecraft] value in the [text], or, if [toAnsi] is
+         * set to `true`, replace with the [ansi] value.
          *
-         * @return string with the replaced colors to the ansi codes
+         * @return The [text] with the replaced colors.
          */
         fun replaceColors(text: String, toAnsi: Boolean = false): String {
             val buff = StringBuilder()
@@ -40,6 +51,10 @@ enum class ChatColor(val code: String, val colorName: String, val ansi: String) 
             return buff.toString()
         }
 
+        /**
+         * Replace the [color] with the [minecraft] value in the [text], or, if [toAnsi] is
+         * set to `true`, replace with the [ansi] value and appends it to the [appender].
+         */
         fun replaceColors(text: String, appender: Appendable, toAnsi: Boolean = false) {
             val replaces = values()
             val toIgnore = Array(replaces.size) { false }

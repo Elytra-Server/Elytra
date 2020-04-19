@@ -1,10 +1,20 @@
 package io.elytra.api.chat
 
+/**
+ * DSL to initialize a new [TextComponent] with the base [text].
+ */
+fun TextComponent(text: String, op: TextComponent.() -> Unit) = TextComponent(text).apply(op)
+
+/**
+ * TextComponent provides an easy way to build messages with custom
+ * hover and click events without resorting to raw json.
+ */
 class TextComponent(var text: String) : JsonComponent {
     var clickEvent: ClickEvent? = null
     var hoverEvent: HoverEvent? = null
     var extra: MutableList<TextComponent>? = null
 
+    // Text formatting attributes
     var color: String? = null
     var bold: Boolean = false
     var italic: Boolean = false
@@ -12,8 +22,29 @@ class TextComponent(var text: String) : JsonComponent {
     var strikeThrough: Boolean = false
     var obfuscated: Boolean = false
 
-    fun addExtra(text: String): TextComponent = addExtra(TextComponent(text))
+    /** Add a click event to run the [action] with the given [value]. */
+    fun clickEvent(action: ClickEvent.Action, value: String) {
+        this.clickEvent = ClickEvent(action, value)
+    }
 
+    /** Add a hover event to show the [action] with the given [value]. */
+    fun hoverEvent(action: HoverEvent.Action, value: JsonComponent) {
+        this.hoverEvent = HoverEvent(action, value)
+    }
+
+    /**
+     * DSL for adding extra components to this components
+     *
+     * @see addExtra
+     */
+    fun addExtra(text: String, op: TextComponent.() -> Unit = {}) = addExtra(TextComponent(text, op))
+
+    /**
+     * Add an extra [component] to this component.
+     *
+     * Extra components act as child components, this means that
+     * they inherit the parents format and click and hover events.
+     */
     fun addExtra(component: TextComponent): TextComponent {
         if (extra == null) {
             extra = mutableListOf()
@@ -24,16 +55,20 @@ class TextComponent(var text: String) : JsonComponent {
         return this
     }
 
+    /** Check if the component has any formatting. */
+    fun hasFormatting(): Boolean {
+        return color != null || bold || italic || underlined || strikeThrough || obfuscated
+    }
+
     override fun toJson(buff: Appendable) {
         if (!hasFormatting() && clickEvent == null && hoverEvent == null && extra == null) {
-            buff.append("\"$text\"")
+            buff.append('"').append(text).append('"')
             return
         }
 
         buff.append('{')
-        buff.append("\"text\":\"")
-        ChatColor.replaceColors(text, buff)
-        buff.append('"')
+        buff.append("\"text\":\"").append(text).append('"')
+
         if (clickEvent != null) {
             buff.append(',').append("\"clickEvent\":")
             clickEvent!!.toJson(buff)
@@ -70,8 +105,4 @@ class TextComponent(var text: String) : JsonComponent {
     }
 
     override fun toString(): String = toJson()
-
-    fun hasFormatting(): Boolean {
-        return color != null || bold || italic || underlined || strikeThrough || obfuscated
-    }
 }
