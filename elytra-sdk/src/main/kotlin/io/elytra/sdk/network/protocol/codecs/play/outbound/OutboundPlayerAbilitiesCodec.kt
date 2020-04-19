@@ -1,12 +1,12 @@
 package io.elytra.sdk.network.protocol.codecs.play.outbound
 
 import io.elytra.sdk.network.protocol.codecs.OutboundCodec
-import io.elytra.sdk.network.protocol.message.play.outbound.PlayerAbilitiesMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.OutboundPlayerAbilitiesMessage
 import io.netty.buffer.ByteBuf
 import kotlin.experimental.or
 
-class PlayerAbilitiesCodec : OutboundCodec<PlayerAbilitiesMessage>() {
-    override fun encode(buffer: ByteBuf, message: PlayerAbilitiesMessage): ByteBuf {
+class OutboundPlayerAbilitiesCodec : OutboundCodec<OutboundPlayerAbilitiesMessage>() {
+    override fun encode(buffer: ByteBuf, message: OutboundPlayerAbilitiesMessage): ByteBuf {
         var b0: Byte = 0
 
         if (message.invulnerable) {

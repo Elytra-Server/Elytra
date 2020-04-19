@@ -16,7 +16,6 @@ import io.elytra.sdk.network.protocol.message.play.outbound.DisconnectMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.OutboundChatMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.PlayEffectMessage
 import io.elytra.sdk.server.Elytra
-import io.elytra.sdk.utils.asJson
 
 data class ElytraPlayer(
     var id: Int,
