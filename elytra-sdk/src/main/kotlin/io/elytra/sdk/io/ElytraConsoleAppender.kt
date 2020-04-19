@@ -6,7 +6,7 @@ import ch.qos.logback.core.CoreConstants
 import ch.qos.logback.core.OutputStreamAppender
 import ch.qos.logback.core.encoder.EncoderBase
 import ch.qos.logback.core.joran.spi.ConsoleTarget
-import io.elytra.api.utils.formatting.AnsiColors
+import io.elytra.api.chat.ChatColor
 import java.io.OutputStream
 import java.io.PrintStream
 import java.time.LocalDateTime
@@ -51,7 +51,7 @@ class ElytraConsoleAppender : OutputStreamAppender<ILoggingEvent>() {
                 sb.append(event.formattedMessage)
                 sb.append("&r").append(CoreConstants.LINE_SEPARATOR)
 
-                return AnsiColors.replaceColors(sb.toString()).toByteArray()
+                return ChatColor.replaceColors(sb.toString(), toAnsi = true).toByteArray()
             }
         })
     }

@@ -1,17 +1,33 @@
 package io.elytra.api.chat
 
-import com.google.gson.annotations.SerializedName
+/**
+ * Allows for a tooltip to be displayed when the player hovers their mouse over text.
+ */
+data class HoverEvent(val action: Action, val value: JsonComponent) : JsonComponent {
 
-data class HoverEvent(val action: Action, val value: String) {
+    override fun toJson(buff: Appendable) {
+        buff.append('{')
+        buff.append("\"action\":\"").append(action.actionName).append('"')
+        buff.append(",\"value\":").append(value.toJson())
+        buff.append('}')
+    }
 
-    enum class Action {
-        @SerializedName("show_text")
-        SHOW_TEXT,
+    override fun toString(): String = toJson()
 
-        @SerializedName("show_item")
-        SHOW_ITEM,
+    enum class Action(val actionName: String) {
+        /**
+         * Shows raw JSON text.
+         */
+        SHOW_TEXT("show_text"),
 
-        @SerializedName("show_entity")
-        SHOW_ENTITY
+        /**
+         * Shows the tooltip of an item that can have NBT tags.
+         */
+        SHOW_ITEM("show_item"),
+
+        /**
+         * Shows an entity's name, possibly its type, and its UUID.
+         */
+        SHOW_ENTITY("show_entity")
     }
 }

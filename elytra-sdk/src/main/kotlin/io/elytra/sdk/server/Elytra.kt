@@ -22,17 +22,16 @@ import io.elytra.sdk.network.utils.cryptManager
 import io.elytra.sdk.scheduler.Scheduler
 import io.elytra.sdk.utils.ElytraConsts
 import io.elytra.sdk.utils.ResourceUtils
-import io.elytra.sdk.utils.asJson
 import io.elytra.sdk.world.ElytraWorld
 import io.elytra.sdk.world.strategy.ClassicWorldStrategy
-import java.net.BindException
-import java.security.KeyPair
-import kotlin.system.exitProcess
 import org.jetbrains.annotations.PropertyKey
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.net.BindException
+import java.security.KeyPair
+import kotlin.system.exitProcess
 
 class Elytra : Server, KoinComponent {
     val startedAt: Long = System.currentTimeMillis()
@@ -71,15 +70,15 @@ class Elytra : Server, KoinComponent {
         }
     }
 
-    override fun broadcastMessage(message: String) {
-        broadcastMessage(message) { it.online }
-    }
+    override fun broadcastMessage(message: String) = broadcastMessage(TextComponent(message))
 
-    override fun broadcastMessage(message: String, filter: (player: Player) -> Boolean) {
-        val textComponent = TextComponent(message)
-        textComponent.text = textComponent.text.replace('&', '§')
+    fun broadcastMessage(message: TextComponent) = broadcastMessage(message) { it.online }
 
-        val packet = OutboundChatMessage(textComponent.asJson(), ChatMode.PLAYER)
+    override fun broadcastMessage(message: String, filter: (player: Player) -> Boolean) =
+        broadcastMessage(TextComponent(message), filter)
+
+    fun broadcastMessage(component: TextComponent, filter: (player: Player) -> Boolean) {
+        val packet = OutboundChatMessage(component, ChatMode.PLAYER)
         for (player in players()) {
             if (filter.invoke(player)) sendPacketToAll(packet)
         }
@@ -131,9 +130,9 @@ class Elytra : Server, KoinComponent {
             }
         }
 
-        fun broadcastMessage(message: String) {
-            server.broadcastMessage(message)
-        }
+        fun broadcastMessage(message: String) = server.broadcastMessage(message)
+
+        fun broadcastMessage(message: TextComponent) = server.broadcastMessage(message)
 
         fun broadcast(@PropertyKey(resourceBundle = I18n.BUNDLE_BASE_NAME) messageKey: String, builder: MessageBuilder.() -> Unit = {}) {
             val message = MessageBuilder(messageKey).apply(builder).getOrBuild()

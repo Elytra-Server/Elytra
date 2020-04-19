@@ -41,10 +41,7 @@ data class ElytraPlayer(
     }
 
     override fun sendMessage(message: String) {
-        val textComponent = TextComponent(message)
-        textComponent.text = textComponent.text.replace('&', '§')
-
-        sendPacket(OutboundChatMessage(textComponent.asJson(), ChatMode.PLAYER))
+        sendPacket(OutboundChatMessage(TextComponent(message), ChatMode.PLAYER))
     }
 
     override fun sendMessage(vararg messages: String) {

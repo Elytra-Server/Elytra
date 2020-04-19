@@ -13,6 +13,6 @@ class SayCommand : ElytraCommand() {
 
     @CommandArgument("message", ArgumentTypes.Default::class)
     override fun execute(issuer: CommandIssuer, arguments: ArgumentList) {
-        Elytra.server.broadcastMessage(arguments.getValue(0))
+        Elytra.broadcastMessage(arguments.getAll().joinToString(" ") { it.value.toString() })
     }
 }
