@@ -2,8 +2,12 @@ package io.elytra.sdk.server
 
 import com.flowpowered.network.Message
 import com.mojang.authlib.minecraft.MinecraftSessionService
+import io.elytra.api.chat.ChatMode
+import io.elytra.api.chat.TextComponent
 import io.elytra.api.command.handler.CommandHandler
 import io.elytra.api.entity.Player
+import io.elytra.api.io.i18n.I18n
+import io.elytra.api.io.i18n.MessageBuilder
 import io.elytra.api.server.Server
 import io.elytra.api.server.ServerDescriptor
 import io.elytra.sdk.entity.ElytraPlayer
@@ -13,22 +17,23 @@ import io.elytra.sdk.network.NetworkServer
 import io.elytra.sdk.network.SessionRegistry
 import io.elytra.sdk.network.protocol.PacketProvider
 import io.elytra.sdk.network.protocol.ProtocolInfo
+import io.elytra.sdk.network.protocol.message.play.outbound.OutboundChatMessage
 import io.elytra.sdk.network.utils.cryptManager
 import io.elytra.sdk.scheduler.Scheduler
 import io.elytra.sdk.utils.ElytraConsts
 import io.elytra.sdk.utils.ResourceUtils
 import io.elytra.sdk.world.ElytraWorld
 import io.elytra.sdk.world.strategy.ClassicWorldStrategy
+import java.net.BindException
+import java.security.KeyPair
+import kotlin.system.exitProcess
+import org.jetbrains.annotations.PropertyKey
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.net.BindException
-import java.security.KeyPair
-import kotlin.system.exitProcess
 
 class Elytra : Server, KoinComponent {
-
     val startedAt: Long = System.currentTimeMillis()
     val keypair: KeyPair = cryptManager.generateKeyPair()
     val debug: Boolean = false
@@ -65,13 +70,17 @@ class Elytra : Server, KoinComponent {
         }
     }
 
-    override fun broadcastMessage(message: String) {
-        broadcastMessage(message) { it.online }
-    }
+    override fun broadcastMessage(message: String) = broadcastMessage(TextComponent(message))
 
-    override fun broadcastMessage(message: String, filter: (player: Player) -> Boolean) {
+    fun broadcastMessage(message: TextComponent) = broadcastMessage(message) { it.online }
+
+    override fun broadcastMessage(message: String, filter: (player: Player) -> Boolean) =
+        broadcastMessage(TextComponent(message), filter)
+
+    fun broadcastMessage(component: TextComponent, filter: (player: Player) -> Boolean) {
+        val packet = OutboundChatMessage(component, ChatMode.FEEDBACK)
         for (player in players()) {
-            if (filter.invoke(player)) player.sendMessage(message)
+            if (filter.invoke(player)) sendPacketToAll(packet)
         }
     }
 
@@ -119,6 +128,16 @@ class Elytra : Server, KoinComponent {
             for (player in players()) {
                 (player as ElytraPlayer).sendPacket(message)
             }
+        }
+
+        fun broadcastMessage(message: String) = server.broadcastMessage(message)
+
+        fun broadcastMessage(message: TextComponent) = server.broadcastMessage(message)
+
+        fun broadcast(@PropertyKey(resourceBundle = I18n.BUNDLE_BASE_NAME) messageKey: String, builder: MessageBuilder.() -> Unit = {}) {
+            val message = MessageBuilder(messageKey).apply(builder).getOrBuild()
+
+            server.broadcastMessage(message)
         }
     }
 }

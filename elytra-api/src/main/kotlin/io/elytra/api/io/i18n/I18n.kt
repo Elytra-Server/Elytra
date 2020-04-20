@@ -1,5 +1,6 @@
 package io.elytra.api.io.i18n
 
+import com.google.common.collect.Maps
 import java.util.*
 import org.jetbrains.annotations.PropertyKey
 
@@ -38,7 +39,7 @@ class I18n(locale: Locale) {
                 loadLocale(locale)
             } else {
                 bundles[I18nLocale.DEFAULT]
-                        ?: throw IllegalArgumentException("No implementation found for the default locale(${I18nLocale.DEFAULT}")
+                    ?: throw IllegalArgumentException("No implementation found for the default locale(${I18nLocale.DEFAULT}")
             }
 
             return i18n!!
@@ -91,7 +92,7 @@ class I18n(locale: Locale) {
         }
     }
 
-    private val bundle: ResourceBundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME, locale)
+    private val bundle: ResourceBundle = wrapBundle(ResourceBundle.getBundle(BUNDLE_BASE_NAME, locale))
 
     /**
      * Get the message relative to the given [key].
@@ -99,5 +100,103 @@ class I18n(locale: Locale) {
      */
     operator fun get(@PropertyKey(resourceBundle = BUNDLE_BASE_NAME) key: String): String {
         return bundle.getString(key) ?: key
+    }
+
+    private fun wrapBundle(bundle: ResourceBundle): ResourceBundle {
+        val default = if (bundle.locale == I18nLocale.DEFAULT) {
+            null
+        } else {
+            I18n[I18nLocale.DEFAULT].bundle
+        }
+
+        return WrappedResourceBundle(bundle, default)
+    }
+
+    private inner class WrappedResourceBundle(bundle: ResourceBundle, fallback: ResourceBundle?) : ResourceBundle() {
+        private val lookup: Map<String, Any>
+
+        init {
+            lookup = Maps.newHashMap()
+
+            for (key in bundle.keys.asIterator()) {
+                val value = bundle.getString(key)
+
+                lookup[key] = parsePlaceholders(value, bundle, fallback)
+            }
+        }
+
+        /**
+         * Load all message placeholders to the [ŧext]
+         */
+        private fun parsePlaceholders(text: String, bundle: ResourceBundle, fallback: ResourceBundle?): String {
+            val builder = StringBuilder()
+
+            // The point to start searching for a match to replace
+            var start = 0
+            do {
+                val prefixIndex = text.indexOf("{@@", start)
+                if (prefixIndex == -1) {
+                    break
+                }
+                val suffixIndex = text.indexOf('}', prefixIndex)
+                if (suffixIndex == 0) {
+                    break
+                }
+                val placeholder = text.substring(prefixIndex + 3, suffixIndex)
+                // Get the replacement from the bundle
+                // If not found get from the default locale bundle
+                val replacement = try {
+                    bundle.getString(placeholder)
+                } catch (e: MissingResourceException) {
+                    if (fallback != null) {
+                        try {
+                            fallback.getString(placeholder)
+                        } catch (e: MissingResourceException) {
+                            null
+                        }
+                    } else {
+                        null
+                    }
+                }
+
+                if (replacement == null) {
+                    start = prefixIndex + 1
+                    continue
+                }
+
+                // Add everything until the match
+                for (i in start until prefixIndex) {
+                    builder.append(text[i])
+                }
+
+                // Place the replacement
+                builder.append(replacement)
+
+                // Increment the next starting point
+                // 2 is the text length of the color, e.g. `&a`
+                start = suffixIndex + 1
+            } while (start < text.length)
+
+            for (i in start until text.length) {
+                builder.append(text[i])
+            }
+
+            return builder.toString()
+        }
+
+        override fun getKeys(): Enumeration<String> {
+            return object : Enumeration<String> {
+                private val it = lookup.keys.iterator()
+                override fun hasMoreElements(): Boolean = it.hasNext()
+
+                override fun nextElement(): String = it.next()
+            }
+        }
+
+        override fun handleGetObject(key: String): Any {
+            Objects.requireNonNull(key, "Key is null")
+
+            return lookup[key]!!
+        }
     }
 }

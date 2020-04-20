@@ -1,4 +1,4 @@
-package io.elytra.sdk.command.handler
+package io.elytra.sdk.command
 
 import io.elytra.api.command.Command
 import io.elytra.api.command.CommandIssuer
@@ -6,7 +6,6 @@ import io.elytra.api.command.argument.ArgumentContainer
 import io.elytra.api.command.argument.ArgumentType
 import io.elytra.api.command.handler.CommandHandler
 import io.elytra.api.command.registry.CommandRegistry
-import io.elytra.sdk.command.argument.ArgumentListImpl
 import io.elytra.sdk.utils.ElytraConsts
 import io.elytra.sdk.utils.localeMessage
 import kotlin.reflect.KClass

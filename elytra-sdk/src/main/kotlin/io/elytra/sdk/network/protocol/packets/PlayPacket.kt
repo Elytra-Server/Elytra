@@ -11,7 +11,6 @@ import io.elytra.sdk.network.protocol.message.play.KeepAliveMessage
 import io.elytra.sdk.network.protocol.message.play.inbound.*
 import io.elytra.sdk.network.protocol.message.play.outbound.*
 import io.elytra.sdk.network.protocol.message.play.outbound.DisconnectMessage
-import io.elytra.sdk.network.protocol.message.play.outbound.PlayEffectMessage
 
 class PlayPacket : BasicPacket("PLAY", 0x55) {
 
@@ -69,10 +68,17 @@ class PlayPacket : BasicPacket("PLAY", 0x55) {
             PlayerMovementHandler::class.java
         )
 
+        inbound(ProtocolInfo.I_PLAYER_ROTATION,
+            PlayerRotationMessage::class.java,
+            PlayerRotationCodec::class.java,
+            PlayerMovementHandler::class.java
+        )
+
         inbound(ProtocolInfo.I_TAB_COMPLETE, TabCompleteMessage::class.java, TabCompleteCodec::class.java, TabCompleteHandler::class.java)
+        inbound(ProtocolInfo.I_PLAYER_ABILITIES, PlayerAbilitiesMessage::class.java, PlayerAbilitiesCodec::class.java, PlayerAbilitiesHandler::class.java)
 
         outbound(ProtocolInfo.HELD_ITEM_CHANGE, HeldItemChangeMessage::class.java, HeldItemChangeCodec::class.java) // Maybe 0x39 // 0x3A
-        outbound(ProtocolInfo.PLAYER_ABILITIES, PlayerAbilitiesMessage::class.java, PlayerAbilitiesCodec::class.java)
+        outbound(ProtocolInfo.O_PLAYER_ABILITIES, OutboundPlayerAbilitiesMessage::class.java, OutboundPlayerAbilitiesCodec::class.java)
         outbound(ProtocolInfo.SERVER_DIFFICULTY, ServerDifficultyMessage::class.java, ServerDifficultyCodec::class.java)
         outbound(ProtocolInfo.O_CUSTOM_PAYLOAD, CustomPayloadMessage::class.java, CustomPayloadCodec::class.java)
         outbound(ProtocolInfo.JOIN_GAME, JoinGameMessage::class.java, JoinGameCodec::class.java)
@@ -93,7 +99,7 @@ class PlayPacket : BasicPacket("PLAY", 0x55) {
         outbound(ProtocolInfo.O_TAB_COMPLETE, TabCompleteResponseMessage::class.java, TabCompleteResponseCodec::class.java)
         outbound(ProtocolInfo.O_CHUNK_LOAD, ChunkDataMessage::class.java, ChunkDataCodec::class.java)
         outbound(ProtocolInfo.O_UNLOAD_CHUNK, UnloadChunkMessage::class.java, UnloadChunkCodec::class.java)
-        outbound(ProtocolInfo.O_PLAY_EFFECT, PlayEffectMessage::class.java, PlayEffectCodec::class.java)
+        // outbound(ProtocolInfo.O_PLAY_EFFECT, PlayEffectMessage::class.java, PlayEffectCodec::class.java)
         outbound(ProtocolInfo.O_UPDATE_HEALTH, UpdateHealthMessage::class.java, UpdateHealthCodec::class.java)
     }
 }

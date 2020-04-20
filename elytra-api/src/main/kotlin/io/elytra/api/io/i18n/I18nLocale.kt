@@ -6,7 +6,7 @@ import java.util.*
  * Provides some default locales
  */
 object I18nLocale {
-    private val ENGLISH: Locale = Locale.ENGLISH
+    val ENGLISH: Locale = Locale.ENGLISH
 
     /** The default/fallback language to use */
     val DEFAULT: Locale = ENGLISH

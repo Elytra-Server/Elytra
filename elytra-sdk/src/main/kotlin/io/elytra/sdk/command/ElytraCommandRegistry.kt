@@ -1,11 +1,11 @@
-package io.elytra.sdk.command.registry
+package io.elytra.sdk.command
 
 import io.elytra.api.command.Command
 import io.elytra.api.command.ElytraCommand
 import io.elytra.api.command.annotations.CommandArgument
 import io.elytra.api.command.annotations.CommandSpec
 import io.elytra.api.command.registry.CommandRegistry
-import io.elytra.sdk.commands.*
+import io.elytra.sdk.command.defaults.*
 import io.elytra.sdk.server.Elytra
 import kotlin.reflect.KClass
 import kotlin.reflect.full.declaredFunctions
@@ -18,10 +18,13 @@ class ElytraCommandRegistry : CommandRegistry {
     private val commandAliasRegistry: MutableMap<String, Command> = HashMap()
 
     init {
-        println("registerDefaults: ${measureTimeMillis(this::registerDefaults)}ms")
+        val timeTilRegisterDefaults = measureTimeMillis {
+            registerDefaults()
+        }
+
+        Elytra.console.debug("Registered default commands in ${timeTilRegisterDefaults}ms!")
     }
 
-    @Synchronized
     override fun register(command: Command) {
         val commandClazz: KClass<out Command> = command::class
         val commandSpec = commandClazz.findAnnotation<CommandSpec>()

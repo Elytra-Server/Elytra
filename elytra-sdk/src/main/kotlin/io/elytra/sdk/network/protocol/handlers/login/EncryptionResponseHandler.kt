@@ -28,8 +28,6 @@ class EncryptionResponseHandler : ElytraMessageHandler<EncryptionResponseMessage
 
         val serverId: String = BigInteger(cryptManager.getServerIdHash("", Elytra.server.keypair.public, secretKey)).toString(16)
 
-        println(serverId)
-
         val gameProfile = Elytra.server.sessionService.hasJoinedServer(session.gameProfile, serverId)
 
         if (gameProfile != null) {

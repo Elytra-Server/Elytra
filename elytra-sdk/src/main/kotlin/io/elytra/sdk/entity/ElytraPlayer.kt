@@ -16,7 +16,6 @@ import io.elytra.sdk.network.protocol.message.play.outbound.DisconnectMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.OutboundChatMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.PlayEffectMessage
 import io.elytra.sdk.server.Elytra
-import io.elytra.sdk.utils.asJson
 
 data class ElytraPlayer(
     var id: Int,
@@ -41,10 +40,7 @@ data class ElytraPlayer(
     }
 
     override fun sendMessage(message: String) {
-        val textComponent = TextComponent(message)
-        textComponent.text = textComponent.text.replace('&', '§')
-
-        sendPacket(OutboundChatMessage(textComponent.asJson(), ChatMode.PLAYER))
+        sendPacket(OutboundChatMessage(TextComponent(message), ChatMode.FEEDBACK))
     }
 
     override fun sendMessage(vararg messages: String) {

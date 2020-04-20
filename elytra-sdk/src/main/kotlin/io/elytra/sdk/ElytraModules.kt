@@ -4,8 +4,8 @@ import com.mojang.authlib.minecraft.MinecraftSessionService
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService
 import io.elytra.api.command.handler.CommandHandler
 import io.elytra.api.command.registry.CommandRegistry
-import io.elytra.sdk.command.handler.ElytraCommandHandler
-import io.elytra.sdk.command.registry.ElytraCommandRegistry
+import io.elytra.sdk.command.ElytraCommandHandler
+import io.elytra.sdk.command.ElytraCommandRegistry
 import io.elytra.sdk.network.SessionRegistry
 import io.elytra.sdk.scheduler.Scheduler
 import io.elytra.sdk.server.PlayerRegistry

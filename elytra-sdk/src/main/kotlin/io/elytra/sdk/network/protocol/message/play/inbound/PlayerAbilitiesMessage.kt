@@ -1,4 +1,4 @@
-package io.elytra.sdk.network.protocol.message.play.outbound
+package io.elytra.sdk.network.protocol.message.play.inbound
 
 import com.flowpowered.network.Message
 

@@ -15,12 +15,15 @@ object ProtocolInfo {
     const val CONFIRM_TELEPORT: Int = 0x00
     const val I_CUSTOM_PAYLOAD: Int = 0x0B // 0x9
     const val I_CHAT: Int = 0x03
-    const val I_PLAYER_MOVEMENT = 0x14
     const val I_PLAYER_POSITION = 0x11
     const val I_PLAYER_LOOK = 0x12
+    const val I_PLAYER_ROTATION = 0x13
+    const val I_PLAYER_MOVEMENT = 0x14
     const val I_KEEP_ALIVE: Int = 0x0F
     const val I_TAB_COMPLETE: Int = 0x06
     const val O_TAB_COMPLETE: Int = 0x11
+    const val I_PLAYER_ABILITIES: Int = 0x19
+    const val O_PLAYER_ABILITIES: Int = 0x32
     const val O_CHUNK_LOAD: Int = 0x22
     const val O_UNLOAD_CHUNK: Int = 0x1E
     const val O_PLAY_EFFECT: Int = 0x23
@@ -36,7 +39,6 @@ object ProtocolInfo {
     const val O_KEEP_ALIVE: Int = 0x21
     const val CLIENT_SETTINGS: Int = 0x05
     const val HELD_ITEM_CHANGE: Int = 0x40
-    const val PLAYER_ABILITIES: Int = 0x32
     const val SERVER_DIFFICULTY: Int = 0x0E
     const val JOIN_GAME: Int = 0x26
     const val O_PLAYER_POS_LOOK: Int = 0x36

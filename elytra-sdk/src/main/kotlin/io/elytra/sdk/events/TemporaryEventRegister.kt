@@ -1,8 +1,5 @@
 package io.elytra.sdk.events
 
-import com.google.common.collect.ImmutableList
-import io.elytra.api.chat.ChatColor
-import io.elytra.api.chat.ChatMode
 import io.elytra.api.chat.TextComponent
 import io.elytra.api.events.EventBus
 import io.elytra.api.events.Registrable
@@ -14,30 +11,29 @@ import io.elytra.sdk.server.Elytra
 
 @Deprecated("Only used for development testing")
 class TemporaryEventRegister : Registrable {
-
     override fun register() {
         EventBus.listen<PlayerJoinEvent>()
             .subscribe {
                 val player = it.player
-                val onlinePlayers = Elytra.players()
 
-                val joinMessage = TextComponent("${ChatColor.YELLOW}${player.displayName} joined the game")
+                Elytra.broadcast("player.joined") {
+                    with("player" to player.displayName)
+                }
+
                 val playerListData = AddPlayerData(
                     0,
                     player.gamemode,
                     player.gameProfile, TextComponent(player.displayName)
                 )
+                Elytra.sendPacketToAll(PlayerListItemMessage(Action.ADD_PLAYER, listOf(playerListData)))
 
-                Elytra.sendPacketToAll(OutboundChatMessage(joinMessage, ChatMode.PLAYER))
-                Elytra.sendPacketToAll(PlayerListItemMessage(Action.ADD_PLAYER, ImmutableList.of(playerListData)))
-
-                onlinePlayers.forEach { onlinePlayer ->
+                Elytra.players().forEach { onlinePlayer ->
                     val onlinePlayerListData = AddPlayerData(
                         0,
                         onlinePlayer.gamemode,
                         onlinePlayer.gameProfile, TextComponent(onlinePlayer.displayName)
                     )
-                    player.sendPacket(PlayerListItemMessage(Action.ADD_PLAYER, ImmutableList.of(onlinePlayerListData)))
+                    player.sendPacket(PlayerListItemMessage(Action.ADD_PLAYER, listOf(onlinePlayerListData)))
 
                     if ((onlinePlayer as ElytraPlayer).id != (player as ElytraPlayer).id) {
                         onlinePlayer.sendMessage("Send spawm")

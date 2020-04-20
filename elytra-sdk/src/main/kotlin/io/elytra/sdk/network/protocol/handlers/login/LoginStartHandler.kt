@@ -1,5 +1,6 @@
 package io.elytra.sdk.network.protocol.handlers.login
 
+import io.elytra.api.io.i18n.MessageBuilder
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.SessionState
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
@@ -19,10 +20,13 @@ class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
             return
         }
 
-        println(message.gameProfile.name)
+        MessageBuilder("console.player.connecting").with(
+            "player" to message.gameProfile.name,
+            "ip" to session.address.address.hostAddress
+        ).getOrBuild().also(Elytra.console::info)
 
         if (Elytra.online(message.gameProfile.name)) {
-            session.disconnect("")
+            session.disconnect("Already online!")
             return
         }
 
