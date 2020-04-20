@@ -21,9 +21,17 @@ class ChatHandler : ElytraMessageHandler<ChatMessage>() {
 
         val chatMessage = MessageBuilder("chat.format")
             .with("player" to session.gameProfile!!.name)
-            .with("message" to message.content)
             .getOrBuild()
+            .split("{message}", limit = 2)
 
-        Elytra.sendPacketToAll(OutboundChatMessage(TextComponent(chatMessage), ChatMode.PLAYER))
+        Elytra.sendPacketToAll(OutboundChatMessage(TextComponent(chatMessage[0]) {
+            addExtra(message.content) {
+                replaceColors = false
+            }
+
+            if (chatMessage.size > 1 && chatMessage[1].isNotEmpty()) {
+                addExtra(chatMessage[1])
+            }
+        }, ChatMode.PLAYER))
     }
 }

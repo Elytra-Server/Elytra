@@ -22,6 +22,9 @@ class TextComponent(var text: String) : JsonComponent {
     var strikeThrough: Boolean = false
     var obfuscated: Boolean = false
 
+    /** Should the [text] have it's colors replaced? */
+    var replaceColors: Boolean = true
+
     /** Add a click event to run the [action] with the given [value]. */
     fun clickEvent(action: ClickEvent.Action, value: String) {
         this.clickEvent = ClickEvent(action, value)
@@ -62,12 +65,16 @@ class TextComponent(var text: String) : JsonComponent {
 
     override fun toJson(buff: Appendable) {
         if (!hasFormatting() && clickEvent == null && hoverEvent == null && extra == null) {
-            buff.append('"').append(text).append('"')
+            buff.append('"')
+            if (replaceColors) ChatColor.replaceColors(text, buff) else buff.append(text)
+            buff.append('"')
             return
         }
 
         buff.append('{')
-        buff.append("\"text\":\"").append(text).append('"')
+        buff.append("\"text\":\"")
+        if (replaceColors) ChatColor.replaceColors(text, buff) else buff.append(text)
+        buff.append('"')
 
         if (clickEvent != null) {
             buff.append(',').append("\"clickEvent\":")
