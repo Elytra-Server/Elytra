@@ -1,6 +1,6 @@
 package io.elytra.sdk.world
 
-import io.elytra.api.entity.Player
+import io.elytra.api.entity.player.Player
 import io.elytra.api.world.Chunk
 import io.elytra.api.world.Position
 import io.elytra.api.world.World

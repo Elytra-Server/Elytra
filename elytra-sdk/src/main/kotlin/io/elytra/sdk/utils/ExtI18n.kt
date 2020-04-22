@@ -1,7 +1,7 @@
 package io.elytra.sdk.utils
 
 import io.elytra.api.command.CommandIssuer
-import io.elytra.api.entity.Player
+import io.elytra.api.entity.player.Player
 import io.elytra.api.io.i18n.I18n
 import io.elytra.api.io.i18n.I18nLocale
 import io.elytra.api.io.i18n.LocatedException

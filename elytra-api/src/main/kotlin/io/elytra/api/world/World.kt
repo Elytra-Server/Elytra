@@ -1,6 +1,6 @@
 package io.elytra.api.world
 
-import io.elytra.api.entity.Player
+import io.elytra.api.entity.player.Player
 import io.elytra.api.utils.Tickable
 
 /**

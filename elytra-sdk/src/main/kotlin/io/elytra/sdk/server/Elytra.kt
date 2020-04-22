@@ -5,7 +5,7 @@ import com.mojang.authlib.minecraft.MinecraftSessionService
 import io.elytra.api.chat.ChatMode
 import io.elytra.api.chat.TextComponent
 import io.elytra.api.command.handler.CommandHandler
-import io.elytra.api.entity.Player
+import io.elytra.api.entity.player.Player
 import io.elytra.api.io.i18n.I18n
 import io.elytra.api.io.i18n.MessageBuilder
 import io.elytra.api.server.Server

@@ -6,7 +6,7 @@ import io.elytra.api.command.annotations.CommandArgument
 import io.elytra.api.command.annotations.CommandSpec
 import io.elytra.api.command.argument.ArgumentList
 import io.elytra.api.command.argument.ArgumentTypes
-import io.elytra.api.entity.Player
+import io.elytra.api.entity.player.Player
 import io.elytra.api.world.enums.GameMode
 import io.elytra.sdk.utils.localeMessage
 

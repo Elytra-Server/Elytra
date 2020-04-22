@@ -4,7 +4,7 @@ import io.elytra.api.command.CommandIssuer
 import io.elytra.api.command.ElytraCommand
 import io.elytra.api.command.annotations.CommandSpec
 import io.elytra.api.command.argument.ArgumentList
-import io.elytra.api.entity.Player
+import io.elytra.api.entity.player.Player
 import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.network.protocol.message.play.outbound.SpawnPlayerMessage
 import io.elytra.sdk.server.Elytra

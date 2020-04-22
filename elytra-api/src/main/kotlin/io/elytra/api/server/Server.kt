@@ -1,6 +1,6 @@
 package io.elytra.api.server
 
-import io.elytra.api.entity.Player
+import io.elytra.api.entity.player.Player
 
 /**
  * [Server] is the game entry that managers the
