@@ -3,18 +3,17 @@ package io.elytra.sdk.network.utils
 import java.security.*
 import java.security.spec.EncodedKeySpec
 import java.security.spec.X509EncodedKeySpec
-import javax.crypto.*
+import javax.crypto.Cipher
+import javax.crypto.KeyGenerator
+import javax.crypto.SecretKey
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
-val cryptManager get() = CryptManager()
-
-class CryptManager {
-
+object CryptManager {
     fun createNewSharedKey(): SecretKey {
-        val keygenerator = KeyGenerator.getInstance("AES")
-        keygenerator.init(128)
-        return keygenerator.generateKey()
+        val keyGenerator = KeyGenerator.getInstance("AES")
+        keyGenerator.init(128)
+        return keyGenerator.generateKey()
     }
 
     fun generateKeyPair(): KeyPair {
@@ -36,9 +35,9 @@ class CryptManager {
     }
 
     fun decodePublicKey(encodedKey: ByteArray?): PublicKey {
-        val keyspec: EncodedKeySpec = X509EncodedKeySpec(encodedKey)
-        val keyfactory = KeyFactory.getInstance("RSA")
-        return keyfactory.generatePublic(keyspec)
+        val keySpec: EncodedKeySpec = X509EncodedKeySpec(encodedKey)
+        val keyFactory = KeyFactory.getInstance("RSA")
+        return keyFactory.generatePublic(keySpec)
     }
 
     fun decryptSharedKey(key: PrivateKey, secretKeyEncrypted: ByteArray): SecretKey {

@@ -18,7 +18,7 @@ import io.elytra.sdk.network.SessionRegistry
 import io.elytra.sdk.network.protocol.PacketProvider
 import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.network.protocol.message.play.outbound.OutboundChatMessage
-import io.elytra.sdk.network.utils.cryptManager
+import io.elytra.sdk.network.utils.CryptManager
 import io.elytra.sdk.scheduler.Scheduler
 import io.elytra.sdk.utils.ElytraConsts
 import io.elytra.sdk.utils.ResourceUtils
@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory
 
 class Elytra : Server, KoinComponent {
     val startedAt: Long = System.currentTimeMillis()
-    val keypair: KeyPair = cryptManager.generateKeyPair()
+    val keypair: KeyPair = CryptManager.generateKeyPair()
     val debug: Boolean = false
     val scheduler: Scheduler by inject()
     val playerRegistry: PlayerRegistry by inject()

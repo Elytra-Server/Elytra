@@ -2,7 +2,7 @@ package io.elytra.sdk.network.protocol.codecs.login.inbound
 
 import com.flowpowered.network.Codec
 import io.elytra.sdk.network.protocol.message.login.EncryptionResponseMessage
-import io.elytra.sdk.network.utils.minecraft
+import io.elytra.sdk.network.utils.readByteArray
 import io.netty.buffer.ByteBuf
 import java.io.IOException
 
@@ -12,8 +12,8 @@ class EncryptionResponseCodec : Codec<EncryptionResponseMessage> {
     }
 
     override fun decode(buffer: ByteBuf): EncryptionResponseMessage {
-        val secretKeyEncrypted = buffer.minecraft.readByteArray()
-        val verifyTokenEncrypted = buffer.minecraft.readByteArray()
+        val secretKeyEncrypted = buffer.readByteArray()
+        val verifyTokenEncrypted = buffer.readByteArray()
         return EncryptionResponseMessage(secretKeyEncrypted!!, verifyTokenEncrypted!!)
     }
 }

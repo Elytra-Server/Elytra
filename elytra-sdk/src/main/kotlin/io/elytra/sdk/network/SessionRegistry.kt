@@ -22,6 +22,7 @@ class SessionRegistry : Registry<String, NetworkSession>, Tickable {
     }
 
     override suspend fun remove(target: NetworkSession): Unit = mutex.withLock {
+        println("Logged out!")
         sessions.remove(target)
     }
 

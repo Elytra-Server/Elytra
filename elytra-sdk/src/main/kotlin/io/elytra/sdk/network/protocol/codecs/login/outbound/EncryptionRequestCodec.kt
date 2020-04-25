@@ -1,20 +1,17 @@
 package io.elytra.sdk.network.protocol.codecs.login.outbound
 
-import com.flowpowered.network.Codec
+import io.elytra.sdk.network.protocol.codecs.OutboundCodec
 import io.elytra.sdk.network.protocol.message.login.EncryptionRequestMessage
-import io.elytra.sdk.network.utils.minecraft
+import io.elytra.sdk.network.utils.writeByteArray
+import io.elytra.sdk.network.utils.writeString
 import io.netty.buffer.ByteBuf
-import java.io.IOException
 
-class EncryptionRequestCodec : Codec<EncryptionRequestMessage> {
+class EncryptionRequestCodec : OutboundCodec<EncryptionRequestMessage> {
     override fun encode(buffer: ByteBuf, message: EncryptionRequestMessage): ByteBuf {
-        buffer.minecraft.writeString(message.hashedServerId)
-        buffer.minecraft.writeByteArray(message.publicKey.encoded)
-        buffer.minecraft.writeByteArray(message.verifyToken)
-        return buffer
-    }
+        buffer.writeString(message.hashedServerId)
+        buffer.writeByteArray(message.publicKey.encoded)
+        buffer.writeByteArray(message.verifyToken)
 
-    override fun decode(buffer: ByteBuf): EncryptionRequestMessage {
-        throw IOException("No have decode support for this")
+        return buffer
     }
 }

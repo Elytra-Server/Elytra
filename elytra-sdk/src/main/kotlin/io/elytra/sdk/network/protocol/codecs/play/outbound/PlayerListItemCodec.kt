@@ -4,57 +4,59 @@ import com.flowpowered.network.util.ByteBufUtils
 import io.elytra.sdk.network.protocol.codecs.OutboundCodec
 import io.elytra.sdk.network.protocol.message.play.outbound.Action
 import io.elytra.sdk.network.protocol.message.play.outbound.PlayerListItemMessage
-import io.elytra.sdk.network.utils.minecraft
-import io.elytra.sdk.utils.asJson
+import io.elytra.sdk.network.utils.writeEnumValue
+import io.elytra.sdk.network.utils.writeString
+import io.elytra.sdk.network.utils.writeUuid
 import io.netty.buffer.ByteBuf
 
-class PlayerListItemCodec : OutboundCodec<PlayerListItemMessage>() {
+class PlayerListItemCodec : OutboundCodec<PlayerListItemMessage> {
     override fun encode(buffer: ByteBuf, message: PlayerListItemMessage): ByteBuf {
-        buffer.minecraft.writeEnumValue(message.action)
+        buffer.writeEnumValue(message.action)
         ByteBufUtils.writeVarInt(buffer, message.players.size)
         for (playerData in message.players) {
             when (message.action) {
                 Action.ADD_PLAYER -> {
-                    buffer.minecraft.writeUuid(playerData.gameProfile.id)
-                    buffer.minecraft.writeString(playerData.gameProfile.name)
+                    buffer.writeUuid(playerData.gameProfile.id)
+                    buffer.writeString(playerData.gameProfile.name)
                     ByteBufUtils.writeVarInt(buffer, playerData.gameProfile.properties.size())
 
                     for (property in playerData.gameProfile.properties.values()) {
-                        buffer.minecraft.writeString(property.name)
-                        buffer.minecraft.writeString(property.value)
+                        buffer.writeString(property.name)
+                        buffer.writeString(property.value)
 
                         if (property.hasSignature()) {
                             buffer.writeBoolean(true)
-                            buffer.minecraft.writeString(property.signature)
+                            buffer.writeString(property.signature)
                         } else {
                             buffer.writeBoolean(false)
                         }
                     }
 
-                    buffer.minecraft.writeEnumValue(playerData.gameMode)
+                    buffer.writeEnumValue(playerData.gameMode)
                     ByteBufUtils.writeVarInt(buffer, playerData.ping)
 
                     buffer.writeBoolean(true)
-                    buffer.minecraft.writeString(playerData.displayName.asJson())
+                    buffer.writeString(playerData.displayName.toJson())
                 }
                 Action.REMOVE_PLAYER -> {
-                    buffer.minecraft.writeUuid(playerData.gameProfile.id)
+                    buffer.writeUuid(playerData.gameProfile.id)
                 }
                 Action.UPDATE_DISPLAY_NAME -> {
-                    buffer.minecraft.writeUuid(playerData.gameProfile.id)
+                    buffer.writeUuid(playerData.gameProfile.id)
                     buffer.writeBoolean(true)
-                    buffer.minecraft.writeString(playerData.displayName.asJson())
+                    buffer.writeString(playerData.displayName.toJson())
                 }
                 Action.UPDATE_GAME_MODE -> {
-                    buffer.minecraft.writeUuid(playerData.gameProfile.id)
-                    buffer.minecraft.writeEnumValue(playerData.gameMode)
+                    buffer.writeUuid(playerData.gameProfile.id)
+                    buffer.writeEnumValue(playerData.gameMode)
                 }
                 Action.UPDATE_LATENCY -> {
-                    buffer.minecraft.writeUuid(playerData.gameProfile.id)
+                    buffer.writeUuid(playerData.gameProfile.id)
                     ByteBufUtils.writeVarInt(buffer, playerData.ping)
                 }
             }
         }
+
         return buffer
     }
 }

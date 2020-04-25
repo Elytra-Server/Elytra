@@ -5,8 +5,7 @@ import io.elytra.sdk.network.protocol.codecs.OutboundCodec
 import io.elytra.sdk.network.protocol.message.play.outbound.TabCompleteResponseMessage
 import io.netty.buffer.ByteBuf
 
-class TabCompleteResponseCodec : OutboundCodec<TabCompleteResponseMessage>() {
-
+class TabCompleteResponseCodec : OutboundCodec<TabCompleteResponseMessage> {
     override fun encode(buf: ByteBuf, message: TabCompleteResponseMessage): ByteBuf {
         ByteBufUtils.writeVarInt(buf, message.transactionId)
         ByteBufUtils.writeVarInt(buf, message.startIndex)
