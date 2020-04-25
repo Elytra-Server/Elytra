@@ -53,6 +53,7 @@ class DeclareCommandsCodec : OutboundCodec<DeclareCommandsMessage>() {
         }
         // endregion --{ Commands }--
 
+        // region --{ Command Args }--
         buf.writeByte(0x02 or 0x04 or 0x10)
         // Child count, 0 only one arg to catch everything
         ByteBufUtils.writeVarInt(buf, 0)
@@ -64,6 +65,7 @@ class DeclareCommandsCodec : OutboundCodec<DeclareCommandsMessage>() {
 
         // Index of the root node, we registered it as the first node, so it's 0
         ByteBufUtils.writeVarInt(buf, 0)
+        // endregion --{ Command Args }--
 
         return buf
     }
