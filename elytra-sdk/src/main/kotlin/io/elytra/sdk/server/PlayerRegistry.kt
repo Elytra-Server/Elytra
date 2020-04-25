@@ -13,6 +13,7 @@ import io.elytra.sdk.events.player.PlayerJoinEvent
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.message.login.LoginSuccessMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.ChunkDataMessage
+import io.elytra.sdk.network.protocol.message.play.outbound.DeclareCommandsMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.JoinGameMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.PlayerPositionAndLookMessage
 import io.elytra.sdk.network.protocol.packets.Protocol
@@ -87,6 +88,8 @@ class PlayerRegistry : Registry<String, Player> {
                                 "player" to player.displayName,
                                 "uuid" to player.gameProfile.id
                             ).getOrBuild().also(Elytra.console::info)
+
+                            session.send(DeclareCommandsMessage(Elytra.server.commandRegistry.getCommands()))
                         }
                     }
                     if (i > 100) {

@@ -62,8 +62,13 @@ class ElytraCommandRegistry : CommandRegistry {
     }
 
     @Synchronized
-    override fun getCommandByName(commandName: String): Command? {
-        return commandRegistry[commandName]
+    override fun getCommands(): Collection<Command> {
+        return commandRegistry.values
+    }
+
+    @Synchronized
+    override fun getCommandByName(name: String): Command? {
+        return commandRegistry[name]
     }
 
     @Synchronized
@@ -72,8 +77,8 @@ class ElytraCommandRegistry : CommandRegistry {
     }
 
     @Synchronized
-    override fun disableCommand(commandName: String) {
-        commandRegistry.remove(commandName)
+    override fun disableCommand(name: String) {
+        commandRegistry.remove(name)
     }
 
     private fun registerDefaults() {

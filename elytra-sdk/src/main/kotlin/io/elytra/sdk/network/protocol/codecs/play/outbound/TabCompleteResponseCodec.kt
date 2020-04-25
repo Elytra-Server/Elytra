@@ -15,12 +15,15 @@ class TabCompleteResponseCodec : OutboundCodec<TabCompleteResponseMessage>() {
 
         for (completion in message.completions) {
             ByteBufUtils.writeUTF8(buf, completion.match)
-            val hasToolip = completion.tooltip != null
-
-            buf.writeBoolean(hasToolip)
-
-            if (hasToolip) {
-                ByteBufUtils.writeUTF8(buf, completion.tooltip.toJson())
+            completion.tooltip.also { tooltip ->
+                if (tooltip != null) {
+                    // Completion has tooltip
+                    buf.writeBoolean(true)
+                    ByteBufUtils.writeUTF8(buf, tooltip.toJson())
+                } else {
+                    // Completion doesn't have tooltip
+                    buf.writeBoolean(false)
+                }
             }
         }
 

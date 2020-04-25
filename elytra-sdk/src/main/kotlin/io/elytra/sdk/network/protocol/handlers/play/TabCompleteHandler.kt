@@ -1,7 +1,6 @@
 package io.elytra.sdk.network.protocol.handlers.play
 
 import io.elytra.api.chat.TextComponent
-import io.elytra.api.command.TabCompletion
 import io.elytra.api.command.handler.CommandHandler
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
@@ -27,7 +26,7 @@ class TabCompleteHandler : ElytraMessageHandler<TabCompleteMessage>(), KoinCompo
                 transactionId = message.transactionId,
                 startIndex = lastArgIndex,
                 textLength = lastArg.length,
-                completions = completions.map { TabCompletion(it, TextComponent(it)) }
+                completions = completions.map { TabCompleteResponseMessage.TabCompletion(it, TextComponent(it)) }
             ))
         }
     }
