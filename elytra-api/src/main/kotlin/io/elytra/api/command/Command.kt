@@ -35,4 +35,14 @@ interface Command {
      * issuer
      */
     fun execute(issuer: CommandIssuer, arguments: ArgumentList)
+
+    /**
+     * Called when the user requests a tab-completion for the [command].
+     *
+     * The [command] argument is the full command string before the user cursor, this
+     * means that it will contain a `/` at the start.
+     *
+     * @return A [Set] containing the possible completions.
+     */
+    fun onTabComplete(issuer: CommandIssuer, command: String): Set<String>
 }
