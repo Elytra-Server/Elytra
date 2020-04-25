@@ -20,7 +20,7 @@ class TabCompleteResponseCodec : OutboundCodec<TabCompleteResponseMessage>() {
             buf.writeBoolean(hasToolip)
 
             if (hasToolip) {
-                ByteBufUtils.writeUTF8(buf, completion.tooltip.text)
+                ByteBufUtils.writeUTF8(buf, completion.tooltip.toJson())
             }
         }
 

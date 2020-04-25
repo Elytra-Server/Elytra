@@ -17,6 +17,31 @@ class ElytraCommandHandler(
 
     private val argumentClassTypePool: ArgumentClassTypePool = ArgumentClassTypePool()
 
+    override fun handleTabComplete(issuer: CommandIssuer, message: String): Set<String> {
+        val messageWithoutPrefix = message.substring(1)
+
+        if (messageWithoutPrefix.isEmpty()) {
+            issuer.localeMessage("command.not.found")
+            return emptySet()
+        }
+
+        val messageArray = messageWithoutPrefix.replaceMoreThanOneSpace().split(" ")
+
+        val label = messageArray[0]
+
+        var command: Command? = commandRegistry.getCommandByName(label)
+
+        if (command == null) {
+            command = commandRegistry.getCommandByAlias(label)
+        }
+
+        if (command == null) {
+            return emptySet()
+        }
+
+        return command.onTabComplete(issuer, message)
+    }
+
     override fun handle(issuer: CommandIssuer, message: String) {
         if (!message.startsWith(ElytraConsts.COMMAND_PREFIX)) return
 
