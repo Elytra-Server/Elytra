@@ -10,11 +10,6 @@ interface Server {
     var serverDescriptor: ServerDescriptor
 
     /**
-	 * Initializes the execution of the game loop and related services
-	 */
-    fun boot()
-
-    /**
 	 * Sends a chat message to all online players
 	 *
 	 * @param message chat message to send
