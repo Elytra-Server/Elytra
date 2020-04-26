@@ -6,7 +6,7 @@ import io.elytra.sdk.network.utils.writeByteArray
 import io.elytra.sdk.network.utils.writeString
 import io.netty.buffer.ByteBuf
 
-class EncryptionRequestCodec : OutboundCodec<EncryptionRequestMessage> {
+class EncryptionRequestCodec : OutboundCodec<EncryptionRequestMessage>() {
     override fun encode(buffer: ByteBuf, message: EncryptionRequestMessage): ByteBuf {
         buffer.writeString(message.hashedServerId)
         buffer.writeByteArray(message.publicKey.encoded)

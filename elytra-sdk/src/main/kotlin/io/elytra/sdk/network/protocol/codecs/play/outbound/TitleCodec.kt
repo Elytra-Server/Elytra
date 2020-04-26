@@ -7,7 +7,7 @@ import io.elytra.sdk.network.utils.writeEnumValue
 import io.elytra.sdk.network.utils.writeTextComponent
 import io.netty.buffer.ByteBuf
 
-class TitleCodec : OutboundCodec<TitleMessage> {
+class TitleCodec : OutboundCodec<TitleMessage>() {
     override fun encode(buffer: ByteBuf, message: TitleMessage): ByteBuf {
         val type = message.type
         buffer.writeEnumValue(type)

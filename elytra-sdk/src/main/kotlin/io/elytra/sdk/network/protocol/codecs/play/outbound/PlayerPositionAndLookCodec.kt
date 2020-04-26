@@ -5,7 +5,7 @@ import io.elytra.sdk.network.protocol.codecs.OutboundCodec
 import io.elytra.sdk.network.protocol.message.play.outbound.PlayerPositionAndLookMessage
 import io.netty.buffer.ByteBuf
 
-class PlayerPositionAndLookCodec : OutboundCodec<PlayerPositionAndLookMessage> {
+class PlayerPositionAndLookCodec : OutboundCodec<PlayerPositionAndLookMessage>() {
     override fun encode(buffer: ByteBuf, message: PlayerPositionAndLookMessage): ByteBuf {
         buffer.writeDouble(message.x)
         buffer.writeDouble(message.y)

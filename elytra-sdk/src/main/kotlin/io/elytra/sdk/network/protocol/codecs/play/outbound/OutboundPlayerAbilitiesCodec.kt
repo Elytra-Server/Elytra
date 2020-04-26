@@ -5,7 +5,7 @@ import io.elytra.sdk.network.protocol.message.play.outbound.OutboundPlayerAbilit
 import io.netty.buffer.ByteBuf
 import kotlin.experimental.or
 
-class OutboundPlayerAbilitiesCodec : OutboundCodec<OutboundPlayerAbilitiesMessage> {
+class OutboundPlayerAbilitiesCodec : OutboundCodec<OutboundPlayerAbilitiesMessage>() {
     override fun encode(buffer: ByteBuf, message: OutboundPlayerAbilitiesMessage): ByteBuf {
         var b0: Byte = 0
 
