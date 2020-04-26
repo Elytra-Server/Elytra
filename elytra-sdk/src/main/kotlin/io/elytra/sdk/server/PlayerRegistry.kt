@@ -77,6 +77,10 @@ class PlayerRegistry : Registry<String, Player> {
         return players.first { player -> (player as ElytraPlayer).id == target }
     }
 
+    fun getAll(): Set<Player> {
+        return players
+    }
+
     override fun iterator(): Iterator<Player> {
         return players.iterator()
     }

@@ -8,7 +8,7 @@ import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
 import io.elytra.sdk.network.protocol.message.play.inbound.ChatMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.OutboundChatMessage
-import io.elytra.sdk.server.Elytra
+import io.elytra.sdk.server.ElytraServer
 import io.elytra.sdk.utils.ElytraConsts
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -29,7 +29,7 @@ class ChatHandler : ElytraMessageHandler<ChatMessage>(), KoinComponent {
             .getOrBuild()
             .split("{message}", limit = 2)
 
-        Elytra.sendPacketToAll(OutboundChatMessage(TextComponent(chatMessage[0]) {
+        ElytraServer.broadcastPacket(OutboundChatMessage(TextComponent(chatMessage[0]) {
             addExtra(message.content) {
                 replaceColors = false
             }

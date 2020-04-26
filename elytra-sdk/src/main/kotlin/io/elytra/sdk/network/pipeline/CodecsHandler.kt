@@ -36,17 +36,17 @@ class CodecsHandler(private val packet: BasicPacket) : MessageToMessageCodec<Byt
             val decoded = codec.decode(msg)
 
             if (msg.readableBytes() > 0) {
-                Elytra.console.warn("Message is too long (${msg.readableBytes()}) - $decoded")
-                Elytra.console.warn("Did the ${codec::class.simpleName} miss any fields?")
+                Elytra.logger.warn("Message is too long (${msg.readableBytes()}) - $decoded")
+                Elytra.logger.warn("Did the ${codec::class.simpleName} miss any fields?")
             }
 
             if (decoded != null) {
                 out.add(decoded)
             }
         } catch (e: IllegalOpcodeException) {
-            Elytra.console.error("Failed to find the Codec: " + e.message)
+            Elytra.logger.error("Failed to find the Codec: " + e.message)
         } catch (e: IOException) {
-            Elytra.console.error("Failed to read the Opcode from the buffer.")
+            Elytra.logger.error("Failed to read the Opcode from the buffer.")
             e.printStackTrace()
         }
     }

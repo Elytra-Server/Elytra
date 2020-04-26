@@ -4,10 +4,11 @@ import io.elytra.api.chat.TextComponent
 import io.elytra.api.events.EventBus
 import io.elytra.api.events.Registrable
 import io.elytra.api.events.listen
+import io.elytra.api.io.i18n.I18n
 import io.elytra.sdk.entity.ElytraPlayer
 import io.elytra.sdk.events.player.PlayerJoinEvent
 import io.elytra.sdk.network.protocol.message.play.outbound.*
-import io.elytra.sdk.server.Elytra
+import io.elytra.sdk.server.ElytraServer
 
 @Deprecated("Only used for development testing")
 class TemporaryEventRegister : Registrable {
@@ -16,18 +17,19 @@ class TemporaryEventRegister : Registrable {
             .subscribe {
                 val player = it.player
 
-                Elytra.broadcast("player.joined") {
-                    with("player" to player.displayName)
-                }
+                I18n.broadcast(
+                    "player.joined",
+                    "player" to player.displayName
+                )
 
                 val playerListData = AddPlayerData(
                     0,
                     player.gamemode,
                     player.gameProfile, TextComponent(player.displayName)
                 )
-                Elytra.sendPacketToAll(PlayerListItemMessage(Action.ADD_PLAYER, listOf(playerListData)))
+                ElytraServer.broadcastPacket(PlayerListItemMessage(Action.ADD_PLAYER, listOf(playerListData)))
 
-                Elytra.players().forEach { onlinePlayer ->
+                ElytraServer.onlinePlayers.forEach { onlinePlayer ->
                     val onlinePlayerListData = AddPlayerData(
                         0,
                         onlinePlayer.gamemode,

@@ -29,6 +29,6 @@ class HandshakeHandler : ElytraMessageHandler<HandshakeMessage>() {
             }
         }
 
-        Elytra.console.debug("Handshake [${message.address}:${message.port}] - ${message.version} (${message.state})")
+        Elytra.logger.debug("Handshake [${message.address}:${message.port}] - ${message.version} (${message.state})")
     }
 }

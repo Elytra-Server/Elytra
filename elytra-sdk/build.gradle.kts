@@ -6,7 +6,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5")
     implementation("org.fusesource.jansi:jansi:1.17")
     implementation("it.unimi.dsi:fastutil:8.3.1")
-    implementation("org.koin:koin-core:2.1.5")
     testImplementation("io.mockk:mockk:1.9")
 }
 

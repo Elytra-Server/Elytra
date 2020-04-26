@@ -6,6 +6,7 @@ import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
 import io.elytra.sdk.network.protocol.message.status.ServerInfoMessage
 import io.elytra.sdk.network.protocol.message.status.ServerQueryMessage
 import io.elytra.sdk.server.Elytra
+import io.elytra.sdk.server.ElytraServer
 
 /**
  * @see https://wiki.vg/Server_List_Ping
@@ -16,7 +17,7 @@ class ServerQueryHandler : ElytraMessageHandler<ServerQueryMessage>() {
         val serverDescriptor = Elytra.server.serverDescriptor
 
         val players = StringBuilder().run {
-            Elytra.players().forEach {
+            ElytraServer.onlinePlayers.forEach {
                 append("{\"name\":\"")
                 append(it.displayName)
                 append("\",\"id\":\"")
@@ -42,6 +43,6 @@ class ServerQueryHandler : ElytraMessageHandler<ServerQueryMessage>() {
 },"description": {"text": "${serverDescriptor.motd.description}"}}"""
 
         session.send(ServerInfoMessage(json))
-        Elytra.console.info("Server query received from ${session.address.address.hostAddress}!")
+        Elytra.logger.info("Server query received from ${session.address.address.hostAddress}!")
     }
 }

@@ -41,6 +41,7 @@ allprojects {
         implementation("io.projectreactor.netty:reactor-netty:0.9.6.RELEASE")
         implementation("com.flowpowered:flow-network:1.0.0")
         implementation("com.mojang:authlib:1.5.21")
+        implementation("org.koin:koin-core:2.1.5")
         // Logging dependencies
         implementation("org.slf4j:slf4j-api:2.0.0-alpha1")
         implementation("ch.qos.logback:logback-classic:1.3.0-alpha5")

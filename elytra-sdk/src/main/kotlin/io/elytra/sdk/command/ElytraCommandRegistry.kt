@@ -22,7 +22,7 @@ class ElytraCommandRegistry : CommandRegistry {
             registerDefaults()
         }
 
-        Elytra.console.debug("Registered default commands in ${timeTilRegisterDefaults}ms!")
+        Elytra.logger.debug("Registered default commands in ${timeTilRegisterDefaults}ms!")
     }
 
     override fun register(command: Command) {
@@ -57,7 +57,7 @@ class ElytraCommandRegistry : CommandRegistry {
             .filterIsInstance<CommandArgument>()
             .forEach { command.argumentList += it }
 
-        Elytra.console.debug("Command $commandName has been registered.")
+        Elytra.logger.debug("Command $commandName has been registered.")
         // TODO("Validate command: arguments, name, etc.")
     }
 

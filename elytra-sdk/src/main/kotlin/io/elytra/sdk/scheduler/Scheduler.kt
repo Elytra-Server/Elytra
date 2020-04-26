@@ -21,7 +21,7 @@ class Scheduler(
             try {
                 tick()
             } catch (ex: Exception) {
-                Elytra.console.error("Error while ticking")
+                Elytra.logger.error("Error while ticking")
                 ex.printStackTrace()
             }
         }, 0, tickEvery, TimeUnit.MILLISECONDS)

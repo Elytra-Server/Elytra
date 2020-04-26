@@ -1,6 +1,7 @@
 package io.elytra.api.io.i18n
 
 import com.google.common.collect.Maps
+import io.elytra.api.server.Server
 import java.util.*
 import org.jetbrains.annotations.PropertyKey
 
@@ -90,6 +91,16 @@ class I18n(locale: Locale) {
             bundles[locale] = i18n
             return i18n
         }
+
+        fun broadcast(
+            @PropertyKey(resourceBundle = BUNDLE_BASE_NAME) messageKey: String,
+            vararg placeholders: Pair<String, Any>
+        ) = broadcast(messageKey) { with(*placeholders) }
+
+        fun broadcast(
+            @PropertyKey(resourceBundle = BUNDLE_BASE_NAME) messageKey: String,
+            builder: MessageBuilder.() -> Unit = {}
+        ) = Server.broadcastMessage(MessageBuilder(messageKey).apply(builder).getOrBuild())
     }
 
     private val bundle: ResourceBundle = wrapBundle(ResourceBundle.getBundle(BUNDLE_BASE_NAME, locale))

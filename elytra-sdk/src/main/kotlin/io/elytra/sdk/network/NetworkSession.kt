@@ -63,7 +63,7 @@ class NetworkSession(
 
     override fun send(message: Message?) {
         if (message !is KeepAliveMessage) {
-            Elytra.console.debug("OUT $message")
+            Elytra.logger.debug("OUT $message")
         }
 
         super.send(message)
@@ -144,7 +144,7 @@ class NetworkSession(
 
     override fun onInboundThrowable(throwable: Throwable?) {
         if (throwable is CodecException) {
-            Elytra.console.error("Error in inbound network: $throwable")
+            Elytra.logger.error("Error in inbound network: $throwable")
             return
         }
 
@@ -152,12 +152,12 @@ class NetworkSession(
     }
 
     override fun onHandlerThrowable(message: Message?, handle: MessageHandler<*, *>?, throwable: Throwable?) {
-        Elytra.console.error("Error while handling $message (${handle?.javaClass?.simpleName}) - $throwable")
+        Elytra.logger.error("Error while handling $message (${handle?.javaClass?.simpleName}) - $throwable")
     }
 
     override fun messageReceived(message: Message) {
         if (message !is KeepAliveMessage) {
-            Elytra.console.debug("IN $message")
+            Elytra.logger.debug("IN $message")
         }
 
         if (message is Asyncable) {

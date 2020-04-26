@@ -135,7 +135,9 @@ data class ElytraPlayer(
                             MessageBuilder("console.player.joined").with(
                                 "player" to displayName,
                                 "uuid" to gameProfile.id
-                            ).getOrBuild().also(Elytra.console::info)
+                            ).getOrBuild().also(Elytra.logger::info)
+
+                            sendPacket(DeclareCommandsMessage(Elytra.server.commandRegistry.getCommands()))
                         }
                     }
                     if (i > 100) {

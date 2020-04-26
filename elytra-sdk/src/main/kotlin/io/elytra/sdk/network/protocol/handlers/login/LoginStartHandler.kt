@@ -7,6 +7,7 @@ import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
 import io.elytra.sdk.network.protocol.message.login.EncryptionRequestMessage
 import io.elytra.sdk.network.protocol.message.login.LoginStartMessage
 import io.elytra.sdk.server.Elytra
+import io.elytra.sdk.server.ElytraServer
 import org.apache.commons.lang3.Validate
 
 class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
@@ -23,9 +24,9 @@ class LoginStartHandler : ElytraMessageHandler<LoginStartMessage>() {
         MessageBuilder("console.player.connecting").with(
             "player" to message.gameProfile.name,
             "ip" to session.address.address.hostAddress
-        ).getOrBuild().also(Elytra.console::info)
+        ).getOrBuild().also(Elytra.logger::info)
 
-        if (Elytra.online(message.gameProfile.name)) {
+        if (ElytraServer.isPlayerOnline(message.gameProfile.name)) {
             session.disconnect("Already online!")
             return
         }

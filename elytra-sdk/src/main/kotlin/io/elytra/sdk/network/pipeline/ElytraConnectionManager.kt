@@ -32,7 +32,7 @@ class ElytraConnectionManager(
             sessionRegistry.add(atomicReference.acquire)
         }
 
-        Elytra.console.trace("got new session ${atomicReference.acquire}")
+        Elytra.logger.trace("got new session ${atomicReference.acquire}")
         return atomicReference.acquire
     }
 
