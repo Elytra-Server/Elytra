@@ -8,18 +8,21 @@ import io.netty.buffer.ByteBuf
 class TabCompleteResponseCodec : OutboundCodec<TabCompleteResponseMessage> {
     override fun encode(buf: ByteBuf, message: TabCompleteResponseMessage): ByteBuf {
         ByteBufUtils.writeVarInt(buf, message.transactionId)
-        ByteBufUtils.writeVarInt(buf, message.startIndex)
-        ByteBufUtils.writeVarInt(buf, message.textLength)
-        ByteBufUtils.writeVarInt(buf, message.completions.size)
+        ByteBufUtils.writeVarInt(buf, message.tabCompletion.startIndex)
+        ByteBufUtils.writeVarInt(buf, message.tabCompletion.textLength)
+        ByteBufUtils.writeVarInt(buf, message.tabCompletion.completions.size)
 
-        for (completion in message.completions) {
+        for (completion in message.tabCompletion.completions) {
             ByteBufUtils.writeUTF8(buf, completion.match)
-            val hasToolip = completion.tooltip != null
-
-            buf.writeBoolean(hasToolip)
-
-            if (hasToolip) {
-                ByteBufUtils.writeUTF8(buf, completion.tooltip.toJson())
+            completion.tooltip.also { tooltip ->
+                if (tooltip != null) {
+                    // Completion has tooltip
+                    buf.writeBoolean(true)
+                    ByteBufUtils.writeUTF8(buf, tooltip.toJson())
+                } else {
+                    // Completion doesn't have tooltip
+                    buf.writeBoolean(false)
+                }
             }
         }
 
