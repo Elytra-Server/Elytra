@@ -14,21 +14,22 @@ interface CommandRegistry {
     fun register(command: Command)
 
     /**
-     * Returns a command by his name
-     *
-     * @return [Command] command
+     * Returns all available commands.
      */
-    fun getCommandByName(commandName: String): Command?
+    fun getCommands(): Collection<Command>
 
     /**
-     * Returns a command by one of his alias
-     *
-     * @return [Command] command
+     * Returns a [Command] by his [name].
+     */
+    fun getCommandByName(name: String): Command?
+
+    /**
+     * Returns a [Command] by one of his [alias].
      */
     fun getCommandByAlias(alias: String): Command?
 
     /**
-     * Removes a registered command by his name
+     * Removes a registered command by his [name].
      */
-    fun disableCommand(commandName: String)
+    fun disableCommand(name: String)
 }

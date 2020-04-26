@@ -4,8 +4,8 @@ import com.flowpowered.network.Message
 import com.mojang.authlib.minecraft.MinecraftSessionService
 import io.elytra.api.chat.ChatMode
 import io.elytra.api.chat.TextComponent
-import io.elytra.api.command.handler.CommandHandler
-import io.elytra.api.entity.player.Player
+import io.elytra.api.command.registry.CommandRegistry
+import io.elytra.api.entity.Player
 import io.elytra.api.io.i18n.I18n
 import io.elytra.api.io.i18n.MessageBuilder
 import io.elytra.api.server.Server
@@ -18,7 +18,7 @@ import io.elytra.sdk.network.SessionRegistry
 import io.elytra.sdk.network.protocol.PacketProvider
 import io.elytra.sdk.network.protocol.ProtocolInfo
 import io.elytra.sdk.network.protocol.message.play.outbound.OutboundChatMessage
-import io.elytra.sdk.network.utils.CryptManager
+import io.elytra.sdk.network.utils.cryptManager
 import io.elytra.sdk.scheduler.Scheduler
 import io.elytra.sdk.utils.ElytraConsts
 import io.elytra.sdk.utils.ResourceUtils
@@ -35,12 +35,12 @@ import org.slf4j.LoggerFactory
 
 class Elytra : Server, KoinComponent {
     val startedAt: Long = System.currentTimeMillis()
-    val keypair: KeyPair = CryptManager.generateKeyPair()
+    val keypair: KeyPair = cryptManager.generateKeyPair()
     val debug: Boolean = false
     val scheduler: Scheduler by inject()
     val playerRegistry: PlayerRegistry by inject()
     val sessionRegistry: SessionRegistry by inject()
-    val commandHandler: CommandHandler by inject()
+    val commandRegistry: CommandRegistry by inject()
     val sessionService: MinecraftSessionService by inject()
 
     override lateinit var serverDescriptor: ServerDescriptor

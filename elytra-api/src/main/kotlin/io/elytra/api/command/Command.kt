@@ -44,5 +44,5 @@ interface Command {
      *
      * @return A [Set] containing the possible completions.
      */
-    fun onTabComplete(issuer: CommandIssuer, command: String): Set<String>
+    fun onTabComplete(issuer: CommandIssuer, command: String, tabCompletion: TabCompletion)
 }

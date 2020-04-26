@@ -2,6 +2,7 @@ package io.elytra.sdk.network.protocol.handlers.play
 
 import io.elytra.api.chat.ChatMode
 import io.elytra.api.chat.TextComponent
+import io.elytra.api.command.handler.CommandHandler
 import io.elytra.api.io.i18n.MessageBuilder
 import io.elytra.sdk.network.NetworkSession
 import io.elytra.sdk.network.protocol.handlers.ElytraMessageHandler
@@ -9,13 +10,17 @@ import io.elytra.sdk.network.protocol.message.play.inbound.ChatMessage
 import io.elytra.sdk.network.protocol.message.play.outbound.OutboundChatMessage
 import io.elytra.sdk.server.Elytra
 import io.elytra.sdk.utils.ElytraConsts
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class ChatHandler : ElytraMessageHandler<ChatMessage>() {
+class ChatHandler : ElytraMessageHandler<ChatMessage>(), KoinComponent {
+    val commandHandler: CommandHandler by inject()
+
     override fun handle(session: NetworkSession, message: ChatMessage) {
         val player = getPlayerOrDisconnect(session)
 
         if (message.content.startsWith(ElytraConsts.COMMAND_PREFIX)) {
-            Elytra.server.commandHandler.handle(player, message.content)
+            commandHandler.handle(player, message.content)
             return
         }
 

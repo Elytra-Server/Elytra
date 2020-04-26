@@ -2,6 +2,7 @@ package io.elytra.sdk.command
 
 import io.elytra.api.command.Command
 import io.elytra.api.command.CommandIssuer
+import io.elytra.api.command.TabCompletion
 import io.elytra.api.command.argument.ArgumentContainer
 import io.elytra.api.command.argument.ArgumentType
 import io.elytra.api.command.handler.CommandHandler
@@ -17,12 +18,12 @@ class ElytraCommandHandler(
 
     private val argumentClassTypePool: ArgumentClassTypePool = ArgumentClassTypePool()
 
-    override fun handleTabComplete(issuer: CommandIssuer, message: String): Set<String> {
+    override fun handleTabComplete(issuer: CommandIssuer, message: String, tabCompletion: TabCompletion) {
         val messageWithoutPrefix = message.substring(1)
 
         if (messageWithoutPrefix.isEmpty()) {
             issuer.localeMessage("command.not.found")
-            return emptySet()
+            return
         }
 
         val messageArray = messageWithoutPrefix.replaceMoreThanOneSpace().split(" ")
@@ -36,10 +37,10 @@ class ElytraCommandHandler(
         }
 
         if (command == null) {
-            return emptySet()
+            return
         }
 
-        return command.onTabComplete(issuer, message)
+        command.onTabComplete(issuer, message, tabCompletion)
     }
 
     override fun handle(issuer: CommandIssuer, message: String) {
