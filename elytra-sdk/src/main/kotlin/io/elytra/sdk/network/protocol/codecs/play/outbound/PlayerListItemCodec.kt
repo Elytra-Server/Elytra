@@ -9,7 +9,7 @@ import io.elytra.sdk.network.utils.writeString
 import io.elytra.sdk.network.utils.writeUuid
 import io.netty.buffer.ByteBuf
 
-class PlayerListItemCodec : OutboundCodec<PlayerListItemMessage> {
+class PlayerListItemCodec : OutboundCodec<PlayerListItemMessage>() {
     override fun encode(buffer: ByteBuf, message: PlayerListItemMessage): ByteBuf {
         buffer.writeEnumValue(message.action)
         ByteBufUtils.writeVarInt(buffer, message.players.size)

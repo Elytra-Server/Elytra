@@ -7,7 +7,7 @@ import io.elytra.sdk.network.utils.writeEnumValue
 import io.elytra.sdk.network.utils.writeString
 import io.netty.buffer.ByteBuf
 
-class JoinGameCodec : OutboundCodec<JoinGameMessage> {
+class JoinGameCodec : OutboundCodec<JoinGameMessage>() {
     override fun encode(buffer: ByteBuf, message: JoinGameMessage): ByteBuf {
         buffer.writeInt(message.id)
         buffer.writeEnumValue(message.gameMode)

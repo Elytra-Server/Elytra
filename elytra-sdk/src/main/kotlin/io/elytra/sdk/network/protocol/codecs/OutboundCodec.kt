@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf
 import io.netty.handler.codec.DecoderException
 
 abstract class OutboundCodec<M : Message> : Codec<M> {
-    abstract override fun encode(buf: ByteBuf, message: M): ByteBuf
+    abstract override fun encode(buffer: ByteBuf, message: M): ByteBuf
 
     override fun decode(buffer: ByteBuf): M {
         throw DecoderException("No decode for outbound codec")
