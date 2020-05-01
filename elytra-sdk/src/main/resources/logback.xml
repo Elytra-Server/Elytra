@@ -15,7 +15,7 @@
         </rollingPolicy>
 
         <encoder>
-            <Pattern>%d{HH:mm:ss.SSS} %-5level[%thread] logger{0}: %replace(%msg){'\u001B\[..?m', ''}%n</Pattern>
+            <Pattern>%d{HH:mm:ss.SSS} %-5level[%thread] %logger{0}: %replace(%msg){'\u001B\[..?m', ''}%n</Pattern>
         </encoder>
     </appender>
 
