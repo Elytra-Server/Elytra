@@ -18,18 +18,13 @@ class ElytraConsoleAppender : OutputStreamAppender<ILoggingEvent>() {
 
     init {
         setEncoder(object : EncoderBase<ILoggingEvent>() {
-            override fun headerBytes(): ByteArray? {
-                return null
-            }
+            override fun headerBytes(): ByteArray? = null
 
-            override fun footerBytes(): ByteArray? {
-                return null
-            }
+            override fun footerBytes(): ByteArray? = null
 
             override fun encode(event: ILoggingEvent): ByteArray {
                 val sb = StringBuilder()
 
-                LocalDateTime.now()
                 dateTimeFormatter.formatTo(LocalDateTime.now(), sb)
                 sb.append(" ")
 
